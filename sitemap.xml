@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://www.1nth.com/</loc>
+    <lastmod>2019-12-19T11:27:22+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.1nth.com/post/k8s_1.17.0_install/</loc>
+    <lastmod>2019-12-19T11:27:22+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.1nth.com/post/</loc>
+    <lastmod>2019-12-19T11:27:22+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.1nth.com/post/hugo_install/</loc>
+    <lastmod>2019-12-12T11:27:22+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.1nth.com/post/nexus3_install/</loc>
+    <lastmod>2019-12-12T11:27:22+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.1nth.com/categories/</loc>
+  </url>
+  
+  <url>
+    <loc>https://www.1nth.com/tags/</loc>
+  </url>
+  
+</urlset>

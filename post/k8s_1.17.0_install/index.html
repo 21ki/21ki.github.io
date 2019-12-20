@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="zh" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>k8s_1.17.0安装 - Myki的博客</title>
+  <meta name="description" content="centos 7.7  kubernetes 1.17.0 安装">
+  <meta name="author" content="Myki"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Myki的博客",
+    
+    "url": "https:\/\/www.1nth.com\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/www.1nth.com\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/www.1nth.com\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/www.1nth.com\/post\/k8s_1.17.0_install\/",
+          "name": "K8s 1.17.0安装"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Myki"
+  },
+  "headline": "k8s_1.17.0安装",
+  "description" : "centos 7.7 kubernetes 1.17.0 安装\n",
+  "inLanguage" : "zh",
+  "wordCount":  572 ,
+  "datePublished" : "2019-12-19T11:27:22",
+  "dateModified" : "2019-12-19T11:27:22",
+  "image" : "https:\/\/www.1nth.com\/img\/avatar-icon.png",
+  "keywords" : [ "" ],
+  "mainEntityOfPage" : "https:\/\/www.1nth.com\/post\/k8s_1.17.0_install\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/www.1nth.com\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/www.1nth.com\/img\/avatar-icon.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="k8s_1.17.0安装" />
+<meta property="og:description" content="centos 7.7  kubernetes 1.17.0 安装">
+<meta property="og:image" content="https://www.1nth.com/img/avatar-icon.png" />
+<meta property="og:url" content="https://www.1nth.com/post/k8s_1.17.0_install/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Myki的博客" />
+
+  <meta name="twitter:title" content="k8s_1.17.0安装" />
+  <meta name="twitter:description" content="centos 7.7  kubernetes 1.17.0 安装">
+  <meta name="twitter:image" content="https://www.1nth.com/img/avatar-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@MykiFan" />
+  <meta name="twitter:creator" content="@MykiFan" />
+  <link href='https://www.1nth.com/img/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.61.0" />
+  <link rel="alternate" href="https://www.1nth.com/index.xml" type="application/rss+xml" title="Myki的博客"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://www.1nth.com/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://www.1nth.com/css/syntax.css" /><link rel="stylesheet" href="https://www.1nth.com/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-154483127-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://www.1nth.com/">Myki的博客</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="主页" href="https://www.1nth.com/">主页</a>
+            </li>
+          
+        
+          
+            <li class="navlinks-container">
+              <a class="navlinks-parent">Samples</a>
+              <div class="navlinks-children">
+                
+                  <a href="https://www.1nth.com/post/2017-03-07-bigimg-sample">Big Image Sample</a>
+                
+                  <a href="https://www.1nth.com/post/2017-03-05-math-sample">Math Sample</a>
+                
+                  <a href="https://www.1nth.com/post/2016-03-08-code-sample">Code Sample</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="https://www.1nth.com/page/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="https://www.1nth.com/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Myki的博客" href="https://www.1nth.com/">
+            <img class="avatar-img" src="https://www.1nth.com/img/avatar-icon.png" alt="Myki的博客" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>k8s_1.17.0安装</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;3&nbsp;
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;572&nbsp;
+  
+  
+    
+      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Myki
+    
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>centos 7.7  kubernetes 1.17.0 安装</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#6272a4">#centos 7.7</span> 
+cat <span style="color:#f1fa8c">&lt;&lt;EOF &gt; /etc/sysctl.d/k8s.conf
+</span><span style="color:#f1fa8c">net.ipv4.ip_forward = 1
+</span><span style="color:#f1fa8c">net.bridge.bridge-nf-call-ip6tables = 1
+</span><span style="color:#f1fa8c">net.bridge.bridge-nf-call-iptables = 1
+</span><span style="color:#f1fa8c">net.ipv4.tcp_keepalive_time = 600
+</span><span style="color:#f1fa8c">net.ipv4.tcp_keepalive_intvl = 30
+</span><span style="color:#f1fa8c">net.ipv4.tcp_keepalive_probes = 10
+</span><span style="color:#f1fa8c">EOF</span>
+<span style="color:#6272a4">#挂载 br_netfilter</span>
+modprobe br_netfilter
+
+<span style="color:#6272a4">#使配置生效</span>
+sysctl -p /etc/sysctl.d/k8s.conf
+
+<span style="color:#6272a4">#查看是否生成相关文件</span>
+ls /proc/sys/net/bridge
+
+<span style="color:#6272a4">#配置 IPVS 模块</span>
+cat &gt; /etc/sysconfig/modules/ipvs.modules <span style="color:#f1fa8c">&lt;&lt;EOF
+</span><span style="color:#f1fa8c">#!/bin/bash
+</span><span style="color:#f1fa8c">modprobe -- ip_vs
+</span><span style="color:#f1fa8c">modprobe -- ip_vs_rr
+</span><span style="color:#f1fa8c">modprobe -- ip_vs_wrr
+</span><span style="color:#f1fa8c">modprobe -- ip_vs_sh
+</span><span style="color:#f1fa8c">modprobe -- nf_conntrack_ipv4
+</span><span style="color:#f1fa8c">EOF</span>
+<span style="color:#6272a4">#修改脚本权限</span>
+chmod <span style="color:#bd93f9">755</span> /etc/sysconfig/modules/ipvs.modules 
+
+<span style="color:#6272a4">#执行脚本</span>
+bash /etc/sysconfig/modules/ipvs.modules 
+
+<span style="color:#6272a4">#查看是否已经正确加载所需的内核模块</span>
+lsmod | grep -e ip_vs -e nf_conntrack_ipv4
+<span style="color:#6272a4">#配置资源限制</span>
+<span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;* soft nofile 65536&#34;</span> &gt;&gt; /etc/security/limits.conf
+<span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;* hard nofile 65536&#34;</span> &gt;&gt; /etc/security/limits.conf
+<span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;* soft nproc 65536&#34;</span>  &gt;&gt; /etc/security/limits.conf
+<span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;* hard nproc 65536&#34;</span>  &gt;&gt; /etc/security/limits.conf
+<span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;* soft memlock  unlimited&#34;</span>  &gt;&gt; /etc/security/limits.conf
+<span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;* hard memlock  unlimited&#34;</span>  &gt;&gt; /etc/security/limits.conf
+
+<span style="color:#6272a4">#阿里云yum源</span>
+curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+curl -o /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo
+
+<span style="color:#6272a4">#修改主机名</span>
+hostnamectl set-hostname k8s-master0
+hostnamectl set-hostname k8s-node1
+hostnamectl set-hostname k8s-node2
+hostnamectl set-hostname k8s-node3
+
+<span style="color:#6272a4">#修改ssh连接慢问题</span>
+sed -i <span style="color:#f1fa8c">&#39;/^#UseDNS yes/cUseDNS no&#39;</span> /etc/ssh/sshd_config
+
+<span style="color:#6272a4"># 安装 nfs-utils</span>
+<span style="color:#6272a4"># 必须先安装 nfs-utils 才能挂载 nfs 网络存储</span>
+yum install -y nfs-utils wget socat
+
+<span style="color:#6272a4"># 关闭 防火墙</span>
+systemctl stop firewalld
+systemctl disable firewalld
+
+<span style="color:#6272a4"># 关闭 SeLinux</span>
+setenforce <span style="color:#bd93f9">0</span>
+sed -i <span style="color:#f1fa8c">&#34;s/SELINUX=enforcing/SELINUX=disabled/g&#34;</span> /etc/selinux/config
+
+<span style="color:#6272a4"># 关闭 swap</span>
+swapoff -a
+yes | cp /etc/fstab /etc/fstab_bak
+cat /etc/fstab_bak |grep -v swap &gt; /etc/fstab
+
+<span style="color:#6272a4"># 设置 yum repository</span>
+yum install -y yum-utils <span style="color:#f1fa8c">\
+</span><span style="color:#f1fa8c"></span>device-mapper-persistent-data <span style="color:#f1fa8c">\
+</span><span style="color:#f1fa8c"></span>lvm2
+yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+
+<span style="color:#6272a4">#安装docker</span>
+yum list docker-ce --showduplicates | sort -r
+yum install -y docker-ce-18.09.9-3.el7
+sudo mkdir -p /etc/docker
+cat &gt; /etc/docker/daemon.json <span style="color:#f1fa8c">&lt;&lt; EOF
+</span><span style="color:#f1fa8c">
+</span><span style="color:#f1fa8c">{
+</span><span style="color:#f1fa8c">  &#34;exec-opts&#34;: [&#34;native.cgroupdriver=systemd&#34;],
+</span><span style="color:#f1fa8c">  &#34;registry-mirrors&#34;: [
+</span><span style="color:#f1fa8c">      &#34;https://dockerhub.azk8s.cn&#34;,
+</span><span style="color:#f1fa8c">      &#34;http://hub-mirror.c.163.com/&#34;,
+</span><span style="color:#f1fa8c">      &#34;https://registry.docker-cn.com&#34;
+</span><span style="color:#f1fa8c">  ],
+</span><span style="color:#f1fa8c">  &#34;storage-driver&#34;: &#34;overlay2&#34;,
+</span><span style="color:#f1fa8c">  &#34;storage-opts&#34;: [
+</span><span style="color:#f1fa8c">    &#34;overlay2.override_kernel_check=true&#34;
+</span><span style="color:#f1fa8c">  ],
+</span><span style="color:#f1fa8c">  &#34;log-driver&#34;: &#34;json-file&#34;,
+</span><span style="color:#f1fa8c">  &#34;log-opts&#34;: {
+</span><span style="color:#f1fa8c">    &#34;max-size&#34;: &#34;100m&#34;
+</span><span style="color:#f1fa8c">  }
+</span><span style="color:#f1fa8c">}
+</span><span style="color:#f1fa8c">
+</span><span style="color:#f1fa8c">EOF</span>
+systemctl start docker <span style="color:#ff79c6">&amp;&amp;</span> systemctl <span style="color:#8be9fd;font-style:italic">enable</span> docker
+systemctl daemon-reload
+systemctl restart docker
+
+<span style="color:#6272a4">#设置镜像存储目录，找到大点的挂载的目录进行存储</span>
+vi /lib/systemd/system/docker.service
+<span style="color:#6272a4">#找到这行，往后面加上存储目录，例如这里是 --graph /apps/docker</span>
+<span style="color:#8be9fd;font-style:italic">ExecStart</span><span style="color:#ff79c6">=</span>/usr/bin/docker --graph /apps/docker
+
+<span style="color:#6272a4">#配置hosts</span>
+<span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;192.168.1.240   k8s-master0&#34;</span> &gt;&gt; /etc/hosts
+<span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;192.168.1.241   k8s-node1&#34;</span> &gt;&gt; /etc/hosts
+<span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;192.168.1.242   k8s-node2&#34;</span> &gt;&gt; /etc/hosts
+<span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;192.168.1.243   k8s-node3&#34;</span> &gt;&gt; /etc/hosts
+
+<span style="color:#6272a4">#安装 kubelet、kubectl、kubeadm（全部节点）</span>
+<span style="color:#6272a4">#配置可用的国内 yum 源</span>
+cat <span style="color:#f1fa8c">&lt;&lt;EOF &gt; /etc/yum.repos.d/kubernetes.repo
+</span><span style="color:#f1fa8c">
+</span><span style="color:#f1fa8c">[kubernetes]
+</span><span style="color:#f1fa8c">name=Kubernetes
+</span><span style="color:#f1fa8c">baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64/
+</span><span style="color:#f1fa8c">enabled=1
+</span><span style="color:#f1fa8c">gpgcheck=0
+</span><span style="color:#f1fa8c">repo_gpgcheck=0
+</span><span style="color:#f1fa8c">gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
+</span><span style="color:#f1fa8c">
+</span><span style="color:#f1fa8c">EOF</span>
+yum list kubelet --showduplicates | sort -r
+<span style="color:#6272a4">#注意安装顺序，一定不要先安装 kubeadm，因为 kubeadm 会自动安装最新版本的 kubelet 与 kubectl，导致版本不一致问题</span>
+<span style="color:#6272a4">#安装 kubelet</span>
+yum install -y kubelet-1.17.0-0 
+<span style="color:#6272a4">#安装 kubectl</span>
+yum install -y kubectl-1.17.0-0
+<span style="color:#6272a4">#安装 kubeadm</span>
+yum install -y kubeadm-1.17.0-0
+
+<span style="color:#6272a4">#启动 kubelet 并配置开机启动</span>
+systemctl start kubelet <span style="color:#ff79c6">&amp;&amp;</span> systemctl <span style="color:#8be9fd;font-style:italic">enable</span> kubelet
+
+<span style="color:#6272a4">#初始化master</span>
+<span style="color:#8be9fd;font-style:italic">export</span> <span style="color:#8be9fd;font-style:italic">MASTER_IP</span><span style="color:#ff79c6">=</span>192.168.1.240
+<span style="color:#8be9fd;font-style:italic">export</span> <span style="color:#8be9fd;font-style:italic">APISERVER_NAME</span><span style="color:#ff79c6">=</span>apiserver.demo
+<span style="color:#8be9fd;font-style:italic">export</span> <span style="color:#8be9fd;font-style:italic">POD_SUBNET</span><span style="color:#ff79c6">=</span>10.100.0.1/16
+<span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">${</span><span style="color:#8be9fd;font-style:italic">MASTER_IP</span><span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">   </span><span style="color:#f1fa8c">${</span><span style="color:#8be9fd;font-style:italic">APISERVER_NAME</span><span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span> &gt;&gt; /etc/hosts
+<span style="color:#6272a4">#生成默认配置</span>
+kubeadm config print init-defaults &gt; kubeadm-init.yaml
+<span style="color:#6272a4">#自定义配置</span>
+cat &gt; kubeadm-config.yaml.tmpl <span style="color:#f1fa8c">&lt;&lt; EOF
+</span><span style="color:#f1fa8c">apiVersion: kubeadm.k8s.io/v1beta2
+</span><span style="color:#f1fa8c">kind: ClusterConfiguration
+</span><span style="color:#f1fa8c">kubernetesVersion: v1.17.0
+</span><span style="color:#f1fa8c">imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
+</span><span style="color:#f1fa8c">controlPlaneEndpoint: &#34;apiserver.demo:6443&#34;
+</span><span style="color:#f1fa8c">apiServer:
+</span><span style="color:#f1fa8c">#ExtraArgs:
+</span><span style="color:#f1fa8c">  extraArgs:
+</span><span style="color:#f1fa8c">    service-node-port-range: 30000-50000
+</span><span style="color:#f1fa8c">networking:
+</span><span style="color:#f1fa8c">  serviceSubnet: &#34;10.96.0.0/16&#34;
+</span><span style="color:#f1fa8c">  podSubnet: &#34;10.100.0.1/16&#34;
+</span><span style="color:#f1fa8c">  dnsDomain: &#34;cluster.local&#34;
+</span><span style="color:#f1fa8c">---
+</span><span style="color:#f1fa8c">apiVersion: kubeproxy.config.k8s.io/v1alpha1
+</span><span style="color:#f1fa8c">kind: KubeProxyConfiguration
+</span><span style="color:#f1fa8c">mode: &#34;ipvs&#34;
+</span><span style="color:#f1fa8c">ipvs:
+</span><span style="color:#f1fa8c">  scheduler: lc
+</span><span style="color:#f1fa8c">  minSyncPeriod: 5s
+</span><span style="color:#f1fa8c">  syncPeriod: 15s
+</span><span style="color:#f1fa8c">EOF</span>
+
+kubeadm config images list --config<span style="color:#ff79c6">=</span>kubeadm-config.yaml.tmpl
+kubeadm config images pull --config<span style="color:#ff79c6">=</span>kubeadm-config.yaml.tmpl
+kubeadm init --config<span style="color:#ff79c6">=</span>kubeadm-config.yaml.tmpl --upload-certs --v<span style="color:#ff79c6">=</span><span style="color:#bd93f9">5</span>
+
+<span style="color:#6272a4">#如果初始化失败执行一下命令</span>
+kubeadm reset
+
+<span style="color:#6272a4">#cni网络插件calico</span>
+wget https://kuboard.cn/install-script/calico/calico-3.9.2.yaml
+sed -i <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">s#192\.168\.0\.0/16#</span><span style="color:#f1fa8c">${</span><span style="color:#8be9fd;font-style:italic">POD_SUBNET</span><span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">#</span><span style="color:#f1fa8c">&#34;</span> calico-3.9.2.yaml
+kubectl apply -f calico-3.9.2.yaml
+
+<span style="color:#6272a4">#配置 kubectl</span>
+rm -rf /root/.kube/
+mkdir /root/.kube/
+cp -i /etc/kubernetes/admin.conf /root/.kube/config
+kubectl get node
+systemctl status kubelet
+kubectl get cs
+<span style="color:#6272a4">#查看配置</span>
+kubectl -n kube-system get cm kubeadm-config -oyaml
+
+<span style="color:#6272a4">#获取work节点token（在master上执行）</span>
+kubeadm token create --print-join-command
+kubeadm join apiserver.demo:6443 --token 2nae97.4f52qgeyhrqi6ndc     --discovery-token-ca-cert-hash sha256:b2313c178f0ef70b3e7eb75d4abf2eb0e56e46aa22ac3b11b765145b7b28d216
+
+<span style="color:#6272a4">#在所有worker节点上执行</span>
+<span style="color:#8be9fd;font-style:italic">export</span> <span style="color:#8be9fd;font-style:italic">MASTER_IP</span><span style="color:#ff79c6">=</span>192.168.1.240
+<span style="color:#8be9fd;font-style:italic">export</span> <span style="color:#8be9fd;font-style:italic">APISERVER_NAME</span><span style="color:#ff79c6">=</span>apiserver.demo
+<span style="color:#8be9fd;font-style:italic">export</span> <span style="color:#8be9fd;font-style:italic">POD_SUBNET</span><span style="color:#ff79c6">=</span>10.100.0.1/16
+<span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">${</span><span style="color:#8be9fd;font-style:italic">MASTER_IP</span><span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">   </span><span style="color:#f1fa8c">${</span><span style="color:#8be9fd;font-style:italic">APISERVER_NAME</span><span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span> &gt;&gt; /etc/hosts
+kubeadm join apiserver.demo:6443 --token 2nae97.4f52qgeyhrqi6ndc     --discovery-token-ca-cert-hash sha256:b2313c178f0ef70b3e7eb75d4abf2eb0e56e46aa22ac3b11b765145b7b28d216
+
+<span style="color:#6272a4">#kubectl 补全命令</span>
+yum install bash-completion -y 
+<span style="color:#8be9fd;font-style:italic">source</span> /usr/share/bash-completion/bash_completion
+<span style="color:#8be9fd;font-style:italic">source</span> &lt;<span style="color:#ff79c6">(</span>kubectl completion bash<span style="color:#ff79c6">)</span>
+<span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;source &lt;(kubectl completion bash)&#34;</span> &gt;&gt; ~/.bashrc
+<span style="color:#8be9fd;font-style:italic">source</span> ~/.bashrc
+
+<span style="color:#6272a4">#查看是否开启 IPVS（Master 节点）</span>
+kubectl get pod -n kube-system | grep kube-proxy
+<span style="color:#6272a4">#选择其中一个 Pod ，查看该 Pod 中的日志信息中是否存在 ipvs 信息：</span>
+kubectl logs kube-proxy-6tg55 -n kube-system
+
+<span style="color:#6272a4">#安装ipvsadm</span> 
+yum install -y ipvsadm
+<span style="color:#6272a4">#查看转发规则</span>
+ipvsadm -Ln
+<span style="color:#6272a4">#查看ipvs模块的转发情况统计</span>
+ipvsadm -Ln --stats | --rate
+ipvsadm -lnc
+</code></pre></div>
+
+        
+
+        
+            <hr/>
+            <section id="social-share">
+              <div class="list-inline footer-links">
+                
+
+<div class="share-box" aria-hidden="true">
+    <ul class="share">
+      
+      <li>
+        <a href="//twitter.com/share?url=https%3a%2f%2fwww.1nth.com%2fpost%2fk8s_1.17.0_install%2f&amp;text=k8s_1.17.0%e5%ae%89%e8%a3%85&amp;via=MykiFan" target="_blank" title="Share on Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fwww.1nth.com%2fpost%2fk8s_1.17.0_install%2f" target="_blank" title="Share on Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//reddit.com/submit?url=https%3a%2f%2fwww.1nth.com%2fpost%2fk8s_1.17.0_install%2f&amp;title=k8s_1.17.0%e5%ae%89%e8%a3%85" target="_blank" title="Share on Reddit">
+          <i class="fab fa-reddit"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fwww.1nth.com%2fpost%2fk8s_1.17.0_install%2f&amp;title=k8s_1.17.0%e5%ae%89%e8%a3%85" target="_blank" title="Share on LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.stumbleupon.com/submit?url=https%3a%2f%2fwww.1nth.com%2fpost%2fk8s_1.17.0_install%2f&amp;title=k8s_1.17.0%e5%ae%89%e8%a3%85" target="_blank" title="Share on StumbleUpon">
+          <i class="fab fa-stumbleupon"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fwww.1nth.com%2fpost%2fk8s_1.17.0_install%2f&amp;description=k8s_1.17.0%e5%ae%89%e8%a3%85" target="_blank" title="Share on Pinterest">
+          <i class="fab fa-pinterest"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+
+              </div>
+            </section>
+        
+
+        
+          
+
+          
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://www.1nth.com/post/hugo_install/" data-toggle="tooltip" data-placement="top" title="Hugo安装测试（未完待续）">&larr; </a>
+            </li>
+          
+          
+        </ul>
+      
+
+
+      
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:21kixc@gmail.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/21ki" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://twitter.com/MykiFan" title="Twitter">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://stackoverflow.com/users/12089012/myki" title="StackOverflow">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-stack-overflow fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://www.instagram.com/myki" title="Instagram">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-instagram fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://www.youtube.com/user/Myki" title="Youtube">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-youtube fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://paypal.me/username" title="PayPal">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-paypal fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://telegram.me/username" title="Telegram">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-telegram fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://weibo.com/%e7%a6%bb%e5%b2%9b%e4%b9%8b%e5%90%8e" title="Weibo">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-weibo fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            <a href="" title="RSS">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="1nth.com">Myki</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2019
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://www.1nth.com/">Myki的博客</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="https://www.1nth.com/js/main.js"></script><script> renderMathInElement(document.body); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://www.1nth.com/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+
