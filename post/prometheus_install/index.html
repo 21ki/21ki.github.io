@@ -7,14 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-  <title>nexus3_install - Myki的博客</title>
-  <meta name="description" content="本文用的docker方式部署
-docker pull sonatype/nexus3:3.16.0
-mkdir /opt/nexus-data
-chown -R  200 /opt/nexus-data
-docker run -d --name nexus --ulimit nofile=65536:65536 -p 8081:8081 -v /opt/nexus-data:/nexus-data sonatype/nexus3:3.16.0
-cat /opt/nexus-data/admin.password 
-">
+  <title>prometheus_install - Myki的博客</title>
   <meta name="author" content="Myki"/><script type="application/ld+json">
 {
     "@context": "http://schema.org",
@@ -50,8 +43,8 @@ cat /opt/nexus-data/admin.password
         "@type": "ListItem",
         "position": 3,
         "item": {
-          "@id": "https:\/\/www.1nth.com\/post\/nexus3_install\/",
-          "name": "Nexus3 install"
+          "@id": "https:\/\/www.1nth.com\/post\/prometheus_install\/",
+          "name": "Prometheus install"
         }
     }]
 }
@@ -62,15 +55,15 @@ cat /opt/nexus-data/admin.password
   "author": {
     "name" : "Myki"
   },
-  "headline": "nexus3_install",
-  "description" : "本文用的docker方式部署\ndocker pull sonatype\/nexus3:3.16.0 mkdir \/opt\/nexus-data chown -R 200 \/opt\/nexus-data docker run -d --name nexus --ulimit nofile=65536:65536 -p 8081:8081 -v \/opt\/nexus-data:\/nexus-data sonatype\/nexus3:3.16.0 cat \/opt\/nexus-data\/admin.password ",
+  "headline": "prometheus_install",
+  "description" : "",
   "inLanguage" : "zh",
-  "wordCount":  116 ,
-  "datePublished" : "2019-12-12T11:27:22",
-  "dateModified" : "2019-12-12T11:27:22",
+  "wordCount":  74 ,
+  "datePublished" : "2019-12-18T11:27:22",
+  "dateModified" : "2019-12-18T11:27:22",
   "image" : "https:\/\/www.1nth.com\/img\/avatar-icon.png",
   "keywords" : [ "" ],
-  "mainEntityOfPage" : "https:\/\/www.1nth.com\/post\/nexus3_install\/",
+  "mainEntityOfPage" : "https:\/\/www.1nth.com\/post\/prometheus_install\/",
   "publisher" : {
     "@type": "Organization",
     "name" : "https:\/\/www.1nth.com\/",
@@ -84,25 +77,13 @@ cat /opt/nexus-data/admin.password
 }
 </script>
 
-<meta property="og:title" content="nexus3_install" />
-<meta property="og:description" content="本文用的docker方式部署
-docker pull sonatype/nexus3:3.16.0
-mkdir /opt/nexus-data
-chown -R  200 /opt/nexus-data
-docker run -d --name nexus --ulimit nofile=65536:65536 -p 8081:8081 -v /opt/nexus-data:/nexus-data sonatype/nexus3:3.16.0
-cat /opt/nexus-data/admin.password 
-">
+<meta property="og:title" content="prometheus_install" />
 <meta property="og:image" content="https://www.1nth.com/img/avatar-icon.png" />
-<meta property="og:url" content="https://www.1nth.com/post/nexus3_install/" />
+<meta property="og:url" content="https://www.1nth.com/post/prometheus_install/" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Myki的博客" />
 
-  <meta name="twitter:title" content="nexus3_install" />
-  <meta name="twitter:description" content="本文用的docker方式部署
-docker pull sonatype/nexus3:3.16.0
-mkdir /opt/nexus-data
-chown -R  200 /opt/nexus-data
-docker run -d --name nexus --ulimit nofile=65536:65536 -p 8081:8081 -v /opt/nexus-data:/nexus-data …">
+  <meta name="twitter:title" content="prometheus_install" />
   <meta name="twitter:image" content="https://www.1nth.com/img/avatar-icon.png" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="@MykiFan" />
@@ -268,7 +249,7 @@ if (!doNotTrack) {
           <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             <div class="post-heading">
               
-                <h1>nexus3_install</h1>
+                <h1>prometheus_install</h1>
               
               
               
@@ -282,7 +263,7 @@ if (!doNotTrack) {
     &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;1&nbsp;
   
   
-    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;116&nbsp;
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;74&nbsp;
   
   
     
@@ -307,68 +288,28 @@ if (!doNotTrack) {
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <article role="main" class="blog-post">
-        <p>本文用的docker方式部署</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">docker pull sonatype/nexus3:3.16.0
-mkdir /opt/nexus-data
-chown -R  <span style="color:#bd93f9">200</span> /opt/nexus-data
-docker run -d --name nexus --ulimit <span style="color:#8be9fd;font-style:italic">nofile</span><span style="color:#ff79c6">=</span>65536:65536 -p 8081:8081 -v /opt/nexus-data:/nexus-data sonatype/nexus3:3.16.0
-cat /opt/nexus-data/admin.password 
-</code></pre></div><p>yum仓库如下配置</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#6272a4">#yum-nexus</span>
-vi /etc/yum.repos.d/CentOS-Nexus.repo
-<span style="color:#ff79c6">[</span>base<span style="color:#ff79c6">]</span>
-<span style="color:#8be9fd;font-style:italic">name</span><span style="color:#ff79c6">=</span>CentOS-<span style="color:#8be9fd;font-style:italic">$releasever</span> - Base - mirrors.aliyun.com
-<span style="color:#6272a4">#failovermethod=priority</span>
-<span style="color:#8be9fd;font-style:italic">baseurl</span><span style="color:#ff79c6">=</span>http://192.168.1.192:8081/repository/centos/<span style="color:#8be9fd;font-style:italic">$releasever</span>/os/<span style="color:#8be9fd;font-style:italic">$basearch</span>/
-<span style="color:#8be9fd;font-style:italic">enabled</span><span style="color:#ff79c6">=</span><span style="color:#bd93f9">1</span>
-<span style="color:#8be9fd;font-style:italic">gpgcheck</span><span style="color:#ff79c6">=</span><span style="color:#bd93f9">0</span>
-<span style="color:#8be9fd;font-style:italic">gpgkey</span><span style="color:#ff79c6">=</span>http://192.168.1.192:8081/repository/centos/RPM-GPG-KEY-CentOS-7
- 
-<span style="color:#6272a4">#released updates</span> 
-<span style="color:#ff79c6">[</span>updates<span style="color:#ff79c6">]</span>
-<span style="color:#8be9fd;font-style:italic">name</span><span style="color:#ff79c6">=</span>CentOS-<span style="color:#8be9fd;font-style:italic">$releasever</span> - Updates - mirrors.aliyun.com
-<span style="color:#8be9fd;font-style:italic">failovermethod</span><span style="color:#ff79c6">=</span>priority
-<span style="color:#8be9fd;font-style:italic">baseurl</span><span style="color:#ff79c6">=</span>http://192.168.1.192:8081/repository/centos/<span style="color:#8be9fd;font-style:italic">$releasever</span>/updates/<span style="color:#8be9fd;font-style:italic">$basearch</span>/
-<span style="color:#8be9fd;font-style:italic">enabled</span><span style="color:#ff79c6">=</span><span style="color:#bd93f9">1</span>
-<span style="color:#8be9fd;font-style:italic">gpgcheck</span><span style="color:#ff79c6">=</span><span style="color:#bd93f9">0</span>
-<span style="color:#8be9fd;font-style:italic">gpgkey</span><span style="color:#ff79c6">=</span>http://192.168.1.192:8081/repository/centos/RPM-GPG-KEY-CentOS-7
- 
-<span style="color:#6272a4">#additional packages that may be useful</span>
-<span style="color:#ff79c6">[</span>extras<span style="color:#ff79c6">]</span>
-<span style="color:#8be9fd;font-style:italic">name</span><span style="color:#ff79c6">=</span>CentOS-<span style="color:#8be9fd;font-style:italic">$releasever</span> - Extras - mirrors.aliyun.com
-<span style="color:#8be9fd;font-style:italic">failovermethod</span><span style="color:#ff79c6">=</span>priority
-<span style="color:#8be9fd;font-style:italic">baseurl</span><span style="color:#ff79c6">=</span>http://192.168.1.192:8081/repository/centos/<span style="color:#8be9fd;font-style:italic">$releasever</span>/extras/<span style="color:#8be9fd;font-style:italic">$basearch</span>/
-<span style="color:#8be9fd;font-style:italic">enabled</span><span style="color:#ff79c6">=</span><span style="color:#bd93f9">1</span>
-<span style="color:#8be9fd;font-style:italic">gpgcheck</span><span style="color:#ff79c6">=</span><span style="color:#bd93f9">0</span>
-<span style="color:#8be9fd;font-style:italic">gpgkey</span><span style="color:#ff79c6">=</span>http://192.168.1.192:8081/repository/centos/RPM-GPG-KEY-CentOS-7
- 
-<span style="color:#6272a4">#additional packages that extend functionality of existing packages</span>
-<span style="color:#ff79c6">[</span>centosplus<span style="color:#ff79c6">]</span>
-<span style="color:#8be9fd;font-style:italic">name</span><span style="color:#ff79c6">=</span>CentOS-<span style="color:#8be9fd;font-style:italic">$releasever</span> - Plus - mirrors.aliyun.com
-<span style="color:#8be9fd;font-style:italic">failovermethod</span><span style="color:#ff79c6">=</span>priority
-<span style="color:#8be9fd;font-style:italic">baseurl</span><span style="color:#ff79c6">=</span>http://192.168.1.192:8081/repository/centos/<span style="color:#8be9fd;font-style:italic">$releasever</span>/centosplus/<span style="color:#8be9fd;font-style:italic">$basearch</span>/
-<span style="color:#8be9fd;font-style:italic">enabled</span><span style="color:#ff79c6">=</span><span style="color:#bd93f9">1</span>
-<span style="color:#8be9fd;font-style:italic">gpgcheck</span><span style="color:#ff79c6">=</span><span style="color:#bd93f9">0</span>
-<span style="color:#8be9fd;font-style:italic">gpgkey</span><span style="color:#ff79c6">=</span>http://192.168.1.192:8081/repository/centos/RPM-GPG-KEY-CentOS-7
- 
-<span style="color:#6272a4">#contrib - packages by Centos Users</span>
-<span style="color:#ff79c6">[</span>contrib<span style="color:#ff79c6">]</span>
-<span style="color:#8be9fd;font-style:italic">name</span><span style="color:#ff79c6">=</span>CentOS-<span style="color:#8be9fd;font-style:italic">$releasever</span> - Contrib - mirrors.aliyun.com
-<span style="color:#8be9fd;font-style:italic">baseurl</span><span style="color:#ff79c6">=</span>http://192.168.1.192:8081/repository/centos/<span style="color:#8be9fd;font-style:italic">$releasever</span>/contrib/<span style="color:#8be9fd;font-style:italic">$basearch</span>/
-<span style="color:#8be9fd;font-style:italic">enabled</span><span style="color:#ff79c6">=</span><span style="color:#bd93f9">0</span>
-<span style="color:#8be9fd;font-style:italic">gpgcheck</span><span style="color:#ff79c6">=</span><span style="color:#bd93f9">0</span>
-<span style="color:#8be9fd;font-style:italic">gpgkey</span><span style="color:#ff79c6">=</span>http://192.168.1.192:8081/repository/centos/RPM-GPG-KEY-CentOS-7
+        <p>#安装教程如下</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">git clone https://github.com/coreos/kube-prometheus.git --depth<span style="color:#ff79c6">=</span>
+<span style="color:#6272a4">#替换镜像地址为国内微软仓库</span> 
+cp -r kube-prometheus<span style="color:#ff79c6">{</span>,.bak<span style="color:#ff79c6">}</span> 
+cat kube-prometheus/manifests/* | grep image: 
+sed -i <span style="color:#f1fa8c">&#39;s#quay.io#quay.azk8s.cn#g&#39;</span> kube-prometheus/manifests/* 
+sed -i <span style="color:#f1fa8c">&#39;s#k8s.gcr.io#gcr.azk8s.cn/google_containers#g&#39;</span> kubeprometheus/manifests/* 
 
-
-vi /etc/yum.repos.d/epel-nexus.repo
-<span style="color:#ff79c6">[</span>nexus_epel<span style="color:#ff79c6">]</span>
-<span style="color:#8be9fd;font-style:italic">name</span><span style="color:#ff79c6">=</span>Nexus Epel Repository
-<span style="color:#8be9fd;font-style:italic">baseurl</span><span style="color:#ff79c6">=</span>http://192.168.1.192:8081/repository/epel/<span style="color:#8be9fd;font-style:italic">$releasever</span>/<span style="color:#8be9fd;font-style:italic">$basearch</span>/
-        http://mirrors.aliyun.com/epel/7/<span style="color:#8be9fd;font-style:italic">$basearch</span>
-<span style="color:#8be9fd;font-style:italic">failovermethod</span><span style="color:#ff79c6">=</span>priority
-<span style="color:#8be9fd;font-style:italic">enabled</span><span style="color:#ff79c6">=</span><span style="color:#bd93f9">1</span>
-<span style="color:#8be9fd;font-style:italic">gpgcheck</span><span style="color:#ff79c6">=</span><span style="color:#bd93f9">0</span>
-<span style="color:#8be9fd;font-style:italic">gpgkey</span><span style="color:#ff79c6">=</span>file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
+<span style="color:#8be9fd;font-style:italic">cd</span> /root/kube-prometheus/manifests/setup
+kubectl apply -f .
+<span style="color:#8be9fd;font-style:italic">cd</span> /root/kube-prometheus/manifests
+kubectl apply -f .
+kubectl get crd |grep coreos
+kubectl get pods -n monitoring
+kubectl get svc -n monitoring
+kubectl edit svc grafana -n monitoring
+<span style="color:#6272a4">#ClusterIP修改成NodePort</span>
+kubectl edit svc prometheus-k8s -n monitoring
+<span style="color:#6272a4">#ClusterIP修改成NodePort</span>
+<span style="color:#6272a4">#导入模版</span>
+点+号 &gt; Import &gt; https://grafana.com/grafana/dashboards/315
+点+号 &gt; Import &gt; https://grafana.com/grafana/dashboards/8919
 </code></pre></div>
 
         
@@ -383,42 +324,42 @@ vi /etc/yum.repos.d/epel-nexus.repo
     <ul class="share">
       
       <li>
-        <a href="//twitter.com/share?url=https%3a%2f%2fwww.1nth.com%2fpost%2fnexus3_install%2f&amp;text=nexus3_install&amp;via=MykiFan" target="_blank" title="Share on Twitter">
+        <a href="//twitter.com/share?url=https%3a%2f%2fwww.1nth.com%2fpost%2fprometheus_install%2f&amp;text=prometheus_install&amp;via=MykiFan" target="_blank" title="Share on Twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
   
       
       <li>
-        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fwww.1nth.com%2fpost%2fnexus3_install%2f" target="_blank" title="Share on Facebook">
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fwww.1nth.com%2fpost%2fprometheus_install%2f" target="_blank" title="Share on Facebook">
           <i class="fab fa-facebook"></i>
         </a>
       </li>
   
       
       <li>
-        <a href="//reddit.com/submit?url=https%3a%2f%2fwww.1nth.com%2fpost%2fnexus3_install%2f&amp;title=nexus3_install" target="_blank" title="Share on Reddit">
+        <a href="//reddit.com/submit?url=https%3a%2f%2fwww.1nth.com%2fpost%2fprometheus_install%2f&amp;title=prometheus_install" target="_blank" title="Share on Reddit">
           <i class="fab fa-reddit"></i>
         </a>
       </li>
   
       
       <li>
-        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fwww.1nth.com%2fpost%2fnexus3_install%2f&amp;title=nexus3_install" target="_blank" title="Share on LinkedIn">
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fwww.1nth.com%2fpost%2fprometheus_install%2f&amp;title=prometheus_install" target="_blank" title="Share on LinkedIn">
           <i class="fab fa-linkedin"></i>
         </a>
       </li>
   
       
       <li>
-        <a href="//www.stumbleupon.com/submit?url=https%3a%2f%2fwww.1nth.com%2fpost%2fnexus3_install%2f&amp;title=nexus3_install" target="_blank" title="Share on StumbleUpon">
+        <a href="//www.stumbleupon.com/submit?url=https%3a%2f%2fwww.1nth.com%2fpost%2fprometheus_install%2f&amp;title=prometheus_install" target="_blank" title="Share on StumbleUpon">
           <i class="fab fa-stumbleupon"></i>
         </a>
       </li>
   
       
       <li>
-        <a href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fwww.1nth.com%2fpost%2fnexus3_install%2f&amp;description=nexus3_install" target="_blank" title="Share on Pinterest">
+        <a href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fwww.1nth.com%2fpost%2fprometheus_install%2f&amp;description=prometheus_install" target="_blank" title="Share on Pinterest">
           <i class="fab fa-pinterest"></i>
         </a>
       </li>
@@ -441,12 +382,12 @@ vi /etc/yum.repos.d/epel-nexus.repo
         <ul class="pager blog-pager">
           
             <li class="previous">
-              <a href="https://www.1nth.com/post/esxi_install/" data-toggle="tooltip" data-placement="top" title="prometheus_install">&larr; </a>
+              <a href="https://www.1nth.com/post/hugo_install/" data-toggle="tooltip" data-placement="top" title="Hugo安装测试（未完待续）">&larr; </a>
             </li>
           
           
             <li class="next">
-              <a href="https://www.1nth.com/post/hugo_install/" data-toggle="tooltip" data-placement="top" title="Hugo安装测试（未完待续）"> &rarr;</a>
+              <a href="https://www.1nth.com/post/k8s_1.17.0_install/" data-toggle="tooltip" data-placement="top" title="k8s_1.17.0安装"> &rarr;</a>
             </li>
           
         </ul>

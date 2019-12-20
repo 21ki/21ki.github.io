@@ -23,6 +23,15 @@
     </item>
     
     <item>
+      <title>prometheus_install</title>
+      <link>https://www.1nth.com/post/prometheus_install/</link>
+      <pubDate>Wed, 18 Dec 2019 11:27:22 +0800</pubDate>
+      <author>21kixc@gmail.com (Myki)</author>
+      <guid>https://www.1nth.com/post/prometheus_install/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Hugo安装测试（未完待续）</title>
       <link>https://www.1nth.com/post/hugo_install/</link>
       <pubDate>Thu, 12 Dec 2019 11:27:22 +0800</pubDate>
@@ -51,6 +60,29 @@ mkdir /opt/nexus-data
 chown -R  &lt;span style=&#34;color:#bd93f9&#34;&gt;200&lt;/span&gt; /opt/nexus-data
 docker run -d --name nexus --ulimit &lt;span style=&#34;color:#8be9fd;font-style:italic&#34;&gt;nofile&lt;/span&gt;&lt;span style=&#34;color:#ff79c6&#34;&gt;=&lt;/span&gt;65536:65536 -p 8081:8081 -v /opt/nexus-data:/nexus-data sonatype/nexus3:3.16.0
 cat /opt/nexus-data/admin.password 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>prometheus_install</title>
+      <link>https://www.1nth.com/post/esxi_install/</link>
+      <pubDate>Sun, 01 Dec 2019 11:27:22 +0800</pubDate>
+      <author>21kixc@gmail.com (Myki)</author>
+      <guid>https://www.1nth.com/post/esxi_install/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>prometheus_install</title>
+      <link>https://www.1nth.com/post/vos4.0_insall/</link>
+      <pubDate>Mon, 18 Nov 2019 11:27:22 +0800</pubDate>
+      <author>21kixc@gmail.com (Myki)</author>
+      <guid>https://www.1nth.com/post/vos4.0_insall/</guid>
+      <description>&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;color:#6272a4&#34;&gt;#linux不记录痕迹&lt;/span&gt;
+&lt;span style=&#34;color:#8be9fd;font-style:italic&#34;&gt;unset&lt;/span&gt; HISTORY HISTFILE HISTSAVE HISTZONE HISTORY HISTLOG
+&lt;span style=&#34;color:#8be9fd;font-style:italic&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#8be9fd;font-style:italic&#34;&gt;HISTFILE&lt;/span&gt;&lt;span style=&#34;color:#ff79c6&#34;&gt;=&lt;/span&gt;/dev/null
+&lt;span style=&#34;color:#8be9fd;font-style:italic&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#8be9fd;font-style:italic&#34;&gt;HISTSIZE&lt;/span&gt;&lt;span style=&#34;color:#ff79c6&#34;&gt;=&lt;/span&gt;0
+&lt;span style=&#34;color:#8be9fd;font-style:italic&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#8be9fd;font-style:italic&#34;&gt;HISTFILESIZE&lt;/span&gt;&lt;span style=&#34;color:#ff79c6&#34;&gt;=&lt;/span&gt;0
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
