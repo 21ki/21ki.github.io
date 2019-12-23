@@ -25,7 +25,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Myki" /><meta name="description" content="prometheus2.0正式版已经发布了，新增了很多特性，特别是底层存储性能提升了不少：https://prometheus.io/blog/2017/11/08/announcing-prometheus-2-0/。
+<meta name="author" content="Myki" /><meta name="description" content="centos
 " /><meta name="keywords" content="kubernetes, prometheus2, grafana, 升级" />
 
 
@@ -58,22 +58,22 @@
 
 
 <meta property="og:title" content="centos7安装定制 kubernetes安装准备环境" />
-<meta property="og:description" content="prometheus2.0正式版已经发布了，新增了很多特性，特别是底层存储性能提升了不少：https://prometheus.io/blog/2017/11/08/announcing-prometheus-2-0/。" />
+<meta property="og:description" content="centos" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://www.1nth.com/post/centos7_install_optimiz/" />
 <meta property="article:published_time" content="2017-11-22T00:00:00+00:00" />
 <meta property="article:modified_time" content="2019-12-23T03:00:23+08:00" />
 <meta itemprop="name" content="centos7安装定制 kubernetes安装准备环境">
-<meta itemprop="description" content="prometheus2.0正式版已经发布了，新增了很多特性，特别是底层存储性能提升了不少：https://prometheus.io/blog/2017/11/08/announcing-prometheus-2-0/。">
+<meta itemprop="description" content="centos">
 <meta itemprop="datePublished" content="2017-11-22T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-12-23T03:00:23&#43;08:00" />
-<meta itemprop="wordCount" content="824">
+<meta itemprop="wordCount" content="725">
 
 
 
 <meta itemprop="keywords" content="kubernetes,linux,centos," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="centos7安装定制 kubernetes安装准备环境"/>
-<meta name="twitter:description" content="prometheus2.0正式版已经发布了，新增了很多特性，特别是底层存储性能提升了不少：https://prometheus.io/blog/2017/11/08/announcing-prometheus-2-0/。"/>
+<meta name="twitter:description" content="centos"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -149,7 +149,7 @@
 
     
     <div class="post-content">
-      <p><code>prometheus</code>2.0正式版已经发布了，新增了很多特性，特别是底层存储性能提升了不少：<a href="https://prometheus.io/blog/2017/11/08/announcing-prometheus-2-0/">https://prometheus.io/blog/2017/11/08/announcing-prometheus-2-0/</a>。</p>
+      <p><code>centos</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">  1
@@ -299,6 +299,7 @@
 </span><span class="lnt">145
 </span><span class="lnt">146
 </span><span class="lnt">147
+</span><span class="lnt">148
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-shell" data-lang="shell"><span class="cp">#!//usr/bin/env bash
@@ -427,6 +428,7 @@ yum -y install epel-release
 mkdir ~/.ssh
 chmod <span class="m">700</span> ~/.ssh
 cat <span class="s">&lt;&lt;EOF&gt;&gt; ~/.ssh/authorized_keys
+</span><span class="s">#放入自己的key
 </span><span class="s">ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAmtqD0IdgMQbd9lBlQsrDyax8q7xPvvS+Cver6lp6cMfhi4vBQX8olf+aE7eUqjQIYE1DXQ4QNjqh42qkdY2AZt3PaTB44CG8BprSsqbcARHlRmIMqx5o8d7I9dqHPb4gPjPScH9PY1kKJ6MQiJnoUawIXIyQD5vRabaJ5Xd9Lky/oTo3pyofLiaaINZpjJWX6LheoxWojziloJ0VGlKFKppS2N8oMnxyxpwE7y1tGW1taBsk2UcPFQ94qpkieiix1XfP6BbJiV/5p60ukIUwKPVpnNxYf97LOhk4W6JmngZLLcI3Ueuvzvxi2JruKplQPUgRcmGLLZQ3JS8qkF/DTQ== root@localhost
 </span><span class="s">EOF</span>
 chmod <span class="m">644</span> ~/.ssh/authorized_keys
