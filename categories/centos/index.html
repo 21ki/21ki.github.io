@@ -2,17 +2,20 @@
 <html lang="zh-cn">
 <head>
 	
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154483127-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-154483127-1');
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-154483127-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
 </script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Myki的博客</title>
+  <title>centos · Myki的博客</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -44,9 +47,9 @@
 <meta name="generator" content="Hugo 0.61.0 with theme even" />
 
 
-<link rel="canonical" href="https://www.1nth.com/" />
-  <link href="https://www.1nth.com/index.xml" rel="alternate" type="application/rss+xml" title="Myki的博客" />
-  <link href="https://www.1nth.com/index.xml" rel="feed" type="application/rss+xml" title="Myki的博客" />
+<link rel="canonical" href="https://www.1nth.com/categories/centos/" />
+  <link href="https://www.1nth.com/categories/centos/index.xml" rel="alternate" type="application/rss+xml" title="Myki的博客" />
+  <link href="https://www.1nth.com/categories/centos/index.xml" rel="feed" type="application/rss+xml" title="Myki的博客" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -58,14 +61,14 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="" />
+<meta property="og:title" content="centos" />
 <meta property="og:description" content="Hugo theme even example site." />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://www.1nth.com/" />
+<meta property="og:url" content="https://www.1nth.com/categories/centos/" />
 <meta property="og:updated_time" content="2019-12-23T03:00:23+08:00" />
-<meta itemprop="name" content="">
+<meta itemprop="name" content="centos">
 <meta itemprop="description" content="Hugo theme even example site."><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content=""/>
+<meta name="twitter:title" content="centos"/>
 <meta name="twitter:description" content="Hugo theme even example site."/>
 
 <!--[if lte IE 9]>
@@ -126,134 +129,27 @@
     <main id="main" class="main">
       <div class="content-wrapper">
         <div id="content" class="content">
-          <section id="posts" class="posts">
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/centos7_install_optimiz/">centos7安装定制 kubernetes安装准备环境</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2019-12-23 </span>
-      <div class="post-category">
-          <a href="/categories/centos/"> centos </a>
-          </div>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p><code>prometheus</code>2.0正式版已经发布了，新增了很多特性，特别是底层存储性能提升了不少：<a href="https://prometheus.io/blog/2017/11/08/announcing-prometheus-2-0/">https://prometheus.io/blog/2017/11/08/announcing-prometheus-2-0/</a>。</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/centos7_install_optimiz/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
+          <section id="archive" class="archive">
+  <div class="archive-title category">
+        <h2 class="archive-name">centos</h2>
+      </div>
 
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/harbor_install/">harbor docker私有库安装</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2019-12-20 </span>
-      
+  <div class="archive-post">
+      <span class="archive-post-time">
+        2019-12-23
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/centos7_install_optimiz/" class="archive-post-link">
+          centos7安装定制 kubernetes安装准备环境
+        </a>
+      </span>
     </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>本文用的docker方式部署</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/harbor_install/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
+</section>
 
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/k8s_1.17.0_install/">kubernetes 1.17 安装</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2019-12-19 </span>
-      
-    </div>
-  </header>
+<nav class="pagination">
   
-  <div class="post-content">
-    <div class="post-summary">
-      <p>centos 7.7  kubernetes 1.17.0 安装</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/k8s_1.17.0_install/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/prometheus_install/">prometheus 安装</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2019-12-18 </span>
-      
-    </div>
-  </header>
   
-  <div class="post-content">
-    <div class="post-summary">
-      
-    </div>
-    <div class="read-more">
-      <a href="/post/prometheus_install/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/hugo_install/">Hugo安装测试（未完待续）</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2019-12-12 </span>
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>#安装教程如下</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">hugo new site blog
-<span class="nb">cd</span> blog/themes/
-<span class="c1">#参考阳明博客直接复制主题</span>
-git clone https://github.com/cnych/qikqiak.com.git
-cp -dprf qikqiak.com/themes/beautifulhugo .
-cp qikqiak.com/config.toml ../
-<span class="nb">cd</span> ..
-</code></pre></td></tr></table>
-</div>
-</div>
-    </div>
-    <div class="read-more">
-      <a href="/post/hugo_install/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    </section>
-  
-  <nav class="pagination">
-    
-    <a class="next" href="/page/2/">
-        <span class="next-text">下一页</span>
-        <i class="iconfont icon-right"></i>
-      </a>
-  </nav>
+</nav>
         </div>
         
 

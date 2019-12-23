@@ -6,17 +6,17 @@
     <description>Recent content on Myki的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 23 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 23 Dec 2019 03:00:23 +0800</lastBuildDate>
     
 	<atom:link href="https://www.1nth.com/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>centos7安装定制 kubernetes安装准备环境</title>
-      <link>https://www.1nth.com/post/update-prometheus-2-in-kubernetes/</link>
-      <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
+      <link>https://www.1nth.com/post/centos7_install_optimiz/</link>
+      <pubDate>Mon, 23 Dec 2019 03:00:23 +0800</pubDate>
       
-      <guid>https://www.1nth.com/post/update-prometheus-2-in-kubernetes/</guid>
+      <guid>https://www.1nth.com/post/centos7_install_optimiz/</guid>
       <description>&lt;p&gt;&lt;code&gt;prometheus&lt;/code&gt;2.0正式版已经发布了，新增了很多特性，特别是底层存储性能提升了不少：&lt;a href=&#34;https://prometheus.io/blog/2017/11/08/announcing-prometheus-2-0/&#34;&gt;https://prometheus.io/blog/2017/11/08/announcing-prometheus-2-0/&lt;/a&gt;。&lt;/p&gt;</description>
     </item>
     
@@ -144,27 +144,6 @@ cat /opt/nexus-data/admin.password
       
       <guid>https://www.1nth.com/post/aliyun-install-ss/</guid>
       <description>1 2 3 4 5 6 7 8 9 wget http://update.aegis.aliyun.com/download/uninstall.sh chmod +x uninstall.sh ./uninstall.sh wget http://update.aegis.aliyun.com/download/quartz_uninstall.sh chmod +x quartz_uninstall.sh ./quartz_uninstall.sh sudo rm -rf /usr/local/aegis sudo rm /usr/sbin/aliyun-service sudo rm /lib/systemd/system/aliyun.service</description>
-    </item>
-    
-    <item>
-      <title>Syntax Highlighting</title>
-      <link>https://www.1nth.com/post/syntax-highlighting/</link>
-      <pubDate>Tue, 30 Aug 2011 16:01:23 +0800</pubDate>
-      
-      <guid>https://www.1nth.com/post/syntax-highlighting/</guid>
-      <description>&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;kd&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;helloWorld&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-  &lt;span class=&#34;nx&#34;&gt;alert&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;Hello, World!&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;</description>
     </item>
     
   </channel>
