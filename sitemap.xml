@@ -64,6 +64,13 @@
   </url>
   
   <url>
+    <loc>https://www.1nth.com/post/aliyun-install-ss/</loc>
+    <lastmod>2019-11-18T11:27:22+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://www.1nth.com/categories/</loc>
     <lastmod>2018-11-05T16:01:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -78,14 +85,14 @@
   </url>
   
   <url>
-    <loc>https://www.1nth.com/categories/syntax-highlighting/</loc>
+    <loc>https://www.1nth.com/tags/syntax-highlighting/</loc>
     <lastmod>2018-11-05T16:01:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://www.1nth.com/tags/syntax-highlighting/</loc>
+    <loc>https://www.1nth.com/categories/syntax-highlighting/</loc>
     <lastmod>2018-11-05T16:01:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>

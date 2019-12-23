@@ -129,6 +129,15 @@ cat /opt/nexus-data/admin.password
     </item>
     
     <item>
+      <title>国际版阿里云安装ss 卸载云盾和安骑士</title>
+      <link>https://www.1nth.com/post/aliyun-install-ss/</link>
+      <pubDate>Mon, 18 Nov 2019 11:27:22 +0800</pubDate>
+      
+      <guid>https://www.1nth.com/post/aliyun-install-ss/</guid>
+      <description>1 2 3 4 5 6 7 8 9 wget http://update.aegis.aliyun.com/download/uninstall.sh chmod +x uninstall.sh ./uninstall.sh wget http://update.aegis.aliyun.com/download/quartz_uninstall.sh chmod +x quartz_uninstall.sh ./quartz_uninstall.sh sudo rm -rf /usr/local/aegis sudo rm /usr/sbin/aliyun-service sudo rm /lib/systemd/system/aliyun.service</description>
+    </item>
+    
+    <item>
       <title>Syntax Highlighting</title>
       <link>https://www.1nth.com/post/syntax-highlighting/</link>
       <pubDate>Tue, 30 Aug 2011 16:01:23 +0800</pubDate>
