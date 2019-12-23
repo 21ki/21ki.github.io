@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154483127-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154483127-1');
+</script>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>centos7安装定制 kubernetes安装准备环境 - Myki的博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Myki" /><meta name="description" content="prometheus2.0正式版已经发布了，新增了很多特性，特别是底层存储性能提升了不少：https://prometheus.io/blog/2017/11/08/announcing-prometheus-2-0/。
+" /><meta name="keywords" content="kubernetes, prometheus2, grafana, 升级" />
+
+
+
+
+
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-2427629508597494",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+<meta name="generator" content="Hugo 0.61.0 with theme even" />
+
+
+<link rel="canonical" href="https://www.1nth.com/post/update-prometheus-2-in-kubernetes/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="centos7安装定制 kubernetes安装准备环境" />
+<meta property="og:description" content="prometheus2.0正式版已经发布了，新增了很多特性，特别是底层存储性能提升了不少：https://prometheus.io/blog/2017/11/08/announcing-prometheus-2-0/。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.1nth.com/post/update-prometheus-2-in-kubernetes/" />
+<meta property="article:published_time" content="2017-11-22T00:00:00+00:00" />
+<meta property="article:modified_time" content="2019-12-23T00:00:00+00:00" />
+<meta itemprop="name" content="centos7安装定制 kubernetes安装准备环境">
+<meta itemprop="description" content="prometheus2.0正式版已经发布了，新增了很多特性，特别是底层存储性能提升了不少：https://prometheus.io/blog/2017/11/08/announcing-prometheus-2-0/。">
+<meta itemprop="datePublished" content="2017-11-22T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-12-23T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="824">
+
+
+
+<meta itemprop="keywords" content="kubernetes,linux,centos," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="centos7安装定制 kubernetes安装准备环境"/>
+<meta name="twitter:description" content="prometheus2.0正式版已经发布了，新增了很多特性，特别是底层存储性能提升了不少：https://prometheus.io/blog/2017/11/08/announcing-prometheus-2-0/。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">centos7安装定制 kubernetes安装准备环境</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-12-23 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents"></nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p><code>prometheus</code>2.0正式版已经发布了，新增了很多特性，特别是底层存储性能提升了不少：<a href="https://prometheus.io/blog/2017/11/08/announcing-prometheus-2-0/">https://prometheus.io/blog/2017/11/08/announcing-prometheus-2-0/</a>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="cp">#!//usr/bin/env bash
+</span><span class="cp"></span><span class="c1">#禁用root登陆</span>
+useradd cheche
+sed -i <span class="s1">&#39;/PermitRootLogin/cPermitRootLogin no&#39;</span> /etc/ssh/sshd_config
+
+<span class="c1">#服务优化</span>
+sudo systemctl stop firewalld.service
+sudo systemctl disable firewalld.service
+setenforce 0
+sudo sed -i <span class="s1">&#39;/^SELINUX=/cSELINUX=disabled&#39;</span> /etc/selinux/config
+sudo systemctl stop iptables.service
+sudo systemctl disable iptables.service
+sudo systemctl disable auditd.service
+sudo systemctl disable microcode.service
+sudo systemctl disable NetworkManager.service
+sudo systemctl disable postfix.service
+sudo systemctl disable tuned.service
+
+<span class="c1">#优化内核参数 可参考https://blog.csdn.net/fangoooooooooooo/article/details/78091959</span>
+sudo <span class="se">\c</span>p /etc/sysctl.conf /etc/sysctl.conf.<span class="sb">`</span>date +<span class="s2">&#34;%Y-%m-%d_%H-%M-%S&#34;</span><span class="sb">`</span>
+sudo tee /etc/sysctl.conf <span class="s">&lt;&lt;-&#39;EOF&#39;
+</span><span class="s">kernel.printk = 4 4 1 7 
+</span><span class="s">kernel.panic = 10 
+</span><span class="s">kernel.sysrq = 0 
+</span><span class="s">kernel.shmmax = 4294967296 
+</span><span class="s">kernel.shmall = 4194304 
+</span><span class="s">kernel.core_uses_pid = 1 
+</span><span class="s">kernel.msgmnb = 65536 
+</span><span class="s">kernel.msgmax = 65536 
+</span><span class="s">vm.swappiness = 20 
+</span><span class="s">vm.dirty_ratio = 80 
+</span><span class="s">vm.dirty_background_ratio = 5 
+</span><span class="s">fs.file-max = 2097152 
+</span><span class="s">net.core.netdev_max_backlog = 262144 
+</span><span class="s">net.core.rmem_default = 31457280 
+</span><span class="s">net.core.rmem_max = 67108864 
+</span><span class="s">net.core.wmem_default = 31457280 
+</span><span class="s">net.core.wmem_max = 67108864 
+</span><span class="s">net.core.somaxconn = 65535 
+</span><span class="s">net.core.optmem_max = 25165824 
+</span><span class="s">net.ipv4.neigh.default.gc_thresh1 = 4096 
+</span><span class="s">net.ipv4.neigh.default.gc_thresh2 = 8192 
+</span><span class="s">net.ipv4.neigh.default.gc_thresh3 = 16384 
+</span><span class="s">net.ipv4.neigh.default.gc_interval = 5 
+</span><span class="s">net.ipv4.neigh.default.gc_stale_time = 120 
+</span><span class="s">net.netfilter.nf_conntrack_max = 10000000 
+</span><span class="s">net.netfilter.nf_conntrack_tcp_loose = 0 
+</span><span class="s">net.netfilter.nf_conntrack_tcp_timeout_established = 1800 
+</span><span class="s">net.netfilter.nf_conntrack_tcp_timeout_close = 10 
+</span><span class="s">net.netfilter.nf_conntrack_tcp_timeout_close_wait = 10 
+</span><span class="s">net.netfilter.nf_conntrack_tcp_timeout_fin_wait = 20 
+</span><span class="s">net.netfilter.nf_conntrack_tcp_timeout_last_ack = 20 
+</span><span class="s">net.netfilter.nf_conntrack_tcp_timeout_syn_recv = 20 
+</span><span class="s">net.netfilter.nf_conntrack_tcp_timeout_syn_sent = 20 
+</span><span class="s">net.netfilter.nf_conntrack_tcp_timeout_time_wait = 10 
+</span><span class="s">net.ipv6.conf.all.disable_ipv6 = 1
+</span><span class="s">net.ipv6.conf.default.disable_ipv6 = 1
+</span><span class="s">net.ipv4.tcp_slow_start_after_idle = 0 
+</span><span class="s">net.ipv4.ip_local_port_range = 1024 65000 
+</span><span class="s">net.ipv4.ip_no_pmtu_disc = 1 
+</span><span class="s">net.ipv4.route.flush = 1 
+</span><span class="s">net.ipv4.route.max_size = 8048576 
+</span><span class="s">net.ipv4.icmp_echo_ignore_broadcasts = 1 
+</span><span class="s">net.ipv4.icmp_ignore_bogus_error_responses = 1 
+</span><span class="s">net.ipv4.tcp_congestion_control = htcp 
+</span><span class="s">net.ipv4.tcp_mem = 65536 131072 262144 
+</span><span class="s">net.ipv4.udp_mem = 65536 131072 262144 
+</span><span class="s">net.ipv4.tcp_rmem = 4096 87380 33554432 
+</span><span class="s">net.ipv4.udp_rmem_min = 16384 
+</span><span class="s">net.ipv4.tcp_wmem = 4096 87380 33554432 
+</span><span class="s">net.ipv4.udp_wmem_min = 16384 
+</span><span class="s">net.ipv4.tcp_max_tw_buckets = 1440000 
+</span><span class="s">net.ipv4.tcp_tw_recycle = 0 
+</span><span class="s">net.ipv4.tcp_tw_reuse = 1 
+</span><span class="s">net.ipv4.tcp_max_orphans = 400000 
+</span><span class="s">net.ipv4.tcp_window_scaling = 1 
+</span><span class="s">net.ipv4.tcp_rfc1337 = 1 
+</span><span class="s">net.ipv4.tcp_syncookies = 1 
+</span><span class="s">net.ipv4.tcp_synack_retries = 1 
+</span><span class="s">net.ipv4.tcp_syn_retries = 2 
+</span><span class="s">net.ipv4.tcp_max_syn_backlog = 16384 
+</span><span class="s">net.ipv4.tcp_timestamps = 1 
+</span><span class="s">net.ipv4.tcp_sack = 1 
+</span><span class="s">net.ipv4.tcp_fack = 1 
+</span><span class="s">net.ipv4.tcp_ecn = 2 
+</span><span class="s">net.ipv4.tcp_fin_timeout = 10 
+</span><span class="s">net.ipv4.tcp_keepalive_time = 600 
+</span><span class="s">net.ipv4.tcp_keepalive_intvl = 60 
+</span><span class="s">net.ipv4.tcp_keepalive_probes = 10 
+</span><span class="s">net.ipv4.tcp_no_metrics_save = 1 
+</span><span class="s">net.ipv4.ip_forward = 1 
+</span><span class="s">net.ipv4.conf.all.accept_redirects = 0 
+</span><span class="s">net.ipv4.conf.all.send_redirects = 0 
+</span><span class="s">net.ipv4.conf.all.accept_source_route = 0 
+</span><span class="s">net.ipv4.conf.all.rp_filter = 1
+</span><span class="s">fs.file-max = 2048000
+</span><span class="s">fs.nr_open = 2048000
+</span><span class="s">fs.aio-max-nr = 1048576
+</span><span class="s">fs.mqueue.msg_default = 10240
+</span><span class="s">fs.mqueue.msg_max = 10240
+</span><span class="s">fs.mqueue.msgsize_default = 8192
+</span><span class="s">fs.mqueue.msgsize_max = 8192
+</span><span class="s">fs.mqueue.queues_max = 256
+</span><span class="s">EOF</span>
+sudo sysctl -p
+
+<span class="c1"># 增加文件描述符限制</span>
+sudo <span class="se">\c</span>p /etc/security/limits.conf /etc/security/limits.conf.<span class="sb">`</span>date +<span class="s2">&#34;%Y-%m-%d_%H-%M-%S&#34;</span><span class="sb">`</span>
+sudo tee /etc/security/limits.conf <span class="s">&lt;&lt;-&#39;EOF&#39;
+</span><span class="s">* soft    nofile  1024000
+</span><span class="s">* hard    nofile  1024000
+</span><span class="s">* soft    nproc   unlimited
+</span><span class="s">* hard    nproc   unlimited
+</span><span class="s">* soft    core    unlimited
+</span><span class="s">* hard    core    unlimited
+</span><span class="s">* soft    memlock unlimited
+</span><span class="s">* hard    memlock unlimited
+</span><span class="s">EOF</span>
+
+<span class="c1">#update repo</span>
+yum -y install epel-release
+
+<span class="c1">#服务器加固</span>
+mkdir ~/.ssh
+chmod <span class="m">700</span> ~/.ssh
+cat <span class="s">&lt;&lt;EOF&gt;&gt; ~/.ssh/authorized_keys
+</span><span class="s">ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAmtqD0IdgMQbd9lBlQsrDyax8q7xPvvS+Cver6lp6cMfhi4vBQX8olf+aE7eUqjQIYE1DXQ4QNjqh42qkdY2AZt3PaTB44CG8BprSsqbcARHlRmIMqx5o8d7I9dqHPb4gPjPScH9PY1kKJ6MQiJnoUawIXIyQD5vRabaJ5Xd9Lky/oTo3pyofLiaaINZpjJWX6LheoxWojziloJ0VGlKFKppS2N8oMnxyxpwE7y1tGW1taBsk2UcPFQ94qpkieiix1XfP6BbJiV/5p60ukIUwKPVpnNxYf97LOhk4W6JmngZLLcI3Ueuvzvxi2JruKplQPUgRcmGLLZQ3JS8qkF/DTQ== root@localhost
+</span><span class="s">EOF</span>
+chmod <span class="m">644</span> ~/.ssh/authorized_keys
+sed -i <span class="s1">&#39;s/^HISTSIZE=1000/HISTSIZE=65535/&#39;</span> /etc/profile
+<span class="c1">#cat &lt;&lt;EOF&gt;&gt; /etc/profile</span>
+<span class="c1">#export PROMPT_COMMAND=&#39;{ msg=\$(history 1|{ read x y;echo \$y; } );logger &#34;[euid=\$(whoami)]&#34;:\$(who am i):[\`pwd\`]&#34;\$msg&#34;;}&#39;</span>
+<span class="c1">#EOF</span>
+<span class="o">[</span> -z <span class="s2">&#34;</span><span class="k">$(</span>grep ^<span class="s1">&#39;export PROMPT_COMMAND=&#39;</span> /etc/bashrc<span class="k">)</span><span class="s2">&#34;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> cat &gt;&gt; /etc/bashrc <span class="s">&lt;&lt; EOF
+</span><span class="s">export PROMPT_COMMAND=&#39;{ msg=\$(history 1 | { read x y; echo \$y; });logger &#34;[euid=\$(whoami)]&#34;:\$(who am i):[\`pwd\`]&#34;\$msg&#34;; }&#39;
+</span><span class="s">EOF</span>
+
+<span class="nb">source</span> /etc/profile
+chattr +a /var/log/messages
+<span class="nb">echo</span> &gt;/var/log/wtmp
+<span class="nb">echo</span> &gt; /var/log/btmp
+<span class="nb">echo</span> &gt; /var/log/lastlog
+<span class="nb">echo</span> &gt; /var/log/secure
+<span class="nb">echo</span> &gt; ~/.bash_history
+<span class="nb">echo</span> &gt; ~/.mysql_history
+<span class="nb">echo</span> &gt; /var/log/messages
+<span class="nb">history</span> -c 
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Myki</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2019-12-23
+        
+    </span>
+  </p>
+  
+  
+</div>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	
+	<ins class="adsbygoogle"
+		style="display:block"
+		data-ad-client="ca-pub-2427629508597494"
+		data-ad-slot="2287897972"
+		data-ad-format="auto"
+		data-full-width-responsive="true"></ins>
+	<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
+
+    
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/kubernetes/">kubernetes</a>
+          <a href="/tags/linux/">linux</a>
+          <a href="/tags/centos/">centos</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/harbor_install/">
+            <span class="next-text nav-default">harbor docker私有库安装</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://www.1nth.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Myki</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154483127-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154483127-1');
+</script>
+
+
+
+
+
+
+</body>
+</html>
