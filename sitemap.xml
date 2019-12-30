@@ -29,14 +29,14 @@
   </url>
   
   <url>
-    <loc>https://www.1nth.com/categories/centos/</loc>
+    <loc>https://www.1nth.com/tags/centos/</loc>
     <lastmod>2019-12-23T03:00:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://www.1nth.com/tags/centos/</loc>
+    <loc>https://www.1nth.com/categories/centos/</loc>
     <lastmod>2019-12-23T03:00:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
