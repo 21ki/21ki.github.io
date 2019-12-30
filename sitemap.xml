@@ -3,8 +3,22 @@
   
   <url>
     <loc>https://www.1nth.com/</loc>
-    <lastmod>2019-12-23T03:00:23+08:00</lastmod>
+    <lastmod>2019-12-30T01:00:00+08:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.1nth.com/post/aliyun_dockerhub_download/</loc>
+    <lastmod>2019-12-30T01:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.1nth.com/post/</loc>
+    <lastmod>2019-12-30T01:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
@@ -15,14 +29,14 @@
   </url>
   
   <url>
-    <loc>https://www.1nth.com/tags/centos/</loc>
+    <loc>https://www.1nth.com/categories/centos/</loc>
     <lastmod>2019-12-23T03:00:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://www.1nth.com/categories/centos/</loc>
+    <loc>https://www.1nth.com/tags/centos/</loc>
     <lastmod>2019-12-23T03:00:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -44,13 +58,6 @@
   
   <url>
     <loc>https://www.1nth.com/tags/linux/</loc>
-    <lastmod>2019-12-23T03:00:23+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.1nth.com/post/</loc>
     <lastmod>2019-12-23T03:00:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>

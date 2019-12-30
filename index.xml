@@ -6,10 +6,20 @@
     <description>Recent content on Myki的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 23 Dec 2019 03:00:23 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 30 Dec 2019 01:00:00 +0800</lastBuildDate>
     
 	<atom:link href="https://www.1nth.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>K8S离线依赖库和镜像制作 阿里云dockerhub docker加速解决被墙问题</title>
+      <link>https://www.1nth.com/post/aliyun_dockerhub_download/</link>
+      <pubDate>Mon, 30 Dec 2019 01:00:00 +0800</pubDate>
+      
+      <guid>https://www.1nth.com/post/aliyun_dockerhub_download/</guid>
+      <description>&lt;h1 id=&#34;github&#34;&gt;github示例如下&lt;/h1&gt;
+&lt;p&gt;&lt;img src=&#34;https://oss.1nth.com/images/k8s-images/k8s-images-kube-apiserver.png&#34; alt=&#34;k8s-images&#34;&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>centos7安装定制 kubernetes安装准备环境</title>
