@@ -2,17 +2,20 @@
 <html lang="zh-cn">
 <head>
 	
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154483127-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-154483127-1');
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-154483127-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
 </script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Myki的博客</title>
+  <title>helm · Myki的博客</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -44,9 +47,9 @@
 <meta name="generator" content="Hugo 0.61.0 with theme even" />
 
 
-<link rel="canonical" href="https://www.1nth.com/" />
-  <link href="https://www.1nth.com/index.xml" rel="alternate" type="application/rss+xml" title="Myki的博客" />
-  <link href="https://www.1nth.com/index.xml" rel="feed" type="application/rss+xml" title="Myki的博客" />
+<link rel="canonical" href="https://www.1nth.com/tags/helm/" />
+  <link href="https://www.1nth.com/tags/helm/index.xml" rel="alternate" type="application/rss+xml" title="Myki的博客" />
+  <link href="https://www.1nth.com/tags/helm/index.xml" rel="feed" type="application/rss+xml" title="Myki的博客" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -58,14 +61,14 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="" />
+<meta property="og:title" content="helm" />
 <meta property="og:description" content="Hugo theme even example site." />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://www.1nth.com/" />
+<meta property="og:url" content="https://www.1nth.com/tags/helm/" />
 <meta property="og:updated_time" content="2020-03-08T09:00:23+08:00" />
-<meta itemprop="name" content="">
+<meta itemprop="name" content="helm">
 <meta itemprop="description" content="Hugo theme even example site."><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content=""/>
+<meta name="twitter:title" content="helm"/>
 <meta name="twitter:description" content="Hugo theme even example site."/>
 
 <!--[if lte IE 9]>
@@ -126,130 +129,27 @@
     <main id="main" class="main">
       <div class="content-wrapper">
         <div id="content" class="content">
-          <section id="posts" class="posts">
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/helm3_install/">helm3 安装使用</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-03-08 </span>
-      <div class="post-category">
-          <a href="/categories/centos/"> centos </a>
-          </div>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <h4 id="helm3-v311"><code>Helm3</code> 版本：v3.1.1</h4>
-<h4 id="kubernetes-v1173">Kubernetes 版本：v1.17.3</h4>
-<h4 id="kubeadm">集群以kubeadm方式安装</h4>
-    </div>
-    <div class="read-more">
-      <a href="/post/helm3_install/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
+          <section id="archive" class="archive">
+  <div class="archive-title tag">
+        <h2 class="archive-name">helm</h2>
+      </div>
 
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/consul_install/">consul安装使用 做prometheus的配置中心</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-03-07 </span>
-      <div class="post-category">
-          <a href="/categories/centos/"> centos </a>
-          </div>
+  <div class="archive-post">
+      <span class="archive-post-time">
+        2020-03-08
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/helm3_install/" class="archive-post-link">
+          helm3 安装使用
+        </a>
+      </span>
     </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>consul 容器化</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/consul_install/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
+</section>
 
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/k8s_bin_centos8_install/">kubernetes 1.17.0安装在centos8 安装体验</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-01-20 </span>
-      <div class="post-category">
-          <a href="/categories/centos/"> centos </a>
-          </div>
-    </div>
-  </header>
+<nav class="pagination">
   
-  <div class="post-content">
-    <div class="post-summary">
-      <p><code>centos8 </code>centos8.1刚刚发布 闲来没事体验一波</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/k8s_bin_centos8_install/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/centos8_install/">centos8 安装体验install</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-01-17 </span>
-      <div class="post-category">
-          <a href="/categories/centos/"> centos </a>
-          </div>
-    </div>
-  </header>
   
-  <div class="post-content">
-    <div class="post-summary">
-      <p><code>centos8 </code>centos8.1刚刚发布 闲来没事体验一波</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/centos8_install/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/docker_container_conf/">Docker内核参数优化</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-01-06 </span>
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>今天看到群里有个朋友报错如下</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">Failed create pod sandbox: rpc error: code = Unknown desc = failed to start sandbox container for pod &#34;dev-node-buyer-7d76bcd67c-qwjxg&#34;: Error response from daemon: OCI runtime create failed: container_linux.go:346: starting container process caused &#34;process_linux.go:449: container init caused \&#34;write sysctl key net.ipv4.tcp_max_syn_backlog: open /proc/sys/net/ipv4/tcp_max_syn_backlog: no such file or directory\&#34;&#34;: unknown
-</code></pre></td></tr></table>
-</div>
-</div>
-    </div>
-    <div class="read-more">
-      <a href="/post/docker_container_conf/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    </section>
-  
-  <nav class="pagination">
-    
-    <a class="next" href="/page/2/">
-        <span class="next-text">下一页</span>
-        <i class="iconfont icon-right"></i>
-      </a>
-  </nav>
+</nav>
         </div>
         
 
