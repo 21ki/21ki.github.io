@@ -6,10 +6,22 @@
     <description>Recent content in centos on Myki的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 08 Mar 2020 09:00:23 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 09 Mar 2020 09:00:23 +0800</lastBuildDate>
     
 	<atom:link href="https://www.1nth.com/categories/centos/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>k8s 时区 docker 时区 中国时区</title>
+      <link>https://www.1nth.com/post/k8s_zone/</link>
+      <pubDate>Mon, 09 Mar 2020 09:00:23 +0800</pubDate>
+      
+      <guid>https://www.1nth.com/post/k8s_zone/</guid>
+      <description>&lt;h4 id=&#34;zone-k8s-docker-&#34;&gt;&lt;code&gt;zone&lt;/code&gt; k8s时区设置 docker 时区设置&lt;/h4&gt;
+&lt;h4 id=&#34;kubernetes-v1174&#34;&gt;Kubernetes 版本：v1.17.4&lt;/h4&gt;
+&lt;h4 id=&#34;kubeadm&#34;&gt;集群以kubeadm方式安装&lt;/h4&gt;
+&lt;h4 id=&#34;docker-19031&#34;&gt;docker版本 19.03.1&lt;/h4&gt;</description>
+    </item>
     
     <item>
       <title>helm3 安装使用</title>
