@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>shell on Myki的博客</title>
-    <link>https://www.1nth.com/categories/shell/</link>
-    <description>Recent content in shell on Myki的博客</description>
+    <title>speedtest on Myki的博客</title>
+    <link>https://www.1nth.com/tags/speedtest/</link>
+    <description>Recent content in speedtest on Myki的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Thu, 23 Apr 2020 09:00:23 +0800</lastBuildDate>
     
-	<atom:link href="https://www.1nth.com/categories/shell/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.1nth.com/tags/speedtest/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -17,16 +17,6 @@
       <pubDate>Thu, 23 Apr 2020 09:00:23 +0800</pubDate>
       
       <guid>https://www.1nth.com/post/speedtest_server/</guid>
-      <description>&lt;h4 id=&#34;linuxbin-&#34;&gt;linux下制作二进制bin 文件制做方法&lt;/h4&gt;
-&lt;h4 id=&#34;centos-77&#34;&gt;centos 7.7&lt;/h4&gt;</description>
-    </item>
-    
-    <item>
-      <title>linux下制作二进制bin 文件制做方法</title>
-      <link>https://www.1nth.com/post/make_bin/</link>
-      <pubDate>Wed, 22 Apr 2020 09:00:23 +0800</pubDate>
-      
-      <guid>https://www.1nth.com/post/make_bin/</guid>
       <description>&lt;h4 id=&#34;linuxbin-&#34;&gt;linux下制作二进制bin 文件制做方法&lt;/h4&gt;
 &lt;h4 id=&#34;centos-77&#34;&gt;centos 7.7&lt;/h4&gt;</description>
     </item>

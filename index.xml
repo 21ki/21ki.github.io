@@ -6,10 +6,20 @@
     <description>Recent content on Myki的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 22 Apr 2020 09:00:23 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 23 Apr 2020 09:00:23 +0800</lastBuildDate>
     
 	<atom:link href="https://www.1nth.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>搭建speedtest服务网速测试工具</title>
+      <link>https://www.1nth.com/post/speedtest_server/</link>
+      <pubDate>Thu, 23 Apr 2020 09:00:23 +0800</pubDate>
+      
+      <guid>https://www.1nth.com/post/speedtest_server/</guid>
+      <description>&lt;h4 id=&#34;linuxbin-&#34;&gt;linux下制作二进制bin 文件制做方法&lt;/h4&gt;
+&lt;h4 id=&#34;centos-77&#34;&gt;centos 7.7&lt;/h4&gt;</description>
+    </item>
     
     <item>
       <title>linux下制作二进制bin 文件制做方法</title>
