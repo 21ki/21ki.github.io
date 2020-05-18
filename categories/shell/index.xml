@@ -12,6 +12,15 @@
     
     
     <item>
+      <title>Aria2 一键安装管理脚本 增强版</title>
+      <link>https://www.1nth.com/post/arias_instsll/</link>
+      <pubDate>Thu, 23 Apr 2020 09:00:23 +0800</pubDate>
+      
+      <guid>https://www.1nth.com/post/arias_instsll/</guid>
+      <description>&lt;h4 id=&#34;linuxaria2&#34;&gt;本人非常排斥迅雷,因为他会偷您的流量,所以所有电脑从来不装迅雷软件,由于是运维所以手上倒是有很多linux服务器,此次用aria2替代&lt;/h4&gt;</description>
+    </item>
+    
+    <item>
       <title>搭建speedtest服务网速测试工具</title>
       <link>https://www.1nth.com/post/speedtest_server/</link>
       <pubDate>Thu, 23 Apr 2020 09:00:23 +0800</pubDate>
