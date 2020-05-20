@@ -6,17 +6,26 @@
     <description>Recent content in speedtest on Myki的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 23 Apr 2020 09:00:23 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 20 May 2020 09:00:23 +0800</lastBuildDate>
     
 	<atom:link href="https://www.1nth.com/tags/speedtest/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Aria2 一键安装管理脚本 增强版</title>
-      <link>https://www.1nth.com/post/arias_instsll/</link>
-      <pubDate>Thu, 23 Apr 2020 09:00:23 +0800</pubDate>
+      <title>公有云 阿里云自定义安装系统 解决centos版本太高vos安装不上emp问题</title>
+      <link>https://www.1nth.com/post/yunos_install/</link>
+      <pubDate>Wed, 20 May 2020 09:00:23 +0800</pubDate>
       
-      <guid>https://www.1nth.com/post/arias_instsll/</guid>
+      <guid>https://www.1nth.com/post/yunos_install/</guid>
+      <description>&lt;h4 id=&#34;--centosvosemp&#34;&gt;公有云 阿里云自定义安装系统 解决centos版本太高vos安装不上emp问题&lt;/h4&gt;</description>
+    </item>
+    
+    <item>
+      <title>Aria2 一键安装管理脚本 增强版</title>
+      <link>https://www.1nth.com/post/aria2_instsll/</link>
+      <pubDate>Mon, 18 May 2020 09:00:23 +0800</pubDate>
+      
+      <guid>https://www.1nth.com/post/aria2_instsll/</guid>
       <description>&lt;h4 id=&#34;linuxaria2&#34;&gt;本人非常排斥迅雷,因为他会偷您的流量,所以所有电脑从来不装迅雷软件,由于是运维所以手上倒是有很多linux服务器,此次用aria2替代&lt;/h4&gt;</description>
     </item>
     

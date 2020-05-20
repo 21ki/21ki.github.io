@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154483127-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154483127-1');
+</script>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>公有云 阿里云自定义安装系统 解决centos版本太高vos安装不上emp问题 - Myki的博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Myki" /><meta name="description" content="公有云 阿里云自定义安装系统 解决centos版本太高vos安装不上emp问题" /><meta name="keywords" content="centos, shell" />
+
+
+
+
+
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-2427629508597494",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+<meta name="generator" content="Hugo 0.61.0 with theme even" />
+
+
+<link rel="canonical" href="https://www.1nth.com/post/yunos_install/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="公有云 阿里云自定义安装系统 解决centos版本太高vos安装不上emp问题" />
+<meta property="og:description" content="公有云 阿里云自定义安装系统 解决centos版本太高vos安装不上emp问题" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.1nth.com/post/yunos_install/" />
+<meta property="article:published_time" content="2020-05-20T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-05-20T09:00:23+08:00" />
+<meta itemprop="name" content="公有云 阿里云自定义安装系统 解决centos版本太高vos安装不上emp问题">
+<meta itemprop="description" content="公有云 阿里云自定义安装系统 解决centos版本太高vos安装不上emp问题">
+<meta itemprop="datePublished" content="2020-05-20T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-05-20T09:00:23&#43;08:00" />
+<meta itemprop="wordCount" content="403">
+
+
+
+<meta itemprop="keywords" content="speedtest," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="公有云 阿里云自定义安装系统 解决centos版本太高vos安装不上emp问题"/>
+<meta name="twitter:description" content="公有云 阿里云自定义安装系统 解决centos版本太高vos安装不上emp问题"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">公有云 阿里云自定义安装系统 解决centos版本太高vos安装不上emp问题</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-05-20 </span>
+        <div class="post-category">
+            <a href="/categories/centos/"> centos </a>
+            <a href="/categories/shell/"> shell </a>
+            </div>
+        
+      </div>
+    </header>
+
+    
+    <div class="post-content">
+      <h4 id="--centosvosemp">公有云 阿里云自定义安装系统 解决centos版本太高vos安装不上emp问题</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#一键安装脚本  https://ssr.tools/693</span>
+bash &lt;<span class="o">(</span>wget --no-check-certificate -qO- <span class="s1">&#39;https://moeclub.org/attachment/LinuxShell/InstallNET.sh&#39;</span><span class="o">)</span> -c 6.5 -v <span class="m">64</span> -a
+默认密码是 MoeClub.org
+
+<span class="c1">#想了解具体安装过程可参考如下详解</span>
+<span class="c1">#先运行:</span>
+<span class="c1">#Debian/Ubuntu:</span>
+apt-get update
+
+<span class="c1">#RedHat/CentOS:</span>
+yum update
+
+<span class="c1">#确保安装了所需软件:</span>
+<span class="c1">#Debian/Ubuntu:</span>
+apt-get install -y xz-utils openssl gawk file
+
+<span class="c1">#RedHat/CentOS:</span>
+yum install -y xz openssl gawk file
+
+
+<span class="c1"># dist-name: 发行版本代号</span>
+<span class="c1"># dist-version: 发行版本号</span>
+<span class="c1"># -apt/-yum/--mirror : 使用定义镜像</span>
+<span class="c1"># -a/-m : 询问是否能进入VNC自行操作. -a 为不提示(一般用于全自动安装), -m 为提示.</span>
+
+<span class="c1">#使用自定义镜像全自动安装</span>
+bash InstallNET.sh -c 6.10 -v <span class="m">64</span> -a --mirror <span class="s1">&#39;http://mirror.centos.org/centos&#39;</span>
+
+
+<span class="c1">#网络重装系统 centos6.10安装以centos6.5为例</span>
+wget http://mirrors.aliyun.com/centos/6.5/os/x86_64/images/pxeboot/vmlinuz -O /boot/vmlinuz.centos.pxe
+wget http://mirrors.aliyun.com/centos/6.5/os/x86_64/images/pxeboot/initrd.img /boot/initrd.img.centos.pxe
+<span class="c1">#编辑启动菜单</span>
+vim /boot/grub/menu.lst
+title CentOS 6.5 VNC Installation
+root <span class="o">(</span>hd0,0<span class="o">)</span>
+kernel /vmlinuz.centos.pxe vnc <span class="nv">vncpassword</span><span class="o">=</span>xiaofan@1 headless <span class="nv">ip</span><span class="o">=</span>127.0.0.1 <span class="nv">netmask</span><span class="o">=</span>255.255.255.0 <span class="nv">gateway</span><span class="o">=</span>127.0.0.1 <span class="nv">dns</span><span class="o">=</span>114.114.114.114 <span class="nv">ksdevice</span><span class="o">=</span>eth0 <span class="nv">method</span><span class="o">=</span>http://mirrors.aliyun.com/centos/6.5/os/x86_64/ <span class="nv">lang</span><span class="o">=</span>en_US <span class="nv">keymap</span><span class="o">=</span>us
+initrd /initrd.img.centos.pxe
+<span class="c1">#修改启动项</span>
+<span class="nv">default</span><span class="o">=</span>1
+reboot
+<span class="c1">#用vnc链接即可</span>
+IP:1
+
+
+
+<span class="c1">#centos7 安装</span>
+wget http://mirrors.aliyun.com/centos/7/os/x86_64/images/pxeboot/initrd.img -O /boot/initrd.img.remote
+wget http://mirrors.aliyun.com/centos/7/os/x86_64/images/pxeboot/vmlinuz -O /boot/vmlinuz.remote
+vim /etc/grub.d/40_custom
+menuentry <span class="s2">&#34;remote reinstall&#34;</span> <span class="o">{</span>
+        <span class="nb">set</span> <span class="nv">root</span><span class="o">=</span><span class="o">(</span>hd0,1<span class="o">)</span>
+        linux /vmlinuz.remote <span class="nv">repo</span><span class="o">=</span>http://mirrors.aliyun.com/centos/7/os/x86_64/ vnc <span class="nv">vncpassword</span><span class="o">=</span>password <span class="nv">ip</span><span class="o">=</span>192.168.100.51 <span class="nv">netmask</span><span class="o">=</span>255.255.255.0 <span class="nv">gateway</span><span class="o">=</span>192.168.100.1 <span class="nv">nameserver</span><span class="o">=</span>223.5.5.5 noselinux headless xfs <span class="nv">panic</span><span class="o">=</span>60
+        initrd /initrd.img.remote
+<span class="o">}</span>
+<span class="c1">#追加此选项</span>
+vim /etc/default/grub
+<span class="nv">GRUB_DEFAULT</span><span class="o">=</span><span class="s2">&#34;remote reinstall&#34;</span>
+<span class="c1">#更新启动项</span>
+grub2-mkconfig --output<span class="o">=</span>/boot/grub2/grub.cfg
+
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Myki</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-05-20
+        
+    </span>
+  </p>
+  
+  
+</div>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	
+	<ins class="adsbygoogle"
+		style="display:block"
+		data-ad-client="ca-pub-2427629508597494"
+		data-ad-slot="2287897972"
+		data-ad-format="auto"
+		data-full-width-responsive="true"></ins>
+	<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
+
+    
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/speedtest/">speedtest</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/aria2_instsll/">
+            <span class="next-text nav-default">Aria2 一键安装管理脚本 增强版</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://www.1nth.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Myki</span>
+    <br><a href="http://beian.miit.gov.cn">京ICP备17054644号</a><br />
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154483127-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154483127-1');
+</script>
+
+
+
+
+
+
+</body>
+</html>
