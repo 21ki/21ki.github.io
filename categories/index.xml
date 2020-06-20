@@ -6,7 +6,7 @@
     <description>Recent content in Categories on Myki的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 20 May 2020 09:00:23 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2020 09:00:23 +0800</lastBuildDate>
     
 	<atom:link href="https://www.1nth.com/categories/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,9 +14,18 @@
     <item>
       <title>centos</title>
       <link>https://www.1nth.com/categories/centos/</link>
-      <pubDate>Wed, 20 May 2020 09:00:23 +0800</pubDate>
+      <pubDate>Sat, 20 Jun 2020 09:00:23 +0800</pubDate>
       
       <guid>https://www.1nth.com/categories/centos/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>k8s</title>
+      <link>https://www.1nth.com/categories/k8s/</link>
+      <pubDate>Sat, 20 Jun 2020 09:00:23 +0800</pubDate>
+      
+      <guid>https://www.1nth.com/categories/k8s/</guid>
       <description></description>
     </item>
     
