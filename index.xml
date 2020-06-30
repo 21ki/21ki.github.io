@@ -296,5 +296,15 @@ cat /opt/nexus-data/admin.password
       <description>1 2 3 4 5 6 7 8 9 wget http://update.aegis.aliyun.com/download/uninstall.sh chmod +x uninstall.sh ./uninstall.sh wget http://update.aegis.aliyun.com/download/quartz_uninstall.sh chmod +x quartz_uninstall.sh ./quartz_uninstall.sh sudo rm -rf /usr/local/aegis sudo rm /usr/sbin/aliyun-service sudo rm /lib/systemd/system/aliyun.service</description>
     </item>
     
+    <item>
+      <title></title>
+      <link>https://www.1nth.com/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.1nth.com/about/</guid>
+      <description>Myki博客 hugo 正在努力修改中 喜欢linux .
+Email: 21kixc@gmail.com</description>
+    </item>
+    
   </channel>
 </rss>

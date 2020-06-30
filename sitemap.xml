@@ -2,12 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://www.1nth.com/</loc>
-    <lastmod>2020-06-30T09:00:23+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://www.1nth.com/categories/</loc>
     <lastmod>2020-06-30T09:00:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -16,6 +10,13 @@
   
   <url>
     <loc>https://www.1nth.com/categories/centos/</loc>
+    <lastmod>2020-06-30T09:00:23+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.1nth.com/</loc>
     <lastmod>2020-06-30T09:00:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -264,6 +265,11 @@
     <lastmod>2019-11-18T11:27:22+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.1nth.com/about/</loc>
+    <priority>0</priority>
   </url>
   
 </urlset>
