@@ -1,98 +1,360 @@
-<!doctype html><html lang=zh-cn><head><script async src="https://www.googletagmanager.com/gtag/js?id=UA-154483127-1"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
-gtag('js',new Date());gtag('config','UA-154483127-1');</script><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>ESXI 6.7 安装 修改web端口和防火墙 - Myki的博客</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="Myki"><meta name=description content><meta name=keywords content="Hugo,theme,even"><script async src=//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js></script><script>(adsbygoogle=window.adsbygoogle||[]).push({google_ad_client:"ca-pub-2427629508597494",enable_page_level_ads:true});</script><meta name=generator content="Hugo 0.61.0 with theme even"><link rel=canonical href=https://www.1nth.com/post/esxi_install/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/dist/even.c2a46f00.min.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="ESXI 6.7 安装 修改web端口和防火墙"><meta property="og:description" content><meta property="og:type" content="article"><meta property="og:url" content="https://www.1nth.com/post/esxi_install/"><meta property="article:published_time" content="2019-12-01T11:27:22+08:00"><meta property="article:modified_time" content="2019-12-01T11:27:22+08:00"><meta itemprop=name content="ESXI 6.7 安装 修改web端口和防火墙"><meta itemprop=description content><meta itemprop=datePublished content="2019-12-01T11:27:22+08:00"><meta itemprop=dateModified content="2019-12-01T11:27:22+08:00"><meta itemprop=wordCount content="222"><meta itemprop=keywords content><meta name=twitter:card content="summary"><meta name=twitter:title content="ESXI 6.7 安装 修改web端口和防火墙"><meta name=twitter:description content><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>Even</a></div><div class=mobile-navbar-icon><span></span><span></span><span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/categories/><li class=mobile-menu-item>Categories</li></a><a href=/about/><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>Even</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/categories/>Categories</a></li><li class=menu-item><a class=menu-item-link href=/about/>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>ESXI 6.7 安装 修改web端口和防火墙</h1><div class=post-meta><span class=post-time>2019-12-01</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class="post-toc-content always-active"><nav id=TableOfContents></nav></div></div><div class=post-content><p>#安装教程如下</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
-</span><span class=lnt> 2
-</span><span class=lnt> 3
-</span><span class=lnt> 4
-</span><span class=lnt> 5
-</span><span class=lnt> 6
-</span><span class=lnt> 7
-</span><span class=lnt> 8
-</span><span class=lnt> 9
-</span><span class=lnt>10
-</span><span class=lnt>11
-</span><span class=lnt>12
-</span><span class=lnt>13
-</span><span class=lnt>14
-</span><span class=lnt>15
-</span><span class=lnt>16
-</span><span class=lnt>17
-</span><span class=lnt>18
-</span><span class=lnt>19
-</span><span class=lnt>20
-</span><span class=lnt>21
-</span><span class=lnt>22
-</span><span class=lnt>23
-</span><span class=lnt>24
-</span><span class=lnt>25
-</span><span class=lnt>26
-</span><span class=lnt>27
-</span><span class=lnt>28
-</span><span class=lnt>29
-</span><span class=lnt>30
-</span><span class=lnt>31
-</span><span class=lnt>32
-</span><span class=lnt>33
-</span><span class=lnt>34
-</span><span class=lnt>35
-</span><span class=lnt>36
-</span><span class=lnt>37
-</span><span class=lnt>38
-</span><span class=lnt>39
-</span><span class=lnt>40
-</span><span class=lnt>41
-</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1>#我们将配置放在esxi的存储器中</span>
-<span class=nb>cd</span> /vmfs/volumes/datastore1
-<span class=c1>#你会得到类似下面的目录</span>
-<span class=o>[</span>root@localhost:/vmfs/volumes/58db5900-c649bd50-8479-d4ae52d01b4e<span class=o>]</span>
-<span class=c1>#新建端口配置文件</span>
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154483127-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154483127-1');
+</script>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>ESXI 6.7 安装 修改web端口和防火墙 - Myki的博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Myki" /><meta name="description" content="" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-2427629508597494",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+<meta name="generator" content="Hugo 0.61.0 with theme even" />
+
+
+<link rel="canonical" href="https://www.1nth.com/post/esxi_install/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="ESXI 6.7 安装 修改web端口和防火墙" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.1nth.com/post/esxi_install/" />
+<meta property="article:published_time" content="2019-12-01T11:27:22+08:00" />
+<meta property="article:modified_time" content="2019-12-01T11:27:22+08:00" />
+<meta itemprop="name" content="ESXI 6.7 安装 修改web端口和防火墙">
+<meta itemprop="description" content="">
+<meta itemprop="datePublished" content="2019-12-01T11:27:22&#43;08:00" />
+<meta itemprop="dateModified" content="2019-12-01T11:27:22&#43;08:00" />
+<meta itemprop="wordCount" content="222">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="ESXI 6.7 安装 修改web端口和防火墙"/>
+<meta name="twitter:description" content=""/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">ESXI 6.7 安装 修改web端口和防火墙</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-12-01 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents"></nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>#安装教程如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#我们将配置放在esxi的存储器中</span>
+<span class="nb">cd</span> /vmfs/volumes/datastore1
+<span class="c1">#你会得到类似下面的目录</span>
+<span class="o">[</span>root@localhost:/vmfs/volumes/58db5900-c649bd50-8479-d4ae52d01b4e<span class="o">]</span>
+<span class="c1">#新建端口配置文件</span>
 vi /vmfs/volumes/datastore1/new-HTTPS.xml
 &lt;ConfigRoot&gt;
   &lt;service&gt;
     &lt;id&gt;new-HTTPS&lt;/id&gt;
-    &lt;rule <span class=nv>id</span><span class=o>=</span><span class=s1>&#39;0000&#39;</span>&gt;
+    &lt;rule <span class="nv">id</span><span class="o">=</span><span class="s1">&#39;0000&#39;</span>&gt;
       &lt;direction&gt;outbound&lt;/direction&gt;
       &lt;protocol&gt;tcp&lt;/protocol&gt;
-      &lt;port <span class=nv>type</span><span class=o>=</span><span class=s1>&#39;dst&#39;</span>&gt;8443&lt;/port&gt;
+      &lt;port <span class="nv">type</span><span class="o">=</span><span class="s1">&#39;dst&#39;</span>&gt;8443&lt;/port&gt;
     &lt;/rule&gt;
-    &lt;rule <span class=nv>id</span><span class=o>=</span><span class=s1>&#39;0001&#39;</span>&gt;
+    &lt;rule <span class="nv">id</span><span class="o">=</span><span class="s1">&#39;0001&#39;</span>&gt;
       &lt;direction&gt;inbound&lt;/direction&gt;
       &lt;protocol&gt;tcp&lt;/protocol&gt;
-      &lt;port <span class=nv>type</span><span class=o>=</span><span class=s1>&#39;dst&#39;</span>&gt;8443&lt;/port&gt;
+      &lt;port <span class="nv">type</span><span class="o">=</span><span class="s1">&#39;dst&#39;</span>&gt;8443&lt;/port&gt;
     &lt;/rule&gt;
     &lt;enabled&gt;true&lt;/enabled&gt;
     &lt;required&gt;false&lt;/required&gt;
   &lt;/service&gt;
 &lt;/ConfigRoot&gt;
-<span class=c1>#添加到启动脚本  一定要添加到exit 0的前一行</span>
+<span class="c1">#添加到启动脚本  一定要添加到exit 0的前一行</span>
 vi /etc/rc.local.d/local.sh
-<span class=c1>#Copy the new firewall rule from vmfs place holder to file system</span>
+<span class="c1">#Copy the new firewall rule from vmfs place holder to file system</span>
 cp /vmfs/volumes/datastore1/new-HTTPS.xml /etc/vmware/firewall/
-<span class=c1>#refresh firewall rules</span>
+<span class="c1">#refresh firewall rules</span>
 esxcli network firewall refresh
-<span class=c1>#保存重启后生效。</span>
-<span class=c1>#不想重启生效就手动运行一下</span>
+<span class="c1">#保存重启后生效。</span>
+<span class="c1">#不想重启生效就手动运行一下</span>
 /etc/rc.local.d/local.sh
-<span class=c1>#改端口</span>
+<span class="c1">#改端口</span>
 vi /etc/vmware/rhttpproxy/config.xml
       &lt;!-- HTTP port to be used by the reverse proxy --&gt;
       &lt;httpPort&gt;80&lt;/httpPort&gt;
 
       &lt;!-- HTTPS port to be used by the reverse proxy --&gt;
       &lt;httpsPort&gt;8443&lt;/httpsPort&gt;
-<span class=c1>#重启服务生效</span>
+<span class="c1">#重启服务生效</span>
 /etc/init.d/rhttpproxy restart
-</code></pre></td></tr></table></div></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
-<span class=item-content>Myki</span></p><p class=copyright-item><span class=item-title>上次更新</span>
-<span class=item-content>2019-12-01</span></p></div><script async src=https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js></script><ins class=adsbygoogle style=display:block data-ad-client=ca-pub-2427629508597494 data-ad-slot=2287897972 data-ad-format=auto data-full-width-responsive=true></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script><footer class=post-footer><nav class=post-nav><a class=prev href=/post/nexus3_install/><i class="iconfont icon-left"></i><span class="prev-text nav-default">nexus3 yum mvn私有库安装</span>
-<span class="prev-text nav-mobile">上一篇</span></a>
-<a class=next href=/post/vos4.0_insall/><span class="next-text nav-default">vos 3000 2.1.4.0 安装</span>
-<span class="next-text nav-mobile">下一篇</span>
-<i class="iconfont icon-right"></i></a></nav></footer></article></div></div></main><footer id=footer class=footer><div class=social-links><a href=https://www.1nth.com/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=power-by>由 <a class=hexo-link href=https://gohugo.io>Hugo</a> 强力驱动</span>
-<span class=division>|</span>
-<span class=theme-info>主题 -
-<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span>
-<span class=copyright-year>&copy;
-2018 -
-2020
-<span class=heart><i class="iconfont icon-heart"></i></span><span class=author>Myki</span><br><a href=http://beian.miit.gov.cn>京ICP备17054644号</a><br></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script><script type=text/javascript src=/dist/even.26188efa.min.js></script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-154483127-1"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
-gtag('js',new Date());gtag('config','UA-154483127-1');</script></body></html>
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Myki</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2019-12-01
+        
+    </span>
+  </p>
+  
+  
+</div>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	
+	<ins class="adsbygoogle"
+		style="display:block"
+		data-ad-client="ca-pub-2427629508597494"
+		data-ad-slot="2287897972"
+		data-ad-format="auto"
+		data-full-width-responsive="true"></ins>
+	<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
+
+    
+    <footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/nexus3_install/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">nexus3 yum mvn私有库安装</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/vos4.0_insall/">
+            <span class="next-text nav-default">vos 3000 2.1.4.0 安装</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://www.1nth.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Myki</span>
+    <br><a href="http://beian.miit.gov.cn">京ICP备17054644号</a><br />
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154483127-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154483127-1');
+</script>
+
+
+
+
+
+
+</body>
+</html>

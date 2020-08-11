@@ -1,24 +1,146 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>centos on Myki的博客</title><link>https://www.1nth.com/categories/centos/</link><description>Recent content in centos on Myki的博客</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 30 Jun 2020 09:00:23 +0800</lastBuildDate><atom:link href="https://www.1nth.com/categories/centos/index.xml" rel="self" type="application/rss+xml"/><item><title>vos 迁移备份mysql</title><link>https://www.1nth.com/post/vos_mysql_back/</link><pubDate>Tue, 30 Jun 2020 09:00:23 +0800</pubDate><guid>https://www.1nth.com/post/vos_mysql_back/</guid><description>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="c1">#linux不记录痕迹&lt;/span>
-&lt;span class="nb">unset&lt;/span> HISTORY HISTFILE HISTSAVE HISTZONE HISTORY HISTLOG
-&lt;span class="nb">export&lt;/span> &lt;span class="nv">HISTFILE&lt;/span>&lt;span class="o">=&lt;/span>/dev/null
-&lt;span class="nb">export&lt;/span> &lt;span class="nv">HISTSIZE&lt;/span>&lt;span class="o">=&lt;/span>0
-&lt;span class="nb">export&lt;/span> &lt;span class="nv">HISTFILESIZE&lt;/span>&lt;span class="o">=&lt;/span>0
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div></description></item><item><title>github action kubeadm编译证书100年</title><link>https://www.1nth.com/post/github_action_kubeadm/</link><pubDate>Sat, 20 Jun 2020 09:00:23 +0800</pubDate><guid>https://www.1nth.com/post/github_action_kubeadm/</guid><description>&lt;h4 id="github-action-kubeadm100">github action kubeadm编译证书100年&lt;/h4></description></item><item><title>公有云 阿里云自定义安装系统 解决centos版本太高vos安装不上emp问题</title><link>https://www.1nth.com/post/yunos_install/</link><pubDate>Wed, 20 May 2020 09:00:23 +0800</pubDate><guid>https://www.1nth.com/post/yunos_install/</guid><description>&lt;h4 id="--centosvosemp">公有云 阿里云自定义安装系统 解决centos版本太高vos安装不上emp问题&lt;/h4></description></item><item><title>Aria2 一键安装管理脚本 增强版</title><link>https://www.1nth.com/post/aria2_instsll/</link><pubDate>Mon, 18 May 2020 09:00:23 +0800</pubDate><guid>https://www.1nth.com/post/aria2_instsll/</guid><description>&lt;h4 id="linuxaria2">本人非常排斥迅雷,因为他会偷您的流量,所以所有电脑从来不装迅雷软件,由于是运维所以手上倒是有很多linux服务器,此次用aria2替代&lt;/h4></description></item><item><title>搭建speedtest服务网速测试工具</title><link>https://www.1nth.com/post/speedtest_server/</link><pubDate>Thu, 23 Apr 2020 09:00:23 +0800</pubDate><guid>https://www.1nth.com/post/speedtest_server/</guid><description>&lt;h4 id="speedtest">搭建speedtest服务网速测试工具&lt;/h4>
-&lt;h4 id="centos-77">centos 7.7&lt;/h4></description></item><item><title>linux下制作二进制bin 文件制做方法</title><link>https://www.1nth.com/post/make_bin/</link><pubDate>Wed, 22 Apr 2020 09:00:23 +0800</pubDate><guid>https://www.1nth.com/post/make_bin/</guid><description>&lt;h4 id="linuxbin-">linux下制作二进制bin 文件制做方法&lt;/h4>
-&lt;h4 id="centos-77">centos 7.7&lt;/h4></description></item><item><title>k8s 时区 docker 时区 中国时区</title><link>https://www.1nth.com/post/k8s_zone/</link><pubDate>Mon, 09 Mar 2020 09:00:23 +0800</pubDate><guid>https://www.1nth.com/post/k8s_zone/</guid><description>&lt;h4 id="zone-k8s-docker-">&lt;code>zone&lt;/code> k8s时区设置 docker 时区设置&lt;/h4>
-&lt;h4 id="kubernetes-v1174">Kubernetes 版本：v1.17.4&lt;/h4>
-&lt;h4 id="kubeadm">集群以kubeadm方式安装&lt;/h4>
-&lt;h4 id="docker-19031">docker版本 19.03.1&lt;/h4></description></item><item><title>helm3 安装使用</title><link>https://www.1nth.com/post/helm3_install/</link><pubDate>Sun, 08 Mar 2020 09:00:23 +0800</pubDate><guid>https://www.1nth.com/post/helm3_install/</guid><description>&lt;h4 id="helm3-v311">&lt;code>Helm3&lt;/code> 版本：v3.1.1&lt;/h4>
-&lt;h4 id="kubernetes-v1173">Kubernetes 版本：v1.17.3&lt;/h4>
-&lt;h4 id="kubeadm">集群以kubeadm方式安装&lt;/h4></description></item><item><title>consul安装使用 做prometheus的配置中心</title><link>https://www.1nth.com/post/consul_install/</link><pubDate>Sat, 07 Mar 2020 09:00:23 +0800</pubDate><guid>https://www.1nth.com/post/consul_install/</guid><description>&lt;p>consul 容器化&lt;/p></description></item><item><title>kubernetes 1.17.0安装在centos8 安装体验</title><link>https://www.1nth.com/post/k8s_bin_centos8_install/</link><pubDate>Mon, 20 Jan 2020 09:00:23 +0800</pubDate><guid>https://www.1nth.com/post/k8s_bin_centos8_install/</guid><description>&lt;p>&lt;code>centos8 &lt;/code>centos8.1刚刚发布 闲来没事体验一波&lt;/p></description></item><item><title>centos8 安装体验install</title><link>https://www.1nth.com/post/centos8_install/</link><pubDate>Fri, 17 Jan 2020 09:00:23 +0800</pubDate><guid>https://www.1nth.com/post/centos8_install/</guid><description>&lt;p>&lt;code>centos8 &lt;/code>centos8.1刚刚发布 闲来没事体验一波&lt;/p></description></item><item><title>centos7安装定制 kubernetes安装准备环境</title><link>https://www.1nth.com/post/centos7_install_optimiz/</link><pubDate>Mon, 23 Dec 2019 03:00:23 +0800</pubDate><guid>https://www.1nth.com/post/centos7_install_optimiz/</guid><description>&lt;p>&lt;code>centos&lt;/code>&lt;/p></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>centos on Myki的博客</title>
+    <link>https://www.1nth.com/categories/centos/</link>
+    <description>Recent content in centos on Myki的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 30 Jun 2020 09:00:23 +0800</lastBuildDate>
+    
+	<atom:link href="https://www.1nth.com/categories/centos/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>vos 迁移备份mysql</title>
+      <link>https://www.1nth.com/post/vos_mysql_back/</link>
+      <pubDate>Tue, 30 Jun 2020 09:00:23 +0800</pubDate>
+      
+      <guid>https://www.1nth.com/post/vos_mysql_back/</guid>
+      <description>&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;c1&#34;&gt;#linux不记录痕迹&lt;/span&gt;
+&lt;span class=&#34;nb&#34;&gt;unset&lt;/span&gt; HISTORY HISTFILE HISTSAVE HISTZONE HISTORY HISTLOG
+&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;HISTFILE&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/dev/null
+&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;HISTSIZE&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;0
+&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;HISTFILESIZE&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;0
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>github action kubeadm编译证书100年</title>
+      <link>https://www.1nth.com/post/github_action_kubeadm/</link>
+      <pubDate>Sat, 20 Jun 2020 09:00:23 +0800</pubDate>
+      
+      <guid>https://www.1nth.com/post/github_action_kubeadm/</guid>
+      <description>&lt;h4 id=&#34;github-action-kubeadm100&#34;&gt;github action kubeadm编译证书100年&lt;/h4&gt;</description>
+    </item>
+    
+    <item>
+      <title>公有云 阿里云自定义安装系统 解决centos版本太高vos安装不上emp问题</title>
+      <link>https://www.1nth.com/post/yunos_install/</link>
+      <pubDate>Wed, 20 May 2020 09:00:23 +0800</pubDate>
+      
+      <guid>https://www.1nth.com/post/yunos_install/</guid>
+      <description>&lt;h4 id=&#34;--centosvosemp&#34;&gt;公有云 阿里云自定义安装系统 解决centos版本太高vos安装不上emp问题&lt;/h4&gt;</description>
+    </item>
+    
+    <item>
+      <title>Aria2 一键安装管理脚本 增强版</title>
+      <link>https://www.1nth.com/post/aria2_instsll/</link>
+      <pubDate>Mon, 18 May 2020 09:00:23 +0800</pubDate>
+      
+      <guid>https://www.1nth.com/post/aria2_instsll/</guid>
+      <description>&lt;h4 id=&#34;linuxaria2&#34;&gt;本人非常排斥迅雷,因为他会偷您的流量,所以所有电脑从来不装迅雷软件,由于是运维所以手上倒是有很多linux服务器,此次用aria2替代&lt;/h4&gt;</description>
+    </item>
+    
+    <item>
+      <title>搭建speedtest服务网速测试工具</title>
+      <link>https://www.1nth.com/post/speedtest_server/</link>
+      <pubDate>Thu, 23 Apr 2020 09:00:23 +0800</pubDate>
+      
+      <guid>https://www.1nth.com/post/speedtest_server/</guid>
+      <description>&lt;h4 id=&#34;speedtest&#34;&gt;搭建speedtest服务网速测试工具&lt;/h4&gt;
+&lt;h4 id=&#34;centos-77&#34;&gt;centos 7.7&lt;/h4&gt;</description>
+    </item>
+    
+    <item>
+      <title>linux下制作二进制bin 文件制做方法</title>
+      <link>https://www.1nth.com/post/make_bin/</link>
+      <pubDate>Wed, 22 Apr 2020 09:00:23 +0800</pubDate>
+      
+      <guid>https://www.1nth.com/post/make_bin/</guid>
+      <description>&lt;h4 id=&#34;linuxbin-&#34;&gt;linux下制作二进制bin 文件制做方法&lt;/h4&gt;
+&lt;h4 id=&#34;centos-77&#34;&gt;centos 7.7&lt;/h4&gt;</description>
+    </item>
+    
+    <item>
+      <title>k8s 时区 docker 时区 中国时区</title>
+      <link>https://www.1nth.com/post/k8s_zone/</link>
+      <pubDate>Mon, 09 Mar 2020 09:00:23 +0800</pubDate>
+      
+      <guid>https://www.1nth.com/post/k8s_zone/</guid>
+      <description>&lt;h4 id=&#34;zone-k8s-docker-&#34;&gt;&lt;code&gt;zone&lt;/code&gt; k8s时区设置 docker 时区设置&lt;/h4&gt;
+&lt;h4 id=&#34;kubernetes-v1174&#34;&gt;Kubernetes 版本：v1.17.4&lt;/h4&gt;
+&lt;h4 id=&#34;kubeadm&#34;&gt;集群以kubeadm方式安装&lt;/h4&gt;
+&lt;h4 id=&#34;docker-19031&#34;&gt;docker版本 19.03.1&lt;/h4&gt;</description>
+    </item>
+    
+    <item>
+      <title>helm3 安装使用</title>
+      <link>https://www.1nth.com/post/helm3_install/</link>
+      <pubDate>Sun, 08 Mar 2020 09:00:23 +0800</pubDate>
+      
+      <guid>https://www.1nth.com/post/helm3_install/</guid>
+      <description>&lt;h4 id=&#34;helm3-v311&#34;&gt;&lt;code&gt;Helm3&lt;/code&gt; 版本：v3.1.1&lt;/h4&gt;
+&lt;h4 id=&#34;kubernetes-v1173&#34;&gt;Kubernetes 版本：v1.17.3&lt;/h4&gt;
+&lt;h4 id=&#34;kubeadm&#34;&gt;集群以kubeadm方式安装&lt;/h4&gt;</description>
+    </item>
+    
+    <item>
+      <title>consul安装使用 做prometheus的配置中心</title>
+      <link>https://www.1nth.com/post/consul_install/</link>
+      <pubDate>Sat, 07 Mar 2020 09:00:23 +0800</pubDate>
+      
+      <guid>https://www.1nth.com/post/consul_install/</guid>
+      <description>&lt;p&gt;consul 容器化&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>kubernetes 1.17.0安装在centos8 安装体验</title>
+      <link>https://www.1nth.com/post/k8s_bin_centos8_install/</link>
+      <pubDate>Mon, 20 Jan 2020 09:00:23 +0800</pubDate>
+      
+      <guid>https://www.1nth.com/post/k8s_bin_centos8_install/</guid>
+      <description>&lt;p&gt;&lt;code&gt;centos8 &lt;/code&gt;centos8.1刚刚发布 闲来没事体验一波&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>centos8 安装体验install</title>
+      <link>https://www.1nth.com/post/centos8_install/</link>
+      <pubDate>Fri, 17 Jan 2020 09:00:23 +0800</pubDate>
+      
+      <guid>https://www.1nth.com/post/centos8_install/</guid>
+      <description>&lt;p&gt;&lt;code&gt;centos8 &lt;/code&gt;centos8.1刚刚发布 闲来没事体验一波&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>centos7安装定制 kubernetes安装准备环境</title>
+      <link>https://www.1nth.com/post/centos7_install_optimiz/</link>
+      <pubDate>Mon, 23 Dec 2019 03:00:23 +0800</pubDate>
+      
+      <guid>https://www.1nth.com/post/centos7_install_optimiz/</guid>
+      <description>&lt;p&gt;&lt;code&gt;centos&lt;/code&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

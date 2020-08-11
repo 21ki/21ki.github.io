@@ -1,1 +1,51 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Categories on Myki的博客</title><link>https://www.1nth.com/categories/</link><description>Recent content in Categories on Myki的博客</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 30 Jun 2020 09:00:23 +0800</lastBuildDate><atom:link href="https://www.1nth.com/categories/index.xml" rel="self" type="application/rss+xml"/><item><title>centos</title><link>https://www.1nth.com/categories/centos/</link><pubDate>Tue, 30 Jun 2020 09:00:23 +0800</pubDate><guid>https://www.1nth.com/categories/centos/</guid><description/></item><item><title>vos</title><link>https://www.1nth.com/categories/vos/</link><pubDate>Tue, 30 Jun 2020 09:00:23 +0800</pubDate><guid>https://www.1nth.com/categories/vos/</guid><description/></item><item><title>k8s</title><link>https://www.1nth.com/categories/k8s/</link><pubDate>Sat, 20 Jun 2020 09:00:23 +0800</pubDate><guid>https://www.1nth.com/categories/k8s/</guid><description/></item><item><title>shell</title><link>https://www.1nth.com/categories/shell/</link><pubDate>Wed, 20 May 2020 09:00:23 +0800</pubDate><guid>https://www.1nth.com/categories/shell/</guid><description/></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Myki的博客</title>
+    <link>https://www.1nth.com/categories/</link>
+    <description>Recent content in Categories on Myki的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 30 Jun 2020 09:00:23 +0800</lastBuildDate>
+    
+	<atom:link href="https://www.1nth.com/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>centos</title>
+      <link>https://www.1nth.com/categories/centos/</link>
+      <pubDate>Tue, 30 Jun 2020 09:00:23 +0800</pubDate>
+      
+      <guid>https://www.1nth.com/categories/centos/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vos</title>
+      <link>https://www.1nth.com/categories/vos/</link>
+      <pubDate>Tue, 30 Jun 2020 09:00:23 +0800</pubDate>
+      
+      <guid>https://www.1nth.com/categories/vos/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>k8s</title>
+      <link>https://www.1nth.com/categories/k8s/</link>
+      <pubDate>Sat, 20 Jun 2020 09:00:23 +0800</pubDate>
+      
+      <guid>https://www.1nth.com/categories/k8s/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>shell</title>
+      <link>https://www.1nth.com/categories/shell/</link>
+      <pubDate>Wed, 20 May 2020 09:00:23 +0800</pubDate>
+      
+      <guid>https://www.1nth.com/categories/shell/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

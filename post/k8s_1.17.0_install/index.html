@@ -1,470 +1,733 @@
-<!doctype html><html lang=zh-cn><head><script async src="https://www.googletagmanager.com/gtag/js?id=UA-154483127-1"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
-gtag('js',new Date());gtag('config','UA-154483127-1');</script><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>kubernetes 1.17 安装 - Myki的博客</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="Myki"><meta name=description content="centos 7.7 kubernetes 1.17.0 安装"><meta name=keywords content="Hugo,theme,even"><script async src=//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js></script><script>(adsbygoogle=window.adsbygoogle||[]).push({google_ad_client:"ca-pub-2427629508597494",enable_page_level_ads:true});</script><meta name=generator content="Hugo 0.61.0 with theme even"><link rel=canonical href=https://www.1nth.com/post/k8s_1.17.0_install/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/dist/even.c2a46f00.min.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="kubernetes 1.17 安装"><meta property="og:description" content="centos 7.7  kubernetes 1.17.0 安装"><meta property="og:type" content="article"><meta property="og:url" content="https://www.1nth.com/post/k8s_1.17.0_install/"><meta property="article:published_time" content="2019-12-19T11:27:22+08:00"><meta property="article:modified_time" content="2019-12-19T11:27:22+08:00"><meta itemprop=name content="kubernetes 1.17 安装"><meta itemprop=description content="centos 7.7  kubernetes 1.17.0 安装"><meta itemprop=datePublished content="2019-12-19T11:27:22+08:00"><meta itemprop=dateModified content="2019-12-19T11:27:22+08:00"><meta itemprop=wordCount content="1212"><meta itemprop=keywords content><meta name=twitter:card content="summary"><meta name=twitter:title content="kubernetes 1.17 安装"><meta name=twitter:description content="centos 7.7  kubernetes 1.17.0 安装"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>Even</a></div><div class=mobile-navbar-icon><span></span><span></span><span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/categories/><li class=mobile-menu-item>Categories</li></a><a href=/about/><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>Even</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/categories/>Categories</a></li><li class=menu-item><a class=menu-item-link href=/about/>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>kubernetes 1.17 安装</h1><div class=post-meta><span class=post-time>2019-12-19</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class="post-toc-content always-active"><nav id=TableOfContents></nav></div></div><div class=post-content><p>centos 7.7 kubernetes 1.17.0 安装</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>  1
-</span><span class=lnt>  2
-</span><span class=lnt>  3
-</span><span class=lnt>  4
-</span><span class=lnt>  5
-</span><span class=lnt>  6
-</span><span class=lnt>  7
-</span><span class=lnt>  8
-</span><span class=lnt>  9
-</span><span class=lnt> 10
-</span><span class=lnt> 11
-</span><span class=lnt> 12
-</span><span class=lnt> 13
-</span><span class=lnt> 14
-</span><span class=lnt> 15
-</span><span class=lnt> 16
-</span><span class=lnt> 17
-</span><span class=lnt> 18
-</span><span class=lnt> 19
-</span><span class=lnt> 20
-</span><span class=lnt> 21
-</span><span class=lnt> 22
-</span><span class=lnt> 23
-</span><span class=lnt> 24
-</span><span class=lnt> 25
-</span><span class=lnt> 26
-</span><span class=lnt> 27
-</span><span class=lnt> 28
-</span><span class=lnt> 29
-</span><span class=lnt> 30
-</span><span class=lnt> 31
-</span><span class=lnt> 32
-</span><span class=lnt> 33
-</span><span class=lnt> 34
-</span><span class=lnt> 35
-</span><span class=lnt> 36
-</span><span class=lnt> 37
-</span><span class=lnt> 38
-</span><span class=lnt> 39
-</span><span class=lnt> 40
-</span><span class=lnt> 41
-</span><span class=lnt> 42
-</span><span class=lnt> 43
-</span><span class=lnt> 44
-</span><span class=lnt> 45
-</span><span class=lnt> 46
-</span><span class=lnt> 47
-</span><span class=lnt> 48
-</span><span class=lnt> 49
-</span><span class=lnt> 50
-</span><span class=lnt> 51
-</span><span class=lnt> 52
-</span><span class=lnt> 53
-</span><span class=lnt> 54
-</span><span class=lnt> 55
-</span><span class=lnt> 56
-</span><span class=lnt> 57
-</span><span class=lnt> 58
-</span><span class=lnt> 59
-</span><span class=lnt> 60
-</span><span class=lnt> 61
-</span><span class=lnt> 62
-</span><span class=lnt> 63
-</span><span class=lnt> 64
-</span><span class=lnt> 65
-</span><span class=lnt> 66
-</span><span class=lnt> 67
-</span><span class=lnt> 68
-</span><span class=lnt> 69
-</span><span class=lnt> 70
-</span><span class=lnt> 71
-</span><span class=lnt> 72
-</span><span class=lnt> 73
-</span><span class=lnt> 74
-</span><span class=lnt> 75
-</span><span class=lnt> 76
-</span><span class=lnt> 77
-</span><span class=lnt> 78
-</span><span class=lnt> 79
-</span><span class=lnt> 80
-</span><span class=lnt> 81
-</span><span class=lnt> 82
-</span><span class=lnt> 83
-</span><span class=lnt> 84
-</span><span class=lnt> 85
-</span><span class=lnt> 86
-</span><span class=lnt> 87
-</span><span class=lnt> 88
-</span><span class=lnt> 89
-</span><span class=lnt> 90
-</span><span class=lnt> 91
-</span><span class=lnt> 92
-</span><span class=lnt> 93
-</span><span class=lnt> 94
-</span><span class=lnt> 95
-</span><span class=lnt> 96
-</span><span class=lnt> 97
-</span><span class=lnt> 98
-</span><span class=lnt> 99
-</span><span class=lnt>100
-</span><span class=lnt>101
-</span><span class=lnt>102
-</span><span class=lnt>103
-</span><span class=lnt>104
-</span><span class=lnt>105
-</span><span class=lnt>106
-</span><span class=lnt>107
-</span><span class=lnt>108
-</span><span class=lnt>109
-</span><span class=lnt>110
-</span><span class=lnt>111
-</span><span class=lnt>112
-</span><span class=lnt>113
-</span><span class=lnt>114
-</span><span class=lnt>115
-</span><span class=lnt>116
-</span><span class=lnt>117
-</span><span class=lnt>118
-</span><span class=lnt>119
-</span><span class=lnt>120
-</span><span class=lnt>121
-</span><span class=lnt>122
-</span><span class=lnt>123
-</span><span class=lnt>124
-</span><span class=lnt>125
-</span><span class=lnt>126
-</span><span class=lnt>127
-</span><span class=lnt>128
-</span><span class=lnt>129
-</span><span class=lnt>130
-</span><span class=lnt>131
-</span><span class=lnt>132
-</span><span class=lnt>133
-</span><span class=lnt>134
-</span><span class=lnt>135
-</span><span class=lnt>136
-</span><span class=lnt>137
-</span><span class=lnt>138
-</span><span class=lnt>139
-</span><span class=lnt>140
-</span><span class=lnt>141
-</span><span class=lnt>142
-</span><span class=lnt>143
-</span><span class=lnt>144
-</span><span class=lnt>145
-</span><span class=lnt>146
-</span><span class=lnt>147
-</span><span class=lnt>148
-</span><span class=lnt>149
-</span><span class=lnt>150
-</span><span class=lnt>151
-</span><span class=lnt>152
-</span><span class=lnt>153
-</span><span class=lnt>154
-</span><span class=lnt>155
-</span><span class=lnt>156
-</span><span class=lnt>157
-</span><span class=lnt>158
-</span><span class=lnt>159
-</span><span class=lnt>160
-</span><span class=lnt>161
-</span><span class=lnt>162
-</span><span class=lnt>163
-</span><span class=lnt>164
-</span><span class=lnt>165
-</span><span class=lnt>166
-</span><span class=lnt>167
-</span><span class=lnt>168
-</span><span class=lnt>169
-</span><span class=lnt>170
-</span><span class=lnt>171
-</span><span class=lnt>172
-</span><span class=lnt>173
-</span><span class=lnt>174
-</span><span class=lnt>175
-</span><span class=lnt>176
-</span><span class=lnt>177
-</span><span class=lnt>178
-</span><span class=lnt>179
-</span><span class=lnt>180
-</span><span class=lnt>181
-</span><span class=lnt>182
-</span><span class=lnt>183
-</span><span class=lnt>184
-</span><span class=lnt>185
-</span><span class=lnt>186
-</span><span class=lnt>187
-</span><span class=lnt>188
-</span><span class=lnt>189
-</span><span class=lnt>190
-</span><span class=lnt>191
-</span><span class=lnt>192
-</span><span class=lnt>193
-</span><span class=lnt>194
-</span><span class=lnt>195
-</span><span class=lnt>196
-</span><span class=lnt>197
-</span><span class=lnt>198
-</span><span class=lnt>199
-</span><span class=lnt>200
-</span><span class=lnt>201
-</span><span class=lnt>202
-</span><span class=lnt>203
-</span><span class=lnt>204
-</span><span class=lnt>205
-</span><span class=lnt>206
-</span><span class=lnt>207
-</span><span class=lnt>208
-</span><span class=lnt>209
-</span><span class=lnt>210
-</span><span class=lnt>211
-</span><span class=lnt>212
-</span><span class=lnt>213
-</span><span class=lnt>214
-</span><span class=lnt>215
-</span><span class=lnt>216
-</span><span class=lnt>217
-</span><span class=lnt>218
-</span><span class=lnt>219
-</span><span class=lnt>220
-</span><span class=lnt>221
-</span><span class=lnt>222
-</span><span class=lnt>223
-</span><span class=lnt>224
-</span><span class=lnt>225
-</span><span class=lnt>226
-</span><span class=lnt>227
-</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1>#centos 7.7</span> 
-cat <span class=s>&lt;&lt;EOF &gt; /etc/sysctl.d/k8s.conf
-</span><span class=s>net.ipv4.ip_forward = 1
-</span><span class=s>net.bridge.bridge-nf-call-ip6tables = 1
-</span><span class=s>net.bridge.bridge-nf-call-iptables = 1
-</span><span class=s>net.ipv4.tcp_keepalive_time = 600
-</span><span class=s>net.ipv4.tcp_keepalive_intvl = 30
-</span><span class=s>net.ipv4.tcp_keepalive_probes = 10
-</span><span class=s>EOF</span>
-<span class=c1>#挂载 br_netfilter</span>
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154483127-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154483127-1');
+</script>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>kubernetes 1.17 安装 - Myki的博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Myki" /><meta name="description" content="centos 7.7 kubernetes 1.17.0 安装
+" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-2427629508597494",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+<meta name="generator" content="Hugo 0.61.0 with theme even" />
+
+
+<link rel="canonical" href="https://www.1nth.com/post/k8s_1.17.0_install/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="kubernetes 1.17 安装" />
+<meta property="og:description" content="centos 7.7  kubernetes 1.17.0 安装" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.1nth.com/post/k8s_1.17.0_install/" />
+<meta property="article:published_time" content="2019-12-19T11:27:22+08:00" />
+<meta property="article:modified_time" content="2019-12-19T11:27:22+08:00" />
+<meta itemprop="name" content="kubernetes 1.17 安装">
+<meta itemprop="description" content="centos 7.7  kubernetes 1.17.0 安装">
+<meta itemprop="datePublished" content="2019-12-19T11:27:22&#43;08:00" />
+<meta itemprop="dateModified" content="2019-12-19T11:27:22&#43;08:00" />
+<meta itemprop="wordCount" content="1212">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="kubernetes 1.17 安装"/>
+<meta name="twitter:description" content="centos 7.7  kubernetes 1.17.0 安装"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">kubernetes 1.17 安装</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-12-19 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents"></nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>centos 7.7  kubernetes 1.17.0 安装</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span><span class="lnt">198
+</span><span class="lnt">199
+</span><span class="lnt">200
+</span><span class="lnt">201
+</span><span class="lnt">202
+</span><span class="lnt">203
+</span><span class="lnt">204
+</span><span class="lnt">205
+</span><span class="lnt">206
+</span><span class="lnt">207
+</span><span class="lnt">208
+</span><span class="lnt">209
+</span><span class="lnt">210
+</span><span class="lnt">211
+</span><span class="lnt">212
+</span><span class="lnt">213
+</span><span class="lnt">214
+</span><span class="lnt">215
+</span><span class="lnt">216
+</span><span class="lnt">217
+</span><span class="lnt">218
+</span><span class="lnt">219
+</span><span class="lnt">220
+</span><span class="lnt">221
+</span><span class="lnt">222
+</span><span class="lnt">223
+</span><span class="lnt">224
+</span><span class="lnt">225
+</span><span class="lnt">226
+</span><span class="lnt">227
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#centos 7.7</span> 
+cat <span class="s">&lt;&lt;EOF &gt; /etc/sysctl.d/k8s.conf
+</span><span class="s">net.ipv4.ip_forward = 1
+</span><span class="s">net.bridge.bridge-nf-call-ip6tables = 1
+</span><span class="s">net.bridge.bridge-nf-call-iptables = 1
+</span><span class="s">net.ipv4.tcp_keepalive_time = 600
+</span><span class="s">net.ipv4.tcp_keepalive_intvl = 30
+</span><span class="s">net.ipv4.tcp_keepalive_probes = 10
+</span><span class="s">EOF</span>
+<span class="c1">#挂载 br_netfilter</span>
 modprobe br_netfilter
 
-<span class=c1>#使配置生效</span>
+<span class="c1">#使配置生效</span>
 sysctl -p /etc/sysctl.d/k8s.conf
 
-<span class=c1>#查看是否生成相关文件</span>
+<span class="c1">#查看是否生成相关文件</span>
 ls /proc/sys/net/bridge
 
-<span class=c1>#配置 IPVS 模块</span>
-cat &gt; /etc/sysconfig/modules/ipvs.modules <span class=s>&lt;&lt;EOF
-</span><span class=s>#!/bin/bash
-</span><span class=s>modprobe -- ip_vs
-</span><span class=s>modprobe -- ip_vs_rr
-</span><span class=s>modprobe -- ip_vs_wrr
-</span><span class=s>modprobe -- ip_vs_sh
-</span><span class=s>modprobe -- nf_conntrack_ipv4
-</span><span class=s>EOF</span>
-<span class=c1>#修改脚本权限</span>
-chmod <span class=m>755</span> /etc/sysconfig/modules/ipvs.modules 
+<span class="c1">#配置 IPVS 模块</span>
+cat &gt; /etc/sysconfig/modules/ipvs.modules <span class="s">&lt;&lt;EOF
+</span><span class="s">#!/bin/bash
+</span><span class="s">modprobe -- ip_vs
+</span><span class="s">modprobe -- ip_vs_rr
+</span><span class="s">modprobe -- ip_vs_wrr
+</span><span class="s">modprobe -- ip_vs_sh
+</span><span class="s">modprobe -- nf_conntrack_ipv4
+</span><span class="s">EOF</span>
+<span class="c1">#修改脚本权限</span>
+chmod <span class="m">755</span> /etc/sysconfig/modules/ipvs.modules 
 
-<span class=c1>#执行脚本</span>
+<span class="c1">#执行脚本</span>
 bash /etc/sysconfig/modules/ipvs.modules 
 
-<span class=c1>#查看是否已经正确加载所需的内核模块</span>
-lsmod <span class=p>|</span> grep -e ip_vs -e nf_conntrack_ipv4
-<span class=c1>#配置资源限制</span>
-<span class=nb>echo</span> <span class=s2>&#34;* soft nofile 65536&#34;</span> &gt;&gt; /etc/security/limits.conf
-<span class=nb>echo</span> <span class=s2>&#34;* hard nofile 65536&#34;</span> &gt;&gt; /etc/security/limits.conf
-<span class=nb>echo</span> <span class=s2>&#34;* soft nproc 65536&#34;</span>  &gt;&gt; /etc/security/limits.conf
-<span class=nb>echo</span> <span class=s2>&#34;* hard nproc 65536&#34;</span>  &gt;&gt; /etc/security/limits.conf
-<span class=nb>echo</span> <span class=s2>&#34;* soft memlock  unlimited&#34;</span>  &gt;&gt; /etc/security/limits.conf
-<span class=nb>echo</span> <span class=s2>&#34;* hard memlock  unlimited&#34;</span>  &gt;&gt; /etc/security/limits.conf
+<span class="c1">#查看是否已经正确加载所需的内核模块</span>
+lsmod <span class="p">|</span> grep -e ip_vs -e nf_conntrack_ipv4
+<span class="c1">#配置资源限制</span>
+<span class="nb">echo</span> <span class="s2">&#34;* soft nofile 65536&#34;</span> &gt;&gt; /etc/security/limits.conf
+<span class="nb">echo</span> <span class="s2">&#34;* hard nofile 65536&#34;</span> &gt;&gt; /etc/security/limits.conf
+<span class="nb">echo</span> <span class="s2">&#34;* soft nproc 65536&#34;</span>  &gt;&gt; /etc/security/limits.conf
+<span class="nb">echo</span> <span class="s2">&#34;* hard nproc 65536&#34;</span>  &gt;&gt; /etc/security/limits.conf
+<span class="nb">echo</span> <span class="s2">&#34;* soft memlock  unlimited&#34;</span>  &gt;&gt; /etc/security/limits.conf
+<span class="nb">echo</span> <span class="s2">&#34;* hard memlock  unlimited&#34;</span>  &gt;&gt; /etc/security/limits.conf
 
-<span class=c1>#阿里云yum源</span>
+<span class="c1">#阿里云yum源</span>
 curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
 curl -o /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo
 
-<span class=c1>#修改主机名</span>
+<span class="c1">#修改主机名</span>
 hostnamectl set-hostname k8s-master0
 hostnamectl set-hostname k8s-node1
 hostnamectl set-hostname k8s-node2
 hostnamectl set-hostname k8s-node3
 
-<span class=c1>#修改ssh连接慢问题</span>
-sed -i <span class=s1>&#39;/^#UseDNS yes/cUseDNS no&#39;</span> /etc/ssh/sshd_config
+<span class="c1">#修改ssh连接慢问题</span>
+sed -i <span class="s1">&#39;/^#UseDNS yes/cUseDNS no&#39;</span> /etc/ssh/sshd_config
 
-<span class=c1># 安装 nfs-utils</span>
-<span class=c1># 必须先安装 nfs-utils 才能挂载 nfs 网络存储</span>
+<span class="c1"># 安装 nfs-utils</span>
+<span class="c1"># 必须先安装 nfs-utils 才能挂载 nfs 网络存储</span>
 yum install -y nfs-utils wget socat
 
-<span class=c1># 关闭 防火墙</span>
+<span class="c1"># 关闭 防火墙</span>
 systemctl stop firewalld
 systemctl disable firewalld
 
-<span class=c1># 关闭 SeLinux</span>
-setenforce <span class=m>0</span>
-sed -i <span class=s2>&#34;s/SELINUX=enforcing/SELINUX=disabled/g&#34;</span> /etc/selinux/config
+<span class="c1"># 关闭 SeLinux</span>
+setenforce <span class="m">0</span>
+sed -i <span class="s2">&#34;s/SELINUX=enforcing/SELINUX=disabled/g&#34;</span> /etc/selinux/config
 
-<span class=c1># 关闭 swap</span>
+<span class="c1"># 关闭 swap</span>
 swapoff -a
-yes <span class=p>|</span> cp /etc/fstab /etc/fstab_bak
-cat /etc/fstab_bak <span class=p>|</span>grep -v swap &gt; /etc/fstab
+yes <span class="p">|</span> cp /etc/fstab /etc/fstab_bak
+cat /etc/fstab_bak <span class="p">|</span>grep -v swap &gt; /etc/fstab
 
-<span class=c1># 设置 yum repository</span>
-yum install -y yum-utils <span class=se>\
-</span><span class=se></span>device-mapper-persistent-data <span class=se>\
-</span><span class=se></span>lvm2
+<span class="c1"># 设置 yum repository</span>
+yum install -y yum-utils <span class="se">\
+</span><span class="se"></span>device-mapper-persistent-data <span class="se">\
+</span><span class="se"></span>lvm2
 yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 
-<span class=c1>#安装docker</span>
-yum list docker-ce --showduplicates <span class=p>|</span> sort -r
+<span class="c1">#安装docker</span>
+yum list docker-ce --showduplicates <span class="p">|</span> sort -r
 yum install -y docker-ce-18.09.9-3.el7
 sudo mkdir -p /etc/docker
-cat &gt; /etc/docker/daemon.json <span class=s>&lt;&lt; EOF
-</span><span class=s>
-</span><span class=s>{
-</span><span class=s>  &#34;exec-opts&#34;: [&#34;native.cgroupdriver=systemd&#34;],
-</span><span class=s>  &#34;registry-mirrors&#34;: [
-</span><span class=s>      &#34;https://dockerhub.azk8s.cn&#34;,
-</span><span class=s>      &#34;http://hub-mirror.c.163.com/&#34;,
-</span><span class=s>      &#34;https://registry.docker-cn.com&#34;
-</span><span class=s>  ],
-</span><span class=s>  &#34;storage-driver&#34;: &#34;overlay2&#34;,
-</span><span class=s>  &#34;storage-opts&#34;: [
-</span><span class=s>    &#34;overlay2.override_kernel_check=true&#34;
-</span><span class=s>  ],
-</span><span class=s>  &#34;log-driver&#34;: &#34;json-file&#34;,
-</span><span class=s>  &#34;log-opts&#34;: {
-</span><span class=s>    &#34;max-size&#34;: &#34;100m&#34;
-</span><span class=s>  }
-</span><span class=s>}
-</span><span class=s>
-</span><span class=s>EOF</span>
-systemctl start docker <span class=o>&amp;&amp;</span> systemctl <span class=nb>enable</span> docker
+cat &gt; /etc/docker/daemon.json <span class="s">&lt;&lt; EOF
+</span><span class="s">
+</span><span class="s">{
+</span><span class="s">  &#34;exec-opts&#34;: [&#34;native.cgroupdriver=systemd&#34;],
+</span><span class="s">  &#34;registry-mirrors&#34;: [
+</span><span class="s">      &#34;https://dockerhub.azk8s.cn&#34;,
+</span><span class="s">      &#34;http://hub-mirror.c.163.com/&#34;,
+</span><span class="s">      &#34;https://registry.docker-cn.com&#34;
+</span><span class="s">  ],
+</span><span class="s">  &#34;storage-driver&#34;: &#34;overlay2&#34;,
+</span><span class="s">  &#34;storage-opts&#34;: [
+</span><span class="s">    &#34;overlay2.override_kernel_check=true&#34;
+</span><span class="s">  ],
+</span><span class="s">  &#34;log-driver&#34;: &#34;json-file&#34;,
+</span><span class="s">  &#34;log-opts&#34;: {
+</span><span class="s">    &#34;max-size&#34;: &#34;100m&#34;
+</span><span class="s">  }
+</span><span class="s">}
+</span><span class="s">
+</span><span class="s">EOF</span>
+systemctl start docker <span class="o">&amp;&amp;</span> systemctl <span class="nb">enable</span> docker
 systemctl daemon-reload
 systemctl restart docker
 
-<span class=c1>#设置镜像存储目录，找到大点的挂载的目录进行存储</span>
+<span class="c1">#设置镜像存储目录，找到大点的挂载的目录进行存储</span>
 vi /lib/systemd/system/docker.service
-<span class=c1>#找到这行，往后面加上存储目录，例如这里是 --graph /apps/docker</span>
-<span class=nv>ExecStart</span><span class=o>=</span>/usr/bin/docker --graph /apps/docker
+<span class="c1">#找到这行，往后面加上存储目录，例如这里是 --graph /apps/docker</span>
+<span class="nv">ExecStart</span><span class="o">=</span>/usr/bin/docker --graph /apps/docker
 
-<span class=c1>#配置hosts</span>
-<span class=nb>echo</span> <span class=s2>&#34;192.168.1.240   k8s-master0&#34;</span> &gt;&gt; /etc/hosts
-<span class=nb>echo</span> <span class=s2>&#34;192.168.1.241   k8s-node1&#34;</span> &gt;&gt; /etc/hosts
-<span class=nb>echo</span> <span class=s2>&#34;192.168.1.242   k8s-node2&#34;</span> &gt;&gt; /etc/hosts
-<span class=nb>echo</span> <span class=s2>&#34;192.168.1.243   k8s-node3&#34;</span> &gt;&gt; /etc/hosts
+<span class="c1">#配置hosts</span>
+<span class="nb">echo</span> <span class="s2">&#34;192.168.1.240   k8s-master0&#34;</span> &gt;&gt; /etc/hosts
+<span class="nb">echo</span> <span class="s2">&#34;192.168.1.241   k8s-node1&#34;</span> &gt;&gt; /etc/hosts
+<span class="nb">echo</span> <span class="s2">&#34;192.168.1.242   k8s-node2&#34;</span> &gt;&gt; /etc/hosts
+<span class="nb">echo</span> <span class="s2">&#34;192.168.1.243   k8s-node3&#34;</span> &gt;&gt; /etc/hosts
 
-<span class=c1>#安装 kubelet、kubectl、kubeadm（全部节点）</span>
-<span class=c1>#配置可用的国内 yum 源</span>
-cat <span class=s>&lt;&lt;EOF &gt; /etc/yum.repos.d/kubernetes.repo
-</span><span class=s>
-</span><span class=s>[kubernetes]
-</span><span class=s>name=Kubernetes
-</span><span class=s>baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64/
-</span><span class=s>enabled=1
-</span><span class=s>gpgcheck=0
-</span><span class=s>repo_gpgcheck=0
-</span><span class=s>gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
-</span><span class=s>
-</span><span class=s>EOF</span>
-yum list kubelet --showduplicates <span class=p>|</span> sort -r
-<span class=c1>#注意安装顺序，一定不要先安装 kubeadm，因为 kubeadm 会自动安装最新版本的 kubelet 与 kubectl，导致版本不一致问题</span>
-<span class=c1>#安装 kubelet</span>
+<span class="c1">#安装 kubelet、kubectl、kubeadm（全部节点）</span>
+<span class="c1">#配置可用的国内 yum 源</span>
+cat <span class="s">&lt;&lt;EOF &gt; /etc/yum.repos.d/kubernetes.repo
+</span><span class="s">
+</span><span class="s">[kubernetes]
+</span><span class="s">name=Kubernetes
+</span><span class="s">baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64/
+</span><span class="s">enabled=1
+</span><span class="s">gpgcheck=0
+</span><span class="s">repo_gpgcheck=0
+</span><span class="s">gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
+</span><span class="s">
+</span><span class="s">EOF</span>
+yum list kubelet --showduplicates <span class="p">|</span> sort -r
+<span class="c1">#注意安装顺序，一定不要先安装 kubeadm，因为 kubeadm 会自动安装最新版本的 kubelet 与 kubectl，导致版本不一致问题</span>
+<span class="c1">#安装 kubelet</span>
 yum install -y kubelet-1.17.0-0 
-<span class=c1>#安装 kubectl</span>
+<span class="c1">#安装 kubectl</span>
 yum install -y kubectl-1.17.0-0
-<span class=c1>#安装 kubeadm</span>
+<span class="c1">#安装 kubeadm</span>
 yum install -y kubeadm-1.17.0-0
 
-<span class=c1>#启动 kubelet 并配置开机启动</span>
-systemctl start kubelet <span class=o>&amp;&amp;</span> systemctl <span class=nb>enable</span> kubelet
+<span class="c1">#启动 kubelet 并配置开机启动</span>
+systemctl start kubelet <span class="o">&amp;&amp;</span> systemctl <span class="nb">enable</span> kubelet
 
-<span class=c1>#初始化master</span>
-<span class=nb>export</span> <span class=nv>MASTER_IP</span><span class=o>=</span>192.168.1.240
-<span class=nb>export</span> <span class=nv>APISERVER_NAME</span><span class=o>=</span>apiserver.demo
-<span class=nb>export</span> <span class=nv>POD_SUBNET</span><span class=o>=</span>10.100.0.1/16
-<span class=nb>echo</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>MASTER_IP</span><span class=si>}</span><span class=s2>   </span><span class=si>${</span><span class=nv>APISERVER_NAME</span><span class=si>}</span><span class=s2>&#34;</span> &gt;&gt; /etc/hosts
-<span class=c1>#生成默认配置</span>
+<span class="c1">#初始化master</span>
+<span class="nb">export</span> <span class="nv">MASTER_IP</span><span class="o">=</span>192.168.1.240
+<span class="nb">export</span> <span class="nv">APISERVER_NAME</span><span class="o">=</span>apiserver.demo
+<span class="nb">export</span> <span class="nv">POD_SUBNET</span><span class="o">=</span>10.100.0.1/16
+<span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MASTER_IP</span><span class="si">}</span><span class="s2">   </span><span class="si">${</span><span class="nv">APISERVER_NAME</span><span class="si">}</span><span class="s2">&#34;</span> &gt;&gt; /etc/hosts
+<span class="c1">#生成默认配置</span>
 kubeadm config print init-defaults &gt; kubeadm-init.yaml
-<span class=c1>#自定义配置</span>
-cat &gt; kubeadm-config.yaml.tmpl <span class=s>&lt;&lt; EOF
-</span><span class=s>apiVersion: kubeadm.k8s.io/v1beta2
-</span><span class=s>kind: ClusterConfiguration
-</span><span class=s>kubernetesVersion: v1.17.0
-</span><span class=s>imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
-</span><span class=s>controlPlaneEndpoint: &#34;apiserver.demo:6443&#34;
-</span><span class=s>apiServer:
-</span><span class=s>#ExtraArgs:
-</span><span class=s>  extraArgs:
-</span><span class=s>    service-node-port-range: 30000-50000
-</span><span class=s>networking:
-</span><span class=s>  serviceSubnet: &#34;10.96.0.0/16&#34;
-</span><span class=s>  podSubnet: &#34;10.100.0.1/16&#34;
-</span><span class=s>  dnsDomain: &#34;cluster.local&#34;
-</span><span class=s>---
-</span><span class=s>apiVersion: kubeproxy.config.k8s.io/v1alpha1
-</span><span class=s>kind: KubeProxyConfiguration
-</span><span class=s>mode: &#34;ipvs&#34;
-</span><span class=s>ipvs:
-</span><span class=s>  scheduler: lc
-</span><span class=s>  minSyncPeriod: 5s
-</span><span class=s>  syncPeriod: 15s
-</span><span class=s>EOF</span>
+<span class="c1">#自定义配置</span>
+cat &gt; kubeadm-config.yaml.tmpl <span class="s">&lt;&lt; EOF
+</span><span class="s">apiVersion: kubeadm.k8s.io/v1beta2
+</span><span class="s">kind: ClusterConfiguration
+</span><span class="s">kubernetesVersion: v1.17.0
+</span><span class="s">imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
+</span><span class="s">controlPlaneEndpoint: &#34;apiserver.demo:6443&#34;
+</span><span class="s">apiServer:
+</span><span class="s">#ExtraArgs:
+</span><span class="s">  extraArgs:
+</span><span class="s">    service-node-port-range: 30000-50000
+</span><span class="s">networking:
+</span><span class="s">  serviceSubnet: &#34;10.96.0.0/16&#34;
+</span><span class="s">  podSubnet: &#34;10.100.0.1/16&#34;
+</span><span class="s">  dnsDomain: &#34;cluster.local&#34;
+</span><span class="s">---
+</span><span class="s">apiVersion: kubeproxy.config.k8s.io/v1alpha1
+</span><span class="s">kind: KubeProxyConfiguration
+</span><span class="s">mode: &#34;ipvs&#34;
+</span><span class="s">ipvs:
+</span><span class="s">  scheduler: lc
+</span><span class="s">  minSyncPeriod: 5s
+</span><span class="s">  syncPeriod: 15s
+</span><span class="s">EOF</span>
 
-kubeadm config images list --config<span class=o>=</span>kubeadm-config.yaml.tmpl
-kubeadm config images pull --config<span class=o>=</span>kubeadm-config.yaml.tmpl
-kubeadm init --config<span class=o>=</span>kubeadm-config.yaml.tmpl --upload-certs --v<span class=o>=</span><span class=m>5</span>
+kubeadm config images list --config<span class="o">=</span>kubeadm-config.yaml.tmpl
+kubeadm config images pull --config<span class="o">=</span>kubeadm-config.yaml.tmpl
+kubeadm init --config<span class="o">=</span>kubeadm-config.yaml.tmpl --upload-certs --v<span class="o">=</span><span class="m">5</span>
 
-<span class=c1>#如果初始化失败执行一下命令</span>
+<span class="c1">#如果初始化失败执行一下命令</span>
 kubeadm reset
 
-<span class=c1>#cni网络插件calico</span>
+<span class="c1">#cni网络插件calico</span>
 wget https://kuboard.cn/install-script/calico/calico-3.9.2.yaml
-sed -i <span class=s2>&#34;</span><span class=s2>s#192\.168\.0\.0/16#</span><span class=si>${</span><span class=nv>POD_SUBNET</span><span class=si>}</span><span class=s2>#</span><span class=s2>&#34;</span> calico-3.9.2.yaml
+sed -i <span class="s2">&#34;</span><span class="s2">s#192\.168\.0\.0/16#</span><span class="si">${</span><span class="nv">POD_SUBNET</span><span class="si">}</span><span class="s2">#</span><span class="s2">&#34;</span> calico-3.9.2.yaml
 kubectl apply -f calico-3.9.2.yaml
 
-<span class=c1>#配置 kubectl</span>
+<span class="c1">#配置 kubectl</span>
 rm -rf /root/.kube/
 mkdir /root/.kube/
 cp -i /etc/kubernetes/admin.conf /root/.kube/config
 kubectl get node
 systemctl status kubelet
 kubectl get cs
-<span class=c1>#查看配置</span>
+<span class="c1">#查看配置</span>
 kubectl -n kube-system get cm kubeadm-config -oyaml
 
-<span class=c1>#获取work节点token（在master上执行）</span>
+<span class="c1">#获取work节点token（在master上执行）</span>
 kubeadm token create --print-join-command
 kubeadm join apiserver.demo:6443 --token 2nae97.4f52qgeyhrqi6ndc     --discovery-token-ca-cert-hash sha256:b2313c178f0ef70b3e7eb75d4abf2eb0e56e46aa22ac3b11b765145b7b28d216
 
-<span class=c1>#在所有worker节点上执行</span>
-<span class=nb>export</span> <span class=nv>MASTER_IP</span><span class=o>=</span>192.168.1.240
-<span class=nb>export</span> <span class=nv>APISERVER_NAME</span><span class=o>=</span>apiserver.demo
-<span class=nb>export</span> <span class=nv>POD_SUBNET</span><span class=o>=</span>10.100.0.1/16
-<span class=nb>echo</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>MASTER_IP</span><span class=si>}</span><span class=s2>   </span><span class=si>${</span><span class=nv>APISERVER_NAME</span><span class=si>}</span><span class=s2>&#34;</span> &gt;&gt; /etc/hosts
+<span class="c1">#在所有worker节点上执行</span>
+<span class="nb">export</span> <span class="nv">MASTER_IP</span><span class="o">=</span>192.168.1.240
+<span class="nb">export</span> <span class="nv">APISERVER_NAME</span><span class="o">=</span>apiserver.demo
+<span class="nb">export</span> <span class="nv">POD_SUBNET</span><span class="o">=</span>10.100.0.1/16
+<span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">MASTER_IP</span><span class="si">}</span><span class="s2">   </span><span class="si">${</span><span class="nv">APISERVER_NAME</span><span class="si">}</span><span class="s2">&#34;</span> &gt;&gt; /etc/hosts
 kubeadm join apiserver.demo:6443 --token 2nae97.4f52qgeyhrqi6ndc     --discovery-token-ca-cert-hash sha256:b2313c178f0ef70b3e7eb75d4abf2eb0e56e46aa22ac3b11b765145b7b28d216
 
-<span class=c1>#kubectl 补全命令</span>
+<span class="c1">#kubectl 补全命令</span>
 yum install bash-completion -y 
-<span class=nb>source</span> /usr/share/bash-completion/bash_completion
-<span class=nb>source</span> &lt;<span class=o>(</span>kubectl completion bash<span class=o>)</span>
-<span class=nb>echo</span> <span class=s2>&#34;source &lt;(kubectl completion bash)&#34;</span> &gt;&gt; ~/.bashrc
-<span class=nb>source</span> ~/.bashrc
+<span class="nb">source</span> /usr/share/bash-completion/bash_completion
+<span class="nb">source</span> &lt;<span class="o">(</span>kubectl completion bash<span class="o">)</span>
+<span class="nb">echo</span> <span class="s2">&#34;source &lt;(kubectl completion bash)&#34;</span> &gt;&gt; ~/.bashrc
+<span class="nb">source</span> ~/.bashrc
 
-<span class=c1>#查看是否开启 IPVS（Master 节点）</span>
-kubectl get pod -n kube-system <span class=p>|</span> grep kube-proxy
-<span class=c1>#选择其中一个 Pod ，查看该 Pod 中的日志信息中是否存在 ipvs 信息：</span>
+<span class="c1">#查看是否开启 IPVS（Master 节点）</span>
+kubectl get pod -n kube-system <span class="p">|</span> grep kube-proxy
+<span class="c1">#选择其中一个 Pod ，查看该 Pod 中的日志信息中是否存在 ipvs 信息：</span>
 kubectl logs kube-proxy-6tg55 -n kube-system
 
-<span class=c1>#安装ipvsadm</span> 
+<span class="c1">#安装ipvsadm</span> 
 yum install -y ipvsadm
-<span class=c1>#查看转发规则</span>
+<span class="c1">#查看转发规则</span>
 ipvsadm -Ln
-<span class=c1>#查看ipvs模块的转发情况统计</span>
-ipvsadm -Ln --stats <span class=p>|</span> --rate
+<span class="c1">#查看ipvs模块的转发情况统计</span>
+ipvsadm -Ln --stats <span class="p">|</span> --rate
 ipvsadm -lnc
-</code></pre></td></tr></table></div></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
-<span class=item-content>Myki</span></p><p class=copyright-item><span class=item-title>上次更新</span>
-<span class=item-content>2019-12-19</span></p></div><script async src=https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js></script><ins class=adsbygoogle style=display:block data-ad-client=ca-pub-2427629508597494 data-ad-slot=2287897972 data-ad-format=auto data-full-width-responsive=true></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script><footer class=post-footer><nav class=post-nav><a class=prev href=/post/harbor_install/><i class="iconfont icon-left"></i><span class="prev-text nav-default">harbor docker私有库安装</span>
-<span class="prev-text nav-mobile">上一篇</span></a>
-<a class=next href=/post/prometheus_install/><span class="next-text nav-default">prometheus 安装</span>
-<span class="next-text nav-mobile">下一篇</span>
-<i class="iconfont icon-right"></i></a></nav></footer></article></div></div></main><footer id=footer class=footer><div class=social-links><a href=https://www.1nth.com/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=power-by>由 <a class=hexo-link href=https://gohugo.io>Hugo</a> 强力驱动</span>
-<span class=division>|</span>
-<span class=theme-info>主题 -
-<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span>
-<span class=copyright-year>&copy;
-2018 -
-2020
-<span class=heart><i class="iconfont icon-heart"></i></span><span class=author>Myki</span><br><a href=http://beian.miit.gov.cn>京ICP备17054644号</a><br></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script><script type=text/javascript src=/dist/even.26188efa.min.js></script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-154483127-1"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
-gtag('js',new Date());gtag('config','UA-154483127-1');</script></body></html>
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Myki</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2019-12-19
+        
+    </span>
+  </p>
+  
+  
+</div>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	
+	<ins class="adsbygoogle"
+		style="display:block"
+		data-ad-client="ca-pub-2427629508597494"
+		data-ad-slot="2287897972"
+		data-ad-format="auto"
+		data-full-width-responsive="true"></ins>
+	<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
+
+    
+    <footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/harbor_install/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">harbor docker私有库安装</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/prometheus_install/">
+            <span class="next-text nav-default">prometheus 安装</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://www.1nth.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Myki</span>
+    <br><a href="http://beian.miit.gov.cn">京ICP备17054644号</a><br />
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154483127-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154483127-1');
+</script>
+
+
+
+
+
+
+</body>
+</html>
