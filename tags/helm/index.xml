@@ -1,38 +1,6 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>helm on Myki的博客</title>
-    <link>https://www.1nth.com/tags/helm/</link>
-    <description>Recent content in helm on Myki的博客</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <lastBuildDate>Mon, 09 Mar 2020 09:00:23 +0800</lastBuildDate>
-    
-	<atom:link href="https://www.1nth.com/tags/helm/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>k8s 时区 docker 时区 中国时区</title>
-      <link>https://www.1nth.com/post/k8s_zone/</link>
-      <pubDate>Mon, 09 Mar 2020 09:00:23 +0800</pubDate>
-      
-      <guid>https://www.1nth.com/post/k8s_zone/</guid>
-      <description>&lt;h4 id=&#34;zone-k8s-docker-&#34;&gt;&lt;code&gt;zone&lt;/code&gt; k8s时区设置 docker 时区设置&lt;/h4&gt;
-&lt;h4 id=&#34;kubernetes-v1174&#34;&gt;Kubernetes 版本：v1.17.4&lt;/h4&gt;
-&lt;h4 id=&#34;kubeadm&#34;&gt;集群以kubeadm方式安装&lt;/h4&gt;
-&lt;h4 id=&#34;docker-19031&#34;&gt;docker版本 19.03.1&lt;/h4&gt;</description>
-    </item>
-    
-    <item>
-      <title>helm3 安装使用</title>
-      <link>https://www.1nth.com/post/helm3_install/</link>
-      <pubDate>Sun, 08 Mar 2020 09:00:23 +0800</pubDate>
-      
-      <guid>https://www.1nth.com/post/helm3_install/</guid>
-      <description>&lt;h4 id=&#34;helm3-v311&#34;&gt;&lt;code&gt;Helm3&lt;/code&gt; 版本：v3.1.1&lt;/h4&gt;
-&lt;h4 id=&#34;kubernetes-v1173&#34;&gt;Kubernetes 版本：v1.17.3&lt;/h4&gt;
-&lt;h4 id=&#34;kubeadm&#34;&gt;集群以kubeadm方式安装&lt;/h4&gt;</description>
-    </item>
-    
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>helm on Myki的博客</title><link>https://www.1nth.com/tags/helm/</link><description>Recent content in helm on Myki的博客</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 09 Mar 2020 09:00:23 +0800</lastBuildDate><atom:link href="https://www.1nth.com/tags/helm/index.xml" rel="self" type="application/rss+xml"/><item><title>k8s 时区 docker 时区 中国时区</title><link>https://www.1nth.com/post/k8s_zone/</link><pubDate>Mon, 09 Mar 2020 09:00:23 +0800</pubDate><guid>https://www.1nth.com/post/k8s_zone/</guid><description>&lt;h4 id="zone-k8s-docker-">&lt;code>zone&lt;/code> k8s时区设置 docker 时区设置&lt;/h4>
+&lt;h4 id="kubernetes-v1174">Kubernetes 版本：v1.17.4&lt;/h4>
+&lt;h4 id="kubeadm">集群以kubeadm方式安装&lt;/h4>
+&lt;h4 id="docker-19031">docker版本 19.03.1&lt;/h4></description></item><item><title>helm3 安装使用</title><link>https://www.1nth.com/post/helm3_install/</link><pubDate>Sun, 08 Mar 2020 09:00:23 +0800</pubDate><guid>https://www.1nth.com/post/helm3_install/</guid><description>&lt;h4 id="helm3-v311">&lt;code>Helm3&lt;/code> 版本：v3.1.1&lt;/h4>
+&lt;h4 id="kubernetes-v1173">Kubernetes 版本：v1.17.3&lt;/h4>
+&lt;h4 id="kubeadm">集群以kubeadm方式安装&lt;/h4></description></item></channel></rss>

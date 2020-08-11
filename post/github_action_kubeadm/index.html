@@ -1,251 +1,93 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-<head>
-	
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154483127-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-154483127-1');
-</script>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>github action kubeadm编译证书100年 - Myki的博客</title>
-  <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-<meta name="theme-color" content="#f8f5ec" />
-<meta name="msapplication-navbutton-color" content="#f8f5ec">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
-
-
-<meta name="author" content="Myki" /><meta name="description" content="github action kubeadm编译证书100年" /><meta name="keywords" content="centos, k8s" />
-
-
-
-
-
-
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-  (adsbygoogle = window.adsbygoogle || []).push({
-    google_ad_client: "ca-pub-2427629508597494",
-    enable_page_level_ads: true
-  });
-</script>
-
-
-<meta name="generator" content="Hugo 0.61.0 with theme even" />
-
-
-<link rel="canonical" href="https://www.1nth.com/post/github_action_kubeadm/" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/manifest.json">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-
-
-<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
-
-
-<meta property="og:title" content="github action kubeadm编译证书100年" />
-<meta property="og:description" content="github action kubeadm编译证书100年" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://www.1nth.com/post/github_action_kubeadm/" />
-<meta property="article:published_time" content="2020-06-20T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-06-20T09:00:23+08:00" />
-<meta itemprop="name" content="github action kubeadm编译证书100年">
-<meta itemprop="description" content="github action kubeadm编译证书100年">
-<meta itemprop="datePublished" content="2020-06-20T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-06-20T09:00:23&#43;08:00" />
-<meta itemprop="wordCount" content="429">
-
-
-
-<meta itemprop="keywords" content="kubeadm," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="github action kubeadm编译证书100年"/>
-<meta name="twitter:description" content="github action kubeadm编译证书100年"/>
-
-<!--[if lte IE 9]>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
-<![endif]-->
-
-<!--[if lt IE 9]>
-  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
-<![endif]-->
-
-</head>
-<body>
-  <div id="mobile-navbar" class="mobile-navbar">
-  <div class="mobile-header-logo">
-    <a href="/" class="logo">Even</a>
-  </div>
-  <div class="mobile-navbar-icon">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-</div>
-<nav id="mobile-menu" class="mobile-menu slideout-menu">
-  <ul class="mobile-menu-list">
-    <a href="/">
-        <li class="mobile-menu-item">Home</li>
-      </a><a href="/post/">
-        <li class="mobile-menu-item">Archives</li>
-      </a><a href="/tags/">
-        <li class="mobile-menu-item">Tags</li>
-      </a><a href="/categories/">
-        <li class="mobile-menu-item">Categories</li>
-      </a><a href="/about/">
-        <li class="mobile-menu-item">About</li>
-      </a>
-  </ul>
-</nav>
-  <div class="container" id="mobile-panel">
-    <header id="header" class="header">
-        <div class="logo-wrapper">
-  <a href="/" class="logo">Even</a>
-</div>
-
-<nav class="site-navbar">
-  <ul id="menu" class="menu">
-    <li class="menu-item">
-        <a class="menu-item-link" href="/">Home</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/post/">Archives</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/tags/">Tags</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/categories/">Categories</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/about/">About</a>
-      </li>
-  </ul>
-</nav>
-    </header>
-
-    <main id="main" class="main">
-      <div class="content-wrapper">
-        <div id="content" class="content">
-          <article class="post">
-    
-    <header class="post-header">
-      <h1 class="post-title">github action kubeadm编译证书100年</h1>
-
-      <div class="post-meta">
-        <span class="post-time"> 2020-06-20 </span>
-        <div class="post-category">
-            <a href="/categories/centos/"> centos </a>
-            <a href="/categories/k8s/"> k8s </a>
-            </div>
-        
-      </div>
-    </header>
-
-    
-    <div class="post-content">
-      <h4 id="github-action-kubeadm100">github action kubeadm编译证书100年</h4>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span><span class="lnt">48
-</span><span class="lnt">49
-</span><span class="lnt">50
-</span><span class="lnt">51
-</span><span class="lnt">52
-</span><span class="lnt">53
-</span><span class="lnt">54
-</span><span class="lnt">55
-</span><span class="lnt">56
-</span><span class="lnt">57
-</span><span class="lnt">58
-</span><span class="lnt">59
-</span><span class="lnt">60
-</span><span class="lnt">61
-</span><span class="lnt">62
-</span><span class="lnt">63
-</span><span class="lnt">64
-</span><span class="lnt">65
-</span><span class="lnt">66
-</span><span class="lnt">67
-</span><span class="lnt">68
-</span><span class="lnt">69
-</span><span class="lnt">70
-</span><span class="lnt">71
-</span><span class="lnt">72
-</span><span class="lnt">73
-</span><span class="lnt">74
-</span><span class="lnt">75
-</span><span class="lnt">76
-</span><span class="lnt">77
-</span><span class="lnt">78
-</span><span class="lnt">79
-</span><span class="lnt">80
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#fork官网kubernets  然后创建工作流  可参考https://github.com/21ki/kubernetes/blob/master/.github/workflows/go.yml</span>
+<!doctype html><html lang=zh-cn><head><script async src="https://www.googletagmanager.com/gtag/js?id=UA-154483127-1"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','UA-154483127-1');</script><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>github action kubeadm编译证书100年 - Myki的博客</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="Myki"><meta name=description content="github action kubeadm编译证书100年"><meta name=keywords content="centos,k8s"><script async src=//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js></script><script>(adsbygoogle=window.adsbygoogle||[]).push({google_ad_client:"ca-pub-2427629508597494",enable_page_level_ads:true});</script><meta name=generator content="Hugo 0.61.0 with theme even"><link rel=canonical href=https://www.1nth.com/post/github_action_kubeadm/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/dist/even.c2a46f00.min.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="github action kubeadm编译证书100年"><meta property="og:description" content="github action kubeadm编译证书100年"><meta property="og:type" content="article"><meta property="og:url" content="https://www.1nth.com/post/github_action_kubeadm/"><meta property="article:published_time" content="2020-06-20T00:00:00+00:00"><meta property="article:modified_time" content="2020-06-20T09:00:23+08:00"><meta itemprop=name content="github action kubeadm编译证书100年"><meta itemprop=description content="github action kubeadm编译证书100年"><meta itemprop=datePublished content="2020-06-20T00:00:00+00:00"><meta itemprop=dateModified content="2020-06-20T09:00:23+08:00"><meta itemprop=wordCount content="429"><meta itemprop=keywords content="kubeadm,"><meta name=twitter:card content="summary"><meta name=twitter:title content="github action kubeadm编译证书100年"><meta name=twitter:description content="github action kubeadm编译证书100年"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>Even</a></div><div class=mobile-navbar-icon><span></span><span></span><span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/categories/><li class=mobile-menu-item>Categories</li></a><a href=/about/><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>Even</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/categories/>Categories</a></li><li class=menu-item><a class=menu-item-link href=/about/>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>github action kubeadm编译证书100年</h1><div class=post-meta><span class=post-time>2020-06-20</span><div class=post-category><a href=/categories/centos/>centos</a>
+<a href=/categories/k8s/>k8s</a></div></div></header><div class=post-content><h4 id=github-action-kubeadm100>github action kubeadm编译证书100年</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span><span class=lnt>71
+</span><span class=lnt>72
+</span><span class=lnt>73
+</span><span class=lnt>74
+</span><span class=lnt>75
+</span><span class=lnt>76
+</span><span class=lnt>77
+</span><span class=lnt>78
+</span><span class=lnt>79
+</span><span class=lnt>80
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1>#fork官网kubernets  然后创建工作流  可参考https://github.com/21ki/kubernetes/blob/master/.github/workflows/go.yml</span>
 name: Go
 
 on:
   push:
-    branches: <span class="o">[</span> master <span class="o">]</span>
+    branches: <span class=o>[</span> master <span class=o>]</span>
   pull_request:
-    branches: <span class="o">[</span> master <span class="o">]</span>
+    branches: <span class=o>[</span> master <span class=o>]</span>
 
 jobs:
 
@@ -261,178 +103,75 @@ jobs:
       id: go
 
     - name: Dump GitHub context
-      <span class="c1">#env:</span>
-      <span class="c1">#  KUBEADM_VERSION: v1.18.2</span>
-      run: <span class="nb">echo</span> <span class="s2">&#34;::set-env name=packageName::v1.18.3&#34;</span>
+      <span class=c1>#env:</span>
+      <span class=c1>#  KUBEADM_VERSION: v1.18.2</span>
+      run: <span class=nb>echo</span> <span class=s2>&#34;::set-env name=packageName::v1.18.3&#34;</span>
     
     - name: Get Env
-      run: <span class="nb">echo</span> <span class="s1">&#39;${{ env.packageName }}&#39;</span>
+      run: <span class=nb>echo</span> <span class=s1>&#39;${{ env.packageName }}&#39;</span>
        
     - name: Check out code into the Go module directory
       uses: actions/checkout@v2
       with:
-        ref: <span class="si">${</span><span class="p">{ env.packageName </span><span class="si">}</span><span class="o">}</span>
+        ref: <span class=si>${</span><span class=p>{ env.packageName </span><span class=si>}</span><span class=o>}</span>
          
     - name: Sed Env
-      run: <span class="p">|</span>
-        sed -i <span class="s2">&#34;s/365/365 * 99/&#34;</span> /home/runner/work/kubernetes/kubernetes/cmd/kubeadm/app/constants/constants.go
-        sed -i <span class="s2">&#34;s/10)/99)/&#34;</span>  /home/runner/work/kubernetes/kubernetes/staging/src/k8s.io/client-go/util/cert/cert.go
+      run: <span class=p>|</span>
+        sed -i <span class=s2>&#34;s/365/365 * 99/&#34;</span> /home/runner/work/kubernetes/kubernetes/cmd/kubeadm/app/constants/constants.go
+        sed -i <span class=s2>&#34;s/10)/99)/&#34;</span>  /home/runner/work/kubernetes/kubernetes/staging/src/k8s.io/client-go/util/cert/cert.go
     - name: Get Env
-      run: <span class="p">|</span>
-        find . -name constants.go <span class="p">|</span>xargs cat <span class="p">|</span>grep 365
-        find . -name cert.go <span class="p">|</span>xargs cat <span class="p">|</span>grep 365d
-    <span class="c1">#- name: github</span>
-    <span class="c1">#  run: git clone --branch v1.18.2 https://github.com/kubernetes/kubernetes.git</span>
+      run: <span class=p>|</span>
+        find . -name constants.go <span class=p>|</span>xargs cat <span class=p>|</span>grep 365
+        find . -name cert.go <span class=p>|</span>xargs cat <span class=p>|</span>grep 365d
+    <span class=c1>#- name: github</span>
+    <span class=c1>#  run: git clone --branch v1.18.2 https://github.com/kubernetes/kubernetes.git</span>
 
     - name: Get dependencies
-      run: <span class="p">|</span>
+      run: <span class=p>|</span>
         go get -v -t -d ./...
-        <span class="k">if</span> <span class="o">[</span> -f Gopkg.toml <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-            curl https://raw.githubusercontent.com/golang/dep/master/install.sh <span class="p">|</span> sh
+        <span class=k>if</span> <span class=o>[</span> -f Gopkg.toml <span class=o>]</span><span class=p>;</span> <span class=k>then</span>
+            curl https://raw.githubusercontent.com/golang/dep/master/install.sh <span class=p>|</span> sh
             dep ensure
-        <span class="k">fi</span>
+        <span class=k>fi</span>
     - name: Get workpath
-      run: <span class="nb">pwd</span>
+      run: <span class=nb>pwd</span>
 
-    <span class="c1">#- name: 切换分支</span>
-    <span class="c1">#  run: git checkout v1.18.2</span>
+    <span class=c1>#- name: 切换分支</span>
+    <span class=c1>#  run: git checkout v1.18.2</span>
 
     - name: Build
-      run: <span class="nv">KUBE_GIT_TREE_STATE</span><span class="o">=</span>clean make all <span class="nv">WHAT</span><span class="o">=</span>cmd/kubeadm <span class="nv">GOFLAGS</span><span class="o">=</span>-v
+      run: <span class=nv>KUBE_GIT_TREE_STATE</span><span class=o>=</span>clean make all <span class=nv>WHAT</span><span class=o>=</span>cmd/kubeadm <span class=nv>GOFLAGS</span><span class=o>=</span>-v
 
     - name: Get paGth
       run: find . -name kubeadm
     
     - name: Kubeadm version
-      run: <span class="p">|</span>
+      run: <span class=p>|</span>
         chmod +x ./_output/local/bin/linux/amd64/kubeadm
         ./_output/local/bin/linux/amd64/kubeadm version
     - name: Package
-      run: mkdir myki <span class="o">&amp;&amp;</span> cp ./_output/local/bin/linux/amd64/kubeadm myki
+      run: mkdir myki <span class=o>&amp;&amp;</span> cp ./_output/local/bin/linux/amd64/kubeadm myki
 
     - uses: actions/upload-artifact@v1
       with:
-        name: kubeadm-<span class="si">${</span><span class="p">{ env.packageName </span><span class="si">}</span><span class="o">}</span>
+        name: kubeadm-<span class=si>${</span><span class=p>{ env.packageName </span><span class=si>}</span><span class=o>}</span>
         path: myki
-<span class="c1">#     #- name: Copy file</span>
-<span class="c1">#     #  run: mkdir staging &amp;&amp; cp _output/local/bin/linux/amd64/kubeadm staging</span>
-<span class="c1">#     #- name: Test</span>
-<span class="c1">#       #run: go test -v .</span>
-</code></pre></td></tr></table>
-</div>
-</div>
-    </div>
-
-    <div class="post-copyright">
-  <p class="copyright-item">
-    <span class="item-title">文章作者</span>
-    <span class="item-content">Myki</span>
-  </p>
-  <p class="copyright-item">
-    <span class="item-title">上次更新</span>
-    <span class="item-content">
-        2020-06-20
-        
-    </span>
-  </p>
-  
-  
-</div>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-	
-	<ins class="adsbygoogle"
-		style="display:block"
-		data-ad-client="ca-pub-2427629508597494"
-		data-ad-slot="2287897972"
-		data-ad-format="auto"
-		data-full-width-responsive="true"></ins>
-	<script>
-		(adsbygoogle = window.adsbygoogle || []).push({});
-	</script>
-
-    
-    <footer class="post-footer">
-      <div class="post-tags">
-          <a href="/tags/kubeadm/">kubeadm</a>
-          </div>
-      <nav class="post-nav">
-        <a class="prev" href="/post/vos_mysql_back/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">vos 迁移备份mysql</span>
-            <span class="prev-text nav-mobile">上一篇</span>
-          </a>
-        <a class="next" href="/post/yunos_install/">
-            <span class="next-text nav-default">公有云 阿里云自定义安装系统 解决centos版本太高vos安装不上emp问题</span>
-            <span class="next-text nav-mobile">下一篇</span>
-            <i class="iconfont icon-right"></i>
-          </a>
-      </nav>
-    </footer>
-  </article>
-        </div>
-        
-
-  
-
-  
-
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="social-links">
-  <a href="https://www.1nth.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
-</div>
-
-<div class="copyright">
-  <span class="power-by">
-    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
-  </span>
-  <span class="division">|</span>
-  <span class="theme-info">
-    主题 - 
-    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
-  </span>
-
-  
-
-  <span class="copyright-year">
-    &copy; 
-    2018 - 
-    2020
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">Myki</span>
-    <br><a href="http://beian.miit.gov.cn">京ICP备17054644号</a><br />
-  </span>
-</div>
-    </footer>
-
-    <div class="back-to-top" id="back-to-top">
-      <i class="iconfont icon-up"></i>
-    </div>
-  </div>
-  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
-<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
-
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154483127-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-154483127-1');
-</script>
-
-
-
-
-
-
-</body>
-</html>
+<span class=c1>#     #- name: Copy file</span>
+<span class=c1>#     #  run: mkdir staging &amp;&amp; cp _output/local/bin/linux/amd64/kubeadm staging</span>
+<span class=c1>#     #- name: Test</span>
+<span class=c1>#       #run: go test -v .</span>
+</code></pre></td></tr></table></div></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+<span class=item-content>Myki</span></p><p class=copyright-item><span class=item-title>上次更新</span>
+<span class=item-content>2020-06-20</span></p></div><script async src=https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js></script><ins class=adsbygoogle style=display:block data-ad-client=ca-pub-2427629508597494 data-ad-slot=2287897972 data-ad-format=auto data-full-width-responsive=true></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script><footer class=post-footer><div class=post-tags><a href=/tags/kubeadm/>kubeadm</a></div><nav class=post-nav><a class=prev href=/post/vos_mysql_back/><i class="iconfont icon-left"></i><span class="prev-text nav-default">vos 迁移备份mysql</span>
+<span class="prev-text nav-mobile">上一篇</span></a>
+<a class=next href=/post/yunos_install/><span class="next-text nav-default">公有云 阿里云自定义安装系统 解决centos版本太高vos安装不上emp问题</span>
+<span class="next-text nav-mobile">下一篇</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div></div></main><footer id=footer class=footer><div class=social-links><a href=https://www.1nth.com/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=power-by>由 <a class=hexo-link href=https://gohugo.io>Hugo</a> 强力驱动</span>
+<span class=division>|</span>
+<span class=theme-info>主题 -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span>
+<span class=copyright-year>&copy;
+2018 -
+2020
+<span class=heart><i class="iconfont icon-heart"></i></span><span class=author>Myki</span><br><a href=http://beian.miit.gov.cn>京ICP备17054644号</a><br></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script><script type=text/javascript src=/dist/even.26188efa.min.js></script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-154483127-1"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','UA-154483127-1');</script></body></html>
