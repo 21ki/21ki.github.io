@@ -3,35 +3,56 @@
   
   <url>
     <loc>https://www.1nth.com/categories/</loc>
-    <lastmod>2020-06-30T09:00:23+08:00</lastmod>
+    <lastmod>2020-07-30T09:00:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://www.1nth.com/categories/centos/</loc>
-    <lastmod>2020-06-30T09:00:23+08:00</lastmod>
+    <lastmod>2020-07-30T09:00:23+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.1nth.com/post/coredns_etcd_install/</loc>
+    <lastmod>2020-07-30T09:00:23+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.1nth.com/tags/coredns/</loc>
+    <lastmod>2020-07-30T09:00:23+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.1nth.com/categories/coredns/</loc>
+    <lastmod>2020-07-30T09:00:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://www.1nth.com/</loc>
-    <lastmod>2020-06-30T09:00:23+08:00</lastmod>
+    <lastmod>2020-07-30T09:00:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://www.1nth.com/post/</loc>
-    <lastmod>2020-06-30T09:00:23+08:00</lastmod>
+    <lastmod>2020-07-30T09:00:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://www.1nth.com/tags/</loc>
-    <lastmod>2020-06-30T09:00:23+08:00</lastmod>
+    <lastmod>2020-07-30T09:00:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>

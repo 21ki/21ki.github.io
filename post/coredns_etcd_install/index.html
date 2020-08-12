@@ -12,7 +12,7 @@
 </script>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>vos 迁移备份mysql - Myki的博客</title>
+  <title>centos7.5下coredns&#43;etcd搭建DNS服务器 - Myki的博客</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -25,7 +25,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Myki" /><meta name="description" content="1 2 3 4 5  #linux不记录痕迹unset HISTORY HISTFILE HISTSAVE HISTZONE HISTORY HISTLOGexport HISTFILE=/dev/nullexport HISTSIZE=0export HISTFILESIZE=0  " /><meta name="keywords" content="centos, vos" />
+<meta name="author" content="Myki" /><meta name="description" content="1 2 3  #安装etcdyum install etcd -ysystemctl start --now etcd  " /><meta name="keywords" content="centos, coredns" />
 
 
 
@@ -44,7 +44,7 @@
 <meta name="generator" content="Hugo 0.61.0 with theme even" />
 
 
-<link rel="canonical" href="https://www.1nth.com/post/vos_mysql_back/" />
+<link rel="canonical" href="https://www.1nth.com/post/coredns_etcd_install/" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -56,68 +56,56 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="vos 迁移备份mysql" />
+<meta property="og:title" content="centos7.5下coredns&#43;etcd搭建DNS服务器" />
 <meta property="og:description" content="
 
 1
 2
 3
-4
-5
 
 
-#linux不记录痕迹
-unset HISTORY HISTFILE HISTSAVE HISTZONE HISTORY HISTLOG
-export HISTFILE=/dev/null
-export HISTSIZE=0
-export HISTFILESIZE=0
+#安装etcd
+yum install etcd -y
+systemctl start --now etcd
 
 
 " />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://www.1nth.com/post/vos_mysql_back/" />
-<meta property="article:published_time" content="2020-06-30T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-06-30T09:00:23+08:00" />
-<meta itemprop="name" content="vos 迁移备份mysql">
+<meta property="og:url" content="https://www.1nth.com/post/coredns_etcd_install/" />
+<meta property="article:published_time" content="2020-07-30T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-07-30T09:00:23+08:00" />
+<meta itemprop="name" content="centos7.5下coredns&#43;etcd搭建DNS服务器">
 <meta itemprop="description" content="
 
 1
 2
 3
-4
-5
 
 
-#linux不记录痕迹
-unset HISTORY HISTFILE HISTSAVE HISTZONE HISTORY HISTLOG
-export HISTFILE=/dev/null
-export HISTSIZE=0
-export HISTFILESIZE=0
+#安装etcd
+yum install etcd -y
+systemctl start --now etcd
 
 
 ">
-<meta itemprop="datePublished" content="2020-06-30T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-06-30T09:00:23&#43;08:00" />
-<meta itemprop="wordCount" content="202">
+<meta itemprop="datePublished" content="2020-07-30T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-07-30T09:00:23&#43;08:00" />
+<meta itemprop="wordCount" content="799">
 
 
 
-<meta itemprop="keywords" content="vos," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="vos 迁移备份mysql"/>
+<meta itemprop="keywords" content="coredns," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="centos7.5下coredns&#43;etcd搭建DNS服务器"/>
 <meta name="twitter:description" content="
 
 1
 2
 3
-4
-5
 
 
-#linux不记录痕迹
-unset HISTORY HISTFILE HISTSAVE HISTZONE HISTORY HISTLOG
-export HISTFILE=/dev/null
-export HISTSIZE=0
-export HISTFILESIZE=0
+#安装etcd
+yum install etcd -y
+systemctl start --now etcd
 
 
 "/>
@@ -187,13 +175,13 @@ export HISTFILESIZE=0
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">vos 迁移备份mysql</h1>
+      <h1 class="post-title">centos7.5下coredns&#43;etcd搭建DNS服务器</h1>
 
       <div class="post-meta">
-        <span class="post-time"> 2020-06-30 </span>
+        <span class="post-time"> 2020-07-30 </span>
         <div class="post-category">
             <a href="/categories/centos/"> centos </a>
-            <a href="/categories/vos/"> vos </a>
+            <a href="/categories/coredns/"> coredns </a>
             </div>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -206,15 +194,11 @@ export HISTFILESIZE=0
 <pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#linux不记录痕迹</span>
-<span class="nb">unset</span> HISTORY HISTFILE HISTSAVE HISTZONE HISTORY HISTLOG
-<span class="nb">export</span> <span class="nv">HISTFILE</span><span class="o">=</span>/dev/null
-<span class="nb">export</span> <span class="nv">HISTSIZE</span><span class="o">=</span>0
-<span class="nb">export</span> <span class="nv">HISTFILESIZE</span><span class="o">=</span>0
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#安装etcd</span>
+yum install etcd -y
+systemctl start --now etcd
 </code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
@@ -252,55 +236,112 @@ export HISTFILESIZE=0
 </span><span class="lnt">31
 </span><span class="lnt">32
 </span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#第一种</span>
-<span class="c1">#数据库迁移位置 因为默认得数据库放在/var/lib/mysql是在根下面 lvm默认home是最大硬盘故迁移到home下面</span>
-/etc/init.d/mysql stop
-rsync -avSH /var/lib/mysql /home/
-<span class="nb">echo</span> <span class="s1">&#39;[client]
-</span><span class="s1">port=3306
-</span><span class="s1">default-character-set=utf8
-</span><span class="s1">socket=/home/mysql/mysql.sock
-</span><span class="s1">[mysqld]
-</span><span class="s1">datadir=/home/mysql
-</span><span class="s1">socket=/home/mysql/mysql.sock
-</span><span class="s1">user=mysql
-</span><span class="s1">symbolic-links=0
-</span><span class="s1">default-character-set=utf8
-</span><span class="s1">max_connections=160
-</span><span class="s1">interactive_timeout=310000
-</span><span class="s1">wait_timeout=31000
-</span><span class="s1">query_cache_size=48M
-</span><span class="s1">table_cache=320
-</span><span class="s1">tmp_table_size=52M
-</span><span class="s1">thread_cache_size=8
-</span><span class="s1">sort_buffer_size=256K
-</span><span class="s1">innodb_thread_concurrency=8
-</span><span class="s1">myisam-recover=FORCE
-</span><span class="s1">max_allowed_packet=32M
-</span><span class="s1">innodb_file_per_table=1
-</span><span class="s1">[mysqld_safe]
-</span><span class="s1">log-error=/var/log/mysqld.log
-</span><span class="s1">pid-file=/var/run/mysqld/mysqld.pid&#39;</span> &gt; /etc/my.cnf
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#安装coredns</span>
+<span class="c1">#下载二进制版本：https://github.com/coredns/coredns/releases 解压安装</span>
+tar zxvf coredns_1.7.0_linux_amd64.tgz
+mv coredns /usr/bin
+mkdir /etc/coredns
+vi /etc/coredns/Corefile
+.:53 <span class="o">{</span>  <span class="c1"># 监听tcp和udp的53端口</span>
+    etcd <span class="o">{</span>   <span class="c1"># 配置启用etcd插件,后面可以指定域名,例如 etcd test.com {</span>
+        stubzones <span class="c1"># 启用存根区域功能。 stubzone仅在位于指定的第一个区域下方的etcd树中完成</span>
+        path /coredns <span class="c1"># etcd里面的路径 默认为/skydns，以后所有的dns记录就是存储在该存根路径底下</span>
+        endpoint http://localhost:2379 <span class="c1"># etcd访问地址，多个空格分开</span>
 
+        <span class="c1"># upstream设置要使用的上游解析程序解决指向外部域名的在etcd（认为CNAME）中找到的外部域名。</span>
+        upstream 8.8.8.8:53 8.8.4.4:53 /etc/resolv.conf
 
-<span class="c1">#第二种备份方案</span>
-<span class="c1">#备份mysql</span>
-/usr/bin/mysqldump -uroot -pxiaofan@1 vos3000  --skip-lock-tables &gt; ./vos3000.sql
+        fallthrough <span class="c1"># 如果区域匹配但不能生成记录，则将请求传递给下一个插件</span>
+        <span class="c1"># tls CERT KEY CACERT # 可选参数，etcd认证证书设置</span>
+    <span class="o">}</span>
+    prometheus  <span class="c1"># 监控插件</span>
+    cache 160
+    loadbalance   <span class="c1"># 负载均衡，开启DNS记录轮询策略</span>
+    forward . 8.8.8.8:53 8.8.4.4:53 /etc/resolv.conf  <span class="c1"># 上面etcd未查询到的请求转发给设置的DNS服务器解析</span>
+    log <span class="c1"># 打印日志</span>
+<span class="o">}</span>
+<span class="c1">#启动</span>
+nohup /usr/bin/coredns -conf /etc/coredns/Corefile &gt; /tmp/coredns.log 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">&amp;</span>
 
-mysql
-drop database vos3000<span class="p">;</span>
-create database vos3000<span class="p">;</span>
-use vos3000.sql<span class="p">;</span>
-<span class="nb">source</span> vos3000.sql<span class="p">;</span>
+<span class="c1">#设置域名解析</span>
+<span class="nb">export</span> <span class="nv">ETCDCTL_API</span><span class="o">=</span>3
+<span class="c1">#A记录</span>
+etcdctl put /coredns/com/leffss/www <span class="s1">&#39;{&#34;host&#34;:&#34;1.1.1.1&#34;,&#34;ttl&#34;:10}&#39;</span>
+<span class="c1">#CNAME记录</span>
+etcdctl put /coredns/com/leffss/www <span class="s1">&#39;{&#34;host&#34;:&#34;www.baidu.com&#34;,&#34;ttl&#34;:10}&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>#如果不用etcd直接把文件写入到hosts让coredns去获取配置如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">.:53 <span class="o">{</span>
+  <span class="c1"># 绑定interface ip</span>
+  <span class="nb">bind</span> 127.0.0.1
+  <span class="c1"># 先走本机的hosts</span>
+  <span class="c1"># https://coredns.io/plugins/hosts/</span>
+  hosts <span class="o">{</span>
+    <span class="c1"># 自定义sms.service search.service 的解析</span>
+    <span class="c1"># 因为解析的域名少我们这里直接用hosts插件即可完成需求</span>
+    <span class="c1"># 如果有大量自定义域名解析那么建议用file插件使用 符合RFC 1035规范的DNS解析配置文件</span>
+    10.6.6.2 sms.service
+    10.6.6.3 search.service
+    <span class="c1"># ttl</span>
+    ttl 60
+    <span class="c1"># 重载hosts配置</span>
+    reload 1m
+    <span class="c1"># 继续执行</span>
+    fallthrough
+  <span class="o">}</span>
+  <span class="c1"># file enables serving zone data from an RFC 1035-style master file.</span>
+  <span class="c1"># https://coredns.io/plugins/file/</span>
+  <span class="c1"># file service.signed service</span>
+  <span class="c1"># 最后所有的都转发到系统配置的上游dns服务器去解析</span>
+  forward . /etc/resolv.conf
+  <span class="c1"># 缓存时间ttl</span>
+  cache 120
+  <span class="c1"># 自动加载配置文件的间隔时间</span>
+  reload 6s
+  <span class="c1"># 输出日志</span>
+  log
+  <span class="c1"># 输出错误</span>
+  errors
+<span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
 </div>
@@ -314,7 +355,7 @@ use vos3000.sql<span class="p">;</span>
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2020-06-30
+        2020-07-30
         
     </span>
   </p>
@@ -350,16 +391,12 @@ use vos3000.sql<span class="p">;</span>
   </div>
 </div><footer class="post-footer">
       <div class="post-tags">
-          <a href="/tags/vos/">vos</a>
+          <a href="/tags/coredns/">coredns</a>
           </div>
       <nav class="post-nav">
-        <a class="prev" href="/post/coredns_etcd_install/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">centos7.5下coredns&#43;etcd搭建DNS服务器</span>
-            <span class="prev-text nav-mobile">上一篇</span>
-          </a>
-        <a class="next" href="/post/github_action_kubeadm/">
-            <span class="next-text nav-default">github action kubeadm编译证书100年</span>
+        
+        <a class="next" href="/post/vos_mysql_back/">
+            <span class="next-text nav-default">vos 迁移备份mysql</span>
             <span class="next-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
           </a>
@@ -372,8 +409,8 @@ use vos3000.sql<span class="p">;</span>
     <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js" crossorigin="anonymous"></script>
     <script type="text/javascript">
       var gitalk = new Gitalk({
-        id: '2020-06-30 09:00:23 \x2b0800 CST',
-        title: 'vos 迁移备份mysql',
+        id: '2020-07-30 09:00:23 \x2b0800 CST',
+        title: 'centos7.5下coredns\x2betcd搭建DNS服务器',
         clientID: '7ddb96ed0bbc973c5414',
         clientSecret: '02c691328facb2ee150a1b7c8a46347d6c046ae1',
         repo: '21ki.github.io',

@@ -62,7 +62,7 @@
 <meta property="og:description" content="Hugo theme even example site." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://www.1nth.com/" />
-<meta property="og:updated_time" content="2020-06-30T09:00:23+08:00" />
+<meta property="og:updated_time" content="2020-07-30T09:00:23+08:00" />
 <meta itemprop="name" content="Myki的博客">
 <meta itemprop="description" content="Hugo theme even example site."><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Myki的博客"/>
@@ -131,6 +131,40 @@
       <div class="content-wrapper">
         <div id="content" class="content">
           <section id="posts" class="posts">
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/coredns_etcd_install/">centos7.5下coredns&#43;etcd搭建DNS服务器</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2020-07-30 </span>
+      <div class="post-category">
+          <a href="/categories/centos/"> centos </a>
+          <a href="/categories/coredns/"> coredns </a>
+          </div>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#安装etcd</span>
+yum install etcd -y
+systemctl start --now etcd
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+    <div class="read-more">
+      <a href="/post/coredns_etcd_install/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
     <article class="post">
   <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/vos_mysql_back/">vos 迁移备份mysql</a></h1>
@@ -231,29 +265,6 @@
     </div>
     <div class="read-more">
       <a href="/post/aria2_instsll/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/speedtest_server/">搭建speedtest服务网速测试工具</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-04-23 </span>
-      <div class="post-category">
-          <a href="/categories/centos/"> centos </a>
-          <a href="/categories/shell/"> shell </a>
-          </div>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <h4 id="speedtest">搭建speedtest服务网速测试工具</h4>
-<h4 id="centos-77">centos 7.7</h4>
-    </div>
-    <div class="read-more">
-      <a href="/post/speedtest_server/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
