@@ -9,13 +9,6 @@
   </url>
   
   <url>
-    <loc>https://www.1nth.com/categories/coredns/</loc>
-    <lastmod>2020-08-01T09:00:23+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://www.1nth.com/</loc>
     <lastmod>2020-08-01T09:00:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -38,6 +31,13 @@
   
   <url>
     <loc>https://www.1nth.com/tags/vos/</loc>
+    <lastmod>2020-08-01T09:00:23+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.1nth.com/categories/vos/</loc>
     <lastmod>2020-08-01T09:00:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -72,15 +72,15 @@
   </url>
   
   <url>
-    <loc>https://www.1nth.com/tags/coredns/</loc>
+    <loc>https://www.1nth.com/categories/coredns/</loc>
     <lastmod>2020-07-30T09:00:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://www.1nth.com/categories/vos/</loc>
-    <lastmod>2020-06-30T09:00:23+08:00</lastmod>
+    <loc>https://www.1nth.com/tags/coredns/</loc>
+    <lastmod>2020-07-30T09:00:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -289,15 +289,15 @@
   </url>
   
   <url>
-    <loc>https://www.1nth.com/post/vos4.0_insall/</loc>
+    <loc>https://www.1nth.com/post/aliyun-install-ss/</loc>
     <lastmod>2019-11-18T11:27:22+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://www.1nth.com/post/aliyun-install-ss/</loc>
-    <lastmod>2019-11-18T11:27:22+08:00</lastmod>
+    <loc>https://www.1nth.com/post/vos4.0_insall/</loc>
+    <lastmod>2019-11-18T09:00:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>

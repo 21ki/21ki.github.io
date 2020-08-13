@@ -12,7 +12,7 @@
     
     
     <item>
-      <title>阿里云安装vos解决没有经典网络问题 专有网络需要安装vpn</title>
+      <title>阿里云安装vos解决没有经典网络问题 不需要专有网络安装vpn</title>
       <link>https://www.1nth.com/post/aliyun_vos_vpc/</link>
       <pubDate>Sat, 01 Aug 2020 09:00:23 +0800</pubDate>
       
@@ -293,9 +293,18 @@ cat /opt/nexus-data/admin.password
     </item>
     
     <item>
+      <title>国际版阿里云安装ss 卸载云盾和安骑士</title>
+      <link>https://www.1nth.com/post/aliyun-install-ss/</link>
+      <pubDate>Mon, 18 Nov 2019 11:27:22 +0800</pubDate>
+      
+      <guid>https://www.1nth.com/post/aliyun-install-ss/</guid>
+      <description>1 2 3 4 5 6 7 8 9 wget http://update.aegis.aliyun.com/download/uninstall.sh chmod +x uninstall.sh ./uninstall.sh wget http://update.aegis.aliyun.com/download/quartz_uninstall.sh chmod +x quartz_uninstall.sh ./quartz_uninstall.sh sudo rm -rf /usr/local/aegis sudo rm /usr/sbin/aliyun-service sudo rm /lib/systemd/system/aliyun.service</description>
+    </item>
+    
+    <item>
       <title>vos 3000 2.1.4.0 安装</title>
       <link>https://www.1nth.com/post/vos4.0_insall/</link>
-      <pubDate>Mon, 18 Nov 2019 11:27:22 +0800</pubDate>
+      <pubDate>Mon, 18 Nov 2019 09:00:23 +0800</pubDate>
       
       <guid>https://www.1nth.com/post/vos4.0_insall/</guid>
       <description>&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -315,15 +324,6 @@ cat /opt/nexus-data/admin.password
 &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;</description>
-    </item>
-    
-    <item>
-      <title>国际版阿里云安装ss 卸载云盾和安骑士</title>
-      <link>https://www.1nth.com/post/aliyun-install-ss/</link>
-      <pubDate>Mon, 18 Nov 2019 11:27:22 +0800</pubDate>
-      
-      <guid>https://www.1nth.com/post/aliyun-install-ss/</guid>
-      <description>1 2 3 4 5 6 7 8 9 wget http://update.aegis.aliyun.com/download/uninstall.sh chmod +x uninstall.sh ./uninstall.sh wget http://update.aegis.aliyun.com/download/quartz_uninstall.sh chmod +x quartz_uninstall.sh ./quartz_uninstall.sh sudo rm -rf /usr/local/aegis sudo rm /usr/sbin/aliyun-service sudo rm /lib/systemd/system/aliyun.service</description>
     </item>
     
   </channel>
