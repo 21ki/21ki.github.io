@@ -6,10 +6,19 @@
     <description>Recent content on Myki的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 30 Jul 2020 09:00:23 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 01 Aug 2020 09:00:23 +0800</lastBuildDate>
     
 	<atom:link href="https://www.1nth.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>阿里云安装vos解决没有经典网络问题 专有网络需要安装vpn</title>
+      <link>https://www.1nth.com/post/aliyun_vos_vpc/</link>
+      <pubDate>Sat, 01 Aug 2020 09:00:23 +0800</pubDate>
+      
+      <guid>https://www.1nth.com/post/aliyun_vos_vpc/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://img.shields.io/badge/VOS-2.1.6.0-brightgreen.svg&#34; alt=&#34;image&#34;&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>centos7.5下coredns&#43;etcd搭建DNS服务器</title>

@@ -62,7 +62,7 @@
 <meta property="og:description" content="Hugo theme even example site." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://www.1nth.com/" />
-<meta property="og:updated_time" content="2020-07-30T09:00:23+08:00" />
+<meta property="og:updated_time" content="2020-08-01T09:00:23+08:00" />
 <meta itemprop="name" content="Myki的博客">
 <meta itemprop="description" content="Hugo theme even example site."><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Myki的博客"/>
@@ -131,6 +131,42 @@
       <div class="content-wrapper">
         <div id="content" class="content">
           <section id="posts" class="posts">
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/nexus3_install/">nexus3 yum mvn私有库安装</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2019-12-12 </span>
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>本文用的docker方式部署</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">docker pull sonatype/nexus3:3.16.0
+mkdir /opt/nexus-data
+chown -R  <span class="m">200</span> /opt/nexus-data
+docker run -d --name nexus --ulimit <span class="nv">nofile</span><span class="o">=</span>65536:65536 -p 8081:8081 -v /opt/nexus-data:/nexus-data sonatype/nexus3:3.16.0
+cat /opt/nexus-data/admin.password 
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+    <div class="read-more">
+      <a href="/post/nexus3_install/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
     <article class="post">
   <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/esxi_install/">ESXI 6.7 安装 修改web端口和防火墙</a></h1>
