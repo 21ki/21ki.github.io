@@ -41,7 +41,7 @@
 </script>
 
 
-<meta name="generator" content="Hugo 0.61.0 with theme even" />
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
 
 
 <link rel="canonical" href="https://www.1nth.com/post/aliyun_vos_vpc/" />
@@ -64,13 +64,14 @@
 <meta property="article:modified_time" content="2020-08-01T09:00:23+08:00" />
 <meta itemprop="name" content="阿里云安装vos解决没有经典网络问题 不需要专有网络安装vpn">
 <meta itemprop="description" content="">
-<meta itemprop="datePublished" content="2020-08-01T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-08-01T09:00:23&#43;08:00" />
-<meta itemprop="wordCount" content="132">
+<meta itemprop="datePublished" content="2020-08-01T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2020-08-01T09:00:23+08:00" />
+<meta itemprop="wordCount" content="128">
 
 
 
-<meta itemprop="keywords" content="vos," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="vos," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="阿里云安装vos解决没有经典网络问题 不需要专有网络安装vpn"/>
 <meta name="twitter:description" content=""/>
 
@@ -154,23 +155,13 @@
     
     <div class="post-content">
       <p><img src="https://img.shields.io/badge/VOS-2.1.6.0-brightgreen.svg" alt="image"></p>
-<h2 id="vos-vpn">阿里云安装vos解决没有经典网络问题 专有网络需要安装vpn</h2>
+<h2 id="阿里云安装vos解决没有经典网络问题-专有网络需要安装vpn">阿里云安装vos解决没有经典网络问题 专有网络需要安装vpn</h2>
 <p>#购买ECS的时候选择多一个辅助网卡,也就是说两个网卡,然后去购买一个弹性公网ip 绑定辅助网卡,配置如下.需要绑定之后VNC链接到服务器,执行网络配置(以centos6.5为例)</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">cd</span> /etc/sysconfig/network-scripts/
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">cd</span> /etc/sysconfig/network-scripts/
 cp ifcfg-eth0 ifcfg-eth1
 sed <span class="s1">&#39;s/eth0/eth1/g&#39;</span> ifcfg-eth0
 /etc/init.d/network restart
-</code></pre></td></tr></table>
-</div>
-</div><p><img src="https://oss.1nth.com/images/1nth/aliyun_vos_vpc.png" alt="aliyun_vos_vpc"></p>
+</code></pre></div><p><img src="https://oss.1nth.com/images/1nth/aliyun_vos_vpc.png" alt="aliyun_vos_vpc"></p>
     </div>
 
     <div class="post-copyright">
@@ -239,7 +230,7 @@ sed <span class="s1">&#39;s/eth0/eth1/g&#39;</span> ifcfg-eth0
     <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js" crossorigin="anonymous"></script>
     <script type="text/javascript">
       var gitalk = new Gitalk({
-        id: '2020-08-01 09:00:23 \x2b0800 CST',
+        id: '2020-08-01 09:00:23 \u002b0800 CST',
         title: '阿里云安装vos解决没有经典网络问题 不需要专有网络安装vpn',
         clientID: '7ddb96ed0bbc973c5414',
         clientSecret: '02c691328facb2ee150a1b7c8a46347d6c046ae1',

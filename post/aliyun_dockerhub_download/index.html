@@ -41,7 +41,7 @@
 </script>
 
 
-<meta name="generator" content="Hugo 0.61.0 with theme even" />
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
 
 
 <link rel="canonical" href="https://www.1nth.com/post/aliyun_dockerhub_download/" />
@@ -66,13 +66,14 @@
 <meta itemprop="name" content="K8S离线安装方法 依赖库和镜像制作  阿里云 dockerhub  docker加速解决被墙问题      kubernetes docker镜像">
 <meta itemprop="description" content="github示例如下
 ">
-<meta itemprop="datePublished" content="2019-12-30T01:00:00&#43;08:00" />
-<meta itemprop="dateModified" content="2019-12-30T01:00:00&#43;08:00" />
-<meta itemprop="wordCount" content="233">
+<meta itemprop="datePublished" content="2019-12-30T01:00:00+08:00" />
+<meta itemprop="dateModified" content="2019-12-30T01:00:00+08:00" />
+<meta itemprop="wordCount" content="210">
 
 
 
-<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="K8S离线安装方法 依赖库和镜像制作  阿里云 dockerhub  docker加速解决被墙问题      kubernetes docker镜像"/>
 <meta name="twitter:description" content="github示例如下
 "/>
@@ -153,59 +154,32 @@
 
     <div class="post-toc" id="post-toc">
   <h2 class="post-toc-title">文章目录</h2>
-  <div class="post-toc-content always-active">
+  <div class="post-toc-content">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#heading">这个只是提供一个思路，假如有被墙得镜像可以通过这种方式去下载</a></li>
+    <li><a href="#这个只是提供一个思路假如有被墙得镜像可以通过这种方式去下载">这个只是提供一个思路，假如有被墙得镜像可以通过这种方式去下载</a></li>
   </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      <h1 id="github">github示例如下</h1>
+      <h1 id="github示例如下">github示例如下</h1>
 <p><img src="https://oss.1nth.com/images/k8s-images/k8s-images-kube-apiserver.png" alt="k8s-images"></p>
 <p>#阿里云或者dockerhub海外镜像下载配置 解决被墙问题</p>
-<h2 id="heading">这个只是提供一个思路，假如有被墙得镜像可以通过这种方式去下载</h2>
-<h1 id="heading-1">阿里云配置如下</h1>
+<h2 id="这个只是提供一个思路假如有被墙得镜像可以通过这种方式去下载">这个只是提供一个思路，假如有被墙得镜像可以通过这种方式去下载</h2>
+<h1 id="阿里云配置如下">阿里云配置如下</h1>
 <p><img src="https://oss.1nth.com/images/k8s-images/aliyun_github.png" alt="k8s-images">
 <img src="https://oss.1nth.com/images/k8s-images/aliyun_docker_images_kube-apiserver.png" alt="k8s-images">
 <img src="https://oss.1nth.com/images/k8s-images/aliyun_kube_build.png" alt="k8s-images"></p>
-<h1 id="dockerhub">dockerhub配置如下</h1>
+<h1 id="dockerhub配置如下">dockerhub配置如下</h1>
 <p><img src="https://oss.1nth.com/images/k8s-images/dockerhub_kube_apiserver.png" alt="k8s-images"></p>
 <p>#当然安装k8s也可以直接用阿里云的镜像仓库</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">vim /etc/yum.repos.d/docker-ce.repo 
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">vim /etc/yum.repos.d/docker-ce.repo 
 <span class="o">[</span>docker-ce-stable<span class="o">]</span>
 <span class="nv">name</span><span class="o">=</span>Docker CE Stable - <span class="nv">$basearch</span>
 <span class="nv">baseurl</span><span class="o">=</span>https://mirrors.aliyun.com/docker-ce/linux/centos/7/<span class="nv">$basearch</span>/stable
-<span class="nv">enabled</span><span class="o">=</span>1
-<span class="nv">gpgcheck</span><span class="o">=</span>1
+<span class="nv">enabled</span><span class="o">=</span><span class="m">1</span>
+<span class="nv">gpgcheck</span><span class="o">=</span><span class="m">1</span>
 <span class="nv">gpgkey</span><span class="o">=</span>https://mirrors.aliyun.com/docker-ce/linux/centos/gpg
 <span class="c1">#docker环境本地下载</span>
 yum install --downloadonly  --downloaddir<span class="o">=</span>. docker
@@ -214,18 +188,16 @@ vim /etc/yum.repos.d/kubernetes.repo
 <span class="o">[</span>kubernetes<span class="o">]</span>
 <span class="nv">name</span><span class="o">=</span>Kubernetes
 <span class="nv">baseurl</span><span class="o">=</span>https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64
-<span class="nv">enabled</span><span class="o">=</span>1
-<span class="nv">gpgcheck</span><span class="o">=</span>0
-<span class="nv">repo_gpgcheck</span><span class="o">=</span>0
+<span class="nv">enabled</span><span class="o">=</span><span class="m">1</span>
+<span class="nv">gpgcheck</span><span class="o">=</span><span class="m">0</span>
+<span class="nv">repo_gpgcheck</span><span class="o">=</span><span class="m">0</span>
 <span class="nv">gpgkey</span><span class="o">=</span>https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
 yum install --downloadonly  --downloaddir<span class="o">=</span>. kubeadm
 <span class="c1">#获取k8s镜像的命令</span>
 kubeadm --kubernetes-version<span class="o">=</span>v1.16.3 config images list
 <span class="c1">#所有k8s依赖包导出</span>
 docker save <span class="k">$(</span>docker images <span class="p">|</span> grep -v REPOSITORY <span class="p">|</span> awk <span class="s1">&#39;BEGIN{OFS=&#34;:&#34;;ORS=&#34; &#34;}{print $1,$2}&#39;</span><span class="k">)</span> -o k8s-images-1.16.3.tar
-</code></pre></td></tr></table>
-</div>
-</div>
+</code></pre></div>
     </div>
 
     <div class="post-copyright">
@@ -292,7 +264,7 @@ docker save <span class="k">$(</span>docker images <span class="p">|</span> grep
     <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js" crossorigin="anonymous"></script>
     <script type="text/javascript">
       var gitalk = new Gitalk({
-        id: '2019-12-30 01:00:00 \x2b0800 CST',
+        id: '2019-12-30 01:00:00 \u002b0800 CST',
         title: 'K8S离线安装方法 依赖库和镜像制作  阿里云 dockerhub  docker加速解决被墙问题      kubernetes docker镜像',
         clientID: '7ddb96ed0bbc973c5414',
         clientSecret: '02c691328facb2ee150a1b7c8a46347d6c046ae1',

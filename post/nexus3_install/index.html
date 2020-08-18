@@ -26,7 +26,7 @@
 
 
 <meta name="author" content="Myki" /><meta name="description" content="本文用的docker方式部署
-1 2 3 4 5  docker pull sonatype/nexus3:3.16.0 mkdir /opt/nexus-data chown -R 200 /opt/nexus-data docker run -d --name nexus --ulimit nofile=65536:65536 -p 8081:8081 -v /opt/nexus-data:/nexus-data sonatype/nexus3:3.16.0 cat /opt/nexus-data/admin.password   " /><meta name="keywords" content="Hugo, theme, even" />
+docker pull sonatype/nexus3:3.16.0 mkdir /opt/nexus-data chown -R 200 /opt/nexus-data docker run -d --name nexus --ulimit nofile=65536:65536 -p 8081:8081 -v /opt/nexus-data:/nexus-data sonatype/nexus3:3.16.0 cat /opt/nexus-data/admin.password " /><meta name="keywords" content="Hugo, theme, even" />
 
 
 
@@ -42,7 +42,7 @@
 </script>
 
 
-<meta name="generator" content="Hugo 0.61.0 with theme even" />
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
 
 
 <link rel="canonical" href="https://www.1nth.com/post/nexus3_install/" />
@@ -59,22 +59,11 @@
 
 <meta property="og:title" content="nexus3 yum mvn私有库安装" />
 <meta property="og:description" content="本文用的docker方式部署
-
-
-1
-2
-3
-4
-5
-
-
 docker pull sonatype/nexus3:3.16.0
 mkdir /opt/nexus-data
 chown -R  200 /opt/nexus-data
 docker run -d --name nexus --ulimit nofile=65536:65536 -p 8081:8081 -v /opt/nexus-data:/nexus-data sonatype/nexus3:3.16.0
 cat /opt/nexus-data/admin.password 
-
-
 " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://www.1nth.com/post/nexus3_install/" />
@@ -82,48 +71,27 @@ cat /opt/nexus-data/admin.password
 <meta property="article:modified_time" content="2019-12-12T11:27:22+08:00" />
 <meta itemprop="name" content="nexus3 yum mvn私有库安装">
 <meta itemprop="description" content="本文用的docker方式部署
-
-
-1
-2
-3
-4
-5
-
-
 docker pull sonatype/nexus3:3.16.0
 mkdir /opt/nexus-data
 chown -R  200 /opt/nexus-data
 docker run -d --name nexus --ulimit nofile=65536:65536 -p 8081:8081 -v /opt/nexus-data:/nexus-data sonatype/nexus3:3.16.0
 cat /opt/nexus-data/admin.password 
-
-
 ">
-<meta itemprop="datePublished" content="2019-12-12T11:27:22&#43;08:00" />
-<meta itemprop="dateModified" content="2019-12-12T11:27:22&#43;08:00" />
-<meta itemprop="wordCount" content="197">
+<meta itemprop="datePublished" content="2019-12-12T11:27:22+08:00" />
+<meta itemprop="dateModified" content="2019-12-12T11:27:22+08:00" />
+<meta itemprop="wordCount" content="137">
 
 
 
-<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="nexus3 yum mvn私有库安装"/>
 <meta name="twitter:description" content="本文用的docker方式部署
-
-
-1
-2
-3
-4
-5
-
-
 docker pull sonatype/nexus3:3.16.0
 mkdir /opt/nexus-data
 chown -R  200 /opt/nexus-data
 docker run -d --name nexus --ulimit nofile=65536:65536 -p 8081:8081 -v /opt/nexus-data:/nexus-data sonatype/nexus3:3.16.0
 cat /opt/nexus-data/admin.password 
-
-
 "/>
 
 <!--[if lte IE 9]>
@@ -202,89 +170,19 @@ cat /opt/nexus-data/admin.password
 
     <div class="post-toc" id="post-toc">
   <h2 class="post-toc-title">文章目录</h2>
-  <div class="post-toc-content always-active">
+  <div class="post-toc-content">
     <nav id="TableOfContents"></nav>
   </div>
 </div>
     <div class="post-content">
       <p>本文用的docker方式部署</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">docker pull sonatype/nexus3:3.16.0
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker pull sonatype/nexus3:3.16.0
 mkdir /opt/nexus-data
 chown -R  <span class="m">200</span> /opt/nexus-data
 docker run -d --name nexus --ulimit <span class="nv">nofile</span><span class="o">=</span>65536:65536 -p 8081:8081 -v /opt/nexus-data:/nexus-data sonatype/nexus3:3.16.0
 cat /opt/nexus-data/admin.password 
-</code></pre></td></tr></table>
-</div>
-</div><p>yum仓库如下配置</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span><span class="lnt">48
-</span><span class="lnt">49
-</span><span class="lnt">50
-</span><span class="lnt">51
-</span><span class="lnt">52
-</span><span class="lnt">53
-</span><span class="lnt">54
-</span><span class="lnt">55
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#yum-nexus</span>
+</code></pre></div><p>yum仓库如下配置</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#yum-nexus</span>
 vi /etc/yum.repos.d/CentOS-Nexus.repo
 <span class="o">[</span>base<span class="o">]</span>
 <span class="nv">name</span><span class="o">=</span>CentOS-<span class="nv">$releasever</span> - Base - mirrors.aliyun.com
@@ -339,9 +237,7 @@ vi /etc/yum.repos.d/epel-nexus.repo
 <span class="nv">enabled</span><span class="o">=</span><span class="m">1</span>
 <span class="nv">gpgcheck</span><span class="o">=</span><span class="m">0</span>
 <span class="nv">gpgkey</span><span class="o">=</span>file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
-</code></pre></td></tr></table>
-</div>
-</div>
+</code></pre></div>
     </div>
 
     <div class="post-copyright">
@@ -408,7 +304,7 @@ vi /etc/yum.repos.d/epel-nexus.repo
     <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js" crossorigin="anonymous"></script>
     <script type="text/javascript">
       var gitalk = new Gitalk({
-        id: '2019-12-12 11:27:22 \x2b0800 CST',
+        id: '2019-12-12 11:27:22 \u002b0800 CST',
         title: 'nexus3 yum mvn私有库安装',
         clientID: '7ddb96ed0bbc973c5414',
         clientSecret: '02c691328facb2ee150a1b7c8a46347d6c046ae1',

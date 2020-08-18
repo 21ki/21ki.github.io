@@ -41,7 +41,7 @@
 </script>
 
 
-<meta name="generator" content="Hugo 0.61.0 with theme even" />
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
 
 
 <link rel="canonical" href="https://www.1nth.com/post/make_bin/" />
@@ -66,13 +66,14 @@ centos 7.7" />
 <meta itemprop="name" content="linux下制作二进制bin 文件制做方法">
 <meta itemprop="description" content="linux下制作二进制bin 文件制做方法
 centos 7.7">
-<meta itemprop="datePublished" content="2020-04-22T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-04-22T09:00:23&#43;08:00" />
-<meta itemprop="wordCount" content="191">
+<meta itemprop="datePublished" content="2020-04-22T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2020-04-22T09:00:23+08:00" />
+<meta itemprop="wordCount" content="164">
 
 
 
-<meta itemprop="keywords" content="shell," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="shell," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="linux下制作二进制bin 文件制做方法"/>
 <meta name="twitter:description" content="linux下制作二进制bin 文件制做方法
 centos 7.7"/>
@@ -156,40 +157,9 @@ centos 7.7"/>
 
     
     <div class="post-content">
-      <h4 id="linuxbin-">linux下制作二进制bin 文件制做方法</h4>
+      <h4 id="linux下制作二进制bin-文件制做方法">linux下制作二进制bin 文件制做方法</h4>
 <h4 id="centos-77">centos 7.7</h4>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">cat bin.sh 
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">cat bin.sh 
 <span class="c1">#!/usr/bin/env bash</span>
 <span class="nb">echo</span> <span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>
 
@@ -198,13 +168,13 @@ cat install.sh
 <span class="nb">echo</span> <span class="s2">&#34;Hello World&#34;</span>
 <span class="nv">dir_tmp</span><span class="o">=</span>/tmp/<span class="k">$(</span>date +<span class="s2">&#34;%y%m%d%H%M%S&#34;</span><span class="k">)</span>
 mkdir /<span class="nv">$dir_tmp</span> &gt;/dev/null
-sed -n -e <span class="s1">&#39;1,/^exit 0$/!p&#39;</span> <span class="nv">$0</span> &gt; <span class="s2">&#34;</span><span class="si">${</span><span class="nv">dir_tmp</span><span class="si">}</span><span class="s2">/pag.tar.gz</span><span class="s2">&#34;</span> 2&gt;/dev/null
+sed -n -e <span class="s1">&#39;1,/^exit 0$/!p&#39;</span> <span class="nv">$0</span> &gt; <span class="s2">&#34;</span><span class="si">${</span><span class="nv">dir_tmp</span><span class="si">}</span><span class="s2">/pag.tar.gz&#34;</span> 2&gt;/dev/null
 <span class="nb">cd</span> <span class="nv">$dir_tmp</span> &gt;/dev/null
 tar xzf pag.tar.gz
 <span class="nb">echo</span> <span class="nv">$Myki</span>
 bash ./bin.sh
 
-<span class="nb">exit</span> 0
+<span class="nb">exit</span> <span class="m">0</span>
 
 <span class="c1">#文件授权打包</span>
 chmod a+x bin.sh
@@ -213,12 +183,10 @@ chmod a+x install.sh
 <span class="c1">#利用cat生成bin文件</span>
 cat install.sh pag.tar.gz  &gt; dev.bin
 <span class="c1">#将二进制文件从.bin文件里分离出来 这句是生成bin文件的关键</span>
-sed -n -e <span class="s1">&#39;1,/^exit 0$/!p&#39;</span> <span class="nv">$0</span> &gt; <span class="s2">&#34;</span><span class="si">${</span><span class="nv">dir_tmp</span><span class="si">}</span><span class="s2">/packages.tar.gz</span><span class="s2">&#34;</span> 2&gt;/dev/null
+sed -n -e <span class="s1">&#39;1,/^exit 0$/!p&#39;</span> <span class="nv">$0</span> &gt; <span class="s2">&#34;</span><span class="si">${</span><span class="nv">dir_tmp</span><span class="si">}</span><span class="s2">/packages.tar.gz&#34;</span> 2&gt;/dev/null
 
 <span class="c1">#调研可以用makeself或者rpm直接打包持续更新</span>
-</code></pre></td></tr></table>
-</div>
-</div>
+</code></pre></div>
     </div>
 
     <div class="post-copyright">
@@ -287,7 +255,7 @@ sed -n -e <span class="s1">&#39;1,/^exit 0$/!p&#39;</span> <span class="nv">$0</
     <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js" crossorigin="anonymous"></script>
     <script type="text/javascript">
       var gitalk = new Gitalk({
-        id: '2020-04-22 09:00:23 \x2b0800 CST',
+        id: '2020-04-22 09:00:23 \u002b0800 CST',
         title: 'linux下制作二进制bin 文件制做方法',
         clientID: '7ddb96ed0bbc973c5414',
         clientSecret: '02c691328facb2ee150a1b7c8a46347d6c046ae1',

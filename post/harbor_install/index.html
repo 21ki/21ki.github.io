@@ -42,7 +42,7 @@
 </script>
 
 
-<meta name="generator" content="Hugo 0.61.0 with theme even" />
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
 
 
 <link rel="canonical" href="https://www.1nth.com/post/harbor_install/" />
@@ -65,13 +65,14 @@
 <meta property="article:modified_time" content="2019-12-20T11:27:22+08:00" />
 <meta itemprop="name" content="harbor docker私有库安装">
 <meta itemprop="description" content="本文用的docker方式部署">
-<meta itemprop="datePublished" content="2019-12-20T11:27:22&#43;08:00" />
-<meta itemprop="dateModified" content="2019-12-20T11:27:22&#43;08:00" />
-<meta itemprop="wordCount" content="413">
+<meta itemprop="datePublished" content="2019-12-20T11:27:22+08:00" />
+<meta itemprop="dateModified" content="2019-12-20T11:27:22+08:00" />
+<meta itemprop="wordCount" content="331">
 
 
 
-<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="harbor docker私有库安装"/>
 <meta name="twitter:description" content="本文用的docker方式部署"/>
 
@@ -151,99 +152,13 @@
 
     <div class="post-toc" id="post-toc">
   <h2 class="post-toc-title">文章目录</h2>
-  <div class="post-toc-content always-active">
+  <div class="post-toc-content">
     <nav id="TableOfContents"></nav>
   </div>
 </div>
     <div class="post-content">
       <p>本文用的docker方式部署</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span><span class="lnt">48
-</span><span class="lnt">49
-</span><span class="lnt">50
-</span><span class="lnt">51
-</span><span class="lnt">52
-</span><span class="lnt">53
-</span><span class="lnt">54
-</span><span class="lnt">55
-</span><span class="lnt">56
-</span><span class="lnt">57
-</span><span class="lnt">58
-</span><span class="lnt">59
-</span><span class="lnt">60
-</span><span class="lnt">61
-</span><span class="lnt">62
-</span><span class="lnt">63
-</span><span class="lnt">64
-</span><span class="lnt">65
-</span><span class="lnt">66
-</span><span class="lnt">67
-</span><span class="lnt">68
-</span><span class="lnt">69
-</span><span class="lnt">70
-</span><span class="lnt">71
-</span><span class="lnt">72
-</span><span class="lnt">73
-</span><span class="lnt">74
-</span><span class="lnt">75
-</span><span class="lnt">76
-</span><span class="lnt">77
-</span><span class="lnt">78
-</span><span class="lnt">79
-</span><span class="lnt">80
-</span><span class="lnt">81
-</span><span class="lnt">82
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#方法一：二进制安装</span>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#方法一：二进制安装</span>
 curl -L https://github.com/docker/compose/releases/download/1.16.1/docker-compose-<span class="sb">`</span>uname -s<span class="sb">`</span>-<span class="sb">`</span>uname -m<span class="sb">`</span> -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 <span class="c1">#c.根据自己的情况决定是否安装命令补全功能</span>
@@ -325,9 +240,7 @@ mkdir -p /etc/docker/certs.d/rgs.unixfbi.com
 scp /etc/certs/ca.crt root@192.168.199.183:/etc/docker/certs.d/rgs.unixfbi.com/
 systemctl restart docker
 
-</code></pre></td></tr></table>
-</div>
-</div>
+</code></pre></div>
     </div>
 
     <div class="post-copyright">
@@ -394,7 +307,7 @@ systemctl restart docker
     <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js" crossorigin="anonymous"></script>
     <script type="text/javascript">
       var gitalk = new Gitalk({
-        id: '2019-12-20 11:27:22 \x2b0800 CST',
+        id: '2019-12-20 11:27:22 \u002b0800 CST',
         title: 'harbor docker私有库安装',
         clientID: '7ddb96ed0bbc973c5414',
         clientSecret: '02c691328facb2ee150a1b7c8a46347d6c046ae1',

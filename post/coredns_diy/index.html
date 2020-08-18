@@ -42,7 +42,7 @@
 </script>
 
 
-<meta name="generator" content="Hugo 0.61.0 with theme even" />
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
 
 
 <link rel="canonical" href="https://www.1nth.com/post/coredns_diy/" />
@@ -65,13 +65,14 @@
 <meta property="article:modified_time" content="2020-08-17T09:00:23+08:00" />
 <meta itemprop="name" content="coredns泛域名解析 单域名解析">
 <meta itemprop="description" content="###coredns泛域名解析 单域名解析">
-<meta itemprop="datePublished" content="2020-08-17T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-08-17T09:00:23&#43;08:00" />
-<meta itemprop="wordCount" content="106">
+<meta itemprop="datePublished" content="2020-08-17T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2020-08-17T09:00:23+08:00" />
+<meta itemprop="wordCount" content="232">
 
 
 
-<meta itemprop="keywords" content="coredns," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="coredns," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="coredns泛域名解析 单域名解析"/>
 <meta name="twitter:description" content="###coredns泛域名解析 单域名解析"/>
 
@@ -156,34 +157,8 @@
     <div class="post-content">
       <p>###coredns泛域名解析 单域名解析</p>
 <p>coredns泛解析</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="w">  </span>Corefile<span class="p">:</span><span class="w"> </span><span class="sd">|
-</span><span class="sd">   </span><span class="sd"> </span><span class="sd">.:53 {</span><span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="w">  </span><span class="k">Corefile</span><span class="p">:</span><span class="w"> </span><span class="sd">|
+</span><span class="sd">    .:53 {</span><span class="w">
 </span><span class="w">        </span>errors<span class="w">
 </span><span class="w">        </span>health<span class="w"> </span>{<span class="w">
 </span><span class="w">          </span>lameduck<span class="w"> </span>5s<span class="w">
@@ -204,54 +179,18 @@
 </span><span class="w">        </span>reload<span class="w">
 </span><span class="w">        </span>loadbalance<span class="w">
 </span><span class="w">    </span>}<span class="w">
-</span></code></pre></td></tr></table>
-</div>
-</div><p>coredns单解析</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml">apiVersion<span class="p">:</span><span class="w"> </span>v1<span class="w">
-</span><span class="w"></span>data<span class="p">:</span><span class="w">
-</span><span class="w">  </span>Corefile<span class="p">:</span><span class="w"> </span><span class="sd">|
-</span><span class="sd">   </span><span class="sd"> </span><span class="sd">.:53 {</span><span class="w">
+</span></code></pre></div><p>coredns单解析</p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
+</span><span class="w"></span><span class="k">data</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">Corefile</span><span class="p">:</span><span class="w"> </span><span class="sd">|
+</span><span class="sd">    .:53 {</span><span class="w">
 </span><span class="w">        </span>errors<span class="w">
 </span><span class="w">        </span>health<span class="w"> </span>{<span class="w">
 </span><span class="w">           </span>lameduck<span class="w"> </span>5s<span class="w">
 </span><span class="w">        </span>}<span class="w">
 </span><span class="w">        </span>ready<span class="w">
 </span><span class="w">        </span>hosts<span class="w"> </span>{<span class="w">
-</span><span class="w">          </span><span class="m">192.168</span><span class="m">.1</span><span class="m">.192</span><span class="w"> </span>harbor.mvmyun.com<span class="w">
+</span><span class="w">          </span><span class="m">192.168.1.192</span><span class="w"> </span>harbor.mvmyun.com<span class="w">
 </span><span class="w">          </span>fallthrough<span class="w">
 </span><span class="w">        </span>}<span class="w">
 </span><span class="w">        </span>kubernetes<span class="w"> </span>cluster.local<span class="w"> </span>in-addr.arpa<span class="w"> </span>ip6.arpa<span class="w"> </span>{<span class="w">
@@ -269,11 +208,9 @@
 </span><span class="w">    </span>mvmyun.com<span class="p">:</span><span class="m">53</span><span class="w"> </span>{<span class="w">
 </span><span class="w">        </span>errors<span class="w">
 </span><span class="w">        </span>cache<span class="w"> </span><span class="m">30</span><span class="w">
-</span><span class="w">        </span>forward<span class="w"> </span>.<span class="w"> </span><span class="m">192.168</span><span class="m">.1</span><span class="m">.1</span><span class="w">
+</span><span class="w">        </span>forward<span class="w"> </span>.<span class="w"> </span><span class="m">192.168.1.1</span><span class="w">
 </span><span class="w">    </span>}<span class="w">
-</span></code></pre></td></tr></table>
-</div>
-</div>
+</span></code></pre></div>
     </div>
 
     <div class="post-copyright">
@@ -338,7 +275,7 @@
     <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js" crossorigin="anonymous"></script>
     <script type="text/javascript">
       var gitalk = new Gitalk({
-        id: '2020-08-17 09:00:23 \x2b0800 CST',
+        id: '2020-08-17 09:00:23 \u002b0800 CST',
         title: 'coredns泛域名解析 单域名解析',
         clientID: '7ddb96ed0bbc973c5414',
         clientSecret: '02c691328facb2ee150a1b7c8a46347d6c046ae1',

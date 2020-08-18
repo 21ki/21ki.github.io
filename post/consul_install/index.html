@@ -42,7 +42,7 @@
 </script>
 
 
-<meta name="generator" content="Hugo 0.61.0 with theme even" />
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
 
 
 <link rel="canonical" href="https://www.1nth.com/post/consul_install/" />
@@ -65,13 +65,14 @@
 <meta property="article:modified_time" content="2020-03-07T09:00:23+08:00" />
 <meta itemprop="name" content="consul安装使用 做prometheus的配置中心">
 <meta itemprop="description" content="consul 容器化">
-<meta itemprop="datePublished" content="2020-03-07T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-03-07T09:00:23&#43;08:00" />
-<meta itemprop="wordCount" content="245">
+<meta itemprop="datePublished" content="2020-03-07T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2020-03-07T09:00:23+08:00" />
+<meta itemprop="wordCount" content="208">
 
 
 
-<meta itemprop="keywords" content="kubernetes,linux,centos," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="kubernetes,linux,centos," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="consul安装使用 做prometheus的配置中心"/>
 <meta name="twitter:description" content="consul 容器化"/>
 
@@ -154,48 +155,7 @@
     
     <div class="post-content">
       <p>consul 容器化</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#单节点 consul容器启动</span>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#单节点 consul容器启动</span>
 docker run --name consul -d -p 8500:8500 consul
 <span class="c1">#修改prometheus配置文件</span>
   - job_name: <span class="s1">&#39;consul&#39;</span>
@@ -221,20 +181,18 @@ consul agent -data-dir<span class="o">=</span>/consul/data -config-dir<span clas
 
 
 <span class="c1">#持久化</span>
-docker run -d -p 8500:8500 <span class="se">\</span>
---restart<span class="o">=</span>always <span class="se">\</span>
---name<span class="o">=</span>consul <span class="se">\</span>
--v <span class="s2">&#34;/consul/data:/consul/data&#34;</span> <span class="se">\</span>
-consul agent <span class="se">\</span>
--server <span class="se">\</span>
--ui <span class="se">\</span>
--client<span class="o">=</span>0.0.0.0 <span class="se">\</span>
--bootstrap-expect<span class="o">=</span>1
+docker run -d -p 8500:8500 <span class="se">\
+</span><span class="se"></span>--restart<span class="o">=</span>always <span class="se">\
+</span><span class="se"></span>--name<span class="o">=</span>consul <span class="se">\
+</span><span class="se"></span>-v <span class="s2">&#34;/consul/data:/consul/data&#34;</span> <span class="se">\
+</span><span class="se"></span>consul agent <span class="se">\
+</span><span class="se"></span>-server <span class="se">\
+</span><span class="se"></span>-ui <span class="se">\
+</span><span class="se"></span>-client<span class="o">=</span>0.0.0.0 <span class="se">\
+</span><span class="se"></span>-bootstrap-expect<span class="o">=</span><span class="m">1</span>
 
 
-</code></pre></td></tr></table>
-</div>
-</div>
+</code></pre></div>
     </div>
 
     <div class="post-copyright">
@@ -305,7 +263,7 @@ consul agent <span class="se">\</span>
     <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js" crossorigin="anonymous"></script>
     <script type="text/javascript">
       var gitalk = new Gitalk({
-        id: '2020-03-07 09:00:23 \x2b0800 CST',
+        id: '2020-03-07 09:00:23 \u002b0800 CST',
         title: 'consul安装使用 做prometheus的配置中心',
         clientID: '7ddb96ed0bbc973c5414',
         clientSecret: '02c691328facb2ee150a1b7c8a46347d6c046ae1',

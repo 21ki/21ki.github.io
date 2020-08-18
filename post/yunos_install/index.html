@@ -41,7 +41,7 @@
 </script>
 
 
-<meta name="generator" content="Hugo 0.61.0 with theme even" />
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
 
 
 <link rel="canonical" href="https://www.1nth.com/post/yunos_install/" />
@@ -64,13 +64,14 @@
 <meta property="article:modified_time" content="2020-05-20T09:00:23+08:00" />
 <meta itemprop="name" content="公有云 阿里云自定义安装系统 解决centos版本太高vos安装不上emp问题">
 <meta itemprop="description" content="公有云 阿里云自定义安装系统 解决centos版本太高vos安装不上emp问题">
-<meta itemprop="datePublished" content="2020-05-20T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-05-20T09:00:23&#43;08:00" />
-<meta itemprop="wordCount" content="403">
+<meta itemprop="datePublished" content="2020-05-20T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2020-05-20T09:00:23+08:00" />
+<meta itemprop="wordCount" content="342">
 
 
 
-<meta itemprop="keywords" content="speedtest," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="speedtest," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="公有云 阿里云自定义安装系统 解决centos版本太高vos安装不上emp问题"/>
 <meta name="twitter:description" content="公有云 阿里云自定义安装系统 解决centos版本太高vos安装不上emp问题"/>
 
@@ -153,73 +154,8 @@
 
     
     <div class="post-content">
-      <h4 id="--centosvosemp">公有云 阿里云自定义安装系统 解决centos版本太高vos安装不上emp问题</h4>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span><span class="lnt">48
-</span><span class="lnt">49
-</span><span class="lnt">50
-</span><span class="lnt">51
-</span><span class="lnt">52
-</span><span class="lnt">53
-</span><span class="lnt">54
-</span><span class="lnt">55
-</span><span class="lnt">56
-</span><span class="lnt">57
-</span><span class="lnt">58
-</span><span class="lnt">59
-</span><span class="lnt">60
-</span><span class="lnt">61
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#一键安装脚本  https://ssr.tools/693</span>
+      <h4 id="公有云-阿里云自定义安装系统-解决centos版本太高vos安装不上emp问题">公有云 阿里云自定义安装系统 解决centos版本太高vos安装不上emp问题</h4>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#一键安装脚本  https://ssr.tools/693</span>
 bash &lt;<span class="o">(</span>wget --no-check-certificate -qO- <span class="s1">&#39;https://moeclub.org/attachment/LinuxShell/InstallNET.sh&#39;</span><span class="o">)</span> -c 6.5 -v <span class="m">64</span> -a
 默认密码是 MoeClub.org
 
@@ -258,7 +194,7 @@ root <span class="o">(</span>hd0,0<span class="o">)</span>
 kernel /vmlinuz.centos.pxe vnc <span class="nv">vncpassword</span><span class="o">=</span>xiaofan@1 headless <span class="nv">ip</span><span class="o">=</span>127.0.0.1 <span class="nv">netmask</span><span class="o">=</span>255.255.255.0 <span class="nv">gateway</span><span class="o">=</span>127.0.0.1 <span class="nv">dns</span><span class="o">=</span>114.114.114.114 <span class="nv">ksdevice</span><span class="o">=</span>eth0 <span class="nv">method</span><span class="o">=</span>http://mirrors.aliyun.com/centos/6.5/os/x86_64/ <span class="nv">lang</span><span class="o">=</span>en_US <span class="nv">keymap</span><span class="o">=</span>us
 initrd /initrd.img.centos.pxe
 <span class="c1">#修改启动项</span>
-<span class="nv">default</span><span class="o">=</span>1
+<span class="nv">default</span><span class="o">=</span><span class="m">1</span>
 reboot
 <span class="c1">#用vnc链接即可</span>
 IP:1
@@ -270,8 +206,8 @@ wget http://mirrors.aliyun.com/centos/7/os/x86_64/images/pxeboot/initrd.img -O /
 wget http://mirrors.aliyun.com/centos/7/os/x86_64/images/pxeboot/vmlinuz -O /boot/vmlinuz.remote
 vim /etc/grub.d/40_custom
 menuentry <span class="s2">&#34;remote reinstall&#34;</span> <span class="o">{</span>
-        <span class="nb">set</span> <span class="nv">root</span><span class="o">=</span><span class="o">(</span>hd0,1<span class="o">)</span>
-        linux /vmlinuz.remote <span class="nv">repo</span><span class="o">=</span>http://mirrors.aliyun.com/centos/7/os/x86_64/ vnc <span class="nv">vncpassword</span><span class="o">=</span>password <span class="nv">ip</span><span class="o">=</span>192.168.100.51 <span class="nv">netmask</span><span class="o">=</span>255.255.255.0 <span class="nv">gateway</span><span class="o">=</span>192.168.100.1 <span class="nv">nameserver</span><span class="o">=</span>223.5.5.5 noselinux headless xfs <span class="nv">panic</span><span class="o">=</span>60
+        <span class="nb">set</span> <span class="nv">root</span><span class="o">=(</span>hd0,1<span class="o">)</span>
+        linux /vmlinuz.remote <span class="nv">repo</span><span class="o">=</span>http://mirrors.aliyun.com/centos/7/os/x86_64/ vnc <span class="nv">vncpassword</span><span class="o">=</span>password <span class="nv">ip</span><span class="o">=</span>192.168.100.51 <span class="nv">netmask</span><span class="o">=</span>255.255.255.0 <span class="nv">gateway</span><span class="o">=</span>192.168.100.1 <span class="nv">nameserver</span><span class="o">=</span>223.5.5.5 noselinux headless xfs <span class="nv">panic</span><span class="o">=</span><span class="m">60</span>
         initrd /initrd.img.remote
 <span class="o">}</span>
 <span class="c1">#追加此选项</span>
@@ -280,9 +216,7 @@ vim /etc/default/grub
 <span class="c1">#更新启动项</span>
 grub2-mkconfig --output<span class="o">=</span>/boot/grub2/grub.cfg
 
-</code></pre></td></tr></table>
-</div>
-</div>
+</code></pre></div>
     </div>
 
     <div class="post-copyright">
@@ -351,7 +285,7 @@ grub2-mkconfig --output<span class="o">=</span>/boot/grub2/grub.cfg
     <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js" crossorigin="anonymous"></script>
     <script type="text/javascript">
       var gitalk = new Gitalk({
-        id: '2020-05-20 09:00:23 \x2b0800 CST',
+        id: '2020-05-20 09:00:23 \u002b0800 CST',
         title: '公有云 阿里云自定义安装系统 解决centos版本太高vos安装不上emp问题',
         clientID: '7ddb96ed0bbc973c5414',
         clientSecret: '02c691328facb2ee150a1b7c8a46347d6c046ae1',

@@ -41,7 +41,7 @@
 </script>
 
 
-<meta name="generator" content="Hugo 0.61.0 with theme even" />
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
 
 
 <link rel="canonical" href="https://www.1nth.com/post/k8s_zone/" />
@@ -70,13 +70,14 @@ docker版本 19.03.1" />
 Kubernetes 版本：v1.17.4
 集群以kubeadm方式安装
 docker版本 19.03.1">
-<meta itemprop="datePublished" content="2020-03-09T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-03-09T09:00:23&#43;08:00" />
-<meta itemprop="wordCount" content="358">
+<meta itemprop="datePublished" content="2020-03-09T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2020-03-09T09:00:23+08:00" />
+<meta itemprop="wordCount" content="297">
 
 
 
-<meta itemprop="keywords" content="helm," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="helm," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="k8s 时区 docker 时区 中国时区"/>
 <meta name="twitter:description" content="zone k8s时区设置 docker 时区设置
 Kubernetes 版本：v1.17.4
@@ -161,76 +162,11 @@ docker版本 19.03.1"/>
 
     
     <div class="post-content">
-      <h4 id="zone-k8s-docker-"><code>zone</code> k8s时区设置 docker 时区设置</h4>
-<h4 id="kubernetes-v1174">Kubernetes 版本：v1.17.4</h4>
-<h4 id="kubeadm">集群以kubeadm方式安装</h4>
-<h4 id="docker-19031">docker版本 19.03.1</h4>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span><span class="lnt">48
-</span><span class="lnt">49
-</span><span class="lnt">50
-</span><span class="lnt">51
-</span><span class="lnt">52
-</span><span class="lnt">53
-</span><span class="lnt">54
-</span><span class="lnt">55
-</span><span class="lnt">56
-</span><span class="lnt">57
-</span><span class="lnt">58
-</span><span class="lnt">59
-</span><span class="lnt">60
-</span><span class="lnt">61
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#k8s 修改时区</span>
+      <h4 id="zone-k8s时区设置-docker-时区设置"><code>zone</code> k8s时区设置 docker 时区设置</h4>
+<h4 id="kubernetes-版本v1174">Kubernetes 版本：v1.17.4</h4>
+<h4 id="集群以kubeadm方式安装">集群以kubeadm方式安装</h4>
+<h4 id="docker版本-19031">docker版本 19.03.1</h4>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#k8s 修改时区</span>
 <span class="c1">##第一种是把主机的时区文件挂载到pod内</span>
 vi time-pod.yaml
 apiVersion: v1
@@ -246,7 +182,7 @@ spec:
   - name: my-tz
     image: harbor.mvmyun.com/dev/nginx
     ports:
-    - containerPort: 80
+    - containerPort: <span class="m">80</span>
     volumeMounts:
       - name: timezone
         mountPath: /etc/localtime
@@ -280,20 +216,18 @@ kubectl get podpresets
 
 <span class="c1">#在dockerfile中修改</span>
 Alpine
-RUN apk --no-cache add tzdata  <span class="o">&amp;&amp;</span> <span class="se">\</span>
-    ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime <span class="o">&amp;&amp;</span> <span class="se">\</span>
-    <span class="nb">echo</span> <span class="s2">&#34;Asia/Shanghai&#34;</span> &gt; /etc/timezone 
+RUN apk --no-cache add tzdata  <span class="o">&amp;&amp;</span> <span class="se">\
+</span><span class="se"></span>    ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime <span class="o">&amp;&amp;</span> <span class="se">\
+</span><span class="se"></span>    <span class="nb">echo</span> <span class="s2">&#34;Asia/Shanghai&#34;</span> &gt; /etc/timezone 
 --no-cache参数不缓存文件，有助于减少最终体积。
 
 Ubuntu
-RUN <span class="nb">echo</span> <span class="s2">&#34;Asia/Shanghai&#34;</span> &gt; /etc/timezone <span class="o">&amp;&amp;</span> <span class="se">\</span>
-    dpkg-reconfigure -f noninteractive tzdata
+RUN <span class="nb">echo</span> <span class="s2">&#34;Asia/Shanghai&#34;</span> &gt; /etc/timezone <span class="o">&amp;&amp;</span> <span class="se">\
+</span><span class="se"></span>    dpkg-reconfigure -f noninteractive tzdata
 
 CentOS
 RUN <span class="nb">echo</span> <span class="s2">&#34;Asia/shanghai&#34;</span> &gt; /etc/timezone<span class="p">;</span>
-</code></pre></td></tr></table>
-</div>
-</div>
+</code></pre></div>
     </div>
 
     <div class="post-copyright">
@@ -362,7 +296,7 @@ RUN <span class="nb">echo</span> <span class="s2">&#34;Asia/shanghai&#34;</span>
     <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js" crossorigin="anonymous"></script>
     <script type="text/javascript">
       var gitalk = new Gitalk({
-        id: '2020-03-09 09:00:23 \x2b0800 CST',
+        id: '2020-03-09 09:00:23 \u002b0800 CST',
         title: 'k8s 时区 docker 时区 中国时区',
         clientID: '7ddb96ed0bbc973c5414',
         clientSecret: '02c691328facb2ee150a1b7c8a46347d6c046ae1',

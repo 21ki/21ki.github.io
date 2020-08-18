@@ -41,7 +41,7 @@
 </script>
 
 
-<meta name="generator" content="Hugo 0.61.0 with theme even" />
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
 
 
 <link rel="canonical" href="https://www.1nth.com/post/prometheus_install/" />
@@ -64,13 +64,14 @@
 <meta property="article:modified_time" content="2019-12-18T11:27:22+08:00" />
 <meta itemprop="name" content="prometheus 安装">
 <meta itemprop="description" content="">
-<meta itemprop="datePublished" content="2019-12-18T11:27:22&#43;08:00" />
-<meta itemprop="dateModified" content="2019-12-18T11:27:22&#43;08:00" />
-<meta itemprop="wordCount" content="162">
+<meta itemprop="datePublished" content="2019-12-18T11:27:22+08:00" />
+<meta itemprop="dateModified" content="2019-12-18T11:27:22+08:00" />
+<meta itemprop="wordCount" content="141">
 
 
 
-<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="prometheus 安装"/>
 <meta name="twitter:description" content=""/>
 
@@ -150,38 +151,13 @@
 
     <div class="post-toc" id="post-toc">
   <h2 class="post-toc-title">文章目录</h2>
-  <div class="post-toc-content always-active">
+  <div class="post-toc-content">
     <nav id="TableOfContents"></nav>
   </div>
 </div>
     <div class="post-content">
       <p>#安装教程如下</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">git clone https://github.com/coreos/kube-prometheus.git --depth<span class="o">=</span>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git clone https://github.com/coreos/kube-prometheus.git --depth<span class="o">=</span>
 <span class="c1">#替换镜像地址为国内微软仓库</span> 
 cp -r kube-prometheus<span class="o">{</span>,.bak<span class="o">}</span> 
 cat kube-prometheus/manifests/* <span class="p">|</span> grep image: 
@@ -202,9 +178,7 @@ kubectl edit svc prometheus-k8s -n monitoring
 <span class="c1">#导入模版</span>
 点+号 &gt; Import &gt; https://grafana.com/grafana/dashboards/315
 点+号 &gt; Import &gt; https://grafana.com/grafana/dashboards/8919
-</code></pre></td></tr></table>
-</div>
-</div>
+</code></pre></div>
     </div>
 
     <div class="post-copyright">
@@ -271,7 +245,7 @@ kubectl edit svc prometheus-k8s -n monitoring
     <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js" crossorigin="anonymous"></script>
     <script type="text/javascript">
       var gitalk = new Gitalk({
-        id: '2019-12-18 11:27:22 \x2b0800 CST',
+        id: '2019-12-18 11:27:22 \u002b0800 CST',
         title: 'prometheus 安装',
         clientID: '7ddb96ed0bbc973c5414',
         clientSecret: '02c691328facb2ee150a1b7c8a46347d6c046ae1',

@@ -41,7 +41,7 @@
 </script>
 
 
-<meta name="generator" content="Hugo 0.61.0 with theme even" />
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
 
 
 <link rel="canonical" href="https://www.1nth.com/post/helm3_install/" />
@@ -68,13 +68,14 @@ Kubernetes 版本：v1.17.3
 <meta itemprop="description" content="Helm3 版本：v3.1.1
 Kubernetes 版本：v1.17.3
 集群以kubeadm方式安装">
-<meta itemprop="datePublished" content="2020-03-08T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-03-08T09:00:23&#43;08:00" />
-<meta itemprop="wordCount" content="423">
+<meta itemprop="datePublished" content="2020-03-08T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2020-03-08T09:00:23+08:00" />
+<meta itemprop="wordCount" content="371">
 
 
 
-<meta itemprop="keywords" content="helm," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="helm," />
+<meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="helm3 安装使用"/>
 <meta name="twitter:description" content="Helm3 版本：v3.1.1
 Kubernetes 版本：v1.17.3
@@ -158,66 +159,10 @@ Kubernetes 版本：v1.17.3
 
     
     <div class="post-content">
-      <h4 id="helm3-v311"><code>Helm3</code> 版本：v3.1.1</h4>
-<h4 id="kubernetes-v1173">Kubernetes 版本：v1.17.3</h4>
-<h4 id="kubeadm">集群以kubeadm方式安装</h4>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span><span class="lnt">48
-</span><span class="lnt">49
-</span><span class="lnt">50
-</span><span class="lnt">51
-</span><span class="lnt">52
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#下载地址 https://github.com/helm/helm/releases</span>
+      <h4 id="helm3-版本v311"><code>Helm3</code> 版本：v3.1.1</h4>
+<h4 id="kubernetes-版本v1173">Kubernetes 版本：v1.17.3</h4>
+<h4 id="集群以kubeadm方式安装">集群以kubeadm方式安装</h4>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#下载地址 https://github.com/helm/helm/releases</span>
 wget https://get.helm.sh/helm-v3.1.1-linux-amd64.tar.gz
 <span class="c1">#解压 Helm</span>
 tar -zxvf helm-v3.1.1-linux-amd64.tar.gz
@@ -269,9 +214,7 @@ helm rollback nginx <span class="m">1</span> -n myki
 helm uninstall nginx -n myki --keep-history
 <span class="c1">#卸载应用，不保留安装记录</span>
 helm delete nginx -n myki
-</code></pre></td></tr></table>
-</div>
-</div>
+</code></pre></div>
     </div>
 
     <div class="post-copyright">
@@ -340,7 +283,7 @@ helm delete nginx -n myki
     <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js" crossorigin="anonymous"></script>
     <script type="text/javascript">
       var gitalk = new Gitalk({
-        id: '2020-03-08 09:00:23 \x2b0800 CST',
+        id: '2020-03-08 09:00:23 \u002b0800 CST',
         title: 'helm3 安装使用',
         clientID: '7ddb96ed0bbc973c5414',
         clientSecret: '02c691328facb2ee150a1b7c8a46347d6c046ae1',
