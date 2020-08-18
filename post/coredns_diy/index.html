@@ -67,7 +67,7 @@
 <meta itemprop="description" content="###coredns泛域名解析 单域名解析">
 <meta itemprop="datePublished" content="2020-08-17T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2020-08-17T09:00:23+08:00" />
-<meta itemprop="wordCount" content="232">
+<meta itemprop="wordCount" content="924">
 
 
 
@@ -156,7 +156,16 @@
     
     <div class="post-content">
       <p>###coredns泛域名解析 单域名解析</p>
-<p>coredns泛解析</p>
+<p>#测试命令如下</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#修改configmap</span>
+kubectl edit cm -n kube-system coredns -oyaml
+<span class="c1">#默认有2分钟延迟,可以先把pod数量为零之后在增加上来  以下两条命令生产环境慎用 慎用 慎用 重要的事情要说三遍</span>
+kubectl scale deployment coredns -n kube-system --replicas<span class="o">=</span><span class="m">0</span>
+kubectl scale deployment coredns -n kube-system --replicas<span class="o">=</span><span class="m">2</span>
+<span class="c1">#启动一个pod测试</span>
+kubectl run --rm -i --tty dev --image<span class="o">=</span>alpine /bin/sh
+ping myki.com
+</code></pre></div><p>coredns泛解析第一种</p>
 <div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="w">  </span><span class="k">Corefile</span><span class="p">:</span><span class="w"> </span><span class="sd">|
 </span><span class="sd">    .:53 {</span><span class="w">
 </span><span class="w">        </span>errors<span class="w">
@@ -179,6 +188,35 @@
 </span><span class="w">        </span>reload<span class="w">
 </span><span class="w">        </span>loadbalance<span class="w">
 </span><span class="w">    </span>}<span class="w">
+</span></code></pre></div><p>coredns泛解析第二种 上游DNS用的是dnamasq
+添加如下配置  address=/myki.com/127.0.0.1</p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
+</span><span class="w"></span><span class="k">data</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">Corefile</span><span class="p">:</span><span class="w"> </span><span class="sd">|
+</span><span class="sd">    .:53 {</span><span class="w">
+</span><span class="w">        </span>errors<span class="w">
+</span><span class="w">        </span>health<span class="w"> </span>{<span class="w">
+</span><span class="w">           </span>lameduck<span class="w"> </span>5s<span class="w">
+</span><span class="w">        </span>}<span class="w">
+</span><span class="w">        </span>ready<span class="w">
+</span><span class="w">        </span>kubernetes<span class="w"> </span>cluster.local<span class="w"> </span>in-addr.arpa<span class="w"> </span>ip6.arpa<span class="w"> </span>{<span class="w">
+</span><span class="w">           </span>pods<span class="w"> </span>insecure<span class="w">
+</span><span class="w">           </span>fallthrough<span class="w"> </span>in-addr.arpa<span class="w"> </span>ip6.arpa<span class="w">
+</span><span class="w">           </span>ttl<span class="w"> </span><span class="m">30</span><span class="w">
+</span><span class="w">        </span>}<span class="w">
+</span><span class="w">        </span>prometheus<span class="w"> </span><span class="p">:</span><span class="m">9153</span><span class="w">
+</span><span class="w">        </span>forward<span class="w"> </span>.<span class="w"> </span>/etc/resolv.conf<span class="w">
+</span><span class="w">        </span>cache<span class="w"> </span><span class="m">30</span><span class="w">
+</span><span class="w">        </span>loop<span class="w">
+</span><span class="w">        </span>reload<span class="w">
+</span><span class="w">        </span>loadbalance<span class="w">
+</span><span class="w">    </span>}<span class="w">
+</span><span class="w">	</span><span class="c">#转发泛域名到上游dns</span><span class="w">
+</span><span class="w">    </span>mvmyun.com<span class="p">:</span><span class="m">53</span><span class="w"> </span>{<span class="w">
+</span><span class="w">        </span>errors<span class="w">
+</span><span class="w">        </span>cache<span class="w"> </span><span class="m">30</span><span class="w">
+</span><span class="w">        </span>forward<span class="w"> </span>.<span class="w"> </span><span class="m">192.168.1.1</span><span class="w">
+</span><span class="w">    </span>}<span class="w">
 </span></code></pre></div><p>coredns单解析</p>
 <div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
 </span><span class="w"></span><span class="k">data</span><span class="p">:</span><span class="w">
@@ -189,6 +227,7 @@
 </span><span class="w">           </span>lameduck<span class="w"> </span>5s<span class="w">
 </span><span class="w">        </span>}<span class="w">
 </span><span class="w">        </span>ready<span class="w">
+</span><span class="w">		</span><span class="c">#单解析</span><span class="w">
 </span><span class="w">        </span>hosts<span class="w"> </span>{<span class="w">
 </span><span class="w">          </span><span class="m">192.168.1.192</span><span class="w"> </span>harbor.mvmyun.com<span class="w">
 </span><span class="w">          </span>fallthrough<span class="w">
