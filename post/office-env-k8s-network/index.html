@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154483127-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154483127-1');
+</script>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>办公环境下 kubernetes 网络互通方案 - Myki的博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Myki" /><meta name="description" content="&#43;--------------------&#43; &#43;--------------------&#43; | &#43;------------&#43; | | &#43;------------&#43; | | | | | | | | | | | ConA | | | | ConB | | | | | | | | | | | &#43;-----&#43;------&#43; | | &#43;-----&#43;------&#43; | | |veth | | |veth | | wl-A | | wl-B | | | | | | | &#43;-------node-A-------&#43; &#43;-------node-B-------&#43; | | | | | | type1. in the same lan | | | &#43;-------------------------------&#43; | | | | type2. in different network | | &#43;-------------&#43; | | | | | &#43;-------------&#43; Routers |-------------&#43; | | &#43;-------------&#43; 从ConA中发送给ConB的报文被nodeA的wl-A接收，根据nodeA上的路由规则，经过各种iptables规则后，转发到nodeB。 如果nodeA和nodeB在同一个二层网段，下一条地址直接就是node-B，经过二层交换机即可到达。 如果nodeA和nodeB在不同的网段，报文被路由到下一跳，经过三层交换或路由器，一步步跳转到node-B。 " /><meta name="keywords" content="kubernetes, coredns" />
+
+
+
+
+
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-2427629508597494",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
+
+
+<link rel="canonical" href="https://www.1nth.com/post/office-env-k8s-network/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="办公环境下 kubernetes 网络互通方案" />
+<meta property="og:description" content="                  &#43;--------------------&#43;              &#43;--------------------&#43; 
+                  |   &#43;------------&#43;   |              |   &#43;------------&#43;   | 
+                  |   |            |   |              |   |            |   | 
+                  |   |    ConA    |   |              |   |    ConB    |   | 
+                  |   |            |   |              |   |            |   | 
+                  |   &#43;-----&#43;------&#43;   |              |   &#43;-----&#43;------&#43;   | 
+                  |         |veth      |              |         |veth      | 
+                  |       wl-A         |              |       wl-B         | 
+                  |         |          |              |         |          |
+                  &#43;-------node-A-------&#43;              &#43;-------node-B-------&#43; 
+                          |    |                               |    |
+                          |    | type1.  in the same lan       |    |
+                          |    &#43;-------------------------------&#43;    |
+                          |                                         |
+                          |      type2. in different network        |
+                          |             &#43;-------------&#43;             |
+                          |             |             |             |
+                          &#43;-------------&#43;   Routers   |-------------&#43;
+                                        |             |
+                                        &#43;-------------&#43;
+从ConA中发送给ConB的报文被nodeA的wl-A接收，根据nodeA上的路由规则，经过各种iptables规则后，转发到nodeB。
+如果nodeA和nodeB在同一个二层网段，下一条地址直接就是node-B，经过二层交换机即可到达。
+如果nodeA和nodeB在不同的网段，报文被路由到下一跳，经过三层交换或路由器，一步步跳转到node-B。
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.1nth.com/post/office-env-k8s-network/" />
+<meta property="article:published_time" content="2020-08-19T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-08-19T09:00:23+08:00" />
+<meta itemprop="name" content="办公环境下 kubernetes 网络互通方案">
+<meta itemprop="description" content="                  &#43;--------------------&#43;              &#43;--------------------&#43; 
+                  |   &#43;------------&#43;   |              |   &#43;------------&#43;   | 
+                  |   |            |   |              |   |            |   | 
+                  |   |    ConA    |   |              |   |    ConB    |   | 
+                  |   |            |   |              |   |            |   | 
+                  |   &#43;-----&#43;------&#43;   |              |   &#43;-----&#43;------&#43;   | 
+                  |         |veth      |              |         |veth      | 
+                  |       wl-A         |              |       wl-B         | 
+                  |         |          |              |         |          |
+                  &#43;-------node-A-------&#43;              &#43;-------node-B-------&#43; 
+                          |    |                               |    |
+                          |    | type1.  in the same lan       |    |
+                          |    &#43;-------------------------------&#43;    |
+                          |                                         |
+                          |      type2. in different network        |
+                          |             &#43;-------------&#43;             |
+                          |             |             |             |
+                          &#43;-------------&#43;   Routers   |-------------&#43;
+                                        |             |
+                                        &#43;-------------&#43;
+从ConA中发送给ConB的报文被nodeA的wl-A接收，根据nodeA上的路由规则，经过各种iptables规则后，转发到nodeB。
+如果nodeA和nodeB在同一个二层网段，下一条地址直接就是node-B，经过二层交换机即可到达。
+如果nodeA和nodeB在不同的网段，报文被路由到下一跳，经过三层交换或路由器，一步步跳转到node-B。
+">
+<meta itemprop="datePublished" content="2020-08-19T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2020-08-19T09:00:23+08:00" />
+<meta itemprop="wordCount" content="945">
+
+
+
+<meta itemprop="keywords" content="kubernetes," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="办公环境下 kubernetes 网络互通方案"/>
+<meta name="twitter:description" content="                  &#43;--------------------&#43;              &#43;--------------------&#43; 
+                  |   &#43;------------&#43;   |              |   &#43;------------&#43;   | 
+                  |   |            |   |              |   |            |   | 
+                  |   |    ConA    |   |              |   |    ConB    |   | 
+                  |   |            |   |              |   |            |   | 
+                  |   &#43;-----&#43;------&#43;   |              |   &#43;-----&#43;------&#43;   | 
+                  |         |veth      |              |         |veth      | 
+                  |       wl-A         |              |       wl-B         | 
+                  |         |          |              |         |          |
+                  &#43;-------node-A-------&#43;              &#43;-------node-B-------&#43; 
+                          |    |                               |    |
+                          |    | type1.  in the same lan       |    |
+                          |    &#43;-------------------------------&#43;    |
+                          |                                         |
+                          |      type2. in different network        |
+                          |             &#43;-------------&#43;             |
+                          |             |             |             |
+                          &#43;-------------&#43;   Routers   |-------------&#43;
+                                        |             |
+                                        &#43;-------------&#43;
+从ConA中发送给ConB的报文被nodeA的wl-A接收，根据nodeA上的路由规则，经过各种iptables规则后，转发到nodeB。
+如果nodeA和nodeB在同一个二层网段，下一条地址直接就是node-B，经过二层交换机即可到达。
+如果nodeA和nodeB在不同的网段，报文被路由到下一跳，经过三层交换或路由器，一步步跳转到node-B。
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">办公环境下 kubernetes 网络互通方案</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-08-19 </span>
+        <div class="post-category">
+            <a href="/categories/kubernetes/"> kubernetes </a>
+            <a href="/categories/coredns/"> coredns </a>
+            </div>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    
+    <div class="post-content">
+      <div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">                  +--------------------+              +--------------------+ 
+                  |   +------------+   |              |   +------------+   | 
+                  |   |            |   |              |   |            |   | 
+                  |   |    ConA    |   |              |   |    ConB    |   | 
+                  |   |            |   |              |   |            |   | 
+                  |   +-----+------+   |              |   +-----+------+   | 
+                  |         |veth      |              |         |veth      | 
+                  |       wl-A         |              |       wl-B         | 
+                  |         |          |              |         |          |
+                  +-------node-A-------+              +-------node-B-------+ 
+                          |    |                               |    |
+                          |    | type1.  in the same lan       |    |
+                          |    +-------------------------------+    |
+                          |                                         |
+                          |      type2. in different network        |
+                          |             +-------------+             |
+                          |             |             |             |
+                          +-------------+   Routers   |-------------+
+                                        |             |
+                                        +-------------+
+从ConA中发送给ConB的报文被nodeA的wl-A接收，根据nodeA上的路由规则，经过各种iptables规则后，转发到nodeB。
+如果nodeA和nodeB在同一个二层网段，下一条地址直接就是node-B，经过二层交换机即可到达。
+如果nodeA和nodeB在不同的网段，报文被路由到下一跳，经过三层交换或路由器，一步步跳转到node-B。
+</code></pre></div><p><img src="https://oss.1nth.com/images/1nth/calicoNetwork.png" alt="aliyun_vos_vpc"></p>
+<p>#测试命令如下</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">k8s-node2 IP 地址 192.168.10.202
+内网 DNS IP 地址 10.96.0.10
+pod 网段10.100.0.1/16，svc 网段10.96.0.0/16
+办公网段 192.168.10.0/23
+<span class="c1">#给 k8s-node2节点打上污点标签（taints），不让 k8s 调度 pod 来占用资源：</span>
+kubectl taint nodes k8s-node2 <span class="nv">forward</span><span class="o">=</span>k8s-node2:NoSchedule
+<span class="c1"># 开启转发</span>
+<span class="c1"># vim /etc/sysctl.d/k8s.conf</span>
+net.ipv4.ip_forward <span class="o">=</span> <span class="m">1</span>
+<span class="c1"># sysctl -p</span>
+
+<span class="c1"># 来自办公室访问pod、service snat</span>
+iptables -t nat -A POSTROUTING -s 192.168.10.0/23 -d 10.100.0.1/16 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s 192.168.10.0/23 -d 10.96.0.0/16 -j  MASQUERADE
+
+<span class="c1">#清除命令</span>
+iptables -t nat -D POSTROUTING -s 192.168.10.0/23 -d 10.100.0.1/16 -j MASQUERADE
+iptables -t nat -D POSTROUTING -s 192.168.10.0/23 -d 10.96.0.0/16 -j  MASQUERADE
+iptables -t nat -nvL --line-number
+iptables -t nat -D POSTROUTING <span class="m">4</span>
+
+<span class="c1">#在办公室的出口路由器上，设置静态路由，将 k8s pod 和 service 的网段，路由到 k8s-node2 节点上</span>
+ip route 10.100.0.0 255.255.0.0   192.168.10.202
+ip route 10.96.0.0  255.240.0.0   192.168.10.202
+
+
+<span class="c1">#方案一， 最简单的做法，我们把内网DNS架设在node-30这台节点上，那么他肯定访问到kube-dns 10.96.0.10</span>
+<span class="c1"># kubectl  get svc  -n kube-system |grep kube-dns</span>
+kube-dns   ClusterIP   10.96.0.10   &lt;none&gt;        53/UDP,53/TCP   20d
+
+<span class="c1">#方案二，由于我们实验场景内网DNS IP地址 10.60.20.1 ，并不在node-30上，我们需要打通10.60.20.1 访问 svc网段10.96.0.0/12即可</span>
+<span class="c1">#内网DNS（IP 10.60.20.1） 添加静态路由</span>
+route add -net 10.96.0.0/12 gw 192.168.10.202
+<span class="c1"># node-30（IP 192.168.10.202） 做snat</span>
+iptables -t nat -A POSTROUTING -s 10.96.0.10/32 -d 10.96.0.0/16 -j MASQUERADE
+
+
+<span class="c1">#nginx代理</span>
+kubectl create namespace dns-l4
+<span class="c1">#打标签</span>
+kubectl label nodes k8s-node2 <span class="nv">node</span><span class="o">=</span>dns-l4
+kubectl apply -f dns-l4.yaml
+<span class="c1">#部署完成后，电脑验证，是否生效：</span>
+nslookup -q<span class="o">=</span>A kube-dns.kube-system.svc.cluster.local  192.168.10.202
+nslookup -q<span class="o">=</span>A my-app-ip.default.svc.cluster.local  192.168.10.202
+
+<span class="c1">#这里我们用轻量级的dnsmasq来作为内网 dns 配置案例，将来自内网的*.cluster.local解析请求，走 KubeDNS 10.60.20.30：</span>
+<span class="c1"># vim /etc/dnsmasq.conf</span>
+strict-order
+listen-address<span class="o">=</span>10.96.0.10
+bogus-nxdomain<span class="o">=</span>223.5.5.5
+<span class="nv">server</span><span class="o">=</span>/cluster.local/192.168.10.202
+</code></pre></div><p>vi dns-l4.yaml</p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">kind</span><span class="p">:</span><span class="w"> </span>ConfigMap<span class="w">
+</span><span class="w"></span><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
+</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>nginx-configuration<span class="w">
+</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>dns-l4<span class="w">
+</span><span class="w">  </span><span class="k">labels</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">app.kubernetes.io/name</span><span class="p">:</span><span class="w"> </span>ingress-nginx<span class="w">
+</span><span class="w">    </span><span class="k">app.kubernetes.io/part-of</span><span class="p">:</span><span class="w"> </span>ingress-nginx<span class="w">
+</span><span class="w">
+</span><span class="w"></span>---<span class="w">
+</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>ConfigMap<span class="w">
+</span><span class="w"></span><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
+</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>tcp-services<span class="w">
+</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>dns-l4<span class="w">
+</span><span class="w">  </span><span class="k">labels</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">app.kubernetes.io/name</span><span class="p">:</span><span class="w"> </span>ingress-nginx<span class="w">
+</span><span class="w">    </span><span class="k">app.kubernetes.io/part-of</span><span class="p">:</span><span class="w"> </span>ingress-nginx<span class="w">
+</span><span class="w"></span><span class="k">data</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">53</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;kube-system/kube-dns:53&#34;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span>---<span class="w">
+</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>ConfigMap<span class="w">
+</span><span class="w"></span><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
+</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>udp-services<span class="w">
+</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>dns-l4<span class="w">
+</span><span class="w">  </span><span class="k">labels</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">app.kubernetes.io/name</span><span class="p">:</span><span class="w"> </span>ingress-nginx<span class="w">
+</span><span class="w">    </span><span class="k">app.kubernetes.io/part-of</span><span class="p">:</span><span class="w"> </span>ingress-nginx<span class="w">
+</span><span class="w"></span><span class="k">data</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">53</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;kube-system/kube-dns:53&#34;</span><span class="w">
+</span><span class="w"></span>---<span class="w">
+</span><span class="w"></span><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
+</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>ServiceAccount<span class="w">
+</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>nginx-ingress-serviceaccount<span class="w">
+</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>dns-l4<span class="w">
+</span><span class="w">  </span><span class="k">labels</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">app.kubernetes.io/name</span><span class="p">:</span><span class="w"> </span>ingress-nginx<span class="w">
+</span><span class="w">    </span><span class="k">app.kubernetes.io/part-of</span><span class="p">:</span><span class="w"> </span>ingress-nginx<span class="w">
+</span><span class="w">
+</span><span class="w"></span>---<span class="w">
+</span><span class="w"></span><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>rbac.authorization.k8s.io/v1beta1<span class="w">
+</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>ClusterRole<span class="w">
+</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>nginx-ingress-clusterrole<span class="w">
+</span><span class="w">  </span><span class="k">labels</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">app.kubernetes.io/name</span><span class="p">:</span><span class="w"> </span>ingress-nginx<span class="w">
+</span><span class="w">    </span><span class="k">app.kubernetes.io/part-of</span><span class="p">:</span><span class="w"> </span>ingress-nginx<span class="w">
+</span><span class="w"></span><span class="k">rules</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">apiGroups</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="s2">&#34;&#34;</span><span class="w">
+</span><span class="w">    </span><span class="k">resources</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- configmaps<span class="w">
+</span><span class="w">      </span>- endpoints<span class="w">
+</span><span class="w">      </span>- nodes<span class="w">
+</span><span class="w">      </span>- pods<span class="w">
+</span><span class="w">      </span>- secrets<span class="w">
+</span><span class="w">    </span><span class="k">verbs</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- list<span class="w">
+</span><span class="w">      </span>- watch<span class="w">
+</span><span class="w">  </span>- <span class="k">apiGroups</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="s2">&#34;&#34;</span><span class="w">
+</span><span class="w">    </span><span class="k">resources</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- nodes<span class="w">
+</span><span class="w">    </span><span class="k">verbs</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- get<span class="w">
+</span><span class="w">  </span>- <span class="k">apiGroups</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="s2">&#34;&#34;</span><span class="w">
+</span><span class="w">    </span><span class="k">resources</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- services<span class="w">
+</span><span class="w">    </span><span class="k">verbs</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- get<span class="w">
+</span><span class="w">      </span>- list<span class="w">
+</span><span class="w">      </span>- watch<span class="w">
+</span><span class="w">  </span>- <span class="k">apiGroups</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="s2">&#34;extensions&#34;</span><span class="w">
+</span><span class="w">    </span><span class="k">resources</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- ingresses<span class="w">
+</span><span class="w">    </span><span class="k">verbs</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- get<span class="w">
+</span><span class="w">      </span>- list<span class="w">
+</span><span class="w">      </span>- watch<span class="w">
+</span><span class="w">  </span>- <span class="k">apiGroups</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="s2">&#34;&#34;</span><span class="w">
+</span><span class="w">    </span><span class="k">resources</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- events<span class="w">
+</span><span class="w">    </span><span class="k">verbs</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- create<span class="w">
+</span><span class="w">      </span>- patch<span class="w">
+</span><span class="w">  </span>- <span class="k">apiGroups</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="s2">&#34;extensions&#34;</span><span class="w">
+</span><span class="w">    </span><span class="k">resources</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- ingresses/status<span class="w">
+</span><span class="w">    </span><span class="k">verbs</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- update<span class="w">
+</span><span class="w">
+</span><span class="w"></span>---<span class="w">
+</span><span class="w"></span><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>rbac.authorization.k8s.io/v1beta1<span class="w">
+</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Role<span class="w">
+</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>nginx-ingress-role<span class="w">
+</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>dns-l4<span class="w">
+</span><span class="w">  </span><span class="k">labels</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">app.kubernetes.io/name</span><span class="p">:</span><span class="w"> </span>ingress-nginx<span class="w">
+</span><span class="w">    </span><span class="k">app.kubernetes.io/part-of</span><span class="p">:</span><span class="w"> </span>ingress-nginx<span class="w">
+</span><span class="w"></span><span class="k">rules</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">apiGroups</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="s2">&#34;&#34;</span><span class="w">
+</span><span class="w">    </span><span class="k">resources</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- configmaps<span class="w">
+</span><span class="w">      </span>- pods<span class="w">
+</span><span class="w">      </span>- secrets<span class="w">
+</span><span class="w">      </span>- namespaces<span class="w">
+</span><span class="w">    </span><span class="k">verbs</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- get<span class="w">
+</span><span class="w">  </span>- <span class="k">apiGroups</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="s2">&#34;&#34;</span><span class="w">
+</span><span class="w">    </span><span class="k">resources</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- configmaps<span class="w">
+</span><span class="w">    </span><span class="k">resourceNames</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="c"># Defaults to &#34;&lt;election-id&gt;-&lt;ingress-class&gt;&#34;</span><span class="w">
+</span><span class="w">      </span><span class="c"># Here: &#34;&lt;ingress-controller-leader&gt;-&lt;nginx&gt;&#34;</span><span class="w">
+</span><span class="w">      </span><span class="c"># This has to be adapted if you change either parameter</span><span class="w">
+</span><span class="w">      </span><span class="c"># when launching the nginx-ingress-controller.</span><span class="w">
+</span><span class="w">      </span>- <span class="s2">&#34;ingress-controller-leader-nginx&#34;</span><span class="w">
+</span><span class="w">    </span><span class="k">verbs</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- get<span class="w">
+</span><span class="w">      </span>- update<span class="w">
+</span><span class="w">  </span>- <span class="k">apiGroups</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="s2">&#34;&#34;</span><span class="w">
+</span><span class="w">    </span><span class="k">resources</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- configmaps<span class="w">
+</span><span class="w">    </span><span class="k">verbs</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- create<span class="w">
+</span><span class="w">  </span>- <span class="k">apiGroups</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="s2">&#34;&#34;</span><span class="w">
+</span><span class="w">    </span><span class="k">resources</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- endpoints<span class="w">
+</span><span class="w">    </span><span class="k">verbs</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- get<span class="w">
+</span><span class="w">
+</span><span class="w"></span>---<span class="w">
+</span><span class="w"></span><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>rbac.authorization.k8s.io/v1beta1<span class="w">
+</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>RoleBinding<span class="w">
+</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>nginx-ingress-role-nisa-binding<span class="w">
+</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>dns-l4<span class="w">
+</span><span class="w">  </span><span class="k">labels</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">app.kubernetes.io/name</span><span class="p">:</span><span class="w"> </span>ingress-nginx<span class="w">
+</span><span class="w">    </span><span class="k">app.kubernetes.io/part-of</span><span class="p">:</span><span class="w"> </span>ingress-nginx<span class="w">
+</span><span class="w"></span><span class="k">roleRef</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">apiGroup</span><span class="p">:</span><span class="w"> </span>rbac.authorization.k8s.io<span class="w">
+</span><span class="w">  </span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Role<span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>nginx-ingress-role<span class="w">
+</span><span class="w"></span><span class="k">subjects</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">kind</span><span class="p">:</span><span class="w"> </span>ServiceAccount<span class="w">
+</span><span class="w">    </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>nginx-ingress-serviceaccount<span class="w">
+</span><span class="w">    </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>dns-l4<span class="w">
+</span><span class="w">
+</span><span class="w"></span>---<span class="w">
+</span><span class="w"></span><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>rbac.authorization.k8s.io/v1beta1<span class="w">
+</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>ClusterRoleBinding<span class="w">
+</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>nginx-ingress-clusterrole-nisa-binding<span class="w">
+</span><span class="w">  </span><span class="k">labels</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">app.kubernetes.io/name</span><span class="p">:</span><span class="w"> </span>ingress-nginx<span class="w">
+</span><span class="w">    </span><span class="k">app.kubernetes.io/part-of</span><span class="p">:</span><span class="w"> </span>ingress-nginx<span class="w">
+</span><span class="w"></span><span class="k">roleRef</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">apiGroup</span><span class="p">:</span><span class="w"> </span>rbac.authorization.k8s.io<span class="w">
+</span><span class="w">  </span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>ClusterRole<span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>nginx-ingress-clusterrole<span class="w">
+</span><span class="w"></span><span class="k">subjects</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">kind</span><span class="p">:</span><span class="w"> </span>ServiceAccount<span class="w">
+</span><span class="w">    </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>nginx-ingress-serviceaccount<span class="w">
+</span><span class="w">    </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>dns-l4<span class="w">
+</span><span class="w">
+</span><span class="w"></span>---<span class="w">
+</span><span class="w"></span><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>apps/v1<span class="w">
+</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Deployment<span class="w">
+</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>nginx-ingress-controller<span class="w">
+</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>dns-l4<span class="w">
+</span><span class="w">  </span><span class="k">labels</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">app.kubernetes.io/name</span><span class="p">:</span><span class="w"> </span>ingress-nginx<span class="w">
+</span><span class="w">    </span><span class="k">app.kubernetes.io/part-of</span><span class="p">:</span><span class="w"> </span>ingress-nginx<span class="w">
+</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">  </span><span class="k">selector</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">matchLabels</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">app.kubernetes.io/name</span><span class="p">:</span><span class="w"> </span>ingress-nginx<span class="w">
+</span><span class="w">      </span><span class="k">app.kubernetes.io/part-of</span><span class="p">:</span><span class="w"> </span>ingress-nginx<span class="w">
+</span><span class="w">  </span><span class="k">template</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">labels</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">app.kubernetes.io/name</span><span class="p">:</span><span class="w"> </span>ingress-nginx<span class="w">
+</span><span class="w">        </span><span class="k">app.kubernetes.io/part-of</span><span class="p">:</span><span class="w"> </span>ingress-nginx<span class="w">
+</span><span class="w">      </span><span class="k">annotations</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">prometheus.io/port</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;10254&#34;</span><span class="w">
+</span><span class="w">        </span><span class="k">prometheus.io/scrape</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;true&#34;</span><span class="w">
+</span><span class="w">    </span><span class="k">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">nodeSelector</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">node</span><span class="p">:</span><span class="w"> </span>dns-l4<span class="w">
+</span><span class="w">      </span><span class="k">hostNetwork</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">      </span><span class="k">serviceAccountName</span><span class="p">:</span><span class="w"> </span>nginx-ingress-serviceaccount<span class="w">
+</span><span class="w">      </span><span class="k">tolerations</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="k">key</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;forward&#34;</span><span class="w">
+</span><span class="w">        </span><span class="k">operator</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;Exists&#34;</span><span class="w">
+</span><span class="w">        </span><span class="k">effect</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;NoSchedule&#34;</span><span class="w">
+</span><span class="w">      </span><span class="k">containers</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>nginx-ingress-controller<span class="w">
+</span><span class="w">          </span><span class="k">image</span><span class="p">:</span><span class="w"> </span>quay.io/kubernetes-ingress-controller/nginx-ingress-controller<span class="p">:</span><span class="m">0.21.0</span><span class="w">
+</span><span class="w">          </span><span class="k">args</span><span class="p">:</span><span class="w">
+</span><span class="w">            </span>- /nginx-ingress-controller<span class="w">
+</span><span class="w">            </span>- --configmap=$(POD_NAMESPACE)/nginx-configuration<span class="w">
+</span><span class="w">            </span>- --tcp-services-configmap=$(POD_NAMESPACE)/tcp-services<span class="w">
+</span><span class="w">            </span>- --udp-services-configmap=$(POD_NAMESPACE)/udp-services<span class="w">
+</span><span class="w">            </span>- --publish-service=$(POD_NAMESPACE)/ingress-nginx<span class="w">
+</span><span class="w">            </span>- --annotations-prefix=nginx.ingress.kubernetes.io<span class="w">
+</span><span class="w">          </span><span class="k">securityContext</span><span class="p">:</span><span class="w">
+</span><span class="w">            </span><span class="k">capabilities</span><span class="p">:</span><span class="w">
+</span><span class="w">              </span><span class="k">drop</span><span class="p">:</span><span class="w">
+</span><span class="w">                </span>- ALL<span class="w">
+</span><span class="w">              </span><span class="k">add</span><span class="p">:</span><span class="w">
+</span><span class="w">                </span>- NET_BIND_SERVICE<span class="w">
+</span><span class="w">            </span><span class="k">runAsUser</span><span class="p">:</span><span class="w"> </span><span class="m">33</span><span class="w">
+</span><span class="w">          </span><span class="k">env</span><span class="p">:</span><span class="w">
+</span><span class="w">            </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>POD_NAME<span class="w">
+</span><span class="w">              </span><span class="k">valueFrom</span><span class="p">:</span><span class="w">
+</span><span class="w">                </span><span class="k">fieldRef</span><span class="p">:</span><span class="w">
+</span><span class="w">                  </span><span class="k">fieldPath</span><span class="p">:</span><span class="w"> </span>metadata.name<span class="w">
+</span><span class="w">            </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>POD_NAMESPACE<span class="w">
+</span><span class="w">              </span><span class="k">valueFrom</span><span class="p">:</span><span class="w">
+</span><span class="w">                </span><span class="k">fieldRef</span><span class="p">:</span><span class="w">
+</span><span class="w">                  </span><span class="k">fieldPath</span><span class="p">:</span><span class="w"> </span>metadata.namespace<span class="w">
+</span><span class="w">          </span><span class="k">ports</span><span class="p">:</span><span class="w">
+</span><span class="w">            </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>http<span class="w">
+</span><span class="w">              </span><span class="k">containerPort</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
+</span><span class="w">            </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>https<span class="w">
+</span><span class="w">              </span><span class="k">containerPort</span><span class="p">:</span><span class="w"> </span><span class="m">443</span><span class="w">
+</span><span class="w">          </span><span class="k">livenessProbe</span><span class="p">:</span><span class="w">
+</span><span class="w">            </span><span class="k">failureThreshold</span><span class="p">:</span><span class="w"> </span><span class="m">3</span><span class="w">
+</span><span class="w">            </span><span class="k">httpGet</span><span class="p">:</span><span class="w">
+</span><span class="w">              </span><span class="k">path</span><span class="p">:</span><span class="w"> </span>/healthz<span class="w">
+</span><span class="w">              </span><span class="k">port</span><span class="p">:</span><span class="w"> </span><span class="m">10254</span><span class="w">
+</span><span class="w">              </span><span class="k">scheme</span><span class="p">:</span><span class="w"> </span>HTTP<span class="w">
+</span><span class="w">            </span><span class="k">initialDelaySeconds</span><span class="p">:</span><span class="w"> </span><span class="m">10</span><span class="w">
+</span><span class="w">            </span><span class="k">periodSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">10</span><span class="w">
+</span><span class="w">            </span><span class="k">successThreshold</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">            </span><span class="k">timeoutSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">          </span><span class="k">readinessProbe</span><span class="p">:</span><span class="w">
+</span><span class="w">            </span><span class="k">failureThreshold</span><span class="p">:</span><span class="w"> </span><span class="m">3</span><span class="w">
+</span><span class="w">            </span><span class="k">httpGet</span><span class="p">:</span><span class="w">
+</span><span class="w">              </span><span class="k">path</span><span class="p">:</span><span class="w"> </span>/healthz<span class="w">
+</span><span class="w">              </span><span class="k">port</span><span class="p">:</span><span class="w"> </span><span class="m">10254</span><span class="w">
+</span><span class="w">              </span><span class="k">scheme</span><span class="p">:</span><span class="w"> </span>HTTP<span class="w">
+</span><span class="w">            </span><span class="k">periodSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">10</span><span class="w">
+</span><span class="w">            </span><span class="k">successThreshold</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">            </span><span class="k">timeoutSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span></code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Myki</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-08-19
+        
+    </span>
+  </p>
+  
+  
+</div>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	
+	<ins class="adsbygoogle"
+		style="display:block"
+		data-ad-client="ca-pub-2427629508597494"
+		data-ad-slot="2287897972"
+		data-ad-format="auto"
+		data-full-width-responsive="true"></ins>
+	<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
+
+    
+    <div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/img/reward/wechat.png">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/img/reward/alipay.png">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/kubernetes/">kubernetes</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/coredns_diy/">
+            <span class="next-text nav-default">coredns泛域名解析 单域名解析</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+      var gitalk = new Gitalk({
+        id: '2020-08-19 09:00:23 \u002b0800 CST',
+        title: '办公环境下 kubernetes 网络互通方案',
+        clientID: '7ddb96ed0bbc973c5414',
+        clientSecret: '02c691328facb2ee150a1b7c8a46347d6c046ae1',
+        repo: '21ki.github.io',
+        owner: '21ki',
+        admin: ['21ki'],
+        body: decodeURI(location.href)
+      });
+      gitalk.render('gitalk-container');
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/gitalk/gitalk">comments powered by gitalk.</a></noscript>
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:21kixc@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/21ki" class="iconfont icon-github" title="github"></a>
+      <a href="http://localhost:1313" class="iconfont icon-weibo" title="weibo"></a>
+  <a href="https://www.1nth.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Myki</span>
+    <a href="http://beian.miit.gov.cn">京ICP备17054644号</a>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154483127-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154483127-1');
+</script>
+
+
+
+
+
+
+</body>
+</html>
