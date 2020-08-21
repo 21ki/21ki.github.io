@@ -6,10 +6,20 @@
     <description>Recent content in centos on Myki的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 17 Aug 2020 09:00:23 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 21 Aug 2020 09:00:23 +0800</lastBuildDate>
     
 	<atom:link href="https://www.1nth.com/categories/centos/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>kubeadm集群备份恢复etcd</title>
+      <link>https://www.1nth.com/post/etcd_backup_kubeadm/</link>
+      <pubDate>Fri, 21 Aug 2020 09:00:23 +0800</pubDate>
+      
+      <guid>https://www.1nth.com/post/etcd_backup_kubeadm/</guid>
+      <description>&lt;p&gt;kubeadm集群备份恢复etcd
+&lt;img src=&#34;https://oss.1nth.com/images/1nth/etcd_backup_kubeadm.jpg?x-oss-process=style/dev&#34; alt=&#34;aliyun_vos_vpc&#34;&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>coredns泛域名解析 单域名解析</title>

@@ -6,10 +6,20 @@
     <description>Recent content on Myki的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 19 Aug 2020 09:00:23 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 21 Aug 2020 09:00:23 +0800</lastBuildDate>
     
 	<atom:link href="https://www.1nth.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>kubeadm集群备份恢复etcd</title>
+      <link>https://www.1nth.com/post/etcd_backup_kubeadm/</link>
+      <pubDate>Fri, 21 Aug 2020 09:00:23 +0800</pubDate>
+      
+      <guid>https://www.1nth.com/post/etcd_backup_kubeadm/</guid>
+      <description>&lt;p&gt;kubeadm集群备份恢复etcd
+&lt;img src=&#34;https://oss.1nth.com/images/1nth/etcd_backup_kubeadm.jpg?x-oss-process=style/dev&#34; alt=&#34;aliyun_vos_vpc&#34;&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>办公环境下 kubernetes 网络互通方案</title>
@@ -40,7 +50,7 @@
 从ConA中发送给ConB的报文被nodeA的wl-A接收，根据nodeA上的路由规则，经过各种iptables规则后，转发到nodeB。
 如果nodeA和nodeB在同一个二层网段，下一条地址直接就是node-B，经过二层交换机即可到达。
 如果nodeA和nodeB在不同的网段，报文被路由到下一跳，经过三层交换或路由器，一步步跳转到node-B。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://oss.1nth.com/images/1nth/calicoNetwork.png&#34; alt=&#34;aliyun_vos_vpc&#34;&gt;&lt;/p&gt;</description>
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://oss.1nth.com/images/1nth/calicoNetwork.png?x-oss-process=style/dev&#34; alt=&#34;aliyun_vos_vpc&#34;&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
