@@ -68,7 +68,7 @@
 ">
 <meta itemprop="datePublished" content="2020-08-21T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2020-08-21T09:00:23+08:00" />
-<meta itemprop="wordCount" content="233">
+<meta itemprop="wordCount" content="292">
 
 
 
@@ -160,20 +160,23 @@
     <div class="post-content">
       <p>kubeadm集群备份恢复etcd
 <img src="https://oss.1nth.com/images/1nth/etcd_backup_kubeadm.jpg?x-oss-process=style/dev" alt="aliyun_vos_vpc"></p>
-<p>利用cronjob备份etcd数据 实例中用得是动态nfs存储卷</p>
+<p>利用cronjob备份etcd数据 实例中用得是动态nfs存储卷
+etcd_pvc.yaml</p>
 <div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
 </span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>PersistentVolumeClaim<span class="w">
 </span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>k8s-backup-pvc<span class="w">
+</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>kube-system<span class="w">
 </span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="k">accessModes</span><span class="p">:</span><span class="w">
 </span><span class="w">    </span>- ReadWriteMany<span class="w">
 </span><span class="w">  </span><span class="k">resources</span><span class="p">:</span><span class="w">
 </span><span class="w">    </span><span class="k">requests</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">storage</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;10Gi&#34;</span><span class="w">
+</span><span class="w">      </span><span class="k">storage</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;30Gi&#34;</span><span class="w">
 </span><span class="w">  </span><span class="k">volumeName</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="k">storageClassName</span><span class="p">:</span><span class="w"> </span>nfs-client<span class="w">
-</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>batch/v1beta1<span class="w">
+</span></code></pre></div><p>etcd_cronjob.yaml 因为是kubeadm安装得环境,所以cronjob再master上执行</p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>batch/v1beta1<span class="w">
 </span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>CronJob<span class="w">
 </span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>etcd-disaster-recovery<span class="w">
@@ -187,6 +190,10 @@
 </span><span class="w">          </span><span class="k">labels</span><span class="p">:</span><span class="w">
 </span><span class="w">            </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>etcd-disaster-recovery<span class="w">
 </span><span class="w">        </span><span class="k">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="k">tolerations</span><span class="p">:</span><span class="w">
+</span><span class="w">            </span>- <span class="k">key</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;node-role.kubernetes.io/master&#34;</span><span class="w">
+</span><span class="w">              </span><span class="k">operator</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;Exists&#34;</span><span class="w">
+</span><span class="w">              </span><span class="k">effect</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;NoSchedule&#34;</span><span class="w">
 </span><span class="w">          </span><span class="k">affinity</span><span class="p">:</span><span class="w">
 </span><span class="w">            </span><span class="k">nodeAffinity</span><span class="p">:</span><span class="w">
 </span><span class="w">              </span><span class="k">requiredDuringSchedulingIgnoredDuringExecution</span><span class="p">:</span><span class="w">
@@ -198,7 +205,7 @@
 </span><span class="w">                          </span>- k8s-master<span class="w">
 </span><span class="w">          </span><span class="k">containers</span><span class="p">:</span><span class="w">
 </span><span class="w">            </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>etcd<span class="w">
-</span><span class="w">              </span><span class="c">#查看当前etcd得版本保持一致</span><span class="w">
+</span><span class="w">              </span><span class="c">#查看当前etcd版本保持一致</span><span class="w">
 </span><span class="w">              </span><span class="k">image</span><span class="p">:</span><span class="w"> </span>registry.cn-hangzhou.aliyuncs.com/google_containers/etcd<span class="p">:</span><span class="m">3.4.3-0</span><span class="w">
 </span><span class="w">              </span><span class="k">imagePullPolicy</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;IfNotPresent&#34;</span><span class="w">
 </span><span class="w">              </span><span class="k">command</span><span class="p">:</span><span class="w">
@@ -224,8 +231,8 @@
 </span><span class="w">                  </span><span class="k">subPath</span><span class="p">:</span><span class="w"> </span>data/etcd-snapshot<span class="w">
 </span><span class="w">                </span>- <span class="k">mountPath</span><span class="p">:</span><span class="w"> </span>/etc/localtime<span class="w">
 </span><span class="w">                  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>lt-config<span class="w">
-</span><span class="w">                </span>- <span class="k">mountPath</span><span class="p">:</span><span class="w"> </span>/etc/timezone<span class="w">
-</span><span class="w">                  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>tz-config<span class="w">
+</span><span class="w"></span><span class="c">#                - mountPath: /etc/timezone/timezone</span><span class="w">
+</span><span class="w"></span><span class="c">#                  name: tz-config</span><span class="w">
 </span><span class="w">          </span><span class="k">restartPolicy</span><span class="p">:</span><span class="w"> </span>OnFailure<span class="w">
 </span><span class="w">          </span><span class="k">volumes</span><span class="p">:</span><span class="w">
 </span><span class="w">            </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>etcd-certs<span class="w">
@@ -240,9 +247,10 @@
 </span><span class="w">            </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>lt-config<span class="w">
 </span><span class="w">              </span><span class="k">hostPath</span><span class="p">:</span><span class="w">
 </span><span class="w">                </span><span class="k">path</span><span class="p">:</span><span class="w"> </span>/etc/localtime<span class="w">
-</span><span class="w">            </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>tz-config<span class="w">
-</span><span class="w">              </span><span class="k">hostPath</span><span class="p">:</span><span class="w">
-</span><span class="w">                </span><span class="k">path</span><span class="p">:</span><span class="w"> </span>/etc/timezone<span class="w">
+</span><span class="w"></span><span class="c">#            - name: tz-config</span><span class="w">
+</span><span class="w"></span><span class="c">#              #centos7时区修改</span><span class="w">
+</span><span class="w"></span><span class="c">#              hostPath:</span><span class="w">
+</span><span class="w"></span><span class="c">#                path: /etc/timezone/timezone</span><span class="w">
 </span><span class="w">          </span><span class="k">hostNetwork</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
 </span></code></pre></div>
     </div>
