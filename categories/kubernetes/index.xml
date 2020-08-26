@@ -6,10 +6,19 @@
     <description>Recent content in kubernetes on Myki的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 21 Aug 2020 09:00:23 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 26 Aug 2020 09:00:23 +0800</lastBuildDate>
     
 	<atom:link href="https://www.1nth.com/categories/kubernetes/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>k8s安装ingress helm3安装ingress ingress配置</title>
+      <link>https://www.1nth.com/post/ingress_helm3_install/</link>
+      <pubDate>Wed, 26 Aug 2020 09:00:23 +0800</pubDate>
+      
+      <guid>https://www.1nth.com/post/ingress_helm3_install/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://oss.1nth.com/images/1nth/ingress_helm3_install.png?x-oss-process=style/dev&#34; alt=&#34;ingress_helm3_install&#34;&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>kubeadm集群备份恢复etcd</title>
