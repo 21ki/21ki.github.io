@@ -12,7 +12,7 @@
 </script>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Myki的博客</title>
+  <title>使用 Certbot 自动申请并续订阿里云 DNS 免费泛域名证书 ssl证书 - Myki的博客</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -25,7 +25,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Myki" /><meta name="description" content="Hugo theme even example site." /><meta name="keywords" content="Hugo, theme, even" />
+<meta name="author" content="Myki" /><meta name="description" content="" /><meta name="keywords" content="https, ssl" />
 
 
 
@@ -44,9 +44,7 @@
 <meta name="generator" content="Hugo 0.74.3 with theme even" />
 
 
-<link rel="canonical" href="https://www.1nth.com/" />
-  <link href="https://www.1nth.com/index.xml" rel="alternate" type="application/rss+xml" title="Myki的博客" />
-  <link href="https://www.1nth.com/index.xml" rel="feed" type="application/rss+xml" title="Myki的博客" />
+<link rel="canonical" href="https://www.1nth.com/post/ssl_certbot_install/" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -58,16 +56,24 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="Myki的博客" />
-<meta property="og:description" content="Hugo theme even example site." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://www.1nth.com/" />
-<meta property="og:updated_time" content="2020-09-05T09:00:23+08:00" />
-<meta itemprop="name" content="Myki的博客">
-<meta itemprop="description" content="Hugo theme even example site.">
+<meta property="og:title" content="使用 Certbot 自动申请并续订阿里云 DNS 免费泛域名证书 ssl证书" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.1nth.com/post/ssl_certbot_install/" />
+<meta property="article:published_time" content="2020-09-05T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-09-05T09:00:23+08:00" />
+<meta itemprop="name" content="使用 Certbot 自动申请并续订阿里云 DNS 免费泛域名证书 ssl证书">
+<meta itemprop="description" content="">
+<meta itemprop="datePublished" content="2020-09-05T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2020-09-05T09:00:23+08:00" />
+<meta itemprop="wordCount" content="213">
+
+
+
+<meta itemprop="keywords" content="https," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Myki的博客"/>
-<meta name="twitter:description" content="Hugo theme even example site."/>
+<meta name="twitter:title" content="使用 Certbot 自动申请并续订阿里云 DNS 免费泛域名证书 ssl证书"/>
+<meta name="twitter:description" content=""/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -131,154 +137,152 @@
     <main id="main" class="main">
       <div class="content-wrapper">
         <div id="content" class="content">
-          <section id="posts" class="posts">
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/prometheus_install/">prometheus 安装</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2019-12-18 </span>
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      
-    </div>
-    <div class="read-more">
-      <a href="/post/prometheus_install/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/hugo_install/">Hugo安装测试（未完待续）</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2019-12-12 </span>
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>#安装教程如下</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">hugo new site blog
-<span class="nb">cd</span> blog/themes/
-<span class="c1">#参考阳明博客直接复制主题</span>
-git clone https://github.com/cnych/qikqiak.com.git
-cp -dprf qikqiak.com/themes/beautifulhugo .
-cp qikqiak.com/config.toml ../
-<span class="nb">cd</span> ..
-</code></pre></div>
-    </div>
-    <div class="read-more">
-      <a href="/post/hugo_install/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/nexus3_install/">nexus3 yum mvn私有库安装</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2019-12-12 </span>
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>本文用的docker方式部署</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker pull sonatype/nexus3:3.16.0
-mkdir /opt/nexus-data
-chown -R  <span class="m">200</span> /opt/nexus-data
-docker run -d --name nexus --ulimit <span class="nv">nofile</span><span class="o">=</span>65536:65536 -p 8081:8081 -v /opt/nexus-data:/nexus-data sonatype/nexus3:3.16.0
-cat /opt/nexus-data/admin.password 
-</code></pre></div>
-    </div>
-    <div class="read-more">
-      <a href="/post/nexus3_install/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/esxi_install/">ESXI 6.7 安装 修改web端口和防火墙</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2019-12-01 </span>
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      
-    </div>
-    <div class="read-more">
-      <a href="/post/esxi_install/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/aliyun-install-ss/">国际版阿里云安装ss 卸载云盾和安骑士</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2019-11-18 </span>
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      wget http://update.aegis.aliyun.com/download/uninstall.sh chmod +x uninstall.sh ./uninstall.sh wget http://update.aegis.aliyun.com/download/quartz_uninstall.sh chmod +x quartz_uninstall.sh ./quartz_uninstall.sh sudo rm -rf /usr/local/aegis sudo rm /usr/sbin/aliyun-service sudo rm /lib/systemd/system/aliyun.service
-    </div>
-    <div class="read-more">
-      <a href="/post/aliyun-install-ss/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/vos4.0_insall/">vos 3000 2.1.4.0 安装</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2019-11-18 </span>
-      <div class="post-category">
-          <a href="/categories/%E9%98%BF%E9%87%8C%E4%BA%91/"> 阿里云 </a>
-          <a href="/categories/vos/"> vos </a>
-          </div>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#linux不记录痕迹</span>
-<span class="nb">unset</span> HISTORY HISTFILE HISTSAVE HISTZONE HISTORY HISTLOG
-<span class="nb">export</span> <span class="nv">HISTFILE</span><span class="o">=</span>/dev/null
-<span class="nb">export</span> <span class="nv">HISTSIZE</span><span class="o">=</span><span class="m">0</span>
-<span class="nb">export</span> <span class="nv">HISTFILESIZE</span><span class="o">=</span><span class="m">0</span>
-</code></pre></div>
-    </div>
-    <div class="read-more">
-      <a href="/post/vos4.0_insall/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    </section>
-  
-  <nav class="pagination">
-    <a class="prev" href="/page/3/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text">上一页</span>
-      </a>
+          <article class="post">
     
-  </nav>
-        </div>
+    <header class="post-header">
+      <h1 class="post-title">使用 Certbot 自动申请并续订阿里云 DNS 免费泛域名证书 ssl证书</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-09-05 </span>
+        <div class="post-category">
+            <a href="/categories/https/"> https </a>
+            <a href="/categories/ssl/"> ssl </a>
+            </div>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    
+    <div class="post-content">
+      <p><img src="https://oss.1nth.com/images/1nth/ssl_certbot_install.jpg?x-oss-process=style/dev" alt="ssl_certbot_install"></p>
+<p>#centos 8
+#安装Python 3</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">ls -la /usr/bin/python<span class="o">{</span>,2,3<span class="o">}</span> /usr/libexec/platform-python
+yum install python3 python3-devel -y
+ln -sf /usr/bin/python3 /usr/bin/python
+python -V
+pip3 install --upgrade pip -i https://mirrors.aliyun.com/pypi/simple/
+pip3 install pip --upgrade -i https://mirrors.aliyun.com/pypi/simple/
+</code></pre></div><p>#安装 Certbot 和 certbot-dns-aliyun</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">pip install certbot certbot-nginx certbot-dns-aliyun
+</code></pre></div><p>#前往 ram.console.aliyun.com 申请阿里云子账号并授予 AliyunDNSFullAccess 权限。然后为子账号创建 AccessKey 并记录</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">mkdir /etc/certbot/
+cat &gt; /etc/certbot/credentials.ini <span class="s">&lt;&lt;EOF
+</span><span class="s">certbot_dns_aliyun:dns_aliyun_access_key = LTAI6BMgFkW6ass0
+</span><span class="s">certbot_dns_aliyun:dns_aliyun_access_key_secret = dJfKwTvCH6gvGn8j5KbVbDRaxIhTwH
+</span><span class="s">EOF</span>
+<span class="c1">#修改文件权限</span>
+chmod <span class="m">600</span> /etc/certbot/credentials.ini
+</code></pre></div><p>#申请证书</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">certbot certonly -a certbot-dns-aliyun:dns-aliyun --certbot-dns-aliyun:dns-aliyun-credentials /etc/certbot/credentials.ini -d myki.cn -d <span class="s2">&#34;*.myki.cn&#34;</span>
+</code></pre></div><p>#自动续订</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">echo</span> <span class="s2">&#34;0 0,12 * * * root python -c &#39;import random; import time; time.sleep(random.random() * 3600)&#39; &amp;&amp; /mnt/certbot/venv/bin/certbot renew -q&#34;</span> <span class="p">|</span> sudo tee -a /etc/crontab &gt; /dev/null
+</code></pre></div><p>#配置 nginx</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">cat &gt; /etc/nginx/conf.d/nginx.header &lt;&lt;EOF
+listen 80;
+listen 443 ssl;
+if ($scheme != https) {
+    rewrite ^/(.*) https://$server_name/$1 permanent;
+}
+ssl_certificate /etc/letsencrypt/live/yourdomain.com/fullchain.pem;
+ssl_certificate_key /etc/letsencrypt/live/yourdomain.com/privkey.pem;
+include /etc/letsencrypt/options-ssl-nginx.conf;
+ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+EOF
+
+cat &gt; /etc/nginx/conf.d/yourdomain.com.conf &lt;&lt;EOF
+server {
+    server_name  yourdomain.com;
+    include      /etc/nginx/conf.d/nginx.header;
+
+    location / {
+        proxy_set_header  Host $host;
+        proxy_set_header  X-Real-IP $remote_addr;
+        proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header  X-Forwarded-Proto $scheme;
+
+        proxy_pass http://127.0.0.1:8080;
+    }
+}
+EOF
+</code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Myki</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-09-05
         
+    </span>
+  </p>
+  
+  
+</div>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	
+	<ins class="adsbygoogle"
+		style="display:block"
+		data-ad-client="ca-pub-2427629508597494"
+		data-ad-slot="2287897972"
+		data-ad-format="auto"
+		data-full-width-responsive="true"></ins>
+	<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
+
+    
+    <div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/img/reward/wechat.png">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/img/reward/alipay.png">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/https/">https</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/ingress_helm3_install/">
+            <span class="next-text nav-default">k8s安装ingress helm3安装ingress ingress配置</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'mykifan';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  
+
+  
 
       </div>
     </main>
