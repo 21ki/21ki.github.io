@@ -62,7 +62,7 @@
 <meta property="og:description" content="Hugo theme even example site." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://www.1nth.com/" />
-<meta property="og:updated_time" content="2020-09-05T09:00:23+08:00" />
+<meta property="og:updated_time" content="2020-09-14T00:00:00+00:00" />
 <meta itemprop="name" content="Myki的博客">
 <meta itemprop="description" content="Hugo theme even example site.">
 <meta name="twitter:card" content="summary"/>
@@ -132,6 +132,59 @@
       <div class="content-wrapper">
         <div id="content" class="content">
           <section id="posts" class="posts">
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/markdown_hugo_commond/">markdown注释 hugo注释 heml注释</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2020-09-14 </span>
+      <div class="post-category">
+          <a href="/categories/hugo/"> hugo </a>
+          <a href="/categories/html/"> html </a>
+          </div>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>hugo直接注释</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">&lt;!--这些是注释文本，不会显示--&gt;
+</code></pre></div><p>diy注释</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">[^_^]:
+    1
+</code></pre></div>
+    </div>
+    <div class="read-more">
+      <a href="/post/markdown_hugo_commond/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/k8s-network-cilium/">kubeadm &#43; Cilium 搭建kubernetes集群</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2020-09-13 </span>
+      <div class="post-category">
+          <a href="/categories/kubernetes/"> kubernetes </a>
+          <a href="/categories/coredns/"> coredns </a>
+          </div>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<h2 id="不得不说的kubeadm">不得不说的kubeadm</h2>
+<p><!-- raw HTML omitted -->kubeadm部署很方便,但是是一个老外写的,使用staticPod(容器)运行的管理组件,镜像都是<code>gcr.io</code>域名仓库里的。<!-- raw HTML omitted -->域名仓库很多docker的人甚至都不知道,docker镜像命名规则是<code>域名/库名/img_name:tag</code>这种形式,dockerhub上要拉取镜像直接是<code>库名/img_name:tag</code>这种名字,是因为域名缺省是<code>docker.io</code>也就是dockerhub上看到的都是这个域名仓库的<!-- raw HTML omitted -->常见的域名仓库国外有gcr.io,quay.io,国内的阿里(registry.cn-hangzhou.aliyuncs.com,hangzhou以外还有shenzhen啥的),daocloud.io等等.gcr.io因为位置在国外会拉取不到.国内阿里仓库同步了<code>gcr.io/google_containers</code>这些镜像,<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->总有人认为kubeadm的容器运行没有二进制运行放心.容器本身就是个隔离受限的进程,另外管理组件都是无状态的,但是他们总感觉不放心。<!-- raw HTML omitted -->事实上除了kubelet以外所有组件都可以用容器方式运行,管理组件简单说下就是集群数据存放<code>etcd</code>数据库里,apiserver去和etcd交互,其他组件和apiserver交互,kubelet调用api去操作docker,其中一些组件也会去操作各个节点的系统设置<!-- raw HTML omitted -->ererere
+<!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+    </div>
+    <div class="read-more">
+      <a href="/post/k8s-network-cilium/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
     <article class="post">
   <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/ssl_certbot_install/">使用 Certbot 自动申请并续订阿里云 DNS 免费泛域名证书 ssl证书</a></h1>
@@ -286,53 +339,6 @@
     </div>
     <div class="read-more">
       <a href="/post/coredns_diy/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/aliyun_vos_vpc/">阿里云安装vos解决没有经典网络问题 不需要专有网络安装vpn</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-08-01 </span>
-      <div class="post-category">
-          <a href="/categories/%E9%98%BF%E9%87%8C%E4%BA%91/"> 阿里云 </a>
-          <a href="/categories/vos/"> vos </a>
-          </div>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p><img src="https://img.shields.io/badge/VOS-2.1.6.0-brightgreen.svg" alt="image"></p>
-    </div>
-    <div class="read-more">
-      <a href="/post/aliyun_vos_vpc/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/coredns_etcd_install/">centos7.5下coredns&#43;etcd搭建DNS服务器</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-07-30 </span>
-      <div class="post-category">
-          <a href="/categories/centos/"> centos </a>
-          <a href="/categories/coredns/"> coredns </a>
-          </div>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#安装etcd</span>
-yum install etcd -y
-systemctl start --now etcd
-</code></pre></div>
-    </div>
-    <div class="read-more">
-      <a href="/post/coredns_etcd_install/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>

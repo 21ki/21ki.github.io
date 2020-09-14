@@ -6,15 +6,42 @@
     <description>Recent content in Posts on Myki的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 05 Sep 2020 09:00:23 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 14 Sep 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://www.1nth.com/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>markdown注释 hugo注释 heml注释</title>
+      <link>https://www.1nth.com/post/markdown_hugo_commond/</link>
+      <pubDate>Mon, 14 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.1nth.com/post/markdown_hugo_commond/</guid>
+      <description>&lt;p&gt;hugo直接注释&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&amp;lt;!--这些是注释文本，不会显示--&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;diy注释&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;[^_^]:
+    1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>kubeadm &#43; Cilium 搭建kubernetes集群</title>
+      <link>https://www.1nth.com/post/k8s-network-cilium/</link>
+      <pubDate>Sun, 13 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.1nth.com/post/k8s-network-cilium/</guid>
+      <description>&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h2 id=&#34;不得不说的kubeadm&#34;&gt;不得不说的kubeadm&lt;/h2&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;kubeadm部署很方便,但是是一个老外写的,使用staticPod(容器)运行的管理组件,镜像都是&lt;code&gt;gcr.io&lt;/code&gt;域名仓库里的。&lt;!-- raw HTML omitted --&gt;域名仓库很多docker的人甚至都不知道,docker镜像命名规则是&lt;code&gt;域名/库名/img_name:tag&lt;/code&gt;这种形式,dockerhub上要拉取镜像直接是&lt;code&gt;库名/img_name:tag&lt;/code&gt;这种名字,是因为域名缺省是&lt;code&gt;docker.io&lt;/code&gt;也就是dockerhub上看到的都是这个域名仓库的&lt;!-- raw HTML omitted --&gt;常见的域名仓库国外有gcr.io,quay.io,国内的阿里(registry.cn-hangzhou.aliyuncs.com,hangzhou以外还有shenzhen啥的),daocloud.io等等.gcr.io因为位置在国外会拉取不到.国内阿里仓库同步了&lt;code&gt;gcr.io/google_containers&lt;/code&gt;这些镜像,&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;总有人认为kubeadm的容器运行没有二进制运行放心.容器本身就是个隔离受限的进程,另外管理组件都是无状态的,但是他们总感觉不放心。&lt;!-- raw HTML omitted --&gt;事实上除了kubelet以外所有组件都可以用容器方式运行,管理组件简单说下就是集群数据存放&lt;code&gt;etcd&lt;/code&gt;数据库里,apiserver去和etcd交互,其他组件和apiserver交互,kubelet调用api去操作docker,其中一些组件也会去操作各个节点的系统设置&lt;!-- raw HTML omitted --&gt;ererere
+&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>使用 Certbot 自动申请并续订阿里云 DNS 免费泛域名证书 ssl证书</title>
       <link>https://www.1nth.com/post/ssl_certbot_install/</link>
-      <pubDate>Sat, 05 Sep 2020 09:00:23 +0800</pubDate>
+      <pubDate>Sat, 05 Sep 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/ssl_certbot_install/</guid>
       <description>&lt;p&gt;&lt;img src=&#34;https://oss.1nth.com/images/1nth/ssl_certbot_install.jpg?x-oss-process=style/dev&#34; alt=&#34;ssl_certbot_install&#34;&gt;&lt;/p&gt;</description>
@@ -23,7 +50,7 @@
     <item>
       <title>k8s安装ingress helm3安装ingress ingress配置</title>
       <link>https://www.1nth.com/post/ingress_helm3_install/</link>
-      <pubDate>Wed, 26 Aug 2020 09:00:23 +0800</pubDate>
+      <pubDate>Wed, 26 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/ingress_helm3_install/</guid>
       <description>&lt;p&gt;&lt;img src=&#34;https://oss.1nth.com/images/1nth/ingress_helm3_install.png?x-oss-process=style/dev&#34; alt=&#34;ingress_helm3_install&#34;&gt;&lt;/p&gt;</description>
@@ -32,7 +59,7 @@
     <item>
       <title>jenkins插件下载慢 初始化慢</title>
       <link>https://www.1nth.com/post/jenkins_plugin_download/</link>
-      <pubDate>Tue, 25 Aug 2020 09:00:23 +0800</pubDate>
+      <pubDate>Tue, 25 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/jenkins_plugin_download/</guid>
       <description>&lt;p&gt;jenkins插件下载慢 初始化慢
@@ -42,7 +69,7 @@
     <item>
       <title>kubeadm集群备份恢复etcd</title>
       <link>https://www.1nth.com/post/etcd_backup_kubeadm/</link>
-      <pubDate>Fri, 21 Aug 2020 09:00:23 +0800</pubDate>
+      <pubDate>Fri, 21 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/etcd_backup_kubeadm/</guid>
       <description>&lt;p&gt;kubeadm集群备份恢复etcd
@@ -52,7 +79,7 @@
     <item>
       <title>办公环境下 kubernetes 网络互通方案</title>
       <link>https://www.1nth.com/post/office-env-k8s-network/</link>
-      <pubDate>Wed, 19 Aug 2020 09:00:23 +0800</pubDate>
+      <pubDate>Wed, 19 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/office-env-k8s-network/</guid>
       <description>&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;                  +--------------------+              +--------------------+ 
@@ -84,7 +111,7 @@
     <item>
       <title>coredns泛域名解析 单域名解析</title>
       <link>https://www.1nth.com/post/coredns_diy/</link>
-      <pubDate>Mon, 17 Aug 2020 09:00:23 +0800</pubDate>
+      <pubDate>Mon, 17 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/coredns_diy/</guid>
       <description>&lt;p&gt;###coredns泛域名解析 单域名解析&lt;/p&gt;</description>
@@ -93,7 +120,7 @@
     <item>
       <title>阿里云安装vos解决没有经典网络问题 不需要专有网络安装vpn</title>
       <link>https://www.1nth.com/post/aliyun_vos_vpc/</link>
-      <pubDate>Sat, 01 Aug 2020 09:00:23 +0800</pubDate>
+      <pubDate>Sat, 01 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/aliyun_vos_vpc/</guid>
       <description>&lt;p&gt;&lt;img src=&#34;https://img.shields.io/badge/VOS-2.1.6.0-brightgreen.svg&#34; alt=&#34;image&#34;&gt;&lt;/p&gt;</description>
@@ -102,7 +129,7 @@
     <item>
       <title>centos7.5下coredns&#43;etcd搭建DNS服务器</title>
       <link>https://www.1nth.com/post/coredns_etcd_install/</link>
-      <pubDate>Thu, 30 Jul 2020 09:00:23 +0800</pubDate>
+      <pubDate>Thu, 30 Jul 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/coredns_etcd_install/</guid>
       <description>&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;c1&#34;&gt;#安装etcd&lt;/span&gt;
@@ -114,7 +141,7 @@ systemctl start --now etcd
     <item>
       <title>vos 迁移备份mysql</title>
       <link>https://www.1nth.com/post/vos_mysql_back/</link>
-      <pubDate>Tue, 30 Jun 2020 09:00:23 +0800</pubDate>
+      <pubDate>Tue, 30 Jun 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/vos_mysql_back/</guid>
       <description>&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;c1&#34;&gt;#linux不记录痕迹&lt;/span&gt;
@@ -128,7 +155,7 @@ systemctl start --now etcd
     <item>
       <title>github action kubeadm编译证书100年</title>
       <link>https://www.1nth.com/post/github_action_kubeadm/</link>
-      <pubDate>Sat, 20 Jun 2020 09:00:23 +0800</pubDate>
+      <pubDate>Sat, 20 Jun 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/github_action_kubeadm/</guid>
       <description>&lt;h4 id=&#34;github-action-kubeadm编译证书100年&#34;&gt;github action kubeadm编译证书100年&lt;/h4&gt;</description>
@@ -137,7 +164,7 @@ systemctl start --now etcd
     <item>
       <title>公有云 阿里云自定义安装系统 解决centos版本太高vos安装不上emp问题</title>
       <link>https://www.1nth.com/post/yunos_install/</link>
-      <pubDate>Wed, 20 May 2020 09:00:23 +0800</pubDate>
+      <pubDate>Wed, 20 May 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/yunos_install/</guid>
       <description>&lt;h4 id=&#34;公有云-阿里云自定义安装系统-解决centos版本太高vos安装不上emp问题&#34;&gt;公有云 阿里云自定义安装系统 解决centos版本太高vos安装不上emp问题&lt;/h4&gt;</description>
@@ -146,7 +173,7 @@ systemctl start --now etcd
     <item>
       <title>Aria2 一键安装管理脚本 增强版</title>
       <link>https://www.1nth.com/post/aria2_instsll/</link>
-      <pubDate>Mon, 18 May 2020 09:00:23 +0800</pubDate>
+      <pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/aria2_instsll/</guid>
       <description>&lt;h4 id=&#34;本人非常排斥迅雷因为他会偷您的流量所以所有电脑从来不装迅雷软件由于是运维所以手上倒是有很多linux服务器此次用aria2替代&#34;&gt;本人非常排斥迅雷,因为他会偷您的流量,所以所有电脑从来不装迅雷软件,由于是运维所以手上倒是有很多linux服务器,此次用aria2替代&lt;/h4&gt;</description>
@@ -155,7 +182,7 @@ systemctl start --now etcd
     <item>
       <title>搭建speedtest服务网速测试工具</title>
       <link>https://www.1nth.com/post/speedtest_server/</link>
-      <pubDate>Thu, 23 Apr 2020 09:00:23 +0800</pubDate>
+      <pubDate>Thu, 23 Apr 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/speedtest_server/</guid>
       <description>&lt;h4 id=&#34;搭建speedtest服务网速测试工具&#34;&gt;搭建speedtest服务网速测试工具&lt;/h4&gt;
@@ -165,7 +192,7 @@ systemctl start --now etcd
     <item>
       <title>linux下制作二进制bin 文件制做方法</title>
       <link>https://www.1nth.com/post/make_bin/</link>
-      <pubDate>Wed, 22 Apr 2020 09:00:23 +0800</pubDate>
+      <pubDate>Wed, 22 Apr 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/make_bin/</guid>
       <description>&lt;h4 id=&#34;linux下制作二进制bin-文件制做方法&#34;&gt;linux下制作二进制bin 文件制做方法&lt;/h4&gt;
@@ -175,7 +202,7 @@ systemctl start --now etcd
     <item>
       <title>k8s 时区 docker 时区 中国时区</title>
       <link>https://www.1nth.com/post/k8s_zone/</link>
-      <pubDate>Mon, 09 Mar 2020 09:00:23 +0800</pubDate>
+      <pubDate>Mon, 09 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/k8s_zone/</guid>
       <description>&lt;h4 id=&#34;zone-k8s时区设置-docker-时区设置&#34;&gt;&lt;code&gt;zone&lt;/code&gt; k8s时区设置 docker 时区设置&lt;/h4&gt;
@@ -187,7 +214,7 @@ systemctl start --now etcd
     <item>
       <title>helm3 安装使用</title>
       <link>https://www.1nth.com/post/helm3_install/</link>
-      <pubDate>Sun, 08 Mar 2020 09:00:23 +0800</pubDate>
+      <pubDate>Sun, 08 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/helm3_install/</guid>
       <description>&lt;h4 id=&#34;helm3-版本v311&#34;&gt;&lt;code&gt;Helm3&lt;/code&gt; 版本：v3.1.1&lt;/h4&gt;
@@ -198,7 +225,7 @@ systemctl start --now etcd
     <item>
       <title>consul安装使用 做prometheus的配置中心</title>
       <link>https://www.1nth.com/post/consul_install/</link>
-      <pubDate>Sat, 07 Mar 2020 09:00:23 +0800</pubDate>
+      <pubDate>Sat, 07 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/consul_install/</guid>
       <description>&lt;p&gt;consul 容器化&lt;/p&gt;</description>
@@ -207,7 +234,7 @@ systemctl start --now etcd
     <item>
       <title>kubernetes 1.17.0安装在centos8 安装体验</title>
       <link>https://www.1nth.com/post/k8s_bin_centos8_install/</link>
-      <pubDate>Mon, 20 Jan 2020 09:00:23 +0800</pubDate>
+      <pubDate>Mon, 20 Jan 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/k8s_bin_centos8_install/</guid>
       <description>&lt;p&gt;&lt;code&gt;centos8 &lt;/code&gt;centos8.1刚刚发布 闲来没事体验一波&lt;/p&gt;</description>
@@ -216,7 +243,7 @@ systemctl start --now etcd
     <item>
       <title>centos8 安装体验install</title>
       <link>https://www.1nth.com/post/centos8_install/</link>
-      <pubDate>Fri, 17 Jan 2020 09:00:23 +0800</pubDate>
+      <pubDate>Fri, 17 Jan 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/centos8_install/</guid>
       <description>&lt;p&gt;&lt;code&gt;centos8 &lt;/code&gt;centos8.1刚刚发布 闲来没事体验一波&lt;/p&gt;</description>
@@ -225,7 +252,7 @@ systemctl start --now etcd
     <item>
       <title>Docker内核参数优化</title>
       <link>https://www.1nth.com/post/docker_container_conf/</link>
-      <pubDate>Mon, 06 Jan 2020 08:00:00 +0800</pubDate>
+      <pubDate>Mon, 06 Jan 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/docker_container_conf/</guid>
       <description>&lt;p&gt;今天看到群里有个朋友报错如下&lt;/p&gt;
@@ -236,7 +263,7 @@ systemctl start --now etcd
     <item>
       <title>K8S离线安装方法 依赖库和镜像制作  阿里云 dockerhub  docker加速解决被墙问题      kubernetes docker镜像</title>
       <link>https://www.1nth.com/post/aliyun_dockerhub_download/</link>
-      <pubDate>Mon, 30 Dec 2019 01:00:00 +0800</pubDate>
+      <pubDate>Mon, 30 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/aliyun_dockerhub_download/</guid>
       <description>&lt;h1 id=&#34;github示例如下&#34;&gt;github示例如下&lt;/h1&gt;
@@ -246,7 +273,7 @@ systemctl start --now etcd
     <item>
       <title>centos7安装定制 kubernetes安装准备环境</title>
       <link>https://www.1nth.com/post/centos7_install_optimiz/</link>
-      <pubDate>Mon, 23 Dec 2019 03:00:23 +0800</pubDate>
+      <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/centos7_install_optimiz/</guid>
       <description>&lt;p&gt;&lt;code&gt;centos&lt;/code&gt;&lt;/p&gt;</description>
@@ -255,7 +282,7 @@ systemctl start --now etcd
     <item>
       <title>harbor docker私有库安装</title>
       <link>https://www.1nth.com/post/harbor_install/</link>
-      <pubDate>Fri, 20 Dec 2019 11:27:22 +0800</pubDate>
+      <pubDate>Fri, 20 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/harbor_install/</guid>
       <description>&lt;p&gt;本文用的docker方式部署&lt;/p&gt;</description>
@@ -264,7 +291,7 @@ systemctl start --now etcd
     <item>
       <title>kubernetes 1.17 安装</title>
       <link>https://www.1nth.com/post/k8s_1.17.0_install/</link>
-      <pubDate>Thu, 19 Dec 2019 11:27:22 +0800</pubDate>
+      <pubDate>Thu, 19 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/k8s_1.17.0_install/</guid>
       <description>&lt;p&gt;centos 7.7  kubernetes 1.17.0 安装&lt;/p&gt;</description>
@@ -273,7 +300,7 @@ systemctl start --now etcd
     <item>
       <title>prometheus 安装</title>
       <link>https://www.1nth.com/post/prometheus_install/</link>
-      <pubDate>Wed, 18 Dec 2019 11:27:22 +0800</pubDate>
+      <pubDate>Wed, 18 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/prometheus_install/</guid>
       <description></description>
@@ -282,7 +309,7 @@ systemctl start --now etcd
     <item>
       <title>Hugo安装测试（未完待续）</title>
       <link>https://www.1nth.com/post/hugo_install/</link>
-      <pubDate>Thu, 12 Dec 2019 11:27:22 +0800</pubDate>
+      <pubDate>Thu, 12 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/hugo_install/</guid>
       <description>&lt;p&gt;#安装教程如下&lt;/p&gt;
@@ -299,7 +326,7 @@ cp qikqiak.com/config.toml ../
     <item>
       <title>nexus3 yum mvn私有库安装</title>
       <link>https://www.1nth.com/post/nexus3_install/</link>
-      <pubDate>Thu, 12 Dec 2019 11:27:22 +0800</pubDate>
+      <pubDate>Thu, 12 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/nexus3_install/</guid>
       <description>&lt;p&gt;本文用的docker方式部署&lt;/p&gt;
@@ -314,7 +341,7 @@ cat /opt/nexus-data/admin.password
     <item>
       <title>ESXI 6.7 安装 修改web端口和防火墙</title>
       <link>https://www.1nth.com/post/esxi_install/</link>
-      <pubDate>Sun, 01 Dec 2019 11:27:22 +0800</pubDate>
+      <pubDate>Sun, 01 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/esxi_install/</guid>
       <description></description>
@@ -332,7 +359,7 @@ cat /opt/nexus-data/admin.password
     <item>
       <title>vos 3000 2.1.4.0 安装</title>
       <link>https://www.1nth.com/post/vos4.0_insall/</link>
-      <pubDate>Mon, 18 Nov 2019 09:00:23 +0800</pubDate>
+      <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/vos4.0_insall/</guid>
       <description>&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;c1&#34;&gt;#linux不记录痕迹&lt;/span&gt;

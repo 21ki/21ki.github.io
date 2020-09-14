@@ -6,7 +6,7 @@
     <description>Recent content in k8s on Myki的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 20 Jun 2020 09:00:23 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://www.1nth.com/categories/k8s/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>github action kubeadm编译证书100年</title>
       <link>https://www.1nth.com/post/github_action_kubeadm/</link>
-      <pubDate>Sat, 20 Jun 2020 09:00:23 +0800</pubDate>
+      <pubDate>Sat, 20 Jun 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/github_action_kubeadm/</guid>
       <description>&lt;h4 id=&#34;github-action-kubeadm编译证书100年&#34;&gt;github action kubeadm编译证书100年&lt;/h4&gt;</description>

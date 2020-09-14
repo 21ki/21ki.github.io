@@ -6,15 +6,51 @@
     <description>Recent content in Categories on Myki的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 05 Sep 2020 09:00:23 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 14 Sep 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://www.1nth.com/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>html</title>
+      <link>https://www.1nth.com/categories/html/</link>
+      <pubDate>Mon, 14 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.1nth.com/categories/html/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>hugo</title>
+      <link>https://www.1nth.com/categories/hugo/</link>
+      <pubDate>Mon, 14 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.1nth.com/categories/hugo/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>coredns</title>
+      <link>https://www.1nth.com/categories/coredns/</link>
+      <pubDate>Sun, 13 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.1nth.com/categories/coredns/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>kubernetes</title>
+      <link>https://www.1nth.com/categories/kubernetes/</link>
+      <pubDate>Sun, 13 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.1nth.com/categories/kubernetes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>https</title>
       <link>https://www.1nth.com/categories/https/</link>
-      <pubDate>Sat, 05 Sep 2020 09:00:23 +0800</pubDate>
+      <pubDate>Sat, 05 Sep 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/categories/https/</guid>
       <description></description>
@@ -23,7 +59,7 @@
     <item>
       <title>ssl</title>
       <link>https://www.1nth.com/categories/ssl/</link>
-      <pubDate>Sat, 05 Sep 2020 09:00:23 +0800</pubDate>
+      <pubDate>Sat, 05 Sep 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/categories/ssl/</guid>
       <description></description>
@@ -32,25 +68,16 @@
     <item>
       <title>ingress</title>
       <link>https://www.1nth.com/categories/ingress/</link>
-      <pubDate>Wed, 26 Aug 2020 09:00:23 +0800</pubDate>
+      <pubDate>Wed, 26 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/categories/ingress/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>kubernetes</title>
-      <link>https://www.1nth.com/categories/kubernetes/</link>
-      <pubDate>Wed, 26 Aug 2020 09:00:23 +0800</pubDate>
-      
-      <guid>https://www.1nth.com/categories/kubernetes/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>centos</title>
       <link>https://www.1nth.com/categories/centos/</link>
-      <pubDate>Tue, 25 Aug 2020 09:00:23 +0800</pubDate>
+      <pubDate>Tue, 25 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/categories/centos/</guid>
       <description></description>
@@ -59,7 +86,7 @@
     <item>
       <title>jenkins</title>
       <link>https://www.1nth.com/categories/jenkins/</link>
-      <pubDate>Tue, 25 Aug 2020 09:00:23 +0800</pubDate>
+      <pubDate>Tue, 25 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/categories/jenkins/</guid>
       <description></description>
@@ -68,25 +95,16 @@
     <item>
       <title>etcd</title>
       <link>https://www.1nth.com/categories/etcd/</link>
-      <pubDate>Fri, 21 Aug 2020 09:00:23 +0800</pubDate>
+      <pubDate>Fri, 21 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/categories/etcd/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>coredns</title>
-      <link>https://www.1nth.com/categories/coredns/</link>
-      <pubDate>Wed, 19 Aug 2020 09:00:23 +0800</pubDate>
-      
-      <guid>https://www.1nth.com/categories/coredns/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>vos</title>
       <link>https://www.1nth.com/categories/vos/</link>
-      <pubDate>Sat, 01 Aug 2020 09:00:23 +0800</pubDate>
+      <pubDate>Sat, 01 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/categories/vos/</guid>
       <description></description>
@@ -95,7 +113,7 @@
     <item>
       <title>阿里云</title>
       <link>https://www.1nth.com/categories/%E9%98%BF%E9%87%8C%E4%BA%91/</link>
-      <pubDate>Sat, 01 Aug 2020 09:00:23 +0800</pubDate>
+      <pubDate>Sat, 01 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/categories/%E9%98%BF%E9%87%8C%E4%BA%91/</guid>
       <description></description>
@@ -104,7 +122,7 @@
     <item>
       <title>k8s</title>
       <link>https://www.1nth.com/categories/k8s/</link>
-      <pubDate>Sat, 20 Jun 2020 09:00:23 +0800</pubDate>
+      <pubDate>Sat, 20 Jun 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/categories/k8s/</guid>
       <description></description>
@@ -113,7 +131,7 @@
     <item>
       <title>shell</title>
       <link>https://www.1nth.com/categories/shell/</link>
-      <pubDate>Wed, 20 May 2020 09:00:23 +0800</pubDate>
+      <pubDate>Wed, 20 May 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/categories/shell/</guid>
       <description></description>

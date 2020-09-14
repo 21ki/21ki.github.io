@@ -6,7 +6,7 @@
     <description>Recent content in vos on Myki的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 01 Aug 2020 09:00:23 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 01 Aug 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://www.1nth.com/categories/vos/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>阿里云安装vos解决没有经典网络问题 不需要专有网络安装vpn</title>
       <link>https://www.1nth.com/post/aliyun_vos_vpc/</link>
-      <pubDate>Sat, 01 Aug 2020 09:00:23 +0800</pubDate>
+      <pubDate>Sat, 01 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/aliyun_vos_vpc/</guid>
       <description>&lt;p&gt;&lt;img src=&#34;https://img.shields.io/badge/VOS-2.1.6.0-brightgreen.svg&#34; alt=&#34;image&#34;&gt;&lt;/p&gt;</description>
@@ -23,7 +23,7 @@
     <item>
       <title>vos 迁移备份mysql</title>
       <link>https://www.1nth.com/post/vos_mysql_back/</link>
-      <pubDate>Tue, 30 Jun 2020 09:00:23 +0800</pubDate>
+      <pubDate>Tue, 30 Jun 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/vos_mysql_back/</guid>
       <description>&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;c1&#34;&gt;#linux不记录痕迹&lt;/span&gt;
@@ -37,7 +37,7 @@
     <item>
       <title>vos 3000 2.1.4.0 安装</title>
       <link>https://www.1nth.com/post/vos4.0_insall/</link>
-      <pubDate>Mon, 18 Nov 2019 09:00:23 +0800</pubDate>
+      <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/vos4.0_insall/</guid>
       <description>&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;c1&#34;&gt;#linux不记录痕迹&lt;/span&gt;

@@ -6,7 +6,7 @@
     <description>Recent content in helm on Myki的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 09 Mar 2020 09:00:23 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 09 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://www.1nth.com/tags/helm/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>k8s 时区 docker 时区 中国时区</title>
       <link>https://www.1nth.com/post/k8s_zone/</link>
-      <pubDate>Mon, 09 Mar 2020 09:00:23 +0800</pubDate>
+      <pubDate>Mon, 09 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/k8s_zone/</guid>
       <description>&lt;h4 id=&#34;zone-k8s时区设置-docker-时区设置&#34;&gt;&lt;code&gt;zone&lt;/code&gt; k8s时区设置 docker 时区设置&lt;/h4&gt;
@@ -26,7 +26,7 @@
     <item>
       <title>helm3 安装使用</title>
       <link>https://www.1nth.com/post/helm3_install/</link>
-      <pubDate>Sun, 08 Mar 2020 09:00:23 +0800</pubDate>
+      <pubDate>Sun, 08 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/helm3_install/</guid>
       <description>&lt;h4 id=&#34;helm3-版本v311&#34;&gt;&lt;code&gt;Helm3&lt;/code&gt; 版本：v3.1.1&lt;/h4&gt;
