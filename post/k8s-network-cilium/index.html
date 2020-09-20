@@ -74,7 +74,7 @@ kubeadm部署很方便,但是是一个老外写的,使用staticPod(容器)运行
 ">
 <meta itemprop="datePublished" content="2020-09-13T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2020-09-13T00:00:00+00:00" />
-<meta itemprop="wordCount" content="5795">
+<meta itemprop="wordCount" content="5894">
 
 
 
@@ -500,7 +500,12 @@ EOF
     nginx
 </code></pre></div><p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
 <h3 id="kubeadm配置文件">kubeadm配置文件</h3>
-<p><!-- raw HTML omitted -->在master01节点操作<!-- raw HTML omitted --></p>
+<h3 id="kubeadm100年证书-编译参考httpsgithubcom21kikubernetesblobmastergithubworkflowsgoyml">kubeadm100年证书 编译参考https://github.com/21ki/kubernetes/blob/master/.github/workflows/go.yml</h3>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">wget https://github.com/21ki/kubernetes/releases/download/v1.19.1/kubeadm-v1.19.1.zip
+unzip kubeadm-v1.19.1.zip
+chmod +x kubeadm
+mv -f kubeadm /usr/bin/kubeadm
+</code></pre></div><p><!-- raw HTML omitted -->在master01节点操作<!-- raw HTML omitted --></p>
 <div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">cat &gt; /root/initconfig.yaml &lt;&lt; EOF
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
