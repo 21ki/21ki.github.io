@@ -69,7 +69,7 @@ kubeadm 默认证书为一年，一年过期后，会导致api service不可用�
 kubeadm 默认证书为一年，一年过期后，会导致api service不可用，使用过程中会出现：x509: certificate has expired or is not yet valid">
 <meta itemprop="datePublished" content="2020-09-21T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2020-09-21T00:00:00+00:00" />
-<meta itemprop="wordCount" content="1631">
+<meta itemprop="wordCount" content="1676">
 
 
 
@@ -170,6 +170,9 @@ chmod +x kubeadm <span class="o">&amp;&amp;</span> <span class="se">\c</span>p -
 
 <span class="c1">#备份原有的证书</span>
 mv /etc/kubernetes/pki /etc/kubernetes/pki.old
+
+<span class="c1">#如果服务器保存得又kubeadm.conf 可直接使用  如果没有可以用以下命令生成</span>
+kubeadm config view &gt; kubeadm.yaml
 
 <span class="c1">#生成新的证书，kubeadm.yaml 指定你自己服务器上的</span>
 kubeadm alpha phase certs all --config  ~/kubeadm.yaml
