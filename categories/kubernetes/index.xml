@@ -6,10 +6,20 @@
     <description>Recent content in kubernetes on Myki的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 13 Sep 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 21 Sep 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://www.1nth.com/categories/kubernetes/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kubeadm证书过期时间调整</title>
+      <link>https://www.1nth.com/post/kubeadm-ssl-update/</link>
+      <pubDate>Mon, 21 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.1nth.com/post/kubeadm-ssl-update/</guid>
+      <description>&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;
+kubeadm 默认证书为一年，一年过期后，会导致api service不可用，使用过程中会出现：&lt;code&gt;x509: certificate has expired or is not yet valid&lt;/code&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>kubeadm &#43; Cilium 搭建kubernetes集群</title>
