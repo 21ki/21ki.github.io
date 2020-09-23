@@ -12,6 +12,17 @@
     
     
     <item>
+      <title>国内拉取google kubernetes镜像 同步镜像sync</title>
+      <link>https://www.1nth.com/post/images-sync-travis/</link>
+      <pubDate>Tue, 22 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.1nth.com/post/images-sync-travis/</guid>
+      <description>&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;私有仓库拉取kubernetes镜像 
+同步到dockerhub或者阿里云仓库
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
       <title>解决kubernetes:v1.18.9 get cs127.0.0.1 connection refused错误</title>
       <link>https://www.1nth.com/post/k8s-cs-unhealthy/</link>
       <pubDate>Tue, 22 Sep 2020 00:00:00 +0000</pubDate>
