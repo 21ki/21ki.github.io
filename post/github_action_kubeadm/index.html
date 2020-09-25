@@ -66,7 +66,7 @@
 <meta itemprop="description" content="github action kubeadm编译证书100年">
 <meta itemprop="datePublished" content="2020-06-20T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2020-06-20T00:00:00+00:00" />
-<meta itemprop="wordCount" content="349">
+<meta itemprop="wordCount" content="266">
 
 
 
@@ -155,86 +155,98 @@
     
     <div class="post-content">
       <h4 id="github-action-kubeadm编译证书100年">github action kubeadm编译证书100年</h4>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#fork官网kubernets  然后创建工作流  可参考https://github.com/21ki/kubernetes/blob/master/.github/workflows/go.yml</span>
-name: Go
-
-on:
-  push:
-    branches: <span class="o">[</span> master <span class="o">]</span>
-  pull_request:
-    branches: <span class="o">[</span> master <span class="o">]</span>
-
-jobs:
-
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-
-    - name: Set up Go 1.x
-      uses: actions/setup-go@v2
-      with:
-        go-version: ^1.14
-      id: go
-
-    - name: Dump GitHub context
-      <span class="c1">#env:</span>
-      <span class="c1">#  KUBEADM_VERSION: v1.18.2</span>
-      run: <span class="nb">echo</span> <span class="s2">&#34;::set-env name=packageName::v1.18.3&#34;</span>
-    
-    - name: Get Env
-      run: <span class="nb">echo</span> <span class="s1">&#39;${{ env.packageName }}&#39;</span>
-       
-    - name: Check out code into the Go module directory
-      uses: actions/checkout@v2
-      with:
-        ref: <span class="si">${</span><span class="p">{ env.packageName </span><span class="si">}</span><span class="o">}</span>
-         
-    - name: Sed Env
-      run: <span class="p">|</span>
-        sed -i <span class="s2">&#34;s/365/365 * 99/&#34;</span> /home/runner/work/kubernetes/kubernetes/cmd/kubeadm/app/constants/constants.go
-        sed -i <span class="s2">&#34;s/10)/99)/&#34;</span>  /home/runner/work/kubernetes/kubernetes/staging/src/k8s.io/client-go/util/cert/cert.go
-    - name: Get Env
-      run: <span class="p">|</span>
-        find . -name constants.go <span class="p">|</span>xargs cat <span class="p">|</span>grep <span class="m">365</span>
-        find . -name cert.go <span class="p">|</span>xargs cat <span class="p">|</span>grep 365d
-    <span class="c1">#- name: github</span>
-    <span class="c1">#  run: git clone --branch v1.18.2 https://github.com/kubernetes/kubernetes.git</span>
-
-    - name: Get dependencies
-      run: <span class="p">|</span>
-        go get -v -t -d ./...
-        <span class="k">if</span> <span class="o">[</span> -f Gopkg.toml <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-            curl https://raw.githubusercontent.com/golang/dep/master/install.sh <span class="p">|</span> sh
-            dep ensure
-        <span class="k">fi</span>
-    - name: Get workpath
-      run: <span class="nb">pwd</span>
-
-    <span class="c1">#- name: 切换分支</span>
-    <span class="c1">#  run: git checkout v1.18.2</span>
-
-    - name: Build
-      run: <span class="nv">KUBE_GIT_TREE_STATE</span><span class="o">=</span>clean make all <span class="nv">WHAT</span><span class="o">=</span>cmd/kubeadm <span class="nv">GOFLAGS</span><span class="o">=</span>-v
-
-    - name: Get paGth
-      run: find . -name kubeadm
-    
-    - name: Kubeadm version
-      run: <span class="p">|</span>
-        chmod +x ./_output/local/bin/linux/amd64/kubeadm
-        ./_output/local/bin/linux/amd64/kubeadm version
-    - name: Package
-      run: mkdir myki <span class="o">&amp;&amp;</span> cp ./_output/local/bin/linux/amd64/kubeadm myki
-
-    - uses: actions/upload-artifact@v1
-      with:
-        name: kubeadm-<span class="si">${</span><span class="p">{ env.packageName </span><span class="si">}</span><span class="o">}</span>
-        path: myki
-<span class="c1">#     #- name: Copy file</span>
-<span class="c1">#     #  run: mkdir staging &amp;&amp; cp _output/local/bin/linux/amd64/kubeadm staging</span>
-<span class="c1">#     #- name: Test</span>
-<span class="c1">#       #run: go test -v .</span>
+<h1 id="直接fork官网kubernets--然后创建工作流--可参考httpsgithubcom21kikubernetesblobmastergithubworkflowsgoyml">直接fork官网kubernets  然后创建工作流  可参考https://github.com/21ki/kubernetes/blob/master/.github/workflows/go.yml</h1>
+<div class="highlight"><pre class="chroma"><code class="language-yml" data-lang="yml"><span class="k">name</span><span class="p">:</span><span class="w"> </span>Go<span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">on</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">push</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">branches</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span>master<span class="w"> </span><span class="p">]</span><span class="w">
+</span><span class="w">  </span><span class="k">pull_request</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">branches</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span>master<span class="w"> </span><span class="p">]</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">jobs</span><span class="p">:</span><span class="w">
+</span><span class="w">
+</span><span class="w">  </span><span class="k">build</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>Build<span class="w">
+</span><span class="w">    </span><span class="k">runs-on</span><span class="p">:</span><span class="w"> </span>ubuntu-latest<span class="w">
+</span><span class="w">    </span><span class="k">steps</span><span class="p">:</span><span class="w">
+</span><span class="w">
+</span><span class="w">    </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>Set<span class="w"> </span>up<span class="w"> </span>Go<span class="w"> </span><span class="m">1.</span>x<span class="w">
+</span><span class="w">      </span><span class="k">uses</span><span class="p">:</span><span class="w"> </span>actions/setup-go@v2<span class="w">
+</span><span class="w">      </span><span class="k">with</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">go-version</span><span class="p">:</span><span class="w"> </span>^<span class="m">1.14</span><span class="w">
+</span><span class="w">      </span><span class="k">id</span><span class="p">:</span><span class="w"> </span>go<span class="w">
+</span><span class="w">
+</span><span class="w">    </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>Dump<span class="w"> </span>GitHub<span class="w"> </span>context<span class="w">
+</span><span class="w">      </span><span class="c">#env:</span><span class="w">
+</span><span class="w">      </span><span class="c">#  KUBEADM_VERSION: v1.18.5</span><span class="w">
+</span><span class="w">      </span><span class="k">run</span><span class="p">:</span><span class="w"> </span>echo<span class="w"> </span><span class="s2">&#34;::set-env name=packageName::v1.19.1&#34;</span><span class="w">
+</span><span class="w">    
+</span><span class="w">    </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>Get<span class="w"> </span>Env<span class="w">
+</span><span class="w">      </span><span class="k">run</span><span class="p">:</span><span class="w"> </span>echo<span class="w"> </span><span class="s1">&#39;${{ env.packageName }}&#39;</span><span class="w">
+</span><span class="w">       
+</span><span class="w">    </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>Check<span class="w"> </span>out<span class="w"> </span>code<span class="w"> </span>into<span class="w"> </span>the<span class="w"> </span>Go<span class="w"> </span>module<span class="w"> </span>directory<span class="w">
+</span><span class="w">      </span><span class="k">uses</span><span class="p">:</span><span class="w"> </span>actions/checkout@v2<span class="w">
+</span><span class="w">      </span><span class="k">with</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">ref</span><span class="p">:</span><span class="w"> </span>${{<span class="w"> </span>env.packageName<span class="w"> </span>}}<span class="w">
+</span><span class="w">         
+</span><span class="w">    </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>Sed<span class="w"> </span>Env<span class="w">
+</span><span class="w">      </span><span class="k">run</span><span class="p">:</span><span class="w"> </span><span class="sd">|
+</span><span class="sd">        sed -i &#34;s/365/365 * 99/&#34; /home/runner/work/kubernetes/kubernetes/cmd/kubeadm/app/constants/constants.go</span><span class="w">
+</span><span class="w">        </span>sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&#34;s/10)/99)/&#34;</span><span class="w">  </span>/home/runner/work/kubernetes/kubernetes/staging/src/k8s.io/client-go/util/cert/cert.go<span class="w">
+</span><span class="w">    </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>Get<span class="w"> </span>Env<span class="w">
+</span><span class="w">      </span><span class="k">run</span><span class="p">:</span><span class="w"> </span><span class="sd">|
+</span><span class="sd">        find . -name constants.go |xargs cat |grep 365</span><span class="w">
+</span><span class="w">        </span>find<span class="w"> </span>.<span class="w"> </span>-name<span class="w"> </span>cert.go<span class="w"> </span>|xargs<span class="w"> </span>cat<span class="w"> </span>|grep<span class="w"> </span>365d<span class="w">
+</span><span class="w">    </span><span class="c">#- name: github</span><span class="w">
+</span><span class="w">    </span><span class="c">#  run: git clone --branch v1.18.2 https://github.com/kubernetes/kubernetes.git</span><span class="w">
+</span><span class="w">
+</span><span class="w">    </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>Get<span class="w"> </span>dependencies<span class="w">
+</span><span class="w">      </span><span class="k">run</span><span class="p">:</span><span class="w"> </span><span class="sd">|
+</span><span class="sd">        go get -v -t -d ./...</span><span class="w">
+</span><span class="w">        </span>if<span class="w"> </span><span class="p">[</span><span class="w"> </span>-f<span class="w"> </span>Gopkg.toml<span class="w"> </span><span class="p">]</span>;<span class="w"> </span>then<span class="w">
+</span><span class="w">            </span>curl<span class="w"> </span>https<span class="p">:</span>//raw.githubusercontent.com/golang/dep/master/install.sh<span class="w"> </span>|<span class="w"> </span>sh<span class="w">
+</span><span class="w">            </span>dep<span class="w"> </span>ensure<span class="w">
+</span><span class="w">        </span>fi<span class="w">
+</span><span class="w">    </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>Get<span class="w"> </span>workpath<span class="w">
+</span><span class="w">      </span><span class="k">run</span><span class="p">:</span><span class="w"> </span>pwd<span class="w">
+</span><span class="w">
+</span><span class="w">    </span><span class="c">#- name: 切换分支</span><span class="w">
+</span><span class="w">    </span><span class="c">#  run: git checkout v1.18.2</span><span class="w">
+</span><span class="w">
+</span><span class="w">    </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>Build<span class="w">
+</span><span class="w">      </span><span class="k">run</span><span class="p">:</span><span class="w"> </span>KUBE_GIT_TREE_STATE=clean<span class="w"> </span>make<span class="w"> </span>all<span class="w"> </span>WHAT=cmd/kubeadm<span class="w"> </span>GOFLAGS=-v<span class="w">
+</span><span class="w">
+</span><span class="w">    </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>Get<span class="w"> </span>paGth<span class="w">
+</span><span class="w">      </span><span class="k">run</span><span class="p">:</span><span class="w"> </span>find<span class="w"> </span>.<span class="w"> </span>-name<span class="w"> </span>kubeadm<span class="w">
+</span><span class="w">    
+</span><span class="w">    </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>Kubeadm<span class="w"> </span>version<span class="w">
+</span><span class="w">      </span><span class="k">run</span><span class="p">:</span><span class="w"> </span><span class="sd">|
+</span><span class="sd">        chmod +x ./_output/local/bin/linux/amd64/kubeadm</span><span class="w">
+</span><span class="w">        </span>./_output/local/bin/linux/amd64/kubeadm<span class="w"> </span>version<span class="w">
+</span><span class="w">    </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>Package<span class="w">
+</span><span class="w">      </span><span class="k">run</span><span class="p">:</span><span class="w"> </span>mkdir<span class="w"> </span>myki<span class="w"> </span><span class="cp">&amp;&amp;</span><span class="w"> </span>cp<span class="w"> </span>./_output/local/bin/linux/amd64/kubeadm<span class="w"> </span>myki<span class="w">
+</span><span class="w">
+</span><span class="w">    </span>- <span class="k">uses</span><span class="p">:</span><span class="w"> </span>actions/upload-artifact@v1<span class="w">
+</span><span class="w">      </span><span class="k">with</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>kubeadm-${{<span class="w"> </span>env.packageName<span class="w"> </span>}}<span class="w">
+</span><span class="w">        </span><span class="k">path</span><span class="p">:</span><span class="w"> </span>myki<span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c">#     #- name: Copy file</span><span class="w">
+</span><span class="w"></span><span class="c">#     #  run: mkdir staging &amp;&amp; cp _output/local/bin/linux/amd64/kubeadm staging</span><span class="w">
+</span><span class="w"></span><span class="c">#     #- name: Test</span><span class="w">
+</span><span class="w"></span><span class="c">#       #run: go test -v .</span><span class="w">
+</span></code></pre></div><p><img src="https://oss.1nth.com/images/1nth/kubeadm-ssl-100-01.png?x-oss-process=style/dev" alt="下载此文件">
+然后执行证书更新命令</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">cp -r /etc/kubernetes/pki /etc/kubernetes/pki.origin
+kubeadm init phase kubeconfig all --config initconfig.yaml
+cp -dprf /etc/kubernetes/*.conf /opt/
+kubeadm init phase kubeconfig all --config initconfig.yaml
+cp /etc/kubernetes/admin.conf ~/.kube/config
+<span class="c1">#重启容器</span>
+docker ps <span class="p">|</span> grep -v pause <span class="p">|</span> grep -E <span class="s2">&#34;etcd|scheduler|controller|apiserver&#34;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print &#34;docker&#34;,&#34;restart&#34;,$1}&#39;</span> <span class="p">|</span> bash
+<span class="c1">#查看证书时间</span>
+kubeadm alpha certs check-expiration
 </code></pre></div>
     </div>
 
