@@ -6,10 +6,28 @@
     <description>Recent content in kubernetes on Myki的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 22 Sep 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 30 Sep 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://www.1nth.com/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>K8S部署Kafka(K8S外部可访问) NodePort 集群外访问</title>
+      <link>https://www.1nth.com/post/kafka-install-k8s/</link>
+      <pubDate>Wed, 30 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.1nth.com/post/kafka-install-k8s/</guid>
+      <description>&lt;h4 id=&#34;环境信息&#34;&gt;环境信息&lt;/h4&gt;
+&lt;p&gt;本次实战的操作系统和软件的版本信息如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;env:
+Kubernetes：1.18
+Kubernetes宿主机：CentOS Linux release 7.7.1908
+NFS服务：IP地址192.168.1.43，动态存储卷 storageClass: &amp;#34;nfs-client&amp;#34;
+Helm：3.2.2
+Kafka：2.0.1
+Zookeeper：3.5.5
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
     
     <item>
       <title>国内拉取google kubernetes镜像 同步镜像sync</title>
