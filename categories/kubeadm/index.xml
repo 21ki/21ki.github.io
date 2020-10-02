@@ -31,7 +31,7 @@ etcd-0               Healthy     {&amp;#34;health&amp;#34;:&amp;#34;true&amp;#34
       <pubDate>Mon, 21 Sep 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/kubeadm-ssl-update/</guid>
-      <description>&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;
+      <description>&lt;p&gt;&lt;a name=&#34;6ed7c9be&#34;&gt;&lt;/a&gt;
 kubeadm 默认证书为一年，一年过期后，会导致api service不可用，使用过程中会出现：&lt;code&gt;x509: certificate has expired or is not yet valid&lt;/code&gt;&lt;/p&gt;</description>
     </item>
     

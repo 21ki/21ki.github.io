@@ -85,7 +85,7 @@ Zookeeper：3.5.5
 ">
 <meta itemprop="datePublished" content="2020-09-30T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2020-09-30T00:00:00+00:00" />
-<meta itemprop="wordCount" content="645">
+<meta itemprop="wordCount" content="413">
 
 
 
@@ -191,12 +191,14 @@ NFS服务：IP地址192.168.1.43，动态存储卷 storageClass: &#34;nfs-client
 Helm：3.2.2
 Kafka：2.0.1
 Zookeeper：3.5.5
-</code></pre></div><p>添加helm仓库并下载</p>
+</code></pre></div><div class="admonition note"><p class="admonition-title">添加helm仓库并下载</p>
+</div>
 <div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">helm repo add incubator http://mirror.azure.cn/kubernetes/charts-incubator/
 helm repo update
 helm fetch incubator/kafka --untar
 <span class="nb">cd</span> kafka
-</code></pre></div><p>vi values-dev.yaml</p>
+</code></pre></div><div class="admonition example"><p class="admonition-title">example</p>
+<p>vi values-dev.yaml</p>
 <div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">resources</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="k">limits</span><span class="p">:</span><span class="w">
 </span><span class="w">    </span><span class="k">cpu</span><span class="p">:</span><span class="w"> </span>200m<span class="w">
@@ -233,10 +235,14 @@ helm fetch incubator/kafka --untar
 </span><span class="w">    </span><span class="k">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
 </span><span class="w">    </span><span class="k">size</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;2Gi&#34;</span><span class="w">
 </span><span class="w">    </span><span class="k">storageClass</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;nfs-client&#34;</span><span class="w">
-</span></code></pre></div><p>#安装kafka</p>
+</span></code></pre></div></div>
+<div class="admonition abstract"><p class="admonition-title">abstract</p>
+<h1 id="安装kafka">安装kafka</h1>
 <div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">helm install -f values-dev.yaml kafka ./ --namespace kafka
-</code></pre></div><p>#添加zk的外部访问
-vi zookeeper-nodeport-svc.yaml</p>
+</code></pre></div></div>
+<div class="admonition example"><p class="admonition-title">example</p>
+<h2 id="添加zk的外部访问">添加zk的外部访问</h2>
+<p>vi zookeeper-nodeport-svc.yaml</p>
 <div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
 </span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Service<span class="w">
 </span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
@@ -250,7 +256,7 @@ vi zookeeper-nodeport-svc.yaml</p>
 </span><span class="w">  </span><span class="k">selector</span><span class="p">:</span><span class="w">
 </span><span class="w">    </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>zookeeper<span class="w">
 </span><span class="w">    </span><span class="k">release</span><span class="p">:</span><span class="w"> </span>kafka<span class="w">
-</span></code></pre></div>
+</span></code></pre></div></div>
     </div>
 
     <div class="post-copyright">

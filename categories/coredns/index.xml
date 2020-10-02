@@ -17,11 +17,11 @@
       <pubDate>Sun, 13 Sep 2020 00:00:00 +0000</pubDate>
       
       <guid>https://www.1nth.com/post/k8s-network-cilium/</guid>
-      <description>&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+      <description>&lt;p&gt;&lt;a name=&#34;6ed7c9be&#34;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&#34;不得不说的kubeadm&#34;&gt;不得不说的kubeadm&lt;/h2&gt;
-&lt;p&gt;&lt;!-- raw HTML omitted --&gt;kubeadm部署很方便,但是是一个老外写的,使用staticPod(容器)运行的管理组件,镜像都是&lt;code&gt;gcr.io&lt;/code&gt;域名仓库里的。&lt;!-- raw HTML omitted --&gt;域名仓库很多docker的人甚至都不知道,docker镜像命名规则是&lt;code&gt;域名/库名/img_name:tag&lt;/code&gt;这种形式,dockerhub上要拉取镜像直接是&lt;code&gt;库名/img_name:tag&lt;/code&gt;这种名字,是因为域名缺省是&lt;code&gt;docker.io&lt;/code&gt;也就是dockerhub上看到的都是这个域名仓库的&lt;!-- raw HTML omitted --&gt;常见的域名仓库国外有gcr.io,quay.io,国内的阿里(registry.cn-hangzhou.aliyuncs.com,hangzhou以外还有shenzhen啥的),daocloud.io等等.gcr.io因为位置在国外会拉取不到.国内阿里仓库同步了&lt;code&gt;gcr.io/google_containers&lt;/code&gt;这些镜像,&lt;!-- raw HTML omitted --&gt;
-&lt;!-- raw HTML omitted --&gt;总有人认为kubeadm的容器运行没有二进制运行放心.容器本身就是个隔离受限的进程,另外管理组件都是无状态的,但是他们总感觉不放心。&lt;!-- raw HTML omitted --&gt;事实上除了kubelet以外所有组件都可以用容器方式运行,管理组件简单说下就是集群数据存放&lt;code&gt;etcd&lt;/code&gt;数据库里,apiserver去和etcd交互,其他组件和apiserver交互,kubelet调用api去操作docker,其中一些组件也会去操作各个节点的系统设置&lt;!-- raw HTML omitted --&gt;ererere
-&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;br /&gt;kubeadm部署很方便,但是是一个老外写的,使用staticPod(容器)运行的管理组件,镜像都是&lt;code&gt;gcr.io&lt;/code&gt;域名仓库里的。&lt;br /&gt;域名仓库很多docker的人甚至都不知道,docker镜像命名规则是&lt;code&gt;域名/库名/img_name:tag&lt;/code&gt;这种形式,dockerhub上要拉取镜像直接是&lt;code&gt;库名/img_name:tag&lt;/code&gt;这种名字,是因为域名缺省是&lt;code&gt;docker.io&lt;/code&gt;也就是dockerhub上看到的都是这个域名仓库的&lt;br /&gt;常见的域名仓库国外有gcr.io,quay.io,国内的阿里(registry.cn-hangzhou.aliyuncs.com,hangzhou以外还有shenzhen啥的),daocloud.io等等.gcr.io因为位置在国外会拉取不到.国内阿里仓库同步了&lt;code&gt;gcr.io/google_containers&lt;/code&gt;这些镜像,&lt;br /&gt;
+&lt;br /&gt;总有人认为kubeadm的容器运行没有二进制运行放心.容器本身就是个隔离受限的进程,另外管理组件都是无状态的,但是他们总感觉不放心。&lt;br /&gt;事实上除了kubelet以外所有组件都可以用容器方式运行,管理组件简单说下就是集群数据存放&lt;code&gt;etcd&lt;/code&gt;数据库里,apiserver去和etcd交互,其他组件和apiserver交互,kubelet调用api去操作docker,其中一些组件也会去操作各个节点的系统设置&lt;br /&gt;ererere
+&lt;a name=&#34;ofRxy&#34;&gt;&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
