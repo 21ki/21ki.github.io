@@ -5,7 +5,7 @@
     <link>https://www.1nth.com/categories/centos/</link>
     <description>Recent content in centos on Myki的博客</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>zh-cn</language>
     <lastBuildDate>Tue, 25 Aug 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://www.1nth.com/categories/centos/index.xml" rel="self" type="application/rss+xml" />
@@ -105,10 +105,10 @@ systemctl start --now etcd
     
     <item>
       <title>linux下制作二进制bin 文件制做方法</title>
-      <link>https://www.1nth.com/post/make_bin/</link>
+      <link>https://www.1nth.com/post/bin-make-linux/</link>
       <pubDate>Wed, 22 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://www.1nth.com/post/make_bin/</guid>
+      <guid>https://www.1nth.com/post/bin-make-linux/</guid>
       <description>&lt;h4 id=&#34;linux下制作二进制bin-文件制做方法&#34;&gt;linux下制作二进制bin 文件制做方法&lt;/h4&gt;
 &lt;h4 id=&#34;centos-77&#34;&gt;centos 7.7&lt;/h4&gt;</description>
     </item>
