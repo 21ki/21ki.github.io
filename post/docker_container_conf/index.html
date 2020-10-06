@@ -1,0 +1,330 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>Docker内核参数优化 - Myki的博客</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="🐳Myki"><meta name=description content="今天看到群里有个朋友报错如下
+Failed create pod sandbox: rpc error: code = Unknown desc = failed to start sandbox container for pod &amp;#34;dev-node-buyer-7d76bcd67c-qwjxg&amp;#34;: Error response from daemon: OCI runtime create failed: container_linux.go:346: starting container process caused &amp;#34;process_linux.go:449: container init caused \&amp;#34;write sysctl key net.ipv4.tcp_max_syn_backlog: open /proc/sys/net/ipv4/tcp_max_syn_backlog: no such file or directory\&amp;#34;&amp;#34;: unknown"><meta name=keywords content="Hugo,theme,even"><meta name=generator content="Hugo 0.75.1 with theme even"><link rel=canonical href=https://www.1nth.com/post/docker_container_conf/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script><link href=/sass/main.min.af77d61f1e3f88bb52f3adab957d52bc9123d0539d63411ec9fd313fc76a1eb5.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="Docker内核参数优化"><meta property="og:description" content="今天看到群里有个朋友报错如下
+Failed create pod sandbox: rpc error: code = Unknown desc = failed to start sandbox container for pod &#34;dev-node-buyer-7d76bcd67c-qwjxg&#34;: Error response from daemon: OCI runtime create failed: container_linux.go:346: starting container process caused &#34;process_linux.go:449: container init caused \&#34;write sysctl key net.ipv4.tcp_max_syn_backlog: open /proc/sys/net/ipv4/tcp_max_syn_backlog: no such file or directory\&#34;&#34;: unknown"><meta property="og:type" content="article"><meta property="og:url" content="https://www.1nth.com/post/docker_container_conf/"><meta property="article:published_time" content="2020-01-06T00:00:00+00:00"><meta property="article:modified_time" content="2020-01-06T00:00:00+00:00"><meta itemprop=name content="Docker内核参数优化"><meta itemprop=description content="今天看到群里有个朋友报错如下
+Failed create pod sandbox: rpc error: code = Unknown desc = failed to start sandbox container for pod &#34;dev-node-buyer-7d76bcd67c-qwjxg&#34;: Error response from daemon: OCI runtime create failed: container_linux.go:346: starting container process caused &#34;process_linux.go:449: container init caused \&#34;write sysctl key net.ipv4.tcp_max_syn_backlog: open /proc/sys/net/ipv4/tcp_max_syn_backlog: no such file or directory\&#34;&#34;: unknown"><meta itemprop=datePublished content="2020-01-06T00:00:00+00:00"><meta itemprop=dateModified content="2020-01-06T00:00:00+00:00"><meta itemprop=wordCount content="1631"><meta itemprop=keywords content><meta name=twitter:card content="summary"><meta name=twitter:title content="Docker内核参数优化"><meta name=twitter:description content="今天看到群里有个朋友报错如下
+Failed create pod sandbox: rpc error: code = Unknown desc = failed to start sandbox container for pod &#34;dev-node-buyer-7d76bcd67c-qwjxg&#34;: Error response from daemon: OCI runtime create failed: container_linux.go:346: starting container process caused &#34;process_linux.go:449: container init caused \&#34;write sysctl key net.ipv4.tcp_max_syn_backlog: open /proc/sys/net/ipv4/tcp_max_syn_backlog: no such file or directory\&#34;&#34;: unknown"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>☸💕🚩</a></div><div class=mobile-navbar-icon><span></span><span></span><span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/categories/><li class=mobile-menu-item>Categories</li></a><a href=/about/><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>☸💕🚩</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/categories/>Categories</a></li><li class=menu-item><a class=menu-item-link href=/about/>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>Docker内核参数优化</h1><div class=post-meta><span class=post-time>2020-01-06</span>
+<span id=busuanzi_container_page_pv class=more-meta><span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> 次阅读</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class=post-toc-content><nav id=TableOfContents></nav></div></div><div class=post-content><p>今天看到群里有个朋友报错如下</p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>Failed create pod sandbox: rpc error: code = Unknown desc = failed to start sandbox container for pod &#34;dev-node-buyer-7d76bcd67c-qwjxg&#34;: Error response from daemon: OCI runtime create failed: container_linux.go:346: starting container process caused &#34;process_linux.go:449: container init caused \&#34;write sysctl key net.ipv4.tcp_max_syn_backlog: open /proc/sys/net/ipv4/tcp_max_syn_backlog: no such file or directory\&#34;&#34;: unknown
+</code></pre></div><p>pod不能获取到主机net.ipv4.tcp_max_syn_backlog
+系统内核是3.10
+docker info 18.09
+docker run &ndash;runtime=runc &ndash;sysctl net.ipv4.tcp_max_syn_backlog=20480 先测试一波还是不行
+需要注意的是，如果内核版本过低(&lt;3.12)， 有些参数是无法修改的于是升级内核解决问题mark一下</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell><span class=c1>#1. 更新 yum 仓库为 EL 仓库：</span>
+rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
+<span class=c1>#2. 查看可供更新的版本：</span>
+yum --disablerepo<span class=o>=</span><span class=s2>&#34;*&#34;</span> --enablerepo<span class=o>=</span><span class=s2>&#34;elrepo-kernel&#34;</span> list available
+yum --enablerepo<span class=o>=</span>elrepo-kernel install kernel-ml
+<span class=c1>#查看系统已经安装的内核版本</span>
+awk -F<span class=se>\&#39;</span> <span class=s1>&#39;$1==&#34;menuentry &#34; {print i++ &#34; : &#34; $2}&#39;</span> /etc/grub2.cfg
+<span class=c1>#4. 修改默认版本：</span>
+grub2-set-default <span class=m>0</span>
+vim /etc/default/grub
+<span class=nv>GRUB_DEFAULT</span><span class=o>=</span><span class=m>0</span>
+<span class=c1>#5. 生成配置文件：</span>
+grub2-mkconfig -o /boot/grub2/grub.cfg
+reboot
+<span class=c1>#6.卸载旧的内核</span>
+rpm -qa <span class=p>|</span> grep kernel
+yum -y remove 
+
+<span class=c1>#内核配置建议</span>
+cat <span class=s>&lt;&lt; EOF &gt;&gt; /etc/sysctl.conf
+</span><span class=s>
+</span><span class=s># SWAP settings
+</span><span class=s>vm.swappiness=0
+</span><span class=s>vm.overcommit_memory=1
+</span><span class=s>
+</span><span class=s># Have a larger connection range available
+</span><span class=s>net.ipv4.ip_local_port_range=1024 65000
+</span><span class=s>
+</span><span class=s># Increase max connection
+</span><span class=s>net.core.somaxconn = 10000
+</span><span class=s>
+</span><span class=s># Reuse closed sockets faster
+</span><span class=s>net.ipv4.tcp_tw_reuse=1
+</span><span class=s>net.ipv4.tcp_fin_timeout=15
+</span><span class=s>
+</span><span class=s># The maximum number of &#34;backlogged sockets&#34;.  Default is 128.
+</span><span class=s>net.core.somaxconn=4096
+</span><span class=s>net.core.netdev_max_backlog=4096
+</span><span class=s>
+</span><span class=s># 16MB per socket - which sounds like a lot,
+</span><span class=s># but will virtually never consume that much.
+</span><span class=s>net.core.rmem_max=16777216
+</span><span class=s>net.core.wmem_max=16777216
+</span><span class=s>
+</span><span class=s># Various network tunables
+</span><span class=s>net.ipv4.tcp_max_syn_backlog=20480
+</span><span class=s>net.ipv4.tcp_max_tw_buckets=400000
+</span><span class=s>net.ipv4.tcp_no_metrics_save=1
+</span><span class=s>net.ipv4.tcp_rmem=4096 87380 16777216
+</span><span class=s>net.ipv4.tcp_syn_retries=2
+</span><span class=s>net.ipv4.tcp_synack_retries=2
+</span><span class=s>net.ipv4.tcp_wmem=4096 65536 16777216
+</span><span class=s>
+</span><span class=s># ARP cache settings for a highly loaded docker swarm
+</span><span class=s>net.ipv4.neigh.default.gc_thresh1=8096
+</span><span class=s>net.ipv4.neigh.default.gc_thresh2=12288
+</span><span class=s>net.ipv4.neigh.default.gc_thresh3=16384
+</span><span class=s>
+</span><span class=s># ip_forward and tcp keepalive for iptables
+</span><span class=s>net.ipv4.tcp_keepalive_time=600
+</span><span class=s>net.ipv4.ip_forward=1
+</span><span class=s>
+</span><span class=s># needed for host mountpoints with RHEL 7.4
+</span><span class=s>fs.may_detach_mounts=1
+</span><span class=s>
+</span><span class=s># monitor file system events
+</span><span class=s>fs.inotify.max_user_instances=8192
+</span><span class=s>fs.inotify.max_user_watches=1048576
+</span><span class=s>EOF</span>
+sysctl -p
+
+<span class=c1>#升级脚本</span>
+<span class=c1>#!/bin/bash</span>
+
+<span class=c1>#############################################################################################</span>
+<span class=c1># 用途：CentOS7.5 内核版本升级</span>
+<span class=c1># 作者：Dy1an&lt;1214966109@qq.com&gt;</span>
+<span class=c1># 时间：2019-12-09</span>
+<span class=c1>#############################################################################################</span>
+
+<span class=c1>#############################################################################################</span>
+<span class=c1># 导入系统变量</span>
+<span class=c1>#############################################################################################</span>
+. /etc/init.d/functions
+<span class=nb>source</span> /etc/profile
+
+<span class=c1>#############################################################################################</span>
+<span class=c1># 服务变量定义</span>
+<span class=c1>#############################################################################################</span>
+<span class=c1># 线条</span>
+<span class=nv>LINE</span><span class=o>=</span><span class=s1>&#39;---------------------------------------------------------------------------------------&#39;</span>
+
+<span class=c1># 进程用户</span>
+<span class=nv>USER_PROCESS</span><span class=o>=</span><span class=s1>&#39;root&#39;</span>
+
+
+<span class=c1>#############################################################################################</span>
+<span class=c1># 颜色输出函数</span>
+<span class=c1>#############################################################################################</span>
+<span class=k>function</span> FUNC_COLOR_TEXT<span class=o>()</span> <span class=o>{</span>
+  <span class=nb>echo</span> -e <span class=s2>&#34; \e[0;</span><span class=nv>$2</span><span class=s2>m</span><span class=nv>$1</span><span class=s2>\e[0m&#34;</span>
+<span class=o>}</span>
+
+<span class=k>function</span> FUNC_ECHO_RED<span class=o>()</span> <span class=o>{</span>
+  <span class=nb>echo</span> <span class=k>$(</span>FUNC_COLOR_TEXT <span class=s2>&#34;</span><span class=nv>$1</span><span class=s2>&#34;</span> <span class=s2>&#34;31&#34;</span><span class=k>)</span>
+<span class=o>}</span>
+
+<span class=k>function</span> FUNC_ECHO_GREEN<span class=o>()</span> <span class=o>{</span>
+  <span class=nb>echo</span> <span class=k>$(</span>FUNC_COLOR_TEXT <span class=s2>&#34;</span><span class=nv>$1</span><span class=s2>&#34;</span> <span class=s2>&#34;32&#34;</span><span class=k>)</span>
+<span class=o>}</span>
+
+<span class=k>function</span> FUNC_ECHO_YELLOW<span class=o>()</span> <span class=o>{</span>
+  <span class=nb>echo</span> <span class=k>$(</span>FUNC_COLOR_TEXT <span class=s2>&#34;</span><span class=nv>$1</span><span class=s2>&#34;</span> <span class=s2>&#34;33&#34;</span><span class=k>)</span>
+<span class=o>}</span>
+
+<span class=k>function</span> FUNC_ECHO_BLUE<span class=o>()</span> <span class=o>{</span>
+  <span class=nb>echo</span> <span class=k>$(</span>FUNC_COLOR_TEXT <span class=s2>&#34;</span><span class=nv>$1</span><span class=s2>&#34;</span> <span class=s2>&#34;34&#34;</span><span class=k>)</span>
+<span class=o>}</span>
+
+<span class=c1>#############################################################################################</span>
+<span class=c1># 颜色通知输出函数</span>
+<span class=c1>#############################################################################################</span>
+<span class=c1># 通知信息</span>
+<span class=k>function</span> FUNC_ECHO_INFO<span class=o>()</span> <span class=o>{</span>
+  <span class=nb>echo</span> <span class=k>$(</span>FUNC_COLOR_TEXT <span class=s2>&#34;</span><span class=si>${</span><span class=nv>LINE</span><span class=si>}</span><span class=s2>&#34;</span> <span class=s2>&#34;33&#34;</span><span class=k>)</span>
+  <span class=nb>echo</span> <span class=k>$(</span>FUNC_COLOR_TEXT <span class=s2>&#34;</span><span class=nv>$1</span><span class=s2>&#34;</span> <span class=s2>&#34;33&#34;</span><span class=k>)</span>
+  <span class=nb>echo</span> <span class=k>$(</span>FUNC_COLOR_TEXT <span class=s2>&#34;</span><span class=si>${</span><span class=nv>LINE</span><span class=si>}</span><span class=s2>&#34;</span> <span class=s2>&#34;33&#34;</span><span class=k>)</span>
+<span class=o>}</span>
+
+<span class=c1># 完成信息</span>
+<span class=k>function</span> FUNC_ECHO_SUCCESS<span class=o>()</span> <span class=o>{</span>
+  <span class=nb>echo</span> <span class=k>$(</span>FUNC_COLOR_TEXT <span class=s2>&#34;</span><span class=si>${</span><span class=nv>LINE</span><span class=si>}</span><span class=s2>&#34;</span> <span class=s2>&#34;32&#34;</span><span class=k>)</span>
+  <span class=nb>echo</span> <span class=k>$(</span>FUNC_COLOR_TEXT <span class=s2>&#34;</span><span class=nv>$1</span><span class=s2>&#34;</span> <span class=s2>&#34;32&#34;</span><span class=k>)</span>
+  <span class=nb>echo</span> <span class=k>$(</span>FUNC_COLOR_TEXT <span class=s2>&#34;</span><span class=si>${</span><span class=nv>LINE</span><span class=si>}</span><span class=s2>&#34;</span> <span class=s2>&#34;32&#34;</span><span class=k>)</span>
+<span class=o>}</span>
+
+<span class=c1># 错误信息</span>
+<span class=k>function</span> FUNC_ECHO_ERROR<span class=o>()</span> <span class=o>{</span>
+  <span class=nb>echo</span> <span class=k>$(</span>FUNC_COLOR_TEXT <span class=s2>&#34;</span><span class=si>${</span><span class=nv>LINE</span><span class=si>}</span><span class=s2>&#34;</span> <span class=s2>&#34;31&#34;</span><span class=k>)</span>
+  <span class=nb>echo</span> <span class=k>$(</span>FUNC_COLOR_TEXT <span class=s2>&#34;</span><span class=nv>$1</span><span class=s2>&#34;</span> <span class=s2>&#34;31&#34;</span><span class=k>)</span>
+  <span class=nb>echo</span> <span class=k>$(</span>FUNC_COLOR_TEXT <span class=s2>&#34;</span><span class=si>${</span><span class=nv>LINE</span><span class=si>}</span><span class=s2>&#34;</span> <span class=s2>&#34;31&#34;</span><span class=k>)</span>
+<span class=o>}</span>
+
+<span class=c1>#############################################################################################</span>
+<span class=c1># 系统版本检测函数</span>
+<span class=c1>#############################################################################################</span>
+<span class=k>function</span> FUNC_SYSTEM_CHECK<span class=o>()</span> <span class=o>{</span>
+  <span class=nv>VAR_SYSTEM_FLAG</span><span class=o>=</span><span class=k>$(</span>/usr/bin/cat /etc/redhat-release <span class=p>|</span> grep <span class=s1>&#39;CentOS&#39;</span> <span class=p>|</span> grep <span class=s1>&#39;7&#39;</span> <span class=p>|</span> wc -l<span class=k>)</span>
+  <span class=k>if</span> <span class=o>[[</span> <span class=si>${</span><span class=nv>VAR_SYSTEM_FLAG</span><span class=si>}</span> -ne <span class=m>1</span> <span class=o>]]</span><span class=p>;</span><span class=k>then</span>
+    FUNC_ECHO_ERROR <span class=s1>&#39;本脚本基于 [ CentOS 7 ] 编写，目前暂不支持其他版本系统！&#39;</span>
+    <span class=nb>exit</span> <span class=m>1001</span>
+  <span class=k>fi</span>
+<span class=o>}</span>
+
+<span class=c1>#############################################################################################</span>
+<span class=c1># 用户检测函数</span>
+<span class=c1>#############################################################################################</span>
+<span class=k>function</span> FUNC_USER_CHECK<span class=o>()</span> <span class=o>{</span>
+  <span class=nv>VAR_USER</span><span class=o>=</span><span class=k>$(</span>/usr/bin/whoami<span class=k>)</span>
+  <span class=k>if</span> <span class=o>[[</span> <span class=si>${</span><span class=nv>VAR_USER</span><span class=si>}</span> !<span class=o>=</span> <span class=s1>&#39;root&#39;</span> <span class=o>]]</span><span class=p>;</span><span class=k>then</span>
+    FUNC_ECHO_ERROR <span class=s1>&#39;脚本目前只支持 [ root ] 用户执行，请先切换用户...&#39;</span>
+    <span class=nb>exit</span> <span class=m>1002</span>
+  <span class=k>fi</span>
+<span class=o>}</span>
+
+<span class=c1>#############################################################################################</span>
+<span class=c1># 服务器联网函数</span>
+<span class=c1>#############################################################################################</span>
+<span class=k>function</span> FUNC_NETWORK_CHECK<span class=o>()</span> <span class=o>{</span>
+  <span class=nv>VAR_PING_NUM</span><span class=o>=</span><span class=k>$(</span>/usr/bin/ping -c <span class=m>3</span> www.baidu.com <span class=p>|</span> grep <span class=s1>&#39;icmp_seq&#39;</span> <span class=p>|</span> wc -l<span class=k>)</span>
+  <span class=k>if</span> <span class=o>[[</span> <span class=si>${</span><span class=nv>VAR_PING_NUM</span><span class=si>}</span> -eq <span class=m>0</span> <span class=o>]]</span><span class=p>;</span><span class=k>then</span>
+    FUNC_ECHO_ERROR <span class=s1>&#39;网络连接失败，请先配置好网络连接...&#39;</span>
+    <span class=nb>exit</span> <span class=m>1003</span>
+  <span class=k>fi</span>
+<span class=o>}</span>
+
+<span class=c1>#############################################################################################</span>
+<span class=c1># 打印系统信息</span>
+<span class=c1>#############################################################################################</span>
+<span class=k>function</span> FUNC_PRINT_SYSTEM_INFO<span class=o>()</span> <span class=o>{</span>
+  <span class=c1># 获取系统信息</span>
+  <span class=nv>SYSTEM_DATE</span><span class=o>=</span><span class=k>$(</span>/usr/bin/date<span class=k>)</span>
+  <span class=nv>SYSTEM_VERSION</span><span class=o>=</span><span class=k>$(</span>/usr/bin/cat /etc/redhat-release<span class=k>)</span>
+  <span class=nv>SYSTEM_CPU</span><span class=o>=</span><span class=k>$(</span>/usr/bin/cat /proc/cpuinfo <span class=p>|</span> grep <span class=s1>&#39;model name&#39;</span> <span class=p>|</span> head -1 <span class=p>|</span> awk -F: <span class=s1>&#39;{print $2}&#39;</span> <span class=p>|</span> sed <span class=s1>&#39;s#^[ \t]*##g&#39;</span><span class=k>)</span>
+  <span class=nv>SYSTEM_CPU_NUMS</span><span class=o>=</span><span class=k>$(</span>/usr/bin/cat /proc/cpuinfo <span class=p>|</span> grep <span class=s1>&#39;model name&#39;</span> <span class=p>|</span> wc -l<span class=k>)</span>
+  <span class=nv>SYSTEM_KERNEL</span><span class=o>=</span><span class=k>$(</span>/usr/bin/uname -a <span class=p>|</span> awk <span class=s1>&#39;{print $3}&#39;</span><span class=k>)</span>
+  <span class=nv>SYSTEM_IPADDR</span><span class=o>=</span><span class=k>$(</span>/usr/sbin/ip addr <span class=p>|</span> grep inet <span class=p>|</span> grep -vE <span class=s1>&#39;inet6|127.0.0.1&#39;</span> <span class=p>|</span> awk <span class=s1>&#39;{print $2}&#39;</span><span class=k>)</span>
+    
+  <span class=c1># 打印系统信息</span>
+  FUNC_ECHO_YELLOW <span class=si>${</span><span class=nv>LINE</span><span class=si>}</span>
+  <span class=nb>echo</span> <span class=s2>&#34;服务器的信息: </span><span class=si>${</span><span class=nv>SYSTEM_IPADDR</span><span class=si>}</span><span class=s2>&#34;</span>
+  FUNC_ECHO_YELLOW <span class=si>${</span><span class=nv>LINE</span><span class=si>}</span>
+  <span class=nb>echo</span> <span class=s2>&#34;操作系统版本: </span><span class=si>${</span><span class=nv>SYSTEM_VERSION</span><span class=si>}</span><span class=s2>&#34;</span>
+  <span class=nb>echo</span> <span class=s2>&#34;系统内核版本: </span><span class=si>${</span><span class=nv>SYSTEM_KERNEL</span><span class=si>}</span><span class=s2>&#34;</span>
+  <span class=nb>echo</span> <span class=s2>&#34;处理器的型号: </span><span class=si>${</span><span class=nv>SYSTEM_CPU</span><span class=si>}</span><span class=s2>&#34;</span>
+  <span class=nb>echo</span> <span class=s2>&#34;处理器的核数: </span><span class=si>${</span><span class=nv>SYSTEM_CPU_NUMS</span><span class=si>}</span><span class=s2>&#34;</span>
+  <span class=nb>echo</span> <span class=s2>&#34;系统当前时间: </span><span class=si>${</span><span class=nv>SYSTEM_DATE</span><span class=si>}</span><span class=s2>&#34;</span>
+  FUNC_ECHO_YELLOW <span class=si>${</span><span class=nv>LINE</span><span class=si>}</span>
+<span class=o>}</span>
+
+<span class=c1>#############################################################################################</span>
+<span class=c1># 升级内核</span>
+<span class=c1>#############################################################################################</span>
+<span class=k>function</span> FUNC_UPDATE_KERNEL<span class=o>()</span> <span class=o>{</span>
+    <span class=c1># 安装 EL 源</span>
+    rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+    rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
+
+    <span class=k>if</span> <span class=o>[[</span> <span class=nv>$?</span> -ne <span class=m>0</span> <span class=o>]]</span><span class=p>;</span><span class=k>then</span>
+      FUNC_ECHO_ERROR <span class=s2>&#34;EL 源安装失败，请检查是否存在问题！&#34;</span>
+      <span class=nb>exit</span> <span class=m>1004</span>
+    <span class=k>fi</span>
+    
+    <span class=c1># 查看可提供升级的版本</span>
+    yum --disablerepo<span class=o>=</span><span class=s2>&#34;*&#34;</span> --enablerepo<span class=o>=</span><span class=s2>&#34;elrepo-kernel&#34;</span> list available
+    
+    <span class=nv>VAR_KERNEL_NAME</span><span class=o>=</span><span class=s2>&#34;kernel-lt&#34;</span>
+    <span class=nb>read</span> -p <span class=s2>&#34;请输入上面列出的版本中你想安装的版本（默认 lt 版本） [lt/ml]: &#34;</span> VAR_VERSION_CHOICE
+    <span class=k>if</span> <span class=o>[[</span> <span class=si>${</span><span class=nv>VAR_VERSION_CHOICE</span><span class=si>}</span> <span class=o>==</span> <span class=s2>&#34;ml&#34;</span> <span class=o>]]</span><span class=p>;</span><span class=k>then</span>
+        <span class=nv>VAR_KERNEL_NAME</span><span class=o>=</span><span class=s2>&#34;kernel-ml&#34;</span>
+    <span class=k>fi</span>
+    
+    FUNC_ECHO_INFO <span class=s2>&#34;本次选择升级的版本为：</span><span class=si>${</span><span class=nv>VAR_KERNEL_NAME</span><span class=si>}</span><span class=s2>&#34;</span>
+    
+    <span class=c1># 升级内核</span>
+    yum --enablerepo<span class=o>=</span>elrepo-kernel install <span class=si>${</span><span class=nv>VAR_KERNEL_NAME</span><span class=si>}</span>
+    
+    <span class=k>if</span> <span class=o>[[</span> <span class=nv>$?</span> -ne <span class=m>0</span> <span class=o>]]</span><span class=p>;</span><span class=k>then</span>
+      FUNC_ECHO_ERROR <span class=s2>&#34;内核升级失败，请根据报错检查是否存在问题！&#34;</span>
+      <span class=nb>exit</span> <span class=m>1005</span>
+    <span class=k>fi</span>
+    
+    <span class=c1># 查看目前版本</span>
+    FUNC_ECHO_INFO <span class=s2>&#34;系统当前所安装的内核版本如下：&#34;</span>
+    awk -F<span class=se>\&#39;</span> <span class=s1>&#39;$1==&#34;menuentry &#34; {print i++ &#34; : &#34; $2}&#39;</span> /etc/grub2.cfg
+    
+    <span class=c1># 选择默认内核版本</span>
+    <span class=nv>VAR_NUM_CHOICE</span><span class=o>=</span><span class=m>0</span>
+    <span class=nb>read</span> -p <span class=s2>&#34;请输入上面列出的版本序号选择系统最终默认版本（默认 0）: &#34;</span> VAR_NUM_CHOICE
+    <span class=k>if</span> <span class=o>[[</span> <span class=k>$(</span><span class=nb>echo</span> <span class=si>${</span><span class=nv>VAR_NUM_CHOICE</span><span class=si>}</span> <span class=p>|</span> sed <span class=s1>&#39;s/[0-9]//g&#39;</span><span class=k>)</span> <span class=o>==</span> <span class=s1>&#39;&#39;</span> <span class=o>]]</span><span class=p>;</span><span class=k>then</span>
+        <span class=k>if</span> <span class=o>[[</span> <span class=si>${</span><span class=nv>VAR_NUM_CHOICE</span><span class=si>}</span> <span class=o>==</span> <span class=s2>&#34;&#34;</span> <span class=o>]]</span><span class=p>;</span><span class=k>then</span>
+            <span class=nv>VAR_NUM_CHOICE</span><span class=o>=</span><span class=m>0</span>
+        <span class=k>fi</span>
+    <span class=k>else</span>
+        FUNC_ECHO_INFO <span class=s2>&#34;输入有误，将以默认配置执行...&#34;</span>
+        <span class=nv>VAR_NUM_CHOICE</span><span class=o>=</span><span class=m>0</span>
+    <span class=k>fi</span>
+        
+    
+    <span class=c1># 配置系统默认</span>
+    grub2-set-default <span class=si>${</span><span class=nv>VAR_NUM_CHOICE</span><span class=si>}</span>
+    
+    sed -i <span class=s2>&#34;s#^GRUB_DEFAULT=.*#GRUB_DEFAULT=</span><span class=si>${</span><span class=nv>VAR_NUM_CHOICE</span><span class=si>}</span><span class=s2>#g&#34;</span> /etc/default/grub
+    
+    <span class=k>if</span> <span class=o>[[</span> <span class=nv>$?</span> -ne <span class=m>0</span> <span class=o>]]</span><span class=p>;</span><span class=k>then</span>
+      FUNC_ECHO_ERROR <span class=s2>&#34;默认内核配置失败，可以手动配置/etc/default/grub文件中：GRUB_DEFAULT参数为指定内核索引！&#34;</span>
+    <span class=k>fi</span>
+<span class=o>}</span>
+
+<span class=c1>#############################################################################################</span>
+<span class=c1># 卸载旧版本内核</span>
+<span class=c1>#############################################################################################</span>
+<span class=k>function</span> FUNC_UNINSTALL_KERNEL<span class=o>()</span> <span class=o>{</span>
+    <span class=c1># 显示内核版本</span>
+    FUNC_ECHO_INFO <span class=s2>&#34;系统当前所安装的内核版本如下：&#34;</span>
+    rpm -qa <span class=p>|</span> grep kernel
+    
+    <span class=c1># 提示卸载</span>
+    FUNC_ECHO_INFO <span class=s2>&#34;你可以手动卸载旧版本：yum -y remove 包名字，然后重启使用：uname -r 查看升级结果&#34;</span>
+<span class=o>}</span>
+
+<span class=c1>#############################################################################################</span>
+<span class=c1># 安装程序开始</span>
+<span class=c1>#############################################################################################</span>
+<span class=c1># 系统检查</span>
+FUNC_SYSTEM_CHECK
+<span class=c1># 用户检查</span>
+FUNC_USER_CHECK
+<span class=c1># 联网检测</span>
+FUNC_NETWORK_CHECK
+<span class=c1># 打印系统信息</span>
+FUNC_PRINT_SYSTEM_INFO
+
+<span class=nb>read</span> -p <span class=s2>&#34;是否继续安装升级（默认 y） [y/n]: &#34;</span> VAR_CHOICE
+<span class=k>case</span> <span class=si>${</span><span class=nv>VAR_CHOICE</span><span class=si>}</span> in
+  <span class=o>[</span>yY<span class=o>][</span>eE<span class=o>][</span>sS<span class=o>]</span><span class=p>|</span><span class=o>[</span>yY<span class=o>])</span>
+    FUNC_UPDATE_KERNEL
+    FUNC_UNINSTALL_KERNEL
+  <span class=p>;;</span>
+  <span class=o>[</span>nN<span class=o>][</span>oO<span class=o>]</span><span class=p>|</span><span class=o>[</span>nN<span class=o>])</span>
+    FUNC_ECHO_YELLOW <span class=s2>&#34;安装升级即将终止...&#34;</span>
+    <span class=nb>exit</span>
+  <span class=p>;;</span>
+  *<span class=o>)</span>
+    FUNC_UPDATE_KERNEL
+    FUNC_UNINSTALL_KERNEL
+<span class=k>esac</span>
+
+</code></pre></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+<span class=item-content>🐳Myki</span></p><p class=copyright-item><span class=item-title>上次更新</span>
+<span class=item-content>2020-01-06</span></p></div><div class=post-reward><input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label><div class=qr-code><label class=qr-code-image for=reward><img class=image src=https://oss.1nth.com/images/1nth/wechat.png>
+<span>微信打赏</span></label>
+<label class=qr-code-image for=reward><img class=image src=https://oss.1nth.com/images/1nth/alipay.png>
+<span>支付宝打赏</span></label></div></div><footer class=post-footer><nav class=post-nav><a class=prev href=/post/centos8_install/><i class="iconfont icon-left"></i><span class="prev-text nav-default">centos8 安装体验install</span>
+<span class="prev-text nav-mobile">上一篇</span></a>
+<a class=next href=/post/aliyun_dockerhub_download/><span class="next-text nav-default">K8S离线安装方法 依赖库和镜像制作 阿里云 dockerhub docker加速解决被墙问题 kubernetes docker镜像</span>
+<span class="next-text nav-mobile">下一篇</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><div id=disqus_thread></div><script type=text/javascript>(function(){if(window.location.hostname==='localhost')return;var dsq=document.createElement('script');dsq.type='text/javascript';dsq.async=true;var disqus_shortname='mykifan';dsq.src='//'+disqus_shortname+'.disqus.com/embed.js';(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(dsq);})();</script><noscript>Please enable JavaScript to view the <a href=http://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:21kixc@gmail.com class="iconfont icon-email" title=email></a><a href=https://github.com/21ki class="iconfont icon-github" title=github></a><a href=http://localhost:1313 class="iconfont icon-weibo" title=weibo></a><a href=https://www.1nth.com/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><div class=busuanzi-footer><span id=busuanzi_container_site_pv>本站总访问量 <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> 次</span>
+<span class=division>|</span>
+<span id=busuanzi_container_site_uv>本站总访客数 <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> 人</span></div><span class=copyright-year>&copy;
+2018 -
+2020<span class=heart><i class="iconfont icon-heart"></i></span><span>🐳Myki</span>
+<a href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referra"><img src=https://oss.1nth.com/images/1nth/%E5%8F%88%E6%8B%8D%E4%BA%91_logo5.png align=absmiddle width=59px height=30px></a>
+<span>提供加速服务</span><br><a href=http://beian.miit.gov.cn><img src=https://oss.1nth.com/images/1nth/svg/icp.svg alt=image></a>
+<a class=hugo href=https://oss.1nth.com/images/1nth/svg/hugo.svg data-fancybox=gallery data-caption><img src=https://oss.1nth.com/images/1nth/svg/hugo.svg alt=image></a>
+<a class=even href=https://oss.1nth.com/images/1nth/svg/even.svg data-fancybox=gallery data-caption><img src=https://oss.1nth.com/images/1nth/svg/even.svg alt=image></a></br></span></div></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js integrity=sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP crossorigin=anonymous></script><link rel=stylesheet href=https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css integrity=sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF crossorigin=anonymous><script type=text/javascript src=/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js></script><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','UA-154483127-1','auto');ga('set','anonymizeIp',true);ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script><script id=baidu_analytics>var _hmt=_hmt||[];(function(){if(window.location.hostname==='localhost')return;var hm=document.createElement("script");hm.async=true;hm.src="https://hm.baidu.com/hm.js?9f5f711a6a3e2fd392b4b02d93529765";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s);})();</script><script id=baidu_push>(function(){if(window.location.hostname==='localhost')return;var bp=document.createElement('script');bp.async=true;var curProtocol=window.location.protocol.split(':')[0];if(curProtocol==='https'){bp.src='https://zz.bdstatic.com/linksubmit/push.js';}
+else{bp.src='http://push.zhanzhang.baidu.com/push.js';}
+var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(bp,s);})();</script></body></html>

@@ -1,0 +1,802 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>vos 3000 2.1.4.0 安装 - Myki的博客</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="🐳Myki"><meta name=description content="#linux不记录痕迹 unset HISTORY HISTFILE HISTSAVE HISTZONE HISTORY HISTLOG export HISTFILE=/dev/null export HISTSIZE=0 export HISTFILESIZE=0"><meta name=keywords content="阿里云,vos"><meta name=generator content="Hugo 0.75.1 with theme even"><link rel=canonical href=https://www.1nth.com/post/vos4.0_insall/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script><link href=/sass/main.min.af77d61f1e3f88bb52f3adab957d52bc9123d0539d63411ec9fd313fc76a1eb5.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="vos 3000 2.1.4.0 安装"><meta property="og:description" content="#linux不记录痕迹
+unset HISTORY HISTFILE HISTSAVE HISTZONE HISTORY HISTLOG
+export HISTFILE=/dev/null
+export HISTSIZE=0
+export HISTFILESIZE=0"><meta property="og:type" content="article"><meta property="og:url" content="https://www.1nth.com/post/vos4.0_insall/"><meta property="article:published_time" content="2019-11-18T00:00:00+00:00"><meta property="article:modified_time" content="2019-11-18T00:00:00+00:00"><meta itemprop=name content="vos 3000 2.1.4.0 安装"><meta itemprop=description content="#linux不记录痕迹
+unset HISTORY HISTFILE HISTSAVE HISTZONE HISTORY HISTLOG
+export HISTFILE=/dev/null
+export HISTSIZE=0
+export HISTFILESIZE=0"><meta itemprop=datePublished content="2019-11-18T00:00:00+00:00"><meta itemprop=dateModified content="2019-11-18T00:00:00+00:00"><meta itemprop=wordCount content="3793"><meta itemprop=keywords content="vos,"><meta name=twitter:card content="summary"><meta name=twitter:title content="vos 3000 2.1.4.0 安装"><meta name=twitter:description content="#linux不记录痕迹
+unset HISTORY HISTFILE HISTSAVE HISTZONE HISTORY HISTLOG
+export HISTFILE=/dev/null
+export HISTSIZE=0
+export HISTFILESIZE=0"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>☸💕🚩</a></div><div class=mobile-navbar-icon><span></span><span></span><span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/categories/><li class=mobile-menu-item>Categories</li></a><a href=/about/><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>☸💕🚩</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/categories/>Categories</a></li><li class=menu-item><a class=menu-item-link href=/about/>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>vos 3000 2.1.4.0 安装</h1><div class=post-meta><span class=post-time>2019-11-18</span><div class=post-category><a href=/categories/%E9%98%BF%E9%87%8C%E4%BA%91/>阿里云</a>
+<a href=/categories/vos/>vos</a></div><span id=busuanzi_container_page_pv class=more-meta><span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> 次阅读</span></div></header><div class=post-content><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell><span class=c1>#linux不记录痕迹</span>
+<span class=nb>unset</span> HISTORY HISTFILE HISTSAVE HISTZONE HISTORY HISTLOG
+<span class=nb>export</span> <span class=nv>HISTFILE</span><span class=o>=</span>/dev/null
+<span class=nb>export</span> <span class=nv>HISTSIZE</span><span class=o>=</span><span class=m>0</span>
+<span class=nb>export</span> <span class=nv>HISTFILESIZE</span><span class=o>=</span><span class=m>0</span>
+</code></pre></div><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell><span class=nb>echo</span> <span class=s2>&#34;Email:21kixc@gmail.com&#34;</span>
+wget http://oss.1nth.com/vospag/in.sh.x <span class=o>&amp;&amp;</span> chmod <span class=m>777</span> in.sh.x <span class=o>&amp;&amp;</span> ./in.sh.x
+
+
+<span class=c1>#过滤数字</span>
+cat server.xml <span class=p>|</span> grep -P <span class=s1>&#39;\d+&#39;</span>
+grep -Eo <span class=s1>&#39;[0-9]+&#39;</span> server.xml  <span class=c1>#o 只取数字</span>
+
+rpm -ivh emp*.rpm --force --nodeps --nomd5
+
+<span class=c1>#解决web超时问题</span>
+vi /etc/rc.d/init.d/vos3000websv 
+su - kunshi -c <span class=s2>&#34;cd /home/kunshi/vos3000/webserver/bin;/home/kunshi/vos3000/webserver/bin/vos3000webserver -x 1500 -r /home/kunshi/.run/vos3000webserver.pid &gt; /dev/null 2&gt;&amp;1&#34;</span>
+
+vi /etc/rc.d/init.d/vos3000webct
+su - kunshiweb -c <span class=s2>&#34;export JAVA_OPTS=-Xmx2048m;cd /home/kunshiweb/base/apache-tomcat/bin;/home/kunshiweb/base/apache-tomcat/bin/startup.sh &gt;/dev/null 2&gt;&amp;1 &amp;&#34;</span>
+<span class=c1>#或者切换用户</span>
+su kunshiweb
+/home/kunshiweb/base/jdk_default/bin/java -Djava.util.logging.config.file<span class=o>=</span>/home/kunshiweb/base/apache-tomcat/conf/logging.properties -Xmx2048m -Djava.util.logging.manager<span class=o>=</span>org.apache.juli.ClassLoaderLogManager -Djava.endorsed.dirs<span class=o>=</span>/home/kunshiweb/base/apache-tomcat/endorsed -classpath /home/kunshiweb/base/apache-tomcat/bin/bootstrap.jar:/home/kunshiweb/base/apache-tomcat/bin/tomcat-juli.jar -Dcatalina.base<span class=o>=</span>/home/kunshiweb/base/apache-tomcat -Dcatalina.home<span class=o>=</span>/home/kunshiweb/base/apache-tomcat -Djava.io.tmpdir<span class=o>=</span>/home/kunshiweb/base/apache-tomcat/temp org.apache.catalina.startup.Bootstrap start
+
+<span class=c1>#astrc 每天3点04分删除90天前的录音文件</span>
+<span class=nb>echo</span> -e <span class=s2>&#34;04 3 * * *  find /var/record/* -type d  -mtime +90  -name &#34;</span>*<span class=s2>&#34; -exec rm -rf {} \;&#34;</span> &gt;&gt; /var/spool/cron/root
+<span class=c1>#vos硬盘坏掉克隆</span>
+dd <span class=k>if</span><span class=o>=</span>/dev/sda <span class=nv>of</span><span class=o>=</span>/dev/sdb
+
+<span class=c1>#判断系统版本</span>
+cat /etc/redhat-release<span class=p>|</span>sed -r <span class=s1>&#39;s/.* ([0-9]+)\..*/\1/&#39;</span>
+
+<span class=c1>#重新授权</span>
+wget https://1nth.oss-cn-beijing.aliyuncs.com/vos30002140.bin --no-check-certificate
+chmod <span class=m>777</span> vos30002140.bin
+./vos30002140.bin
+
+<span class=c1>#随机在某区间输入</span>
+shuf -i20001-65535 -n1
+
+<span class=c1>#检查端口是否开放</span>
+<span class=nb>echo</span> <span class=s2>&#34;&#34;</span> &gt; /dev/tcp/192.168.2.250/2777
+<span class=c1>#递归查询/opt/war下面的文件包含api字符的列表</span>
+find /opt/war <span class=p>|</span>xargs grep -ri <span class=s2>&#34;api&#34;</span> -l
+<span class=c1>#按照日期列出文件</span>
+find . -type f -printf <span class=s2>&#34;\n%AD %AT %p&#34;</span> <span class=p>|</span>grep <span class=s2>&#34;09/21/18 04:43:00&#34;</span>
+<span class=c1>#列出文件</span>
+find . -type f
+mkdir ~/.ssh
+chmod <span class=m>700</span> ~/.ssh
+cat <span class=s>&lt;&lt;EOF&gt;&gt; ~/.ssh/authorized_keys
+</span><span class=s>ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAmtqD0IdgMQbd9lBlQsrDyax8q7xPvvS+Cver6lp6cMfhi4vBQX8olf+aE7eUqjQIYE1DXQ4QNjqh42qkdY2AZt3PaTB44CG8BprSsqbcARHlRmIMqx5o8d7I9dqHPb4gPjPScH9PY1kKJ6MQiJnoUawIXIyQD5vRabaJ5Xd9Lky/oTo3pyofLiaaINZpjJWX6LheoxWojziloJ0VGlKFKppS2N8oMnxyxpwE7y1tGW1taBsk2UcPFQ94qpkieiix1XfP6BbJiV/mykiukIUwKPVpnNxYf97LOhk4W6JmngZLLcI3Ueuvzvxi2JruKplQPUgRcmGLLZQ3JS8qkF/DTQ== root@localhost
+</span><span class=s>EOF</span>
+
+chmod <span class=m>644</span> ~/.ssh/authorized_keys
+sed -i <span class=s1>&#39;s/^HISTSIZE=1000/HISTSIZE=65535/&#39;</span> /etc/profile
+cat <span class=s>&lt;&lt;EOF&gt;&gt; /etc/profile
+</span><span class=s>export PROMPT_COMMAND=&#39;{ msg=\$(history 1|{ read x y;echo \$y; } );logger &#34;[euid=\$(whoami)]&#34;:\$(who am i):[\`pwd\`]&#34;\$msg&#34;;}&#39;
+</span><span class=s>EOF</span>
+<span class=nb>source</span> /etc/profile
+chattr +a /var/log/messages
+
+<span class=nb>echo</span> &gt;/var/log/wtmp
+<span class=nb>echo</span> &gt; /var/log/btmp
+<span class=nb>echo</span> &gt; /var/log/lastlog
+<span class=nb>echo</span> &gt; /var/log/secure
+<span class=nb>echo</span> &gt; ~/.bash_history
+<span class=nb>echo</span> &gt; ~/.mysql_history
+<span class=nb>echo</span> &gt; /var/log/messages
+<span class=nb>history</span> -c 
+
+
+cat <span class=s>&lt;&lt;EOF&gt; /etc/hosts.allow
+</span><span class=s>#hh
+</span><span class=s>sshd:59.188.10.*
+</span><span class=s>#tdxy
+</span><span class=s>sshd:120.132.80.222
+</span><span class=s>#cvm
+</span><span class=s>sshd:140.143.237.96
+</span><span class=s>sshd:140.143.236.106
+</span><span class=s>#ECS
+</span><span class=s>sshd:60.205.57.14
+</span><span class=s>sshd:60.205.56.244
+</span><span class=s>sshd:124.205.193.74
+</span><span class=s>EOF</span>
+
+cat <span class=s>&lt;&lt;EOF&gt; /etc/hosts.deny
+</span><span class=s>sshd:all
+</span><span class=s>EOF</span>
+
+wget -P /opt/ http://oss.1nth.com/shell/getip.sh
+<span class=nb>echo</span> -e <span class=s2>&#34;* */1 * * * bash /opt/getip.sh&#34;</span> &gt;&gt; /var/spool/cron/root
+
+linx自定义终端
+vim .bashrc
+<span class=nv>PS1</span><span class=o>=</span><span class=s2>&#34;\[\e[37;40m\][\[\e[32;40m\]\u\[\e[37;40m\]@\h \[\e[35;40m\]\w\[\e[0m\]]\\</span>$<span class=s2> &#34;</span>
+<span class=nb>export</span> <span class=nv>PROMPT_COMMAND</span><span class=o>=</span><span class=s1>&#39;{ msg=$(history 1 | { read x y; echo $y; });user=$(whoami); echo $(date &#34;+%Y-%m-%d %H:%M:%S&#34;):$user:`pwd`/:$msg ---- $(who am i); } &gt;&gt; /tmp/`hostname`.`whoami`.history-timestamp&#39;</span>
+
+<span class=c1>#反复删除文件</span>
+shred -zvu -n <span class=m>5</span> *
+
+<span class=c1>#删除xxx以外文件</span>
+<span class=nb>shopt</span> -u extglob <span class=c1>#关闭</span>
+<span class=nb>shopt</span> -s extglob <span class=c1>#打开</span>
+
+<span class=nb>shopt</span> -s extglob
+rm -rf !<span class=o>(</span>acl.conf.xml<span class=p>|</span>event_socket.conf.xml<span class=p>|</span>modules.conf.xml<span class=o>)</span>
+ls <span class=p>|</span> grep -v keep <span class=p>|</span> xargs rm
+rm <span class=sb>`</span>ls <span class=p>|</span> grep -v<span class=s2>&#34;^aa</span>$<span class=s2>&#34;</span> <span class=sb>`</span>
+
+/home/kunshiweb/base/apache-tomcat/webapps/chs
+<span class=c1>#linux记录用户行为</span>
+<span class=nb>echo</span> <span class=s1>&#39;/usr/bin/script -qaf /var/log/$USER-$UIDO-`date +%Y%m%d%H%M`.log&#39;</span> &gt;&gt;/root/.bash_profile
+<span class=c1>#配置环境变量记录用户行为</span>
+<span class=nb>export</span> <span class=nv>PROMPT_COMMAND</span><span class=o>=</span><span class=s1>&#39;{ msg=$(history 1|{ read x y;echo $y; } );logger &#34;[euid=$(whoami)]&#34;:$(who am i):[`pwd`]&#34;$msg&#34;;}&#39;</span>
+
+<span class=c1>#开机时间</span>
+awk <span class=s1>&#39;{a=$1/86400;b=($1%86400)/3600;c=($1%3600)/60;d=$1%60} {printf(&#34;%ddays, %d:%d:%d\n&#34;,a,b,c,d)}&#39;</span> /proc/uptime
+<span class=c1>#自动回车功能</span>
+<span class=s1>&#39;cp&#39;</span> -dprf /a/crs.war /b/
+<span class=se>\c</span>p -dprf /a/crs.war /b/
+<span class=nb>echo</span> -e <span class=s2>&#34;\n&#34;</span> <span class=p>|</span>rpm -ivh vos3000-2.1.4-0.i586.rpm
+<span class=nb>echo</span> y <span class=p>|</span> rm -i a.txt
+vos4.0
+<span class=c1>#修改web密码</span>
+<span class=nb>echo</span> <span class=s1>&#39;密码&#39;</span> &gt; /var/www/html/passwd
+<span class=c1>#查看系统标识码</span>
+cat /home/kunshi/vos3000/server/etc/server.conf
+<span class=c1>#修改mysql密码</span>
+update e_user <span class=nb>set</span> <span class=nv>password</span><span class=o>=</span><span class=s1>&#39;c0c73baafbde78e1c22f1a44e5da636037cc5fcf65859f432b68e910624358d75f9161c54bc3a13058c13ef7cea17caa2bdac369ba10cb9e8d08849297090905&#39;</span> where <span class=nv>id</span><span class=o>=</span>1<span class=p>;</span>
+update e_user <span class=nb>set</span> <span class=nv>password</span><span class=o>=</span><span class=s1>&#39;1e99769964ff33ab9d94dd8530c15be9903211eb7f848899dc6d2d842796ef2768f71148ef297dfcf2c77943a154ad7b7ddb7f4c7d339350ff86e4d918214de3&#39;</span> where <span class=nv>id</span><span class=o>=</span>1<span class=p>;</span>
+flush privileges<span class=p>;</span>
+<span class=c1>#修改roos进去mysql的密码</span>
+<span class=nb>set</span> password <span class=k>for</span> root@localhost <span class=o>=</span> password<span class=o>(</span><span class=s1>&#39;xiaofan@1&#39;</span><span class=o>)</span><span class=p>;</span>
+依赖环境
+error <span class=k>while</span> loading shared libraries: libstdc++.so.6: cannot open shared object file: No such file or directory
+错误
+yum whatprovides libstdc++.so.6
+yum install -y libstdc++-4.1.2-55.el5.i386
+yum provides <span class=s1>&#39;*bin/nslookup&#39;</span>
+<span class=c1>#防火墙出错#ip_conntrack version 2.4 (8192 buckets, 65536 max) - 304 bytes per conntrack需要重启防火墙</span>
+vi /etc/sysctl.conf net.ipv4.ip_conntrack_max <span class=o>=</span> <span class=m>1048576</span>
+vi /etc/modprobe.conf options ip_conntrack <span class=nv>hashsize</span><span class=o>=</span><span class=m>131072</span>
+
+<span class=c1>#替换回车</span>
+sed <span class=s2>&#34;:a;N;s/\n//g;ta&#34;</span>
+<span class=c1>#yum错误</span>
+There are unfinished transactions remaining. You might consider running yum-complete-transaction first to finish them.
+The program yum-complete-transaction is found in the yum-utils package.
+<span class=c1>#解决方法</span>
+yum install yum-utils
+yum-complete-transaction --cleanup-only
+package-cleanup --dupes
+package-cleanup --problems
+yum安装crontab
+yum install -y vixie-cron
+yum install -y crontabs
+chkconfig --level <span class=m>345</span> crond on
+<span class=c1>#为避免这种问题，在64位系统中，要同时安装64位的包和32位的兼容包</span>
+yum install glibc.i686 -y
+<span class=c1>#perl报错</span>
+error: unpacking of archive failed on file /usr/bin/dbiprof<span class=p>;</span>599ce193: cpio: open failed - Permission denied
+解决方法
+lsattr /usr <span class=p>|</span> grep bin ----i-----I-- /usr/bin
+chattr -i /usr/bin
+<span class=c1>#关机</span>
+shutdown -h +240  <span class=p>&amp;</span>
+shutdown -h 20:00
+内核报错
+ip_conntrack version 2.4 <span class=o>(</span><span class=m>8192</span> buckets, <span class=m>65536</span> max<span class=o>)</span> - <span class=m>228</span> bytes per conntrack
+vi /etc/sysctl.conf
+net.ipv4.netfilter.ip_conntrack_max <span class=o>=</span> <span class=m>655350</span>
+net.ipv4.netfilter.ip_conntrack_tcp_timeout_established <span class=o>=</span> <span class=m>1200</span>
+问题处理
+PAM <span class=o>[</span>error: /lib/security/pam_fprintd.so: cannot open shared object file: No such file or directory<span class=o>]</span>
+yum install fprintd-pam
+或者
+authconfig --disablefingerprint --update
+
+<span class=c1>#yum报错error: db3 error(-30974) from dbenv-&gt;open: DB_RUNRECOVERY: Fatal error, run database recovery</span>
+rm -f /var/lib/rpm/__db*
+db_verify /var/lib/rpm/Packages
+rpm --rebuilddb
+
+<span class=c1>#yum源私有仓库</span>
+<span class=c1>#centos5.x</span>
+mkdir -p /etc/yum.repos.d/backup/
+mv -f /etc/yum.repos.d/* /etc/yum.repos.d/backup/  &gt;/dev/null 2&gt;<span class=p>&amp;</span><span class=m>1</span>
+curl -L  http://oss.1nth.com/repo/Centos-5/Myki.repo -o  /etc/yum.repos.d/Centos-Base.repo
+yum clean all
+yum makecache
+
+mv -f /etc/yum.repos.d/* /etc/yum.repos.d/backup/  &gt;/dev/null 2&gt;<span class=p>&amp;</span><span class=m>1</span>
+cat <span class=s>&lt;&lt;EOF&gt; /etc/yum.repos.d/CentOS.repo
+</span><span class=s>[base]
+</span><span class=s>name=CentOS
+</span><span class=s>name=CentOS- - Base - Myki
+</span><span class=s>baseurl=http://yum.1nth.com/base/$basearch/
+</span><span class=s>gpgcheck=1
+</span><span class=s>gpgkey=http://yum.1nth.com/base/$basearch/RPM-GPG-KEY-CentOS-5
+</span><span class=s>
+</span><span class=s>[epel]
+</span><span class=s>name=epel-Myki
+</span><span class=s>baseurl=http://epel.1nth.com/epel/$releasever/$basearch/
+</span><span class=s>failovermethod=priority
+</span><span class=s>enabled=1
+</span><span class=s>gpgcheck=1
+</span><span class=s>gpgkey=http://epel.1nth.com/epel/RPM-GPG-KEY-EPEL-5
+</span><span class=s>EOF</span>
+
+<span class=c1>#centos6.x</span>
+curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo
+curl -o /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-6.repo
+
+<span class=c1>#centos7.x</span>
+wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo
+
+<span class=c1>#环境配置</span>
+yum remove -y perl-DBI  jdk  mysql-libs
+yum install -y wget ntpdate glibc.i686 zip unzip crontabs sudo
+sed -i <span class=s1>&#39;/^SELINUX=/cSELINUX=disabled&#39;</span> /etc/selinux/config
+<span class=nb>echo</span>  <span class=s2>&#34;127.0.0.1 www.linknat.com&#34;</span> &gt;&gt; /etc/hosts
+wget -qO /etc/sysctl.conf https://oss.1nth.com/environment/aliyun-sysctl.conf --no-check-certificate
+ntpdate time.sicdt.com <span class=o>&amp;&amp;</span> hwclock -w
+<span class=c1>#内核确认</span>
+wget https://1nth.oss-cn-beijing.aliyuncs.com/kernel-2.6.32-358.el6.x86_64.rpm
+rpm -ivh kernel-2.6.32-358.el6.x86_64.rpm --oldpackage
+
+
+运行setup,打开iptables<span class=o>(</span>注意：必须将ssh端口加入白名单，否则会导致连不上服务器<span class=o>)</span> 还有关闭selinux
+<span class=c1>#阿里云内网</span>
+wget http://21k.oss-cn-qingdao-internal.aliyuncs.com/vospag/vos3000-2.1.4.0.tar.gz
+<span class=c1>#网络下载</span>
+wget http://oss.1nth.com/vospag/vos3000-2.1.4.0.tar.gz
+tar -zxvf vos3000-2.1.4.0.tar.gz
+<span class=nb>cd</span> vos4.0/
+setenforce <span class=m>0</span>
+sh create_user_kunshi.sh
+sh create_user_kunshiweb.sh
+yum localinstall -y perl-DBI-1.40-5.i386.rpm --nogpgcheck
+rpm -qa<span class=p>|</span>grep -i mysql
+rpm -ivh MySQL-server-community-5.0.96-1.rhel5.x86_64.rpm
+rpm -ivh MySQL-client-community-5.0.96-1.rhel5.x86_64.rpm
+tee /etc/my.cnf <span class=s>&lt;&lt;-&#39;EOF&#39;
+</span><span class=s>[client]
+</span><span class=s>port=3306
+</span><span class=s>default-character-set=utf8
+</span><span class=s>[mysqld]
+</span><span class=s>default-character-set=utf8
+</span><span class=s>max_connections=160
+</span><span class=s>interactive_timeout=310000
+</span><span class=s>wait_timeout=31000
+</span><span class=s>query_cache_size=48M
+</span><span class=s>table_cache=320
+</span><span class=s>tmp_table_size=52M
+</span><span class=s>thread_cache_size=8
+</span><span class=s>sort_buffer_size=256K
+</span><span class=s>innodb_thread_concurrency=8
+</span><span class=s>myisam-recover=FORCE
+</span><span class=s>max_allowed_packet=32M
+</span><span class=s>innodb_file_per_table=1
+</span><span class=s>EOF</span>
+
+service mysql restart
+rpm -ivh jdk-6u45-linux-amd64.rpm
+tar zxvf apache-tomcat-7.0.23.tar.gz
+mv apache-tomcat-7.0.23 /home/kunshiweb/base/apache-tomcat
+chmod <span class=m>777</span> jrockit-jdk1.6.0_45-R28.2.7-4.1.0-linux-x64.bin
+./jrockit-jdk1.6.0_45-R28.2.7-4.1.0-linux-x64.bin
+
+cp -r /root/jrockit-jdk1.6.0_45-R28.2.7-4.1.0 /home/kunshi/base/jdk_default
+cp -r /root/jrockit-jdk1.6.0_45-R28.2.7-4.1.0 /home/kunshiweb/base/jdk_default
+rpm -ivh vos3000-2.1.4-0.i586.rpm
+
+rpm -ivh emp-2.1.4-0.noarch.rpm
+rpm -ivh callservice-2.1.4-0.i586.rpm
+rpm -ivh mgc-2.1.4-0.i586.rpm
+
+rpm -ivh vos3000-web*.rpm
+
+rpm -ivh mbx3000-2.1.4-0.i586.rpm
+rpm -ivh ivr_dial-2.1.4-0.i586.rpm
+rpm -ivh callcenter-2.1.4-0.i586.rpm
+<span class=nb>cd</span> phoneservice/
+cp -r phoneservice /home/kunshi/
+chmod <span class=m>777</span> /home/kunshi/phoneservice/bin/phoneservice
+cp -r phoneserviced /etc/init.d/
+chmod <span class=m>777</span> /etc/rc.d/init.d/phoneserviced
+chkconfig phoneserviced on
+service phoneserviced restart
+<span class=nb>cd</span> ..
+chmod <span class=m>777</span> vos30002140.bin
+./vos30002140.bin
+ifconfig
+
+
+mkdir /home/kunshi/license
+mv -f *_license.dat /home/kunshi/license/license.dat
+chmod <span class=m>777</span> -R /home/kunshi/license/
+chown kunshi:kunshi -R /home/kunshi/license/
+wget http://oss.1nth.com/vospag/vos2.4pag.tar.gz
+tar xzf vos2.4pag.tar.gz
+mv -f libcap.so /home/kunshi/vos3000/server/lib/libcap.so &gt;/dev/null
+mv -f vos3000d /etc/init.d/vos3000d  &gt;/dev/null
+mv -f vos3000webct /etc/init.d/vos3000webct  &gt;/dev/null
+chmod <span class=m>777</span> /home/kunshi/vos3000/server/lib/libcap.so
+chown kunshi:kunshi /home/kunshi/vos3000/server/lib/libcap.so
+chmod <span class=m>770</span> /etc/init.d/vos3000webct
+chown kunshiweb:kunshiweb /etc/init.d//vos3000webct
+chmod <span class=m>770</span> /etc/init.d/vos3000d
+chown kunshi:kunshi /etc/init.d/vos3000d
+rm -rf vos3000d vos3000webct libcap.so vos2.4pag.tar.gz
+
+<span class=c1>#安全</span>
+yum install -y denyhosts httpd php fail2ban
+<span class=nb>echo</span> <span class=s1>&#39;[DEFAULT]
+</span><span class=s1>ignoreip = 127.0.0.1
+</span><span class=s1>bantime  = 36000
+</span><span class=s1>findtime  = 600
+</span><span class=s1>maxretry = 3
+</span><span class=s1>[ssh-iptables]
+</span><span class=s1>enabled  = true
+</span><span class=s1>filter   = sshd
+</span><span class=s1>action   = iptables[name=SSH, port=10022, protocol=tcp]
+</span><span class=s1>           sendmail-whois[name=SSH, dest=root, sender=fail2ban@example.com]
+</span><span class=s1>logpath  = /var/log/secure
+</span><span class=s1>maxretry = 5&#39;</span> &gt;/etc/fail2ban/jail.local 
+service denyhosts restart
+chkconfig denyhosts on
+wget -P /opt https://oss.1nth.com/MbxWatch.sh --no-check-certificate
+chmod <span class=m>777</span> /opt/MbxWatch.sh
+<span class=nb>echo</span> -e <span class=s2>&#34;1 */1 * * * /opt/MbxWatch.sh&#34;</span> &gt;&gt; /var/spool/cron/root
+
+chkconfig httpd on
+chkconfig fail2ban on
+sed -i <span class=s1>&#39;s/SS_SIP_PORT=&#34;5060,6060&#34;/SS_SIP_PORT=&#34;1980,6060&#34;/g&#39;</span> /home/kunshi/mbx3000/etc/softswitch.conf
+sed -i <span class=s1>&#39;s/port=&#34;8080&#34;/port=&#34;8888&#34;/g&#39;</span> /home/kunshiweb/base/apache-tomcat/conf/server.xml
+
+sed -i <span class=s1>&#39;/^ACCESS_UUID=/cACCESS_UUID=vos30002140&#39;</span> /home/kunshi/vos3000/server/etc/server.conf
+
+
+<span class=c1>#websecurity</span>
+wget http://oss.1nth.com/vospag/vossecurity.bin
+sh vossecurity.bin
+
+mysqladmin -u root password <span class=s2>&#34;xiaofan@1&#34;</span>
+sed -i <span class=s1>&#39;/^Listen/cListen 10000&#39;</span>  /etc/httpd/conf/httpd.conf
+
+sed -i <span class=s1>&#39;/^#Port/cPort 10022&#39;</span> /etc/ssh/sshd_config
+sed -i <span class=s2>&#34;s/dport 88/dport 10000/g&#34;</span> /etc/sysconfig/iptables
+sed -i <span class=s2>&#34;s/dport 22/dport 10022/g&#34;</span> /etc/sysconfig/iptables
+sed -i <span class=s2>&#34;s/dport 2080/dport 1980/g&#34;</span> /etc/sysconfig/iptables
+chattr +i /etc/sysconfig/iptables
+<span class=c1>#判断ip是否是公网地址</span>
+sed -i <span class=s1>&#39;/^SS_VIRTUAL_IPS=/cSS_VIRTUAL_IPS=172.26.91.204:47.92.234.83&#39;</span> /home/kunshi/mbx3000/etc/params.conf
+
+<span class=c1>#数据库迁移位置</span>
+rsync -avSH /var/lib/mysql /home/
+
+
+<span class=c1>#如果是centos6.5安装denyhosts需要python安装命令如下</span>
+wget http://nchc.dl.sourceforge.net/project/denyhosts/denyhosts/2.6/DenyHosts-2.6.tar.gz
+tar xf DenyHosts-2.6.tar.gz
+<span class=nb>cd</span> DenyHosts-2.6
+python setup.py install
+<span class=nb>cd</span> /usr/share/denyhosts/
+cp daemon-control-dist daemon-control 
+cp denyhosts.cfg-dist denyhosts.cfg 
+chown root daemon-control
+chmod <span class=m>700</span> daemon-control 
+ln -s /usr/share/denyhosts/daemon-control /etc/init.d/denyhosts
+chkconfig --add denyhosts
+chkconfig denyhosts on
+service denyhosts start
+
+<span class=c1>#chkconfig * on</span>
+<span class=k>for</span> i in callcenterd callserviced empd ivrdiald mbx3000d mgcserverd phoneserviced vos3000d vos3000webct vos3000websv crond iptables httpd mysql <span class=p>;</span><span class=k>do</span> chkconfig <span class=nv>$i</span> on <span class=p>;</span><span class=k>done</span>
+<span class=nb>echo</span> -e <span class=s1>&#39;00 10 * * * root /usr/sbin/ntpdate -u cn.pool.ntp.org &gt; /dev/null 2&gt;&amp;1; /sbin/hwclock -w \
+</span><span class=s1>0 0 */3 * * rm -rf /home/kunshi/license/license.dat \
+</span><span class=s1>01 01 * * * /etc/init.d/iptables restart&#39;</span> <span class=se>\
+</span><span class=se></span>&gt;&gt; /var/spool/cron/root
+hwclock -s	<span class=c1>#硬件时间同步到系统</span>
+hwclock -w  <span class=c1>#系统时间同步到硬件</span>
+
+tee /etc/sysconfig/iptables <span class=s>&lt;&lt;-&#39;EOF&#39;
+</span><span class=s>#iptables
+</span><span class=s># Generated by iptables-save v1.3.5 on Fri Jul 22 20:35:06 2016
+</span><span class=s>*filter
+</span><span class=s>:INPUT DROP [5:200]
+</span><span class=s>:FORWARD ACCEPT [0:0]
+</span><span class=s>:OUTPUT ACCEPT [4:328]
+</span><span class=s>-A INPUT -s 43.250.9.14 -j DROP
+</span><span class=s>-A INPUT -s 42.51.207.92 -j DROP
+</span><span class=s>-A INPUT -s 42.51.203.25 -j DROP
+</span><span class=s>-A INPUT -s 42.51.153.99 -j DROP
+</span><span class=s>-A INPUT -s 42.51.153.108 -j DROP
+</span><span class=s>-A INPUT -s 42.51.153.104 -j DROP
+</span><span class=s>-A INPUT -s 42.51.152.9 -j DROP
+</span><span class=s>-A INPUT -s 42.51.152.2 -j DROP
+</span><span class=s>-A INPUT -s 125.65.40.231 -j DROP
+</span><span class=s>-A INPUT -s 82.102.16.82 -j DROP
+</span><span class=s>-A INPUT -s 27.242.2.121 -j DROP
+</span><span class=s>-A INPUT -s 185.107.94.135 -j DROP
+</span><span class=s>-A INPUT -s 103.242.3.253 -j DROP
+</span><span class=s>-A INPUT -s 118.193.137.76 -j DROP
+</span><span class=s>-A INPUT -s 103.228.131.142 -j DROP
+</span><span class=s>-A INPUT -s 118.184.31.38 -j DROP
+</span><span class=s>-A INPUT -s 118.193.131.237 -j DROP
+</span><span class=s>-A INPUT -s 118.193.255.114 -j DROP
+</span><span class=s>-A INPUT -s 103.230.123.203 -j DROP
+</span><span class=s>-A INPUT -s 103.228.131.229 -j DROP
+</span><span class=s>-A INPUT -s 118.193.255.67 -j DROP
+</span><span class=s>-A INPUT -s 113.118.186.72 -j DROP
+</span><span class=s>-A INPUT -s 218.18.152.69 -j DROP
+</span><span class=s>-A INPUT -s 120.25.65.233 -j DROP
+</span><span class=s>-A INPUT -s 27.38.250.183 -j DROP
+</span><span class=s>-A INPUT -s 113.89.236.100 -j DROP
+</span><span class=s>-A INPUT -s 67.229.142.210 -j DROP
+</span><span class=s>-A INPUT -s 116.62.194.128 -j DROP
+</span><span class=s>-A INPUT -s 47.89.249.205 -j DROP
+</span><span class=s>-A INPUT -s 119.137.53.244 -j DROP
+</span><span class=s>-A INPUT -s 47.88.78.78 -j DROP
+</span><span class=s>-A INPUT -s 120.78.135.255 -j DROP
+</span><span class=s>-A INPUT -s 42.51.153.114 -j DROP
+</span><span class=s>-A INPUT -s 116.24.154.135 -j DROP
+</span><span class=s>-A INPUT -s 115.29.234.201 -j DROP
+</span><span class=s>-A INPUT -s 222.95.0.0/255.255.0.0 -j DROP
+</span><span class=s>-A INPUT -s 222.45.0.0/255.255.0.0 -j DROP
+</span><span class=s>-A INPUT -s 58.212.0.0/255.255.0.0 -j DROP
+</span><span class=s>-A INPUT -i lo -j ACCEPT
+</span><span class=s>-A INPUT -p tcp -m tcp --dport 88 -j ACCEPT
+</span><span class=s>-A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
+</span><span class=s>-A INPUT -p udp -m udp --dport 2080 -j ACCEPT
+</span><span class=s>-A INPUT -p tcp -m tcp --dport 10000:49999 -j ACCEPT
+</span><span class=s>-A INPUT -p udp -m udp --dport 10000:49999 -j ACCEPT
+</span><span class=s>-A INPUT -p icmp --icmp-type any -j DROP
+</span><span class=s>-A INPUT -p icmp -m icmp --icmp-type 0 -j ACCEPT
+</span><span class=s>#-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+</span><span class=s>COMMIT
+</span><span class=s># Completed on Fri Jul 11 10:18:06 2017
+</span><span class=s># 小樊整理防火墙联系21kixc@gmail.com
+</span><span class=s>EOF</span>
+
+<span class=c1>#修改sip端口</span>
+sed -i <span class=s1>&#39;s/SS_SIP_PORT=&#34;5060,6060&#34;/SS_SIP_PORT=&#34;2080,6060&#34;/g&#39;</span> /home/kunshi/mbx3000/etc/softswitch.conf
+<span class=c1>#修改查费端口</span>
+sed -i <span class=s1>&#39;s/port=&#34;8080&#34;/port=&#34;8888&#34;/g&#39;</span> /home/kunshiweb/base/apache-tomcat/conf/server.xml 
+
+/sbin/iptables  -I INPUT -s 183.15.177.34 -j ACCEPT
+
+
+<span class=c1>#iptables顺序</span>
+nat<span class=o>(</span>prerouting<span class=o>)</span> -&gt; filter<span class=o>(</span>input<span class=o>)</span> -&gt; 本机 -&gt; filter<span class=o>(</span>output<span class=o>)</span> -&gt; nat<span class=o>(</span>postrouting<span class=o>)</span>
+cat /etc/sysconfig/iptables
+<span class=c1># Generated by iptables-save v1.3.5 on Mon Jul 16 15:05:10 2018</span>
+*filter
+:INPUT ACCEPT <span class=o>[</span>4448:1414784<span class=o>]</span>
+:FORWARD ACCEPT <span class=o>[</span>0:0<span class=o>]</span>
+:OUTPUT ACCEPT <span class=o>[</span>4807:1594665<span class=o>]</span>
+:RH-Firewall-1-INPUT - <span class=o>[</span>0:0<span class=o>]</span>
+-A INPUT -s 58.212.0.0/255.255.0.0 -p tcp -m tcp --dport <span class=m>1202</span> -j DROP 
+-A INPUT -s 222.45.0.0/255.255.0.0 -p tcp -m tcp --dport <span class=m>1202</span> -j DROP 
+-A INPUT -s 222.95.0.0/255.255.0.0 -p tcp -m tcp --dport <span class=m>1202</span> -j DROP 
+-A INPUT -s 172.16.0.0/255.255.0.0 -j DROP 
+-A INPUT -s 199.217.0.0/255.255.0.0 -j DROP 
+-A INPUT -s 104.193.9.52 -j DROP 
+-A INPUT -s 123.65.216.34 -j DROP 
+-A INPUT -s 95.211.0.0/255.255.0.0 -j DROP 
+-A INPUT -s 207.236.0.0/255.255.0.0 -j DROP 
+-A INPUT -p tcp -m tcp --dport <span class=m>1207</span> -j DROP 
+-A INPUT -s 37.8.0.0/255.255.0.0 -j DROP 
+-A INPUT -s 82.205.0.0/255.255.0.0 -j DROP 
+-A INPUT -s 104.148.64.0/255.255.255.0 -j DROP 
+-A INPUT -s 192.99.126.0/255.255.255.0 -j DROP 
+-A OUTPUT -d 117.88.0.0/255.255.0.0 -j DROP 
+-A OUTPUT -d 123.65.0.0/255.255.0.0 -j DROP 
+-A OUTPUT -d 207.236.0.0/255.255.0.0 -j REJECT --reject-with icmp-port-unreachable 
+-A OUTPUT -p tcp -m tcp --dport <span class=m>1207</span> -j DROP 
+-A RH-Firewall-1-INPUT -i lo -j ACCEPT 
+-A RH-Firewall-1-INPUT -i eth1 -j ACCEPT 
+-A RH-Firewall-1-INPUT -i eth0 -j ACCEPT 
+-A RH-Firewall-1-INPUT -p icmp -m icmp --icmp-type any -j ACCEPT 
+-A RH-Firewall-1-INPUT -d 224.0.0.251 -p udp -m udp --dport <span class=m>5353</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p udp -m udp --dport <span class=m>631</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>22</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>2022</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>2233</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>3389</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport 50:50000 -j ACCEPT 
+-A RH-Firewall-1-INPUT -p udp -m state --state NEW -m udp --dport 50:50000 -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>51</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>52</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>53</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>54</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>55</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>56</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>57</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>58</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>59</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>80</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>81</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>82</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>83</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>84</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>85</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>86</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>87</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>88</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>89</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>1720</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>1719</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>2720</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>2719</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>3720</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>3719</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>5060</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>5061</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>6060</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>6061</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>5070</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>5071</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>8080</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>8088</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>1701</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>1702</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>1723</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>47</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>1200</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>1300</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>1800</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m state --state NEW -m tcp --dport <span class=m>3600</span> -j ACCEPT 
+-A RH-Firewall-1-INPUT -p tcp -m tcp --dport <span class=m>1202</span> -j LOG --log-level <span class=m>7</span> 
+-A RH-Firewall-1-INPUT -j REJECT --reject-with icmp-host-prohibited 
+COMMIT
+<span class=c1># Completed on Mon Jul 16 15:05:10 2018</span>
+<span class=c1># Generated by iptables-save v1.3.5 on Mon Jul 16 15:05:10 2018</span>
+*nat
+:PREROUTING ACCEPT <span class=o>[</span>3:1582<span class=o>]</span>
+:POSTROUTING ACCEPT <span class=o>[</span>28:8429<span class=o>]</span>
+:OUTPUT ACCEPT <span class=o>[</span>28:8429<span class=o>]</span>
+-A PREROUTING -s 182.50.122.155 -p tcp -m tcp --dport <span class=m>1202</span> -j ACCEPT 
+-A PREROUTING -p tcp -m tcp --dport <span class=m>3306</span> -j DROP 
+-A PREROUTING -p tcp -m tcp --dport <span class=m>2501</span> -j DROP 
+-A PREROUTING -p tcp -m tcp --dport <span class=m>1202</span> -j DROP 
+-A PREROUTING -p tcp -m tcp --dport <span class=m>1203</span> -j DROP 
+-A PREROUTING -p tcp -m tcp --dport <span class=m>1204</span> -j DROP 
+-A PREROUTING -p tcp -m tcp --dport <span class=m>1205</span> -j DROP 
+-A PREROUTING -p tcp -m tcp --dport <span class=m>143</span> -j DROP 
+COMMIT
+<span class=c1># Completed on Mon Jul 16 15:05:10 2018</span>
+
+
+chown mysql:mysql 
+apache        <span class=nv>ALL</span><span class=o>=(</span>ALL<span class=o>)</span>       NOPASSWD: ALL
+chmod <span class=m>440</span> /etc/sudoers
+
+/home/kunshiweb/base/apache-tomcat/webapps/chs
+<span class=c1>#修改4.0web端口号路径</span>
+vi /home/kunshiweb/base/apache-tomcat/conf/server.xml
+crontab -e
+vi /var/spool/cron/root
+<span class=m>1</span> */6 * * * /opt/MbxWatch.sh
+<span class=m>1</span> */1 * * * /opt/freemem.sh
+<span class=m>01</span> <span class=m>01</span> * * * /etc/init.d/iptables restart
+
+
+
+
+<span class=c1>#!/bin/bash</span>
+wget http://21k.oss-cn-qingdao.aliyuncs.com/vospag/vossafe.tar.gz
+tar -zxvf vossafe.tar.gz
+
+yum clean all
+yum makecache
+yum install -y httpd php
+mv html/ /opt/
+<span class=nb>cd</span> vossafe/
+yes<span class=p>|</span>mv httpd.conf /etc/httpd/conf/httpd.conf
+yes<span class=p>|</span>mv sudoers /etc/sudoers
+yes<span class=p>|</span>mv iptables /etc/sysconfig/iptables
+service httpd restart
+service iptables restart
+chkconfig iptables on
+chkconfig httpd on
+chkconfig mysql on
+
+
+<span class=nb>echo</span> -e <span class=s2>&#34;1 */6 * * * /opt/MbxWatch.sh\n1 */1 * * * /opt/freemem.sh\n01 01 * * * /etc/init.d/iptables restart&#34;</span> &gt;&gt; /var/spool/cron/root
+
+
+
+<span class=nb>echo</span> -e <span class=s2>&#34;cheche  ALL=(ALL)       NOPASSWD:ALL&#34;</span> &gt;&gt; /etc/sudoers
+<span class=nb>echo</span> &gt;/var/log/wtmp
+<span class=nb>echo</span> &gt; /var/log/btmp
+<span class=nb>echo</span> &gt; /var/log/lastlog
+<span class=nb>echo</span> &gt; /var/log/secure
+<span class=nb>echo</span> &gt; ~/.bash_history
+<span class=nb>echo</span> &gt; ~/.mysql_history
+<span class=nb>echo</span> &gt; /var/log/messages
+<span class=nb>history</span> -c 
+<span class=c1>#vos 2009 4.0安装</span>
+setenforce <span class=m>0</span>
+sh create_user_kunshi.sh
+sh create_user_kunshiweb.sh
+rpm -ivh perl-DBI-1.40-5.i386.rpm 
+rpm -ivh MySQL-server-community-5.0.96-1.rhel5.x86_64.rpm 
+rpm -ivh MySQL-client-community-5.0.96-1.rhel5.x86_64.rpm 
+tee /etc/my.cnf <span class=s>&lt;&lt;-&#39;EOF&#39;
+</span><span class=s>service mysql restart
+</span><span class=s>rpm -ivh jdk-6u45-linux-amd64.rpm
+</span><span class=s>tar zxvf apache-tomcat-7.0.23.tar.gz
+</span><span class=s>mv apache-tomcat-7.0.23 /home/kunshiweb/base/apache-tomcat
+</span><span class=s>chmod 777 jrockit-jdk1.6.0_45-R28.2.7-4.1.0-linux-x64.bin
+</span><span class=s>./jrockit-jdk1.6.0_45-R28.2.7-4.1.0-linux-x64.bin
+</span><span class=s>cp -r /root/jrockit-jdk1.6.0_45-R28.2.7-4.1.0 /home/kunshi/base/jdk_default
+</span><span class=s>cp -r /root/jrockit-jdk1.6.0_45-R28.2.7-4.1.0 /home/kunshiweb/base/jdk_default
+</span><span class=s>rpm -ivh vos3000-2.1.4-0.i586.rpm
+</span><span class=s>rpm -ivh vos2009-2.1.4-0.i586.rpm 
+</span><span class=s>rpm -ivh emp-2.1.4-0.noarch.rpm 
+</span><span class=s>rpm -ivh callservice-2.1.4-0.i586.rpm 
+</span><span class=s>rpm -ivh mgc-2.1.4-0.i586.rpm 
+</span><span class=s>rpm -ivh vos2009-web*.rpm
+</span><span class=s>rpm -ivh mbx2009-2.1.4-0.i586.rpm 
+</span><span class=s>rpm -ivh ivr_dial-2.1.4-0.i586.rpm 
+</span><span class=s>rpm -ivh callservice-2.1.4-0.i586.rpm 
+</span><span class=s>cd phoneservice/
+</span><span class=s>cp -r phoneservice /home/kunshi/
+</span><span class=s>chmod 777 /home/kunshi/phoneservice/bin/phoneservice
+</span><span class=s>cp -r phoneserviced /etc/init.d/
+</span><span class=s>chmod 777 /etc/rc.d/init.d/phoneserviced
+</span><span class=s>chkconfig phoneserviced on
+</span><span class=s>service phoneserviced restart
+</span><span class=s>sh vos20092140.bin 
+</span><span class=s>ifconfig 
+</span><span class=s>mkdir /home/kunshi/license
+</span><span class=s>chmod 777 -R /home/kunshi/license/
+</span><span class=s>mv *license.dat /home/kunshi/license/license.dat
+</span><span class=s>chown kunshi:kunshi -R /home/kunshi/license/
+</span><span class=s>
+</span><span class=s>
+</span><span class=s>vos4.0卸载命令
+</span><span class=s>rm -rf /etc/init.d/phoneserviced
+</span><span class=s>rpm -e callcenter
+</span><span class=s>rpm -e ivr_dial
+</span><span class=s>rpm -e mbx3000
+</span><span class=s>rpm -e $(rpm -qa|grep vos3000-web)
+</span><span class=s>rpm -e mgc
+</span><span class=s>rpm -e callservice
+</span><span class=s>rpm -e emp
+</span><span class=s>rpm -e vos3000
+</span><span class=s>rpm -e jdk
+</span><span class=s>rpm -e $(rpm -qa|grep -i mysql)
+</span><span class=s>rpm -e perl-DBI
+</span><span class=s>rm -rf /etc/my.cnf
+</span><span class=s>rm -rf /var/lib/mysql/
+</span><span class=s>rm -rf /home/kunshi/
+</span><span class=s>rm -rf /home/kunshiweb/
+</span><span class=s>userdel -f kunshi
+</span><span class=s>userdel -f kunshiweb
+</span><span class=s>
+</span><span class=s>
+</span><span class=s>#mysql迁移位置
+</span><span class=s>echo &#39;[client]
+</span><span class=s>port=3306
+</span><span class=s>default-character-set=utf8
+</span><span class=s>socket=/data/mysql/mysql.sock
+</span><span class=s>[mysqld]
+</span><span class=s>datadir=/data/mysql
+</span><span class=s>socket=/data/mysql/mysql.sock
+</span><span class=s>user=mysql
+</span><span class=s>symbolic-links=0
+</span><span class=s>default-character-set=utf8
+</span><span class=s>max_connections=160
+</span><span class=s>interactive_timeout=310000
+</span><span class=s>wait_timeout=31000
+</span><span class=s>query_cache_size=48M
+</span><span class=s>table_cache=320
+</span><span class=s>tmp_table_size=52M
+</span><span class=s>thread_cache_size=8
+</span><span class=s>sort_buffer_size=256K
+</span><span class=s>innodb_thread_concurrency=8
+</span><span class=s>myisam-recover=FORCE</span>
+<span class=nv>max_allowed_packet</span><span class=o>=</span>32M
+<span class=nv>innodb_file_per_table</span><span class=o>=</span><span class=m>1</span>
+<span class=o>[</span>mysqld_safe<span class=o>]</span>
+log-error<span class=o>=</span>/var/log/mysqld.log
+pid-file<span class=o>=</span>/var/run/mysqld/mysqld.pid<span class=s1>&#39; &gt; /etc/my.cnf
+</span><span class=s1>sed -i &#39;</span>s#data<span class=se>\/</span>mysql#home<span class=se>\/</span>mysql#g<span class=s1>&#39; /etc/my.cnf
+</span><span class=s1>
+</span><span class=s1>drwx------ 2 mysql mysql    16384 10月 30 10:47 vos3000
+</span><span class=s1>chown mysql:mysql -R vos3000/
+</span><span class=s1>chmod 700 -R vos3000/
+</span><span class=s1>mount -t ntfs-3g /dev/sdb1 /vosroot
+</span><span class=s1>
+</span><span class=s1>mysql_install_db
+</span><span class=s1>#昆石官方升级命令
+</span><span class=s1>ntpdate 172.100.100.1
+</span><span class=s1>netstat -na -t
+</span><span class=s1>netstat -na -u
+</span><span class=s1>mkdir cdr
+</span><span class=s1>cp -dprf vos2009  vos2009backup
+</span><span class=s1>mv  vos2009/e_cdr_2014*  cdr/
+</span><span class=s1>
+</span><span class=s1>-java -jar vos30002124reg.jar ip mac rpmtime vostime jdktime ivr line language userinfo timestamp
+</span><span class=s1>java -jar vos30002140.jar 101.37.12.30,10.241.104.203 00-16-3E-12-EA-30 1408326133 1499654430 1499654373 10000 20000 en_us 766F733230303932313430 1600000000
+</span><span class=s1>pause
+</span><span class=s1>
+</span><span class=s1>
+</span><span class=s1>防止vos超频功能
+</span><span class=s1>
+</span><span class=s1>#备份mysql
+</span><span class=s1>mysqladmin -uroot -p password xiaofan@1
+</span><span class=s1>set password for root@localhost = password(&#39;&#39;);
+</span><span class=s1>flush privileges;
+</span><span class=s1>/usr/bin/mysqldump -uroot -pxiaofan@1 vos3000  --skip-lock-tables &gt; /backup/db/&#34;date +&#34;%y-%m-%d&#34;/&#34;vos3000&#34;_&#34;date +&#34;%y-%m-%d&#34;.sql
+</span><span class=s1>
+</span><span class=s1>
+</span><span class=s1>
+</span><span class=s1>
+</span><span class=s1>#centos6.4内核
+</span><span class=s1>#修改内核
+</span><span class=s1>rpm -ivh kernel-2.6.32-358.el6.x86_64.rpm --nodeps --force
+</span><span class=s1>rpm -ivh kernel-devel-2.6.32-358.el6.x86_64.rpm
+</span><span class=s1>rpm -ivh kernel-headers-2.6.32-358.el6.x86_64.rpm --nodeps --force
+</span><span class=s1>rpm -ivh kernel-firmware-2.6.32-358.el6.noarch.rpm
+</span><span class=s1>
+</span><span class=s1>rpm -e kernel-headers-2.6.32-696.10.1.el6.x86_64
+</span><span class=s1>rpm -e kernel-firmware-2.6.32-696.10.1.el6.noarch
+</span><span class=s1>rpm -e irqbalance-1.0.7-8.el6.x86_64
+</span><span class=s1>rpm -e kernel-2.6.32-696.10.1.el6.x86_64
+</span><span class=s1>
+</span><span class=s1>rpm -vih irqbalance-1.0.4-3.el6.x86_64.rpm
+</span><span class=s1>
+</span><span class=s1>不记录无效话单
+</span><span class=s1>
+</span><span class=s1>
+</span><span class=s1>负载均衡
+</span><span class=s1>grant all privileges on *.* to cheche@&#34;%&#34; identified by &#34;xiaofan@1&#34; with grant option;
+</span><span class=s1>flush privileges;
+</span><span class=s1>添加访问权限
+</span><span class=s1>show grants;
+</span><span class=s1>create user &#39;</span>root<span class=s1>&#39;@&#39;</span>10.80.184.48<span class=s1>&#39; identified by &#34;&#34;;
+</span><span class=s1>grant all on *.* to &#39;</span>root<span class=s1>&#39;@&#39;</span>10.80.184.48<span class=s1>&#39;;
+</span><span class=s1>flush privileges;
+</span><span class=s1>select user,host,password from user;
+</span><span class=s1>drop user &#39;</span>root<span class=s1>&#39;@&#39;</span>10.80.184.48<span class=err>&#39;</span><span class=p>;</span>
+<span class=k>select</span> user,host,password from mysql.user<span class=p>;</span>
+
+<span class=c1>#centos6.11 HTTP报错</span>
+<span class=c1>#apr_sockaddr_info_get() failed for hostname</span>
+vi /etc/httpd/conf/httpd.conf
+<span class=c1>#ServerName www.example.com:80  ServerName 127.0.0.1</span>
+
+
+<span class=c1>#校验版本失败</span>
+bin文件调用zip和unzip
+yum install -y zip unzip
+
+public的key导入到rt.jar
+
+zip -r /usr/java/jdk1.6.0_45/jre/lib/rt.jar java &gt;/dev/null 2&gt;/dev/null
+zip -r /home/kunshi/base/jdk_default/jre/lib/rt.jar java &gt;/dev/null 2&gt;/dev/null
+zip -r /home/kunshiweb/base/jdk_default/jre/lib/rt.jar java &gt;/dev/null 2&gt;/dev/null
+
+2.0web后门
+ /usr/kunshi/vos2009/webclient/jsp/query-terminal.jsp
+此文件安装之后一定要删除
+
+</code></pre></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+<span class=item-content>🐳Myki</span></p><p class=copyright-item><span class=item-title>上次更新</span>
+<span class=item-content>2019-11-18</span></p></div><div class=post-reward><input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label><div class=qr-code><label class=qr-code-image for=reward><img class=image src=https://oss.1nth.com/images/1nth/wechat.png>
+<span>微信打赏</span></label>
+<label class=qr-code-image for=reward><img class=image src=https://oss.1nth.com/images/1nth/alipay.png>
+<span>支付宝打赏</span></label></div></div><footer class=post-footer><div class=post-tags><a href=/tags/vos/>vos</a></div><nav class=post-nav><a class=prev href=/post/aliyun-install-ss/><i class="iconfont icon-left"></i><span class="prev-text nav-default">国际版阿里云安装ss 卸载云盾和安骑士</span>
+<span class="prev-text nav-mobile">上一篇</span></a></nav></footer></article></div><div id=disqus_thread></div><script type=text/javascript>(function(){if(window.location.hostname==='localhost')return;var dsq=document.createElement('script');dsq.type='text/javascript';dsq.async=true;var disqus_shortname='mykifan';dsq.src='//'+disqus_shortname+'.disqus.com/embed.js';(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(dsq);})();</script><noscript>Please enable JavaScript to view the <a href=http://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:21kixc@gmail.com class="iconfont icon-email" title=email></a><a href=https://github.com/21ki class="iconfont icon-github" title=github></a><a href=http://localhost:1313 class="iconfont icon-weibo" title=weibo></a><a href=https://www.1nth.com/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><div class=busuanzi-footer><span id=busuanzi_container_site_pv>本站总访问量 <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> 次</span>
+<span class=division>|</span>
+<span id=busuanzi_container_site_uv>本站总访客数 <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> 人</span></div><span class=copyright-year>&copy;
+2018 -
+2020<span class=heart><i class="iconfont icon-heart"></i></span><span>🐳Myki</span>
+<a href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referra"><img src=https://oss.1nth.com/images/1nth/%E5%8F%88%E6%8B%8D%E4%BA%91_logo5.png align=absmiddle width=59px height=30px></a>
+<span>提供加速服务</span><br><a href=http://beian.miit.gov.cn><img src=https://oss.1nth.com/images/1nth/svg/icp.svg alt=image></a>
+<a class=hugo href=https://oss.1nth.com/images/1nth/svg/hugo.svg data-fancybox=gallery data-caption><img src=https://oss.1nth.com/images/1nth/svg/hugo.svg alt=image></a>
+<a class=even href=https://oss.1nth.com/images/1nth/svg/even.svg data-fancybox=gallery data-caption><img src=https://oss.1nth.com/images/1nth/svg/even.svg alt=image></a></br></span></div></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js integrity=sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP crossorigin=anonymous></script><link rel=stylesheet href=https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css integrity=sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF crossorigin=anonymous><script type=text/javascript src=/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js></script><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','UA-154483127-1','auto');ga('set','anonymizeIp',true);ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script><script id=baidu_analytics>var _hmt=_hmt||[];(function(){if(window.location.hostname==='localhost')return;var hm=document.createElement("script");hm.async=true;hm.src="https://hm.baidu.com/hm.js?9f5f711a6a3e2fd392b4b02d93529765";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s);})();</script><script id=baidu_push>(function(){if(window.location.hostname==='localhost')return;var bp=document.createElement('script');bp.async=true;var curProtocol=window.location.protocol.split(':')[0];if(curProtocol==='https'){bp.src='https://zz.bdstatic.com/linksubmit/push.js';}
+else{bp.src='http://push.zhanzhang.baidu.com/push.js';}
+var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(bp,s);})();</script></body></html>

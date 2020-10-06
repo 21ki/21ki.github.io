@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://www.1nth.com/sitemap.xml
