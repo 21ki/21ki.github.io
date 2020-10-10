@@ -1,25 +1,2 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>etcd on Myki的博客</title>
-    <link>https://www.1nth.com/categories/etcd/</link>
-    <description>Recent content in etcd on Myki的博客</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <lastBuildDate>Fri, 21 Aug 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://www.1nth.com/categories/etcd/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>kubeadm集群备份恢复etcd</title>
-      <link>https://www.1nth.com/post/etcd_backup_kubeadm/</link>
-      <pubDate>Fri, 21 Aug 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://www.1nth.com/post/etcd_backup_kubeadm/</guid>
-      <description>&lt;p&gt;kubeadm集群备份恢复etcd
-&lt;img src=&#34;https://oss.1nth.com/images/1nth/etcd_backup_kubeadm.jpg?x-oss-process=style/dev&#34; alt=&#34;aliyun_vos_vpc&#34;&gt;&lt;/p&gt;</description>
-    </item>
-    
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>etcd on Myki的博客</title><link>https://www.1nth.com/categories/etcd/</link><description>Recent content in etcd on Myki的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Fri, 21 Aug 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://www.1nth.com/categories/etcd/index.xml" rel="self" type="application/rss+xml"/><item><title>kubeadm集群备份恢复etcd</title><link>https://www.1nth.com/post/etcd_backup_kubeadm/</link><pubDate>Fri, 21 Aug 2020 00:00:00 +0000</pubDate><guid>https://www.1nth.com/post/etcd_backup_kubeadm/</guid><description>&lt;p>kubeadm集群备份恢复etcd
+&lt;img src="https://oss.1nth.com/images/1nth/etcd_backup_kubeadm.jpg?x-oss-process=style/dev" alt="aliyun_vos_vpc">&lt;/p></description></item></channel></rss>

@@ -1,52 +1,11 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>vos on Myki的博客</title>
-    <link>https://www.1nth.com/tags/vos/</link>
-    <description>Recent content in vos on Myki的博客</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <lastBuildDate>Sat, 01 Aug 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://www.1nth.com/tags/vos/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>阿里云安装vos解决没有经典网络问题 不需要专有网络安装vpn</title>
-      <link>https://www.1nth.com/post/aliyun_vos_vpc/</link>
-      <pubDate>Sat, 01 Aug 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://www.1nth.com/post/aliyun_vos_vpc/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;https://img.shields.io/badge/VOS-2.1.6.0-brightgreen.svg&#34; alt=&#34;image&#34;&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>vos 迁移备份mysql</title>
-      <link>https://www.1nth.com/post/vos_mysql_back/</link>
-      <pubDate>Tue, 30 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://www.1nth.com/post/vos_mysql_back/</guid>
-      <description>&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;c1&#34;&gt;#linux不记录痕迹&lt;/span&gt;
-&lt;span class=&#34;nb&#34;&gt;unset&lt;/span&gt; HISTORY HISTFILE HISTSAVE HISTZONE HISTORY HISTLOG
-&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;HISTFILE&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/dev/null
-&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;HISTSIZE&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;
-&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;HISTFILESIZE&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-    </item>
-    
-    <item>
-      <title>vos 3000 2.1.4.0 安装</title>
-      <link>https://www.1nth.com/post/vos4.0_insall/</link>
-      <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://www.1nth.com/post/vos4.0_insall/</guid>
-      <description>&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;c1&#34;&gt;#linux不记录痕迹&lt;/span&gt;
-&lt;span class=&#34;nb&#34;&gt;unset&lt;/span&gt; HISTORY HISTFILE HISTSAVE HISTZONE HISTORY HISTLOG
-&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;HISTFILE&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/dev/null
-&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;HISTSIZE&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;
-&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;HISTFILESIZE&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-    </item>
-    
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>vos on Myki的博客</title><link>https://www.1nth.com/tags/vos/</link><description>Recent content in vos on Myki的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Sat, 01 Aug 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://www.1nth.com/tags/vos/index.xml" rel="self" type="application/rss+xml"/><item><title>阿里云安装vos解决没有经典网络问题 不需要专有网络安装vpn</title><link>https://www.1nth.com/post/aliyun_vos_vpc/</link><pubDate>Sat, 01 Aug 2020 00:00:00 +0000</pubDate><guid>https://www.1nth.com/post/aliyun_vos_vpc/</guid><description>&lt;p>&lt;img src="https://img.shields.io/badge/VOS-2.1.6.0-brightgreen.svg" alt="image">&lt;/p></description></item><item><title>vos 迁移备份mysql</title><link>https://www.1nth.com/post/vos_mysql_back/</link><pubDate>Tue, 30 Jun 2020 00:00:00 +0000</pubDate><guid>https://www.1nth.com/post/vos_mysql_back/</guid><description>&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="c1">#linux不记录痕迹&lt;/span>
+&lt;span class="nb">unset&lt;/span> HISTORY HISTFILE HISTSAVE HISTZONE HISTORY HISTLOG
+&lt;span class="nb">export&lt;/span> &lt;span class="nv">HISTFILE&lt;/span>&lt;span class="o">=&lt;/span>/dev/null
+&lt;span class="nb">export&lt;/span> &lt;span class="nv">HISTSIZE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">0&lt;/span>
+&lt;span class="nb">export&lt;/span> &lt;span class="nv">HISTFILESIZE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">0&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>vos 3000 2.1.4.0 安装</title><link>https://www.1nth.com/post/vos4.0_insall/</link><pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate><guid>https://www.1nth.com/post/vos4.0_insall/</guid><description>&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="c1">#linux不记录痕迹&lt;/span>
+&lt;span class="nb">unset&lt;/span> HISTORY HISTFILE HISTSAVE HISTZONE HISTORY HISTLOG
+&lt;span class="nb">export&lt;/span> &lt;span class="nv">HISTFILE&lt;/span>&lt;span class="o">=&lt;/span>/dev/null
+&lt;span class="nb">export&lt;/span> &lt;span class="nv">HISTSIZE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">0&lt;/span>
+&lt;span class="nb">export&lt;/span> &lt;span class="nv">HISTFILESIZE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">0&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div></description></item></channel></rss>

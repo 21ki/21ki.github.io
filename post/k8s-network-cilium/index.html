@@ -1,196 +1,20 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>kubeadm &#43; Cilium 搭建kubernetes集群 - Myki的博客</title>
-  <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-<meta name="theme-color" content="#f8f5ec" />
-<meta name="msapplication-navbutton-color" content="#f8f5ec">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
-
-
-<meta name="author" content="🐳Myki" /><meta name="description" content="
-不得不说的kubeadm 
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>kubeadm + Cilium 搭建kubernetes集群 - Myki的博客</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="🐳Myki"><meta name=description content="不得不说的kubeadm 
 kubeadm部署很方便,但是是一个老外写的,使用staticPod(容器)运行的管理组件,镜像都是gcr.io域名仓库里的。
 域名仓库很多docker的人甚至都不知道,docker镜像命名规则是域名/库名/img_name:tag这种形式,dockerhub上要拉取镜像直接是库名/img_name:tag这种名字,是因为域名缺省是docker.io也就是dockerhub上看到的都是这个域名仓库的
 常见的域名仓库国外有gcr.io,quay.io,国内的阿里(registry.cn-hangzhou.aliyuncs.com,hangzhou以外还有shenzhen啥的),daocloud.io等等.gcr.io因为位置在国外会拉取不到.国内阿里仓库同步了gcr.io/google_containers这些镜像,
 总有人认为kubeadm的容器运行没有二进制运行放心.容器本身就是个隔离受限的进程,另外管理组件都是无状态的,但是他们总感觉不放心。
 事实上除了kubelet以外所有组件都可以用容器方式运行,管理组件简单说下就是集群数据存放etcd数据库里,apiserver去和etcd交互,其他组件和apiserver交互,kubelet调用api去操作docker,其中一些组件也会去操作各个节点的系统设置
-ererere 
-" /><meta name="keywords" content="kubernetes, coredns" />
-
-
-
-
-
-
-<meta name="generator" content="Hugo 0.74.3 with theme even" />
-
-
-<link rel="canonical" href="https://www.1nth.com/post/k8s-network-cilium/" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/manifest.json">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-<link href="/sass/main.min.af77d61f1e3f88bb52f3adab957d52bc9123d0539d63411ec9fd313fc76a1eb5.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
-
-
-<meta property="og:title" content="kubeadm &#43; Cilium 搭建kubernetes集群" />
-<meta property="og:description" content="
-不得不说的kubeadm
+ererere"><meta name=keywords content="kubernetes,coredns"><meta name=generator content="Hugo 0.74.3 with theme even"><link rel=canonical href=https://www.1nth.com/post/k8s-network-cilium/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script><link href=/sass/main.min.a9078c195c76d0b255970a73e8aabe1b54513002dd70ecece9f46c640536ee54.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><link rel=stylesheet href=/css/custom.css><meta property="og:title" content="kubeadm + Cilium 搭建kubernetes集群"><meta property="og:description" content="不得不说的kubeadm
 kubeadm部署很方便,但是是一个老外写的,使用staticPod(容器)运行的管理组件,镜像都是gcr.io域名仓库里的。域名仓库很多docker的人甚至都不知道,docker镜像命名规则是域名/库名/img_name:tag这种形式,dockerhub上要拉取镜像直接是库名/img_name:tag这种名字,是因为域名缺省是docker.io也就是dockerhub上看到的都是这个域名仓库的常见的域名仓库国外有gcr.io,quay.io,国内的阿里(registry.cn-hangzhou.aliyuncs.com,hangzhou以外还有shenzhen啥的),daocloud.io等等.gcr.io因为位置在国外会拉取不到.国内阿里仓库同步了gcr.io/google_containers这些镜像,
-总有人认为kubeadm的容器运行没有二进制运行放心.容器本身就是个隔离受限的进程,另外管理组件都是无状态的,但是他们总感觉不放心。事实上除了kubelet以外所有组件都可以用容器方式运行,管理组件简单说下就是集群数据存放etcd数据库里,apiserver去和etcd交互,其他组件和apiserver交互,kubelet调用api去操作docker,其中一些组件也会去操作各个节点的系统设置ererere
-" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://www.1nth.com/post/k8s-network-cilium/" />
-<meta property="article:published_time" content="2020-09-13T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-09-13T00:00:00+00:00" />
-<meta itemprop="name" content="kubeadm &#43; Cilium 搭建kubernetes集群">
-<meta itemprop="description" content="
-不得不说的kubeadm
+总有人认为kubeadm的容器运行没有二进制运行放心.容器本身就是个隔离受限的进程,另外管理组件都是无状态的,但是他们总感觉不放心。事实上除了kubelet以外所有组件都可以用容器方式运行,管理组件简单说下就是集群数据存放etcd数据库里,apiserver去和etcd交互,其他组件和apiserver交互,kubelet调用api去操作docker,其中一些组件也会去操作各个节点的系统设置ererere"><meta property="og:type" content="article"><meta property="og:url" content="https://www.1nth.com/post/k8s-network-cilium/"><meta property="article:published_time" content="2020-09-13T00:00:00+00:00"><meta property="article:modified_time" content="2020-09-13T00:00:00+00:00"><meta itemprop=name content="kubeadm + Cilium 搭建kubernetes集群"><meta itemprop=description content="不得不说的kubeadm
 kubeadm部署很方便,但是是一个老外写的,使用staticPod(容器)运行的管理组件,镜像都是gcr.io域名仓库里的。域名仓库很多docker的人甚至都不知道,docker镜像命名规则是域名/库名/img_name:tag这种形式,dockerhub上要拉取镜像直接是库名/img_name:tag这种名字,是因为域名缺省是docker.io也就是dockerhub上看到的都是这个域名仓库的常见的域名仓库国外有gcr.io,quay.io,国内的阿里(registry.cn-hangzhou.aliyuncs.com,hangzhou以外还有shenzhen啥的),daocloud.io等等.gcr.io因为位置在国外会拉取不到.国内阿里仓库同步了gcr.io/google_containers这些镜像,
-总有人认为kubeadm的容器运行没有二进制运行放心.容器本身就是个隔离受限的进程,另外管理组件都是无状态的,但是他们总感觉不放心。事实上除了kubelet以外所有组件都可以用容器方式运行,管理组件简单说下就是集群数据存放etcd数据库里,apiserver去和etcd交互,其他组件和apiserver交互,kubelet调用api去操作docker,其中一些组件也会去操作各个节点的系统设置ererere
-">
-<meta itemprop="datePublished" content="2020-09-13T00:00:00+00:00" />
-<meta itemprop="dateModified" content="2020-09-13T00:00:00+00:00" />
-<meta itemprop="wordCount" content="5799">
-
-
-
-<meta itemprop="keywords" content="kubernetes," />
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="kubeadm &#43; Cilium 搭建kubernetes集群"/>
-<meta name="twitter:description" content="
-不得不说的kubeadm
+总有人认为kubeadm的容器运行没有二进制运行放心.容器本身就是个隔离受限的进程,另外管理组件都是无状态的,但是他们总感觉不放心。事实上除了kubelet以外所有组件都可以用容器方式运行,管理组件简单说下就是集群数据存放etcd数据库里,apiserver去和etcd交互,其他组件和apiserver交互,kubelet调用api去操作docker,其中一些组件也会去操作各个节点的系统设置ererere"><meta itemprop=datePublished content="2020-09-13T00:00:00+00:00"><meta itemprop=dateModified content="2020-09-13T00:00:00+00:00"><meta itemprop=wordCount content="5799"><meta itemprop=keywords content="kubernetes,"><meta name=twitter:card content="summary"><meta name=twitter:title content="kubeadm + Cilium 搭建kubernetes集群"><meta name=twitter:description content="不得不说的kubeadm
 kubeadm部署很方便,但是是一个老外写的,使用staticPod(容器)运行的管理组件,镜像都是gcr.io域名仓库里的。域名仓库很多docker的人甚至都不知道,docker镜像命名规则是域名/库名/img_name:tag这种形式,dockerhub上要拉取镜像直接是库名/img_name:tag这种名字,是因为域名缺省是docker.io也就是dockerhub上看到的都是这个域名仓库的常见的域名仓库国外有gcr.io,quay.io,国内的阿里(registry.cn-hangzhou.aliyuncs.com,hangzhou以外还有shenzhen啥的),daocloud.io等等.gcr.io因为位置在国外会拉取不到.国内阿里仓库同步了gcr.io/google_containers这些镜像,
-总有人认为kubeadm的容器运行没有二进制运行放心.容器本身就是个隔离受限的进程,另外管理组件都是无状态的,但是他们总感觉不放心。事实上除了kubelet以外所有组件都可以用容器方式运行,管理组件简单说下就是集群数据存放etcd数据库里,apiserver去和etcd交互,其他组件和apiserver交互,kubelet调用api去操作docker,其中一些组件也会去操作各个节点的系统设置ererere
-"/>
-
-<!--[if lte IE 9]>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
-<![endif]-->
-
-<!--[if lt IE 9]>
-  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
-<![endif]-->
-
-</head>
-<body>
-  <div id="mobile-navbar" class="mobile-navbar">
-  <div class="mobile-header-logo">
-    <a href="/" class="logo">☸💕🚩</a>
-  </div>
-  <div class="mobile-navbar-icon">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-</div>
-<nav id="mobile-menu" class="mobile-menu slideout-menu">
-  <ul class="mobile-menu-list">
-    <a href="/">
-        <li class="mobile-menu-item">Home</li>
-      </a><a href="/post/">
-        <li class="mobile-menu-item">Archives</li>
-      </a><a href="/tags/">
-        <li class="mobile-menu-item">Tags</li>
-      </a><a href="/categories/">
-        <li class="mobile-menu-item">Categories</li>
-      </a><a href="/about/">
-        <li class="mobile-menu-item">About</li>
-      </a>
-  </ul>
-</nav>
-  <div class="container" id="mobile-panel">
-    <header id="header" class="header">
-        <div class="logo-wrapper">
-  <a href="/" class="logo">☸💕🚩</a>
-</div>
-
-<nav class="site-navbar">
-  <ul id="menu" class="menu">
-    <li class="menu-item">
-        <a class="menu-item-link" href="/">Home</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/post/">Archives</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/tags/">Tags</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/categories/">Categories</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/about/">About</a>
-      </li>
-  </ul>
-</nav>
-    </header>
-
-    <main id="main" class="main">
-      <div class="content-wrapper">
-        <div id="content" class="content">
-          <article class="post">
-    
-    <header class="post-header">
-      <h1 class="post-title">kubeadm &#43; Cilium 搭建kubernetes集群</h1>
-
-      <div class="post-meta">
-        <span class="post-time"> 2020-09-13 </span>
-        <div class="post-category">
-            <a href="/categories/kubernetes/"> kubernetes </a>
-            <a href="/categories/coredns/"> coredns </a>
-            </div>
-        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
-      </div>
-    </header>
-
-    
-    <div class="post-content">
-      <p><a name="6ed7c9be"></a></p>
-<h2 id="不得不说的kubeadm">不得不说的kubeadm</h2>
-<p><br />kubeadm部署很方便,但是是一个老外写的,使用staticPod(容器)运行的管理组件,镜像都是<code>gcr.io</code>域名仓库里的。<br />域名仓库很多docker的人甚至都不知道,docker镜像命名规则是<code>域名/库名/img_name:tag</code>这种形式,dockerhub上要拉取镜像直接是<code>库名/img_name:tag</code>这种名字,是因为域名缺省是<code>docker.io</code>也就是dockerhub上看到的都是这个域名仓库的<br />常见的域名仓库国外有gcr.io,quay.io,国内的阿里(registry.cn-hangzhou.aliyuncs.com,hangzhou以外还有shenzhen啥的),daocloud.io等等.gcr.io因为位置在国外会拉取不到.国内阿里仓库同步了<code>gcr.io/google_containers</code>这些镜像,<br />
-<br />总有人认为kubeadm的容器运行没有二进制运行放心.容器本身就是个隔离受限的进程,另外管理组件都是无状态的,但是他们总感觉不放心。<br />事实上除了kubelet以外所有组件都可以用容器方式运行,管理组件简单说下就是集群数据存放<code>etcd</code>数据库里,apiserver去和etcd交互,其他组件和apiserver交互,kubelet调用api去操作docker,其中一些组件也会去操作各个节点的系统设置<br />ererere
-<a name="ofRxy"></a></p>
-<h2 id="架构">架构</h2>
-<p>三个master，多个node。<br />kube-proxy开启ipvs模式通信。<br />所有组件都得与kube-apiserver通信，这边在每台主机部署nginx容器，将kube-apiserver的访问代理到后端三个master上的kube-apiserver pod中去，实现master高可用。<br /><img src="https://cdn.nlark.com/yuque/0/2020/svg/1176682/1593953281781-d132c23b-e537-4d74-80a4-6faf89bd7801.svg#align=left&amp;display=inline&amp;height=510&amp;margin=%5Bobject%20Object%5D&amp;name=k8s.svg&amp;originHeight=150&amp;originWidth=218&amp;size=85958&amp;status=done&amp;style=none&amp;width=741" alt="k8s.svg">
-<a name="F1kUn"></a></p>
-<h3 id="master的组件">master的组件</h3>
-<ul>
-<li>etcd</li>
-<li>kube-apiserver</li>
-<li>kube-controller-manager</li>
-<li>kube-scheduler</li>
-<li>kubelet</li>
-<li>kube-proxy</li>
-<li>docker</li>
-<li>nginx
-<a name="JNO39"></a></li>
-</ul>
-<h3 id="node的组件">node的组件</h3>
-<ul>
-<li>kubelet</li>
-<li>kube-proxy</li>
-<li>docker</li>
-<li>nginx</li>
-</ul>
-<p><a name="cbb060fd"></a></p>
-<h2 id="环境准备">环境准备</h2>
-<p><br />在所有节点操作<br /></p>
-<p><a name="e272bcd2"></a></p>
-<h3 id="所有主机统一hosts">所有主机统一hosts</h3>
-<p>hosts统一如下<br />系统<code>CentOS 7.6+</code>以上，最好不要使用centos7.5以下，容器技术依赖于内核技术，低版本系统部署和运行后可能问题会非常多。</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">cat /etc/hosts
+总有人认为kubeadm的容器运行没有二进制运行放心.容器本身就是个隔离受限的进程,另外管理组件都是无状态的,但是他们总感觉不放心。事实上除了kubelet以外所有组件都可以用容器方式运行,管理组件简单说下就是集群数据存放etcd数据库里,apiserver去和etcd交互,其他组件和apiserver交互,kubelet调用api去操作docker,其中一些组件也会去操作各个节点的系统设置ererere"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>☸💕🚩</a></div><div class=mobile-navbar-icon><span></span><span></span><span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/categories/><li class=mobile-menu-item>Categories</li></a><a href=/about/><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>☸💕🚩</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/categories/>Categories</a></li><li class=menu-item><a class=menu-item-link href=/about/>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>kubeadm + Cilium 搭建kubernetes集群</h1><div class=post-meta><span class=post-time>2020-09-13</span><div class=post-category><a href=/categories/kubernetes/>kubernetes</a>
+<a href=/categories/coredns/>coredns</a></div><span id=busuanzi_container_page_pv class=more-meta><span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> 次阅读</span></div></header><div class=post-content><p><a name=6ed7c9be></a></p><h2 id=不得不说的kubeadm>不得不说的kubeadm</h2><p><br>kubeadm部署很方便,但是是一个老外写的,使用staticPod(容器)运行的管理组件,镜像都是<code>gcr.io</code>域名仓库里的。<br>域名仓库很多docker的人甚至都不知道,docker镜像命名规则是<code>域名/库名/img_name:tag</code>这种形式,dockerhub上要拉取镜像直接是<code>库名/img_name:tag</code>这种名字,是因为域名缺省是<code>docker.io</code>也就是dockerhub上看到的都是这个域名仓库的<br>常见的域名仓库国外有gcr.io,quay.io,国内的阿里(registry.cn-hangzhou.aliyuncs.com,hangzhou以外还有shenzhen啥的),daocloud.io等等.gcr.io因为位置在国外会拉取不到.国内阿里仓库同步了<code>gcr.io/google_containers</code>这些镜像,<br><br>总有人认为kubeadm的容器运行没有二进制运行放心.容器本身就是个隔离受限的进程,另外管理组件都是无状态的,但是他们总感觉不放心。<br>事实上除了kubelet以外所有组件都可以用容器方式运行,管理组件简单说下就是集群数据存放<code>etcd</code>数据库里,apiserver去和etcd交互,其他组件和apiserver交互,kubelet调用api去操作docker,其中一些组件也会去操作各个节点的系统设置<br>ererere
+<a name=ofRxy></a></p><h2 id=架构>架构</h2><p>三个master，多个node。<br>kube-proxy开启ipvs模式通信。<br>所有组件都得与kube-apiserver通信，这边在每台主机部署nginx容器，将kube-apiserver的访问代理到后端三个master上的kube-apiserver pod中去，实现master高可用。<br><img src="https://cdn.nlark.com/yuque/0/2020/svg/1176682/1593953281781-d132c23b-e537-4d74-80a4-6faf89bd7801.svg#align=left&display=inline&height=510&margin=%5Bobject%20Object%5D&name=k8s.svg&originHeight=150&originWidth=218&size=85958&status=done&style=none&width=741" alt=k8s.svg>
+<a name=F1kUn></a></p><h3 id=master的组件>master的组件</h3><ul><li>etcd</li><li>kube-apiserver</li><li>kube-controller-manager</li><li>kube-scheduler</li><li>kubelet</li><li>kube-proxy</li><li>docker</li><li>nginx
+<a name=JNO39></a></li></ul><h3 id=node的组件>node的组件</h3><ul><li>kubelet</li><li>kube-proxy</li><li>docker</li><li>nginx</li></ul><p><a name=cbb060fd></a></p><h2 id=环境准备>环境准备</h2><p><br>在所有节点操作<br></p><p><a name=e272bcd2></a></p><h3 id=所有主机统一hosts>所有主机统一hosts</h3><p>hosts统一如下<br>系统<code>CentOS 7.6+</code>以上，最好不要使用centos7.5以下，容器技术依赖于内核技术，低版本系统部署和运行后可能问题会非常多。</p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>cat /etc/hosts
 
 127.0.0.1 apiserver.k8s.local
 192.168.33.101 master01
@@ -199,90 +23,17 @@ kubeadm部署很方便,但是是一个老外写的,使用staticPod(容器)运行
 192.168.33.201 node01
 192.168.33.202 node02
 192.168.33.203 node03
-</code></pre></div><table>
-<thead>
-<tr>
-<th align="left">IP</th>
-<th align="center">Hostname</th>
-<th align="center">内核</th>
-<th align="center">CPU</th>
-<th align="center">Memory</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left">192.168.33.101</td>
-<td align="center">master01</td>
-<td align="center">3.10.0-1062</td>
-<td align="center">2</td>
-<td align="center">4G</td>
-</tr>
-<tr>
-<td align="left">192.168.33.102</td>
-<td align="center">master02</td>
-<td align="center">3.10.0-1062</td>
-<td align="center">2</td>
-<td align="center">4G</td>
-</tr>
-<tr>
-<td align="left">192.168.33.103</td>
-<td align="center">master03</td>
-<td align="center">3.10.0-1062</td>
-<td align="center">2</td>
-<td align="center">4G</td>
-</tr>
-<tr>
-<td align="left">192.168.33.201</td>
-<td align="center">node01</td>
-<td align="center">3.10.0-1062</td>
-<td align="center">2</td>
-<td align="center">4G</td>
-</tr>
-<tr>
-<td align="left">192.168.33.202</td>
-<td align="center">node02</td>
-<td align="center">3.10.0-1062</td>
-<td align="center">2</td>
-<td align="center">4G</td>
-</tr>
-<tr>
-<td align="left">192.168.33.203</td>
-<td align="center">node03</td>
-<td align="center">3.10.0-1062</td>
-<td align="center">2</td>
-<td align="center">4G</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>kubeadm好像要求最低配置2c2g还是多少来着，越高越好</li>
-<li>所有操作全部用root使用者进行，系统盘根目录一定要大，不然到时候镜像多了例如到了85%会被gc回收镜像</li>
-<li>高可用一般建议大于等于3台的奇数台,使用3台<code>master</code>来做高可用</li>
-</ul>
-<p><a name="BD1XW"></a></p>
-<h3 id="所有机器升级内核可选">所有机器升级内核（可选）</h3>
-<p>导入升级内核的yum源</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+</code></pre></div><table><thead><tr><th align=left>IP</th><th align=center>Hostname</th><th align=center>内核</th><th align=center>CPU</th><th align=center>Memory</th></tr></thead><tbody><tr><td align=left>192.168.33.101</td><td align=center>master01</td><td align=center>3.10.0-1062</td><td align=center>2</td><td align=center>4G</td></tr><tr><td align=left>192.168.33.102</td><td align=center>master02</td><td align=center>3.10.0-1062</td><td align=center>2</td><td align=center>4G</td></tr><tr><td align=left>192.168.33.103</td><td align=center>master03</td><td align=center>3.10.0-1062</td><td align=center>2</td><td align=center>4G</td></tr><tr><td align=left>192.168.33.201</td><td align=center>node01</td><td align=center>3.10.0-1062</td><td align=center>2</td><td align=center>4G</td></tr><tr><td align=left>192.168.33.202</td><td align=center>node02</td><td align=center>3.10.0-1062</td><td align=center>2</td><td align=center>4G</td></tr><tr><td align=left>192.168.33.203</td><td align=center>node03</td><td align=center>3.10.0-1062</td><td align=center>2</td><td align=center>4G</td></tr></tbody></table><ul><li>kubeadm好像要求最低配置2c2g还是多少来着，越高越好</li><li>所有操作全部用root使用者进行，系统盘根目录一定要大，不然到时候镜像多了例如到了85%会被gc回收镜像</li><li>高可用一般建议大于等于3台的奇数台,使用3台<code>master</code>来做高可用</li></ul><p><a name=BD1XW></a></p><h3 id=所有机器升级内核可选>所有机器升级内核（可选）</h3><p>导入升级内核的yum源</p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
 rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
-</code></pre></div><p>查看可用版本 kernel-lt指长期稳定版 kernel-ml指最新版</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"> yum --disablerepo=&#34;*&#34; --enablerepo=&#34;elrepo-kernel&#34; list available
-</code></pre></div><p>安装kernel-ml</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">yum --enablerepo=elrepo-kernel install kernel-ml kernel-ml-devel -y
-</code></pre></div><p><a name="R2POd"></a></p>
-<h4 id="设置启动项">设置启动项</h4>
-<p>查看系统上的所有可用内核</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">awk -F\&#39; &#39;$1==&#34;menuentry &#34; {print i++ &#34; : &#34; $2}&#39; /etc/grub2.cfg
-</code></pre></div><p><img src="https://cdn.nlark.com/yuque/0/2020/png/1176682/1594196209080-1a691d50-bd6d-4f77-a304-1d1b3155b109.png#align=left&amp;display=inline&amp;height=103&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=206&amp;originWidth=1219&amp;size=37152&amp;status=done&amp;style=none&amp;width=609.5" alt="image.png"><br />设置新的内核为grub2的默认版本</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">grub2-set-default &#39;CentOS Linux (5.7.7-1.el7.elrepo.x86_64) 7 (Core)&#39;
-</code></pre></div><p><br />生成 grub 配置文件并重启</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">grub2-mkconfig -o /boot/grub2/grub.cfg
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">reboot
-</code></pre></div><p><br />重启后</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">uname -r
-</code></pre></div><p><img src="https://cdn.nlark.com/yuque/0/2020/png/1176682/1594196465931-fc7cf374-a5ef-4913-8ab6-746b708253f0.png#align=left&amp;display=inline&amp;height=46&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=92&amp;originWidth=550&amp;size=9538&amp;status=done&amp;style=none&amp;width=275" alt="image.png">
-<a name="17cc97ce"></a></p>
-<h3 id="所有机器都关闭防火墙swapselinux">所有机器都关闭防火墙，swap，selinux</h3>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">#关闭防火墙
+</code></pre></div><p>查看可用版本 kernel-lt指长期稳定版 kernel-ml指最新版</p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback> yum --disablerepo=&#34;*&#34; --enablerepo=&#34;elrepo-kernel&#34; list available
+</code></pre></div><p>安装kernel-ml</p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>yum --enablerepo=elrepo-kernel install kernel-ml kernel-ml-devel -y
+</code></pre></div><p><a name=R2POd></a></p><h4 id=设置启动项>设置启动项</h4><p>查看系统上的所有可用内核</p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>awk -F\&#39; &#39;$1==&#34;menuentry &#34; {print i++ &#34; : &#34; $2}&#39; /etc/grub2.cfg
+</code></pre></div><p><img src="https://cdn.nlark.com/yuque/0/2020/png/1176682/1594196209080-1a691d50-bd6d-4f77-a304-1d1b3155b109.png#align=left&display=inline&height=103&margin=%5Bobject%20Object%5D&name=image.png&originHeight=206&originWidth=1219&size=37152&status=done&style=none&width=609.5" alt=image.png><br>设置新的内核为grub2的默认版本</p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>grub2-set-default &#39;CentOS Linux (5.7.7-1.el7.elrepo.x86_64) 7 (Core)&#39;
+</code></pre></div><p><br>生成 grub 配置文件并重启</p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>grub2-mkconfig -o /boot/grub2/grub.cfg
+</code></pre></div><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>reboot
+</code></pre></div><p><br>重启后</p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>uname -r
+</code></pre></div><p><img src="https://cdn.nlark.com/yuque/0/2020/png/1176682/1594196465931-fc7cf374-a5ef-4913-8ab6-746b708253f0.png#align=left&display=inline&height=46&margin=%5Bobject%20Object%5D&name=image.png&originHeight=92&originWidth=550&size=9538&status=done&style=none&width=275" alt=image.png>
+<a name=17cc97ce></a></p><h3 id=所有机器都关闭防火墙swapselinux>所有机器都关闭防火墙，swap，selinux</h3><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>#关闭防火墙
 systemctl disable --now firewalld NetworkManager
 
 #关闭swap
@@ -292,16 +43,11 @@ sed -ri &#39;/^[^#]*swap/s@^@#@&#39; /etc/fstab
 #关闭selinux
 setenforce 0
 sed -ri &#39;/^[^#]*SELINUX=/s#=.+$#=disabled#&#39; /etc/selinux/config
-</code></pre></div><p><a name="7b3ef209"></a></p>
-<h3 id="所有机器yum准备">所有机器yum准备</h3>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">yum install epel-release -y
+</code></pre></div><p><a name=7b3ef209></a></p><h3 id=所有机器yum准备>所有机器yum准备</h3><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>yum install epel-release -y
 
 yum update -y
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">yum -y install  gcc bc gcc-c++ ncurses ncurses-devel cmake elfutils-libelf-devel openssl-devel flex* bison* autoconf automake zlib* fiex* libxml* ncurses-devel libmcrypt* libtool-ltdl-devel* make cmake  pcre pcre-devel openssl openssl-devel   jemalloc-devel tlc libtool vim unzip wget lrzsz bash-comp* ipvsadm ipset jq sysstat conntrack libseccomp conntrack-tools socat curl wget git conntrack-tools psmisc nfs-utils tree bash-completion conntrack libseccomp net-tools crontabs sysstat iftop nload strace bind-utils tcpdump htop telnet lsof 
-</code></pre></div><p><a name="21d411b7"></a></p>
-<h3 id="所有机器都加载ipvs">所有机器都加载ipvs</h3>
-<p>内核4.19及4.19以上的用这个ipvs配置文件</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">:&gt; /etc/modules-load.d/ipvs.conf
+</code></pre></div><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>yum -y install  gcc bc gcc-c++ ncurses ncurses-devel cmake elfutils-libelf-devel openssl-devel flex* bison* autoconf automake zlib* fiex* libxml* ncurses-devel libmcrypt* libtool-ltdl-devel* make cmake  pcre pcre-devel openssl openssl-devel   jemalloc-devel tlc libtool vim unzip wget lrzsz bash-comp* ipvsadm ipset jq sysstat conntrack libseccomp conntrack-tools socat curl wget git conntrack-tools psmisc nfs-utils tree bash-completion conntrack libseccomp net-tools crontabs sysstat iftop nload strace bind-utils tcpdump htop telnet lsof 
+</code></pre></div><p><a name=21d411b7></a></p><h3 id=所有机器都加载ipvs>所有机器都加载ipvs</h3><p>内核4.19及4.19以上的用这个ipvs配置文件</p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>:&gt; /etc/modules-load.d/ipvs.conf
 module=(
 ip_vs
 ip_vs_rr
@@ -313,8 +59,7 @@ br_netfilter
 for kernel_module in ${module[@]};do
     /sbin/modinfo -F filename $kernel_module |&amp; grep -qv ERROR &amp;&amp; echo $kernel_module &gt;&gt; /etc/modules-load.d/ipvs.conf || :
 done
-</code></pre></div><p><br />内核4.19以下的，不包括4.19，用这个ipvs配置文件</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">:&gt; /etc/modules-load.d/ipvs.conf
+</code></pre></div><p><br>内核4.19以下的，不包括4.19，用这个ipvs配置文件</p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>:&gt; /etc/modules-load.d/ipvs.conf
 module=(
 ip_vs
 ip_vs_rr
@@ -326,20 +71,16 @@ br_netfilter
 for kernel_module in ${module[@]};do
     /sbin/modinfo -F filename $kernel_module |&amp; grep -qv ERROR &amp;&amp; echo $kernel_module &gt;&gt; /etc/modules-load.d/ipvs.conf || :
 done
-</code></pre></div><p><br />加载ipvs模块</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">systemctl daemon-reload
+</code></pre></div><p><br>加载ipvs模块</p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>systemctl daemon-reload
 systemctl enable --now systemd-modules-load.service
-</code></pre></div><p><br />查询ipvs是否加载</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">$ lsmod | grep ip_vs
+</code></pre></div><p><br>查询ipvs是否加载</p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>$ lsmod | grep ip_vs
 ip_vs_sh               12688  0 
 ip_vs_wrr              12697  0 
 ip_vs_rr               12600  11 
 ip_vs                 145497  17 ip_vs_rr,ip_vs_sh,ip_vs_wrr
 nf_conntrack          133095  7 ip_vs,nf_nat,nf_nat_ipv4,xt_conntrack,nf_nat_masquerade_ipv4,nf_conntrack_netlink,nf_conntrack_ipv4
 libcrc32c              12644  3 ip_vs,nf_nat,nf_conntrack
-</code></pre></div><p><a name="279b9293"></a></p>
-<h3 id="所有机器都设置k8s系统参数">所有机器都设置k8s系统参数</h3>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">cat &lt;&lt;EOF &gt; /etc/sysctl.d/k8s.conf
+</code></pre></div><p><a name=279b9293></a></p><h3 id=所有机器都设置k8s系统参数>所有机器都设置k8s系统参数</h3><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>cat &lt;&lt;EOF &gt; /etc/sysctl.d/k8s.conf
 net.ipv6.conf.all.disable_ipv6 = 1           #禁用ipv6
 net.ipv6.conf.default.disable_ipv6 = 1       #禁用ipv6
 net.ipv6.conf.lo.disable_ipv6 = 1            #禁用ipv6
@@ -372,9 +113,7 @@ vm.max_map_count=262144                      #定义了一个进程能拥有的�
 EOF
 
 sysctl --system
-</code></pre></div><p><a name="c09a351c"></a></p>
-<h3 id="所有机器都设置文件最大数">所有机器都设置文件最大数</h3>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">cat&gt;/etc/security/limits.d/kubernetes.conf&lt;&lt;EOF
+</code></pre></div><p><a name=c09a351c></a></p><h3 id=所有机器都设置文件最大数>所有机器都设置文件最大数</h3><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>cat&gt;/etc/security/limits.d/kubernetes.conf&lt;&lt;EOF
 *       soft    nproc   131072
 *       hard    nproc   131072
 *       soft    nofile  131072
@@ -384,25 +123,13 @@ root    hard    nproc   131072
 root    soft    nofile  131072
 root    hard    nofile  131072
 EOF
-</code></pre></div><p><a name="9082a5d6"></a></p>
-<h3 id="所有机器都设置docker-安装">所有机器都设置docker 安装</h3>
-<p><a name="ceaf9f34"></a></p>
-<h4 id="docker-yum">docker yum</h4>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">cd /etc/yum.repos.d/  &amp;&amp;  wget https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
-</code></pre></div><p><a name="78cbf33b"></a></p>
-<h4 id="官方脚本检查">官方脚本检查</h4>
-<p><br />docker官方的内核检查脚本建议<code>(RHEL7/CentOS7: User namespaces disabled; add 'user_namespace.enable=1' to boot command line)</code><br />
-<br /><img src="https://raw.githubusercontent.com/tangwei0928/picture01/master/20200104211718.png#align=left&amp;display=inline&amp;height=121&amp;margin=%5Bobject%20Object%5D&amp;originHeight=121&amp;originWidth=702&amp;status=done&amp;style=none&amp;width=702" alt=""><br /></p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">grubby --args=&#34;user_namespace.enable=1&#34; --update-kernel=&#34;$(grubby --default-kernel)&#34;
+</code></pre></div><p><a name=9082a5d6></a></p><h3 id=所有机器都设置docker-安装>所有机器都设置docker 安装</h3><p><a name=ceaf9f34></a></p><h4 id=docker-yum>docker yum</h4><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>cd /etc/yum.repos.d/  &amp;&amp;  wget https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+</code></pre></div><p><a name=78cbf33b></a></p><h4 id=官方脚本检查>官方脚本检查</h4><p><br>docker官方的内核检查脚本建议<code>(RHEL7/CentOS7: User namespaces disabled; add 'user_namespace.enable=1' to boot command line)</code><br><br><img src="https://raw.githubusercontent.com/tangwei0928/picture01/master/20200104211718.png#align=left&display=inline&height=121&margin=%5Bobject%20Object%5D&originHeight=121&originWidth=702&status=done&style=none&width=702" alt><br></p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>grubby --args=&#34;user_namespace.enable=1&#34; --update-kernel=&#34;$(grubby --default-kernel)&#34;
 
 #然后重启
 reboot
-</code></pre></div><p><a name="6232cdc9"></a></p>
-<h4 id="docker安装">docker安装</h4>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">yum install docker-ce -y
-</code></pre></div><p><a name="c99bd83b"></a></p>
-<h4 id="配置docker">配置docker</h4>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">cp /usr/share/bash-completion/completions/docker /etc/bash_completion.d/
+</code></pre></div><p><a name=6232cdc9></a></p><h4 id=docker安装>docker安装</h4><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>yum install docker-ce -y
+</code></pre></div><p><a name=c99bd83b></a></p><h4 id=配置docker>配置docker</h4><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>cp /usr/share/bash-completion/completions/docker /etc/bash_completion.d/
 
 mkdir -p /etc/docker/
 
@@ -424,42 +151,27 @@ cat &gt; /etc/docker/daemon.json &lt;&lt;EOF
     ]
 }
 EOF
-</code></pre></div><p><a name="f223c043"></a></p>
-<h4 id="启动docker">启动docker</h4>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">systemctl enable --now docker
-</code></pre></div><p><a name="75d97f7f"></a></p>
-<h2 id="kubeadm部署">kubeadm部署</h2>
-<p><a name="07df8c55"></a></p>
-<h3 id="所有机器都设置kubeadm-yum">所有机器都设置kubeadm yum</h3>
-<p><br />在所有节点操作<br /></p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">cat &lt;&lt;EOF &gt;/etc/yum.repos.d/kubernetes.repo
+</code></pre></div><p><a name=f223c043></a></p><h4 id=启动docker>启动docker</h4><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>systemctl enable --now docker
+</code></pre></div><p><a name=75d97f7f></a></p><h2 id=kubeadm部署>kubeadm部署</h2><p><a name=07df8c55></a></p><h3 id=所有机器都设置kubeadm-yum>所有机器都设置kubeadm yum</h3><p><br>在所有节点操作<br></p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>cat &lt;&lt;EOF &gt;/etc/yum.repos.d/kubernetes.repo
 [kubernetes]
 name=Kubernetes
 baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64
 enabled=1
 gpgcheck=0
 EOF
-</code></pre></div><p><a name="ce4ceb45"></a></p>
-<h3 id="maser节点安装">maser节点安装</h3>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">yum install -y \
+</code></pre></div><p><a name=ce4ceb45></a></p><h3 id=maser节点安装>maser节点安装</h3><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>yum install -y \
     kubeadm-1.18.5 \
     kubectl-1.18.5 \
     kubelet-1.18.5 \
     --disableexcludes=kubernetes &amp;&amp; \
     systemctl enable kubelet
-</code></pre></div><p><a name="2ac153da"></a></p>
-<h3 id="node节点安装">node节点安装</h3>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">yum install -y \
+</code></pre></div><p><a name=2ac153da></a></p><h3 id=node节点安装>node节点安装</h3><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>yum install -y \
     kubeadm-1.18.5 \
     kubelet-1.18.5 \
     --disableexcludes=kubernetes &amp;&amp; \
     systemctl enable kubelet
-</code></pre></div><p><a name="c91991ae"></a></p>
-<h3 id="master高可用">master高可用</h3>
-<p><a name="pRKhb"></a></p>
-<h4 id="在所有节点部署一个nginx容器">在所有节点部署一个nginx容器</h4>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">mkdir -p /etc/kubernetes
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">cat &gt; /etc/kubernetes/nginx.conf &lt;&lt; EOF
+</code></pre></div><p><a name=c91991ae></a></p><h3 id=master高可用>master高可用</h3><p><a name=pRKhb></a></p><h4 id=在所有节点部署一个nginx容器>在所有节点部署一个nginx容器</h4><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>mkdir -p /etc/kubernetes
+</code></pre></div><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>cat &gt; /etc/kubernetes/nginx.conf &lt;&lt; EOF
 user nginx nginx;
 worker_processes auto;
 events {
@@ -482,22 +194,18 @@ stream {
     }
 }
 EOF
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">docker run --restart=always \
+</code></pre></div><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>docker run --restart=always \
     -v /etc/kubernetes/nginx.conf:/etc/nginx/nginx.conf \
     -v /etc/localtime:/etc/localtime:ro \
     --name k8sHA \
     --net host \
     -d \
     nginx
-</code></pre></div><p><a name="d615260c"></a></p>
-<h3 id="kubeadm配置文件">kubeadm配置文件</h3>
-<h3 id="kubeadm100年证书-编译参考httpsgithubcom21kikubernetesblobmastergithubworkflowsgoyml">kubeadm100年证书 编译参考https://github.com/21ki/kubernetes/blob/master/.github/workflows/go.yml</h3>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">wget https://github.com/21ki/kubernetes/releases/download/v1.19.1/kubeadm-v1.19.1.zip
+</code></pre></div><p><a name=d615260c></a></p><h3 id=kubeadm配置文件>kubeadm配置文件</h3><h3 id=kubeadm100年证书-编译参考httpsgithubcom21kikubernetesblobmastergithubworkflowsgoyml>kubeadm100年证书 编译参考https://github.com/21ki/kubernetes/blob/master/.github/workflows/go.yml</h3><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>wget https://github.com/21ki/kubernetes/releases/download/v1.19.1/kubeadm-v1.19.1.zip
 unzip kubeadm-v1.19.1.zip
 chmod +x kubeadm
 mv -f kubeadm /usr/bin/kubeadm
-</code></pre></div><p><br />在master01节点操作<br /></p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">cat &gt; /root/initconfig.yaml &lt;&lt; EOF
+</code></pre></div><p><br>在master01节点操作<br></p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>cat &gt; /root/initconfig.yaml &lt;&lt; EOF
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
 imageRepository: registry.aliyuncs.com/k8sxio
@@ -606,14 +314,9 @@ kind: KubeletConfiguration
 cgroupDriver: &#34;systemd&#34;
 failSwapOn: true
 EOF
-</code></pre></div><p><br />检查文件是否错误，忽略<code>warning</code>，错误的话会抛出error，没错则会输出到包含字符串<code>kubeadm join xxx</code>啥的<br /></p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">kubeadm init --config /root/initconfig.yaml --dry-run
-</code></pre></div><p><br />预先拉取镜像<br /></p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">kubeadm config images pull --config /root/initconfig.yaml
-</code></pre></div><p><a name="292262c8"></a></p>
-<h3 id="部署master">部署master</h3>
-<p><br />在master01节点操作<br /></p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">kubeadm init --config /root/initconfig.yaml --upload-certs
+</code></pre></div><p><br>检查文件是否错误，忽略<code>warning</code>，错误的话会抛出error，没错则会输出到包含字符串<code>kubeadm join xxx</code>啥的<br></p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>kubeadm init --config /root/initconfig.yaml --dry-run
+</code></pre></div><p><br>预先拉取镜像<br></p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>kubeadm config images pull --config /root/initconfig.yaml
+</code></pre></div><p><a name=292262c8></a></p><h3 id=部署master>部署master</h3><p><br>在master01节点操作<br></p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>kubeadm init --config /root/initconfig.yaml --upload-certs
 
 ...
 ...
@@ -632,18 +335,13 @@ Then you can join any number of worker nodes by running the following on each as
 
 kubeadm join apiserver.k8s.local:8443 --token 8lmdqu.cqe8r0rxa0056vmm \
     --discovery-token-ca-cert-hash sha256:5ca87fff6b414a0872ab5452972d7e36e4bad7ab3a0bc385abe0138ce671eabb
-</code></pre></div><p><br />复制kubectl的kubeconfig，kubectl的kubeconfig路径默认是<code>~/.kube/config</code><br /></p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">mkdir -p $HOME/.kube
+</code></pre></div><p><br>复制kubectl的kubeconfig，kubectl的kubeconfig路径默认是<code>~/.kube/config</code><br></p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>mkdir -p $HOME/.kube
 
 sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config
 
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
-</code></pre></div><p><br />init的yaml信息实际上会存在集群的configmap里，我们可以随时查看，该yaml在其他node和master join的时候会使用到<br /></p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">kubectl -n kube-system get cm kubeadm-config -o yaml
-</code></pre></div><p><a name="bcaa46b0"></a></p>
-<h4 id="设置ep的rbac">设置ep的rbac</h4>
-<p><br />kube-apiserver的web健康检查路由有权限，我们需要开放用来监控或者对接SLB的健康检查<br /></p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">cat &gt; /root/healthz-rbac.yml &lt;&lt; EOF
+</code></pre></div><p><br>init的yaml信息实际上会存在集群的configmap里，我们可以随时查看，该yaml在其他node和master join的时候会使用到<br></p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>kubectl -n kube-system get cm kubeadm-config -o yaml
+</code></pre></div><p><a name=bcaa46b0></a></p><h4 id=设置ep的rbac>设置ep的rbac</h4><p><br>kube-apiserver的web健康检查路由有权限，我们需要开放用来监控或者对接SLB的健康检查<br></p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>cat &gt; /root/healthz-rbac.yml &lt;&lt; EOF
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
@@ -668,11 +366,8 @@ rules:
 - nonResourceURLs: [&#34;/healthz&#34;, &#34;/healthz/*&#34;]
   verbs: [&#34;get&#34;, &#34;post&#34;]
 EOF
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">kubectl apply -f /root/healthz-rbac.yml
-</code></pre></div><p><a name="c1edf8ea"></a></p>
-<h4 id="配置其他master的k8s管理组件">配置其他master的k8s管理组件</h4>
-<p>将master01上的配置文件发到其他2个master节点上</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">for node in 192.168.33.102 192.168.33.103;do
+</code></pre></div><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>kubectl apply -f /root/healthz-rbac.yml
+</code></pre></div><p><a name=c1edf8ea></a></p><h4 id=配置其他master的k8s管理组件>配置其他master的k8s管理组件</h4><p>将master01上的配置文件发到其他2个master节点上</p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>for node in 192.168.33.102 192.168.33.103;do
     ssh $node &#39;mkdir -p /etc/kubernetes/pki/etcd&#39;
     scp -r /root/initconfig.yaml $node:/root/initconfig.yaml
     scp -r /etc/kubernetes/pki/ca.* $node:/etc/kubernetes/pki/
@@ -680,36 +375,22 @@ EOF
     scp -r /etc/kubernetes/pki/front-proxy-ca.* $node:/etc/kubernetes/pki/
     scp -r /etc/kubernetes/pki/etcd/ca.* $node:/etc/kubernetes/pki/etcd/
 done
-</code></pre></div><p><a name="7d082cef"></a></p>
-<h4 id="其他master-join进来">其他master join进来</h4>
-<p>先拉取镜像</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">kubeadm config images pull --config /root/initconfig.yaml
-</code></pre></div><p>查看master01上 带有<code>--control-plane</code>的那一行</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">kubeadm join apiserver.k8s.local:8443 --token 8lmdqu.cqe8r0rxa0056vmm \
+</code></pre></div><p><a name=7d082cef></a></p><h4 id=其他master-join进来>其他master join进来</h4><p>先拉取镜像</p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>kubeadm config images pull --config /root/initconfig.yaml
+</code></pre></div><p>查看master01上 带有<code>--control-plane</code>的那一行</p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>kubeadm join apiserver.k8s.local:8443 --token 8lmdqu.cqe8r0rxa0056vmm \
     --discovery-token-ca-cert-hash sha256:5ca87fff6b414a0872ab5452972d7e36e4bad7ab3a0bc385abe0138ce671eabb \
     --control-plane --certificate-key 7a1d432b2834464a82fd7cba0e9e5d8409c492cf9a4ee6328fb4f84b6a78934a
-</code></pre></div><p><a name="6af224e5"></a></p>
-<h4 id="所有master配置kubectl">所有master配置kubectl</h4>
-<p><a name="0bc22c29"></a></p>
-<h5 id="准备kubectl的kubeconfig">准备kubectl的kubeconfig</h5>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">mkdir -p $HOME/.kube
+</code></pre></div><p><a name=6af224e5></a></p><h4 id=所有master配置kubectl>所有master配置kubectl</h4><p><a name=0bc22c29></a></p><h5 id=准备kubectl的kubeconfig>准备kubectl的kubeconfig</h5><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>mkdir -p $HOME/.kube
 
 sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config
 
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
-</code></pre></div><p><a name="21aba698"></a></p>
-<h5 id="设置kubectl的补全脚本">设置kubectl的补全脚本</h5>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">yum -y install bash-comp*
+</code></pre></div><p><a name=21aba698></a></p><h5 id=设置kubectl的补全脚本>设置kubectl的补全脚本</h5><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>yum -y install bash-comp*
 
 source &lt;(kubectl completion bash)
 
 echo &#39;source &lt;(kubectl completion bash)&#39; &gt;&gt; ~/.bashrc
-</code></pre></div><p><a name="50981283"></a></p>
-<h4 id="master配置etcdctl">master配置etcdctl</h4>
-<p><br />所有master节点先复制出容器里的etcdctl<br /></p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">docker cp `docker ps -a | awk &#39;/k8s_etcd/{print $1}&#39;|head -n1`:/usr/local/bin/etcdctl /usr/local/bin/etcdctl
-</code></pre></div><p><br />编写一个简单别名，记得替换对应的ip</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">cat &gt;/etc/profile.d/etcd.sh&lt;&lt;&#39;EOF&#39;
+</code></pre></div><p><a name=50981283></a></p><h4 id=master配置etcdctl>master配置etcdctl</h4><p><br>所有master节点先复制出容器里的etcdctl<br></p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>docker cp `docker ps -a | awk &#39;/k8s_etcd/{print $1}&#39;|head -n1`:/usr/local/bin/etcdctl /usr/local/bin/etcdctl
+</code></pre></div><p><br>编写一个简单别名，记得替换对应的ip</p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>cat &gt;/etc/profile.d/etcd.sh&lt;&lt;&#39;EOF&#39;
 ETCD_CERET_DIR=/etc/kubernetes/pki/etcd/
 ETCD_CA_FILE=ca.crt
 ETCD_KEY_FILE=healthcheck-client.key
@@ -723,8 +404,8 @@ alias etcd_v3=&#34;ETCDCTL_API=3 \
    --cacert ${ETCD_CERET_DIR}/${ETCD_CA_FILE} \
    --endpoints $ETCD_EP&#34;
 EOF
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">source  /etc/profile.d/etcd.sh
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">etcd_v3 endpoint status --write-out=table
+</code></pre></div><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>source  /etc/profile.d/etcd.sh
+</code></pre></div><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>etcd_v3 endpoint status --write-out=table
 
 +-----------------------------+------------------+---------+---------+-----------+-----------+------------+
 |          ENDPOINT           |        ID        | VERSION | DB SIZE | IS LEADER | RAFT TERM | RAFT INDEX |
@@ -733,7 +414,7 @@ EOF
 | https://192.168.33.102:2379 | 3dcceec24ad5c5d4 |  3.4.7 |  1.6 MB |     false |         7 |       1865 |
 | https://192.168.33.103:2379 | bc21062efb4a5d4c |  3.4.7 |  1.5 MB |     false |         7 |       1865 |
 +-----------------------------+------------------+---------+---------+-----------+-----------+------------+
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">etcd_v3 endpoint health --write-out=table
+</code></pre></div><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>etcd_v3 endpoint health --write-out=table
 +-----------------------------+--------+-------------+-------+
 |          ENDPOINT           | HEALTH |    TOOK     | ERROR |
 +-----------------------------+--------+-------------+-------+
@@ -741,90 +422,81 @@ EOF
 | https://192.168.33.102:2379 |   true |   19.2603ms |       |
 | https://192.168.33.101:2379 |   true | 22.490443ms |       |
 +-----------------------------+--------+-------------+-------+
-</code></pre></div><p><br />配置etcd备份脚本<br />记得替换对应的ip</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">mkdir -p /opt/etcd
+</code></pre></div><p><br>配置etcd备份脚本<br>记得替换对应的ip</p><div class=highlight><pre class=chroma><code class=language-bash data-lang=bash>mkdir -p /opt/etcd
 
-cat&gt;/opt/etcd/etcd_cron.sh<span class="s">&lt;&lt;&#39;EOF&#39;
-</span><span class="s">#!/bin/bash
-</span><span class="s">set -e
-</span><span class="s">source  /etc/profile
-</span><span class="s">export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
-</span><span class="s">master=`ETCDCTL_API=3 etcdctl --endpoints=&#34;https://192.168.33.101:2379,https://192.168.33.102:2379,https://192.168.33.103:2379&#34; --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key --cacert=/etc/kubernetes/pki/etcd/ca.crt  endpoint status  | grep true|awk -F&#34;,&#34; &#39;{print $1}&#39;`
-</span><span class="s">:  ${bak_dir:=/root/} #缺省备份目录,可以修改成存在的目录
-</span><span class="s">:  ${cert_dir:=/etc/kubernetes/pki/etcd/}
-</span><span class="s">:  ${endpoints:=$master}
-</span><span class="s">bak_prefix=&#39;etcd-&#39;
-</span><span class="s">cmd_suffix=&#39;date +%Y-%m-%d-%H-%M&#39;
-</span><span class="s">bak_suffix=&#39;.db&#39;
-</span><span class="s">
-</span><span class="s">#将规范化后的命令行参数分配至位置参数（$1,$2,...)
-</span><span class="s">temp=`getopt -n $0 -o c:d: -u -- &#34;$@&#34;`
-</span><span class="s">
-</span><span class="s">[ $? != 0 ] &amp;&amp; {
-</span><span class="s">    echo &#39;
-</span><span class="s">Examples:
-</span><span class="s">  # just save once
-</span><span class="s">  bash $0 /tmp/etcd.db
-</span><span class="s">  # save in contab and  keep 5
-</span><span class="s">  bash $0 -c 5
-</span><span class="s">    &#39;
-</span><span class="s">    exit 1
-</span><span class="s">    }
-</span><span class="s">
-</span><span class="s">set -- $temp
-</span><span class="s"># -c 备份保留副本数量
-</span><span class="s"># -d 指定备份存放目录
-</span><span class="s">
-</span><span class="s">while true;do
-</span><span class="s">    case &#34;$1&#34; in
-</span><span class="s">        -c)
-</span><span class="s">            [ -z &#34;$bak_count&#34; ] &amp;&amp; bak_count=$2
-</span><span class="s">            printf -v null %d &#34;$bak_count&#34; &amp;&gt;/dev/null || \
-</span><span class="s">                { echo &#39;the value of the -c must be number&#39;;exit 1; }
-</span><span class="s">            shift 2
-</span><span class="s">            ;;
-</span><span class="s">        -d)
-</span><span class="s">            [ ! -d &#34;$2&#34; ] &amp;&amp; mkdir -p $2
-</span><span class="s">            bak_dir=$2
-</span><span class="s">            shift 2
-</span><span class="s">            ;;
-</span><span class="s">         *)
-</span><span class="s">            [[ -z &#34;$1&#34; || &#34;$1&#34; == &#39;--&#39; ]] &amp;&amp; { shift;break; }
-</span><span class="s">            echo &#34;Internal error!&#34;
-</span><span class="s">            exit 1
-</span><span class="s">            ;;
-</span><span class="s">    esac
-</span><span class="s">done
-</span><span class="s">
-</span><span class="s">
-</span><span class="s">
-</span><span class="s">etcd::cron::save(){
-</span><span class="s">    cd $bak_dir/
-</span><span class="s">    ETCDCTL_API=3 etcdctl --endpoints=$endpoints --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key --cacert=/etc/kubernetes/pki/etcd/ca.crt  snapshot save  $bak_prefix$($cmd_suffix)$bak_suffix
-</span><span class="s">    rm_files=`ls -t $bak_prefix*$bak_suffix | tail -n +$[bak_count+1]`
-</span><span class="s">    if [ -n &#34;$rm_files&#34; ];then
-</span><span class="s">        rm -f $rm_files
-</span><span class="s">    fi
-</span><span class="s">}
-</span><span class="s">
-</span><span class="s">main(){
-</span><span class="s">    [ -n &#34;$bak_count&#34; ] &amp;&amp; etcd::cron::save || etcd_v3 snapshot save $@
-</span><span class="s">}
-</span><span class="s">
-</span><span class="s">main $@
-</span><span class="s">EOF</span>
-</code></pre></div><p><br />crontab -e添加下面内容自动保留四个备份副本<br /></p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">0 0 * * * bash /opt/etcd/etcd_cron.sh  -c 4 -d /opt/etcd/ &amp;&gt;/dev/null
-</code></pre></div><p><a name="ab1dac9e"></a></p>
-<h3 id="部署node">部署node</h3>
-<p><br />在node节点执行<br />
-<br />和master的join一样，提前准备好环境和docker，然后join的时候不需要带<code>--control-plane</code><br /></p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">kubeadm join apiserver.k8s.local:8443 --token 8lmdqu.cqe8r0rxa0056vmm \
+cat&gt;/opt/etcd/etcd_cron.sh<span class=s>&lt;&lt;&#39;EOF&#39;
+</span><span class=s>#!/bin/bash
+</span><span class=s>set -e
+</span><span class=s>source  /etc/profile
+</span><span class=s>export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
+</span><span class=s>master=`ETCDCTL_API=3 etcdctl --endpoints=&#34;https://192.168.33.101:2379,https://192.168.33.102:2379,https://192.168.33.103:2379&#34; --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key --cacert=/etc/kubernetes/pki/etcd/ca.crt  endpoint status  | grep true|awk -F&#34;,&#34; &#39;{print $1}&#39;`
+</span><span class=s>:  ${bak_dir:=/root/} #缺省备份目录,可以修改成存在的目录
+</span><span class=s>:  ${cert_dir:=/etc/kubernetes/pki/etcd/}
+</span><span class=s>:  ${endpoints:=$master}
+</span><span class=s>bak_prefix=&#39;etcd-&#39;
+</span><span class=s>cmd_suffix=&#39;date +%Y-%m-%d-%H-%M&#39;
+</span><span class=s>bak_suffix=&#39;.db&#39;
+</span><span class=s>
+</span><span class=s>#将规范化后的命令行参数分配至位置参数（$1,$2,...)
+</span><span class=s>temp=`getopt -n $0 -o c:d: -u -- &#34;$@&#34;`
+</span><span class=s>
+</span><span class=s>[ $? != 0 ] &amp;&amp; {
+</span><span class=s>    echo &#39;
+</span><span class=s>Examples:
+</span><span class=s>  # just save once
+</span><span class=s>  bash $0 /tmp/etcd.db
+</span><span class=s>  # save in contab and  keep 5
+</span><span class=s>  bash $0 -c 5
+</span><span class=s>    &#39;
+</span><span class=s>    exit 1
+</span><span class=s>    }
+</span><span class=s>
+</span><span class=s>set -- $temp
+</span><span class=s># -c 备份保留副本数量
+</span><span class=s># -d 指定备份存放目录
+</span><span class=s>
+</span><span class=s>while true;do
+</span><span class=s>    case &#34;$1&#34; in
+</span><span class=s>        -c)
+</span><span class=s>            [ -z &#34;$bak_count&#34; ] &amp;&amp; bak_count=$2
+</span><span class=s>            printf -v null %d &#34;$bak_count&#34; &amp;&gt;/dev/null || \
+</span><span class=s>                { echo &#39;the value of the -c must be number&#39;;exit 1; }
+</span><span class=s>            shift 2
+</span><span class=s>            ;;
+</span><span class=s>        -d)
+</span><span class=s>            [ ! -d &#34;$2&#34; ] &amp;&amp; mkdir -p $2
+</span><span class=s>            bak_dir=$2
+</span><span class=s>            shift 2
+</span><span class=s>            ;;
+</span><span class=s>         *)
+</span><span class=s>            [[ -z &#34;$1&#34; || &#34;$1&#34; == &#39;--&#39; ]] &amp;&amp; { shift;break; }
+</span><span class=s>            echo &#34;Internal error!&#34;
+</span><span class=s>            exit 1
+</span><span class=s>            ;;
+</span><span class=s>    esac
+</span><span class=s>done
+</span><span class=s>
+</span><span class=s>
+</span><span class=s>
+</span><span class=s>etcd::cron::save(){
+</span><span class=s>    cd $bak_dir/
+</span><span class=s>    ETCDCTL_API=3 etcdctl --endpoints=$endpoints --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key --cacert=/etc/kubernetes/pki/etcd/ca.crt  snapshot save  $bak_prefix$($cmd_suffix)$bak_suffix
+</span><span class=s>    rm_files=`ls -t $bak_prefix*$bak_suffix | tail -n +$[bak_count+1]`
+</span><span class=s>    if [ -n &#34;$rm_files&#34; ];then
+</span><span class=s>        rm -f $rm_files
+</span><span class=s>    fi
+</span><span class=s>}
+</span><span class=s>
+</span><span class=s>main(){
+</span><span class=s>    [ -n &#34;$bak_count&#34; ] &amp;&amp; etcd::cron::save || etcd_v3 snapshot save $@
+</span><span class=s>}
+</span><span class=s>
+</span><span class=s>main $@
+</span><span class=s>EOF</span>
+</code></pre></div><p><br>crontab -e添加下面内容自动保留四个备份副本<br></p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>0 0 * * * bash /opt/etcd/etcd_cron.sh  -c 4 -d /opt/etcd/ &amp;&gt;/dev/null
+</code></pre></div><p><a name=ab1dac9e></a></p><h3 id=部署node>部署node</h3><p><br>在node节点执行<br><br>和master的join一样，提前准备好环境和docker，然后join的时候不需要带<code>--control-plane</code><br></p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>kubeadm join apiserver.k8s.local:8443 --token 8lmdqu.cqe8r0rxa0056vmm \
     --discovery-token-ca-cert-hash sha256:5ca87fff6b414a0872ab5452972d7e36e4bad7ab3a0bc385abe0138ce671eabb
-</code></pre></div><p><a name="fedbcac8"></a></p>
-<h3 id="打标签">打标签</h3>
-<p><br />role只是一个label，可以打label，想显示啥就<code>node-role.kubernetes.io/xxxx</code><br /></p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@master01 ~]# kubectl get nodes
+</code></pre></div><p><a name=fedbcac8></a></p><h3 id=打标签>打标签</h3><p><br>role只是一个label，可以打label，想显示啥就<code>node-role.kubernetes.io/xxxx</code><br></p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>[root@master01 ~]# kubectl get nodes
 NAME       STATUS     ROLES    AGE   VERSION
 master01   NotReady   master   17m   v1.18.5
 master02   NotReady   master   14m   v1.18.5
@@ -832,7 +504,7 @@ master03   NotReady   master   13m   v1.18.5
 node01     NotReady   &lt;none&gt;   24s   v1.18.5
 node02     NotReady   &lt;none&gt;   18s   v1.18.5
 node03     NotReady   &lt;none&gt;   11s   v1.18.5
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@master01 ~]# kubectl label node node01 node-role.kubernetes.io/node=&#34;&#34;
+</code></pre></div><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>[root@master01 ~]# kubectl label node node01 node-role.kubernetes.io/node=&#34;&#34;
 node/node01 labeled
 [root@master01 ~]# kubectl label node node02 node-role.kubernetes.io/node=&#34;&#34;
 node/node02 labeled
@@ -847,22 +519,14 @@ master03   NotReady   master   21m     v1.18.5
 node01     NotReady   node     8m      v1.18.5
 node02     NotReady   node     7m54s   v1.18.5
 node03     NotReady   node     7m47s   v1.18.5
-</code></pre></div><p><a name="5550f7bc"></a></p>
-<h2 id="部署网络插件cilium">部署网络插件Cilium</h2>
-<p><a name="czUsA"></a></p>
-<h3 id="准备helm3">准备helm3</h3>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">https://github.com/helm/helm/releases
-</code></pre></div><!-- ![image.png](https://cdn.nlark.com/yuque/0/2020/png/1176682/1594439663818-f2da1f2a-1169-4451-af76-6adb1fe9e64a.png#align=left&display=inline&height=856&margin=%5Bobject%20Object%5D&name=image.png&originHeight=856&originWidth=1449&size=117906&status=done&style=none&width=1449)<br /> -->链接: [https://pan.baidu.com/s/13qsdwCzaKfnZNlDarsBYpg](https://pan.baidu.com/s/13qsdwCzaKfnZNlDarsBYpg) 提取码: wu22
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">tar xvf helm-v3.3.0-rc.1-linux-amd64.tar
-</code></pre></div><!-- ![image.png](https://cdn.nlark.com/yuque/0/2020/png/1176682/1594439897751-baf387d5-6591-474f-b0b2-202450246420.png#align=left&display=inline&height=293&margin=%5Bobject%20Object%5D&name=image.png&originHeight=293&originWidth=843&size=21820&status=done&style=none&width=843) -->
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">chmod +x linux-amd64/helm 
+</code></pre></div><p><a name=5550f7bc></a></p><h2 id=部署网络插件cilium>部署网络插件Cilium</h2><p><a name=czUsA></a></p><h3 id=准备helm3>准备helm3</h3><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>https://github.com/helm/helm/releases
+</code></pre></div>链接: [https://pan.baidu.com/s/13qsdwCzaKfnZNlDarsBYpg](https://pan.baidu.com/s/13qsdwCzaKfnZNlDarsBYpg) 提取码: wu22<div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>tar xvf helm-v3.3.0-rc.1-linux-amd64.tar
+</code></pre></div><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>chmod +x linux-amd64/helm 
 mv linux-amd64/helm  /usr/bin/
-</code></pre></div><p><img src="https://cdn.nlark.com/yuque/0/2020/png/1176682/1594439952860-de4aecf8-5f2b-4062-b6b4-750bf81bdccc.png#align=left&amp;display=inline&amp;height=106&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=106&amp;originWidth=491&amp;size=7265&amp;status=done&amp;style=none&amp;width=491" alt="image.png">
-<a name="UuH7B"></a></p>
-<h3 id="部署cilium">部署Cilium</h3>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">https://github.com/cilium/cilium
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">helm repo add cilium https://helm.cilium.io
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">helm install cilium cilium/cilium --version 1.8.1 \
+</code></pre></div><p><img src="https://cdn.nlark.com/yuque/0/2020/png/1176682/1594439952860-de4aecf8-5f2b-4062-b6b4-750bf81bdccc.png#align=left&display=inline&height=106&margin=%5Bobject%20Object%5D&name=image.png&originHeight=106&originWidth=491&size=7265&status=done&style=none&width=491" alt=image.png>
+<a name=UuH7B></a></p><h3 id=部署cilium>部署Cilium</h3><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>https://github.com/cilium/cilium
+</code></pre></div><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>helm repo add cilium https://helm.cilium.io
+</code></pre></div><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>helm install cilium cilium/cilium --version 1.8.1 \
    --namespace kube-system \
    --set global.nodeinit.enabled=true \
    --set global.externalIPs.enabled=true \
@@ -877,15 +541,8 @@ mv linux-amd64/helm  /usr/bin/
    --set global.prometheus.enabled=true \
    --set global.operatorPrometheus.enabled=true \
    --set global.hubble.ui.enabled=true
-</code></pre></div><p><br />hubble-ui镜像下载<br />链接: <a href="https://pan.baidu.com/s/1gRVM37RjFyEebBfQ-1MyJQ">https://pan.baidu.com/s/1gRVM37RjFyEebBfQ-1MyJQ</a> 提取码: gtyv
-<a name="db06c78d"></a></p>
-<h2 id="heading"></h2>
-<p><a name="XYeYx"></a></p>
-<h2 id="测试">测试</h2>
-<p><a name="cbdc82b1"></a></p>
-<h3 id="验证集群可用性">验证集群可用性</h3>
-<p><br />最基本的3master3node集群搭建完成了<br /></p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@master01 ~]# kubectl get pods --all-namespaces -w
+</code></pre></div><p><br>hubble-ui镜像下载<br>链接: <a href=https://pan.baidu.com/s/1gRVM37RjFyEebBfQ-1MyJQ>https://pan.baidu.com/s/1gRVM37RjFyEebBfQ-1MyJQ</a> 提取码: gtyv
+<a name=db06c78d></a></p><h2 id=heading></h2><p><a name=XYeYx></a></p><h2 id=测试>测试</h2><p><a name=cbdc82b1></a></p><h3 id=验证集群可用性>验证集群可用性</h3><p><br>最基本的3master3node集群搭建完成了<br></p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>[root@master01 ~]# kubectl get pods --all-namespaces -w
 NAMESPACE     NAME                               READY   STATUS    RESTARTS   AGE
 kube-system   cilium-4qs42                       1/1     Running   0          14m
 kube-system   cilium-5v9xc                       1/1     Running   0          14m
@@ -922,17 +579,12 @@ kube-system   kube-proxy-xjpkd                   1/1     Running   0          25
 kube-system   kube-scheduler-master01            1/1     Running   1          29m
 kube-system   kube-scheduler-master02            1/1     Running   0          27m
 kube-system   kube-scheduler-master03            1/1     Running   0          25m
-</code></pre></div><p><a name="j67Rf"></a></p>
-<h3 id="重启dockerkubelet">重启docker，kubelet</h3>
-<p>由于kubeadm默认使用cgoupfs，官方推荐用systemd，所有节点都得进行检查和修改成systemd，然后重启docker，kubelelt<br /><img src="https://cdn.nlark.com/yuque/0/2020/png/1176682/1593015648865-aa8e2229-aa2e-41ff-bf50-7d9dbad7d1ae.png#align=left&amp;display=inline&amp;height=334&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=334&amp;originWidth=1075&amp;size=30776&amp;status=done&amp;style=none&amp;width=1075" alt="image.png"></p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">vim /var/lib/kubelet/kubeadm-flags.env
+</code></pre></div><p><a name=j67Rf></a></p><h3 id=重启dockerkubelet>重启docker，kubelet</h3><p>由于kubeadm默认使用cgoupfs，官方推荐用systemd，所有节点都得进行检查和修改成systemd，然后重启docker，kubelelt<br><img src="https://cdn.nlark.com/yuque/0/2020/png/1176682/1593015648865-aa8e2229-aa2e-41ff-bf50-7d9dbad7d1ae.png#align=left&display=inline&height=334&margin=%5Bobject%20Object%5D&name=image.png&originHeight=334&originWidth=1075&size=30776&status=done&style=none&width=1075" alt=image.png></p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>vim /var/lib/kubelet/kubeadm-flags.env
 
 vim /etc/docker/daemon.json
-</code></pre></div><p><img src="https://cdn.nlark.com/yuque/0/2020/png/1176682/1593015747647-1c5d6eee-a8cb-47b1-8aed-eb97ad54dd19.png#align=left&amp;display=inline&amp;height=320&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=320&amp;originWidth=972&amp;size=29352&amp;status=done&amp;style=none&amp;width=972" alt="image.png"><br />
-<br />所有节点先重启docker 再重启kubelet</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">systemctl restart docker
+</code></pre></div><p><img src="https://cdn.nlark.com/yuque/0/2020/png/1176682/1593015747647-1c5d6eee-a8cb-47b1-8aed-eb97ad54dd19.png#align=left&display=inline&height=320&margin=%5Bobject%20Object%5D&name=image.png&originHeight=320&originWidth=972&size=29352&status=done&style=none&width=972" alt=image.png><br><br>所有节点先重启docker 再重启kubelet</p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>systemctl restart docker
 systemctl restart kubelet
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@master01 ~]# kubectl get  nodes
+</code></pre></div><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>[root@master01 ~]# kubectl get  nodes
 NAME       STATUS   ROLES    AGE   VERSION
 master01   Ready    master   37m   v1.18.5
 master02   Ready    master   34m   v1.18.5
@@ -940,9 +592,7 @@ master03   Ready    master   33m   v1.18.5
 node01     Ready    node     19m   v1.18.5
 node02     Ready    node     19m   v1.18.5
 node03     Ready    node     19m   v1.18.5
-</code></pre></div><p><a name="demo"></a></p>
-<h3 id="demo测试">demo测试</h3>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">cat&lt;&lt;EOF | kubectl apply -f -
+</code></pre></div><p><a name=demo></a></p><h3 id=demo测试>demo测试</h3><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>cat&lt;&lt;EOF | kubectl apply -f -
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -989,7 +639,7 @@ spec:
     imagePullPolicy: IfNotPresent
   restartPolicy: Always
 EOF
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@master01 ~]# kubectl get all  -o wide
+</code></pre></div><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>[root@master01 ~]# kubectl get all  -o wide
 NAME                         READY   STATUS    RESTARTS   AGE   IP               NODE     NOMINATED NODE   READINESS GATES
 pod/busybox                  1/1     Running   0          73s   10.244.186.194   node03   &lt;none&gt;           &lt;none&gt;
 pod/nginx-5c559d5697-24zck   1/1     Running   0          73s   10.244.186.193   node03   &lt;none&gt;           &lt;none&gt;
@@ -1003,18 +653,13 @@ deployment.apps/nginx   1/1     1            1           73s   nginx        ngin
 
 NAME                               DESIRED   CURRENT   READY   AGE   CONTAINERS   IMAGES         SELECTOR
 replicaset.apps/nginx-5c559d5697   1         1         1       73s   nginx        nginx:alpine   app=nginx,pod-template-hash=5c559d5697
-</code></pre></div><p><a name="439107f4"></a></p>
-<h4 id="验证集群dns">验证集群dns</h4>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@master01 ~]# kubectl exec -ti busybox -- nslookup kubernetes
+</code></pre></div><p><a name=439107f4></a></p><h4 id=验证集群dns>验证集群dns</h4><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>[root@master01 ~]# kubectl exec -ti busybox -- nslookup kubernetes
 Server:		10.96.0.10
 Address:	10.96.0.10#53
 
 Name:	kubernetes.default.svc.cluster.local
 Address: 10.96.0.1
-</code></pre></div><p><a name="72f60fe4"></a></p>
-<h4 id="测试nginx是否通">测试nginx是否通</h4>
-<p><br />在master上curl nginx的pod的ip出现nginx的index内容即集群正常<br /></p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@master01 ~]# curl 10.244.186.193
+</code></pre></div><p><a name=72f60fe4></a></p><h4 id=测试nginx是否通>测试nginx是否通</h4><p><br>在master上curl nginx的pod的ip出现nginx的index内容即集群正常<br></p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>[root@master01 ~]# curl 10.244.186.193
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
@@ -1040,8 +685,7 @@ Commercial support is available at
 &lt;p&gt;&lt;em&gt;Thank you for using nginx.&lt;/em&gt;&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-</code></pre></div><p><br />在master上curl nginx的svc的ip出现nginx的index内容即集群正常<br /></p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@master01 ~]# curl 10.111.219.3
+</code></pre></div><p><br>在master上curl nginx的svc的ip出现nginx的index内容即集群正常<br></p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>[root@master01 ~]# curl 10.111.219.3
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
@@ -1067,17 +711,13 @@ Commercial support is available at
 &lt;p&gt;&lt;em&gt;Thank you for using nginx.&lt;/em&gt;&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-</code></pre></div><p><br />
-<br /></p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@master01 ~]# kubectl exec -ti busybox -- nslookup nginx
+</code></pre></div><p><br><br></p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>[root@master01 ~]# kubectl exec -ti busybox -- nslookup nginx
 Server:		10.96.0.10
 Address:	10.96.0.10#53
 
 Name:	nginx.default.svc.cluster.local
 Address: 10.111.219.3
-</code></pre></div><p><a name="009fab47"></a></p>
-<h4 id="ipvs验证">ipvs验证</h4>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@node01 ~]# ipvsadm -ln
+</code></pre></div><p><a name=009fab47></a></p><h4 id=ipvs验证>ipvs验证</h4><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>[root@node01 ~]# ipvsadm -ln
 IP Virtual Server version 1.2.1 (size=4096)
 Prot LocalAddress:Port Scheduler Flags
   -&gt; RemoteAddress:Port           Forward Weight ActiveConn InActConn
@@ -1096,177 +736,26 @@ TCP  10.111.219.3:80 rr
 UDP  10.96.0.10:53 rr
   -&gt; 10.244.140.65:53             Masq    1      0          0         
   -&gt; 10.244.140.67:53             Masq    1      0          0
-</code></pre></div><p><a name="SMT45"></a></p>
-<h3 id="网络可视化神器-hubble">网络可视化神器 Hubble</h3>
-<p> <code>Cilium</code> 强大之处就是提供了简单高效的网络可视化功能，它是通过 <strong>Hubble</strong> 组件完成的。<strong>Cilium 在 1.7 版本后推出并开源了 Hubble</strong>，它是专门为网络可视化设计，能够利用 <code>Cilium</code> 提供的 <code>eBPF</code> 数据路径，获得对 Kubernetes 应用和服务的网络流量的深度可见性。</p>
-<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback">kubectl edit svc -n kube-system  hubble-ui
-</code></pre></div><p><img src="https://cdn.nlark.com/yuque/0/2020/png/1176682/1594448142087-820ba694-af0a-46cf-af10-f07ad6cdf568.png#align=left&amp;display=inline&amp;height=305&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=305&amp;originWidth=461&amp;size=14334&amp;status=done&amp;style=none&amp;width=461" alt="image.png"><br />
-<br /><img src="https://cdn.nlark.com/yuque/0/2020/png/1176682/1594451204489-5078f6fb-54fe-4afc-a63b-acd44961ee88.png#align=left&amp;display=inline&amp;height=1040&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=1040&amp;originWidth=1920&amp;size=276479&amp;status=done&amp;style=none&amp;width=1920" alt="image.png">
-[转载]https://www.yuque.com/xiaowei-trt7k/tw/ah0ls0</p>
-    </div>
-
-    <div class="post-copyright">
-  <p class="copyright-item">
-    <span class="item-title">文章作者</span>
-    <span class="item-content">🐳Myki</span>
-  </p>
-  <p class="copyright-item">
-    <span class="item-title">上次更新</span>
-    <span class="item-content">
-        2020-09-13
-        
-    </span>
-  </p>
-  
-  
-</div>
-<div class="post-reward">
-  <input type="checkbox" name="reward" id="reward" hidden />
-  <label class="reward-button" for="reward">赞赏支持</label>
-  <div class="qr-code">
-    
-    <label class="qr-code-image" for="reward">
-        <img class="image" src="https://oss.1nth.com/images/1nth/wechat.png">
-        <span>微信打赏</span>
-      </label>
-    <label class="qr-code-image" for="reward">
-        <img class="image" src="https://oss.1nth.com/images/1nth/alipay.png">
-        <span>支付宝打赏</span>
-      </label>
-  </div>
-</div><footer class="post-footer">
-      <div class="post-tags">
-          <a href="/tags/kubernetes/">kubernetes</a>
-          </div>
-      <nav class="post-nav">
-        <a class="prev" href="/post/markdown_hugo_commond/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">markdown注释 hugo注释 heml注释</span>
-            <span class="prev-text nav-mobile">上一篇</span>
-          </a>
-        <a class="next" href="/post/ssl_certbot_install/">
-            <span class="next-text nav-default">使用 Certbot 自动申请并续订阿里云 DNS 免费泛域名证书 ssl证书</span>
-            <span class="next-text nav-mobile">下一篇</span>
-            <i class="iconfont icon-right"></i>
-          </a>
-      </nav>
-    </footer>
-  </article>
-        </div>
-        <div id="disqus_thread"></div>
-    <script type="text/javascript">
-    (function() {
-      
-      
-      if (window.location.hostname === 'localhost') return;
-
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      var disqus_shortname = 'mykifan';
-      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-  
-
-  
-
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="social-links">
-      <a href="mailto:21kixc@gmail.com" class="iconfont icon-email" title="email"></a>
-      <a href="https://github.com/21ki" class="iconfont icon-github" title="github"></a>
-      <a href="http://localhost:1313" class="iconfont icon-weibo" title="weibo"></a>
-  <a href="https://www.1nth.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
-</div>
-
-<div class="copyright">
-  
-
-  <div class="busuanzi-footer">
-    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
-      <span class="division">|</span>
-    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
-  </div>
-
-  <span class="copyright-year">
-    &copy; 
-    2018 - 
-    2020<span class="heart"><i class="iconfont icon-heart"></i></span><span>🐳Myki</span>
-    
-    <a href="https://www.upyun.com/?utm_source=lianmeng&amp;utm_medium=referra"><img src="https://oss.1nth.com/images/1nth/%E5%8F%88%E6%8B%8D%E4%BA%91_logo5.png"align="absmiddle" width="59px" height="30px" /></a>
-    <span>提供加速服务</span>
-    
-  <br>
-    
-    <a href="http://beian.miit.gov.cn"><img src="https://oss.1nth.com/images/1nth/svg/icp.svg" alt="image"></a>
-    
-    <a class="hugo" href="https://oss.1nth.com/images/1nth/svg/hugo.svg" data-fancybox="gallery" data-caption=""><img src="https://oss.1nth.com/images/1nth/svg/hugo.svg" alt="image"></a>
-    <a class="even" href="https://oss.1nth.com/images/1nth/svg/even.svg" data-fancybox="gallery" data-caption=""><img src="https://oss.1nth.com/images/1nth/svg/even.svg" alt="image"></a>
-  </br>
-  </span>
-</div>
-</div>
-
-    </footer>
-
-    <div class="back-to-top" id="back-to-top">
-      <i class="iconfont icon-up"></i>
-    </div>
-  </div>
-  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
-
-
-
-<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
-
-
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-154483127-1', 'auto');
-	ga('set', 'anonymizeIp', true);
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-<script id="baidu_analytics">
-  var _hmt = _hmt || [];
-  (function() {
-    if (window.location.hostname === 'localhost') return;
-    var hm = document.createElement("script"); hm.async = true;
-    hm.src = "https://hm.baidu.com/hm.js?9f5f711a6a3e2fd392b4b02d93529765";
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(hm, s);
-  })();
-</script>
-
-<script id="baidu_push">
-  (function(){
-    if (window.location.hostname === 'localhost') return;
-    var bp = document.createElement('script'); bp.async = true;
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-    }
-    else {
-      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-  })();
-</script>
-
-
-
-
-</body>
-</html>
+</code></pre></div><p><a name=SMT45></a></p><h3 id=网络可视化神器-hubble>网络可视化神器 Hubble</h3><p> <code>Cilium</code> 强大之处就是提供了简单高效的网络可视化功能，它是通过 <strong>Hubble</strong> 组件完成的。<strong>Cilium 在 1.7 版本后推出并开源了 Hubble</strong>，它是专门为网络可视化设计，能够利用 <code>Cilium</code> 提供的 <code>eBPF</code> 数据路径，获得对 Kubernetes 应用和服务的网络流量的深度可见性。</p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>kubectl edit svc -n kube-system  hubble-ui
+</code></pre></div><p><img src="https://cdn.nlark.com/yuque/0/2020/png/1176682/1594448142087-820ba694-af0a-46cf-af10-f07ad6cdf568.png#align=left&display=inline&height=305&margin=%5Bobject%20Object%5D&name=image.png&originHeight=305&originWidth=461&size=14334&status=done&style=none&width=461" alt=image.png><br><br><img src="https://cdn.nlark.com/yuque/0/2020/png/1176682/1594451204489-5078f6fb-54fe-4afc-a63b-acd44961ee88.png#align=left&display=inline&height=1040&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1040&originWidth=1920&size=276479&status=done&style=none&width=1920" alt=image.png>
+[转载]https://www.yuque.com/xiaowei-trt7k/tw/ah0ls0</p></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+<span class=item-content>🐳Myki</span></p><p class=copyright-item><span class=item-title>上次更新</span>
+<span class=item-content>2020-09-13</span></p></div><div class=post-reward><input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label><div class=qr-code><label class=qr-code-image for=reward><img class=image src=https://oss.1nth.com/images/1nth/wechat.png>
+<span>微信打赏</span></label>
+<label class=qr-code-image for=reward><img class=image src=https://oss.1nth.com/images/1nth/alipay.png>
+<span>支付宝打赏</span></label></div></div><footer class=post-footer><div class=post-tags><a href=/tags/kubernetes/>kubernetes</a></div><nav class=post-nav><a class=prev href=/post/markdown_hugo_commond/><i class="iconfont icon-left"></i><span class="prev-text nav-default">markdown注释 hugo注释 heml注释</span>
+<span class="prev-text nav-mobile">上一篇</span></a>
+<a class=next href=/post/ssl_certbot_install/><span class="next-text nav-default">使用 Certbot 自动申请并续订阿里云 DNS 免费泛域名证书 ssl证书</span>
+<span class="next-text nav-mobile">下一篇</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><div id=disqus_thread></div><script type=text/javascript>(function(){if(window.location.hostname==='localhost')return;var dsq=document.createElement('script');dsq.type='text/javascript';dsq.async=true;var disqus_shortname='mykifan';dsq.src='//'+disqus_shortname+'.disqus.com/embed.js';(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(dsq);})();</script><noscript>Please enable JavaScript to view the <a href=http://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:21kixc@gmail.com class="iconfont icon-email" title=email></a><a href=https://github.com/21ki class="iconfont icon-github" title=github></a><a href=http://localhost:1313 class="iconfont icon-weibo" title=weibo></a><a href=https://www.1nth.com/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><div class=busuanzi-footer><span id=busuanzi_container_site_pv>本站总访问量 <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> 次</span>
+<span class=division>|</span>
+<span id=busuanzi_container_site_uv>本站总访客数 <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> 人</span></div><span class=copyright-year>&copy;
+2018 -
+2020<span class=heart><i class="iconfont icon-heart"></i></span><span>🐳Myki</span>
+<a href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referra"><img src=https://oss.1nth.com/images/1nth/%E5%8F%88%E6%8B%8D%E4%BA%91_logo5.png align=absmiddle width=59px height=30px></a>
+<span>提供加速服务</span><br><a href=http://beian.miit.gov.cn><img src=https://oss.1nth.com/images/1nth/svg/icp.svg alt=image></a>
+<a class=hugo href=https://oss.1nth.com/images/1nth/svg/hugo.svg data-fancybox=gallery data-caption><img src=https://oss.1nth.com/images/1nth/svg/hugo.svg alt=image></a>
+<a class=even href=https://oss.1nth.com/images/1nth/svg/even.svg data-fancybox=gallery data-caption><img src=https://oss.1nth.com/images/1nth/svg/even.svg alt=image></a></br></span></div></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js integrity=sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP crossorigin=anonymous></script><link rel=stylesheet href=https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css integrity=sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF crossorigin=anonymous><script type=text/javascript src=/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js></script><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','UA-154483127-1','auto');ga('set','anonymizeIp',true);ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script><script id=baidu_analytics>var _hmt=_hmt||[];(function(){if(window.location.hostname==='localhost')return;var hm=document.createElement("script");hm.async=true;hm.src="https://hm.baidu.com/hm.js?9f5f711a6a3e2fd392b4b02d93529765";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s);})();</script><script id=baidu_push>(function(){if(window.location.hostname==='localhost')return;var bp=document.createElement('script');bp.async=true;var curProtocol=window.location.protocol.split(':')[0];if(curProtocol==='https'){bp.src='https://zz.bdstatic.com/linksubmit/push.js';}
+else{bp.src='http://push.zhanzhang.baidu.com/push.js';}
+var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(bp,s);})();</script></body></html>

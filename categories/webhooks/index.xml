@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>webhooks on Myki的博客</title><link>https://www.1nth.com/categories/webhooks/</link><description>Recent content in webhooks on Myki的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Fri, 09 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://www.1nth.com/categories/webhooks/index.xml" rel="self" type="application/rss+xml"/><item><title>搭建 webhooks 自动部署 Github 代码至自建 Linux 服务器</title><link>https://www.1nth.com/post/webhook-install-auto/</link><pubDate>Fri, 09 Oct 2020 00:00:00 +0000</pubDate><guid>https://www.1nth.com/post/webhook-install-auto/</guid><description>&lt;h3 id="webhook">webhook&lt;/h3>
+&lt;p>博客默认节点部署在github上,服务器部署的从节点,以及又拍云多节点部署,但是每次提交之后都要手动同步有点浪费时间,
+查找文档发现webhook可以实现github有代码变更可以通知其他节点实现所有节点同步的功能,
+webhook有python,php,nodejs等版本
+作为屌丝运维当然首选go了&lt;/p></description></item></channel></rss>

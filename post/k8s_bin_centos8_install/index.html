@@ -1,159 +1,19 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>kubernetes 1.17.0安装在centos8 安装体验 - Myki的博客</title>
-  <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-<meta name="theme-color" content="#f8f5ec" />
-<meta name="msapplication-navbutton-color" content="#f8f5ec">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
-
-
-<meta name="author" content="🐳Myki" /><meta name="description" content="centos8 centos8.1刚刚发布 闲来没事体验一波
-" /><meta name="keywords" content="kubernetes, prometheus2, grafana, 升级" />
-
-
-
-
-
-
-<meta name="generator" content="Hugo 0.74.3 with theme even" />
-
-
-<link rel="canonical" href="https://www.1nth.com/post/k8s_bin_centos8_install/" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/manifest.json">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-<link href="/sass/main.min.af77d61f1e3f88bb52f3adab957d52bc9123d0539d63411ec9fd313fc76a1eb5.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
-
-
-<meta property="og:title" content="kubernetes 1.17.0安装在centos8 安装体验" />
-<meta property="og:description" content="centos8 centos8.1刚刚发布 闲来没事体验一波" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://www.1nth.com/post/k8s_bin_centos8_install/" />
-<meta property="article:published_time" content="2020-01-20T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-01-20T00:00:00+00:00" />
-<meta itemprop="name" content="kubernetes 1.17.0安装在centos8 安装体验">
-<meta itemprop="description" content="centos8 centos8.1刚刚发布 闲来没事体验一波">
-<meta itemprop="datePublished" content="2020-01-20T00:00:00+00:00" />
-<meta itemprop="dateModified" content="2020-01-20T00:00:00+00:00" />
-<meta itemprop="wordCount" content="2969">
-
-
-
-<meta itemprop="keywords" content="kubernetes,linux,centos," />
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="kubernetes 1.17.0安装在centos8 安装体验"/>
-<meta name="twitter:description" content="centos8 centos8.1刚刚发布 闲来没事体验一波"/>
-
-<!--[if lte IE 9]>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
-<![endif]-->
-
-<!--[if lt IE 9]>
-  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
-<![endif]-->
-
-</head>
-<body>
-  <div id="mobile-navbar" class="mobile-navbar">
-  <div class="mobile-header-logo">
-    <a href="/" class="logo">☸💕🚩</a>
-  </div>
-  <div class="mobile-navbar-icon">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-</div>
-<nav id="mobile-menu" class="mobile-menu slideout-menu">
-  <ul class="mobile-menu-list">
-    <a href="/">
-        <li class="mobile-menu-item">Home</li>
-      </a><a href="/post/">
-        <li class="mobile-menu-item">Archives</li>
-      </a><a href="/tags/">
-        <li class="mobile-menu-item">Tags</li>
-      </a><a href="/categories/">
-        <li class="mobile-menu-item">Categories</li>
-      </a><a href="/about/">
-        <li class="mobile-menu-item">About</li>
-      </a>
-  </ul>
-</nav>
-  <div class="container" id="mobile-panel">
-    <header id="header" class="header">
-        <div class="logo-wrapper">
-  <a href="/" class="logo">☸💕🚩</a>
-</div>
-
-<nav class="site-navbar">
-  <ul id="menu" class="menu">
-    <li class="menu-item">
-        <a class="menu-item-link" href="/">Home</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/post/">Archives</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/tags/">Tags</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/categories/">Categories</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/about/">About</a>
-      </li>
-  </ul>
-</nav>
-    </header>
-
-    <main id="main" class="main">
-      <div class="content-wrapper">
-        <div id="content" class="content">
-          <article class="post">
-    
-    <header class="post-header">
-      <h1 class="post-title">kubernetes 1.17.0安装在centos8 安装体验</h1>
-
-      <div class="post-meta">
-        <span class="post-time"> 2020-01-20 </span>
-        <div class="post-category">
-            <a href="/categories/centos/"> centos </a>
-            </div>
-        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
-      </div>
-    </header>
-
-    
-    <div class="post-content">
-      <p><code>centos8 </code>centos8.1刚刚发布 闲来没事体验一波</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#centos8  install</span> 
-<span class="c1">#在启动项添加 网卡命名 禁用ipv6 https://www.aikaiyuan.com/12535.html</span>
-net.ifnames<span class="o">=</span><span class="m">0</span> <span class="nv">biosdevname</span><span class="o">=</span><span class="m">0</span> ipv6.disable<span class="o">=</span><span class="m">1</span>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>kubernetes 1.17.0安装在centos8 安装体验 - Myki的博客</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="🐳Myki"><meta name=description content="centos8 centos8.1刚刚发布 闲来没事体验一波"><meta name=keywords content="kubernetes,prometheus2,grafana,升级"><meta name=generator content="Hugo 0.74.3 with theme even"><link rel=canonical href=https://www.1nth.com/post/k8s_bin_centos8_install/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script><link href=/sass/main.min.a9078c195c76d0b255970a73e8aabe1b54513002dd70ecece9f46c640536ee54.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><link rel=stylesheet href=/css/custom.css><meta property="og:title" content="kubernetes 1.17.0安装在centos8 安装体验"><meta property="og:description" content="centos8 centos8.1刚刚发布 闲来没事体验一波"><meta property="og:type" content="article"><meta property="og:url" content="https://www.1nth.com/post/k8s_bin_centos8_install/"><meta property="article:published_time" content="2020-01-20T00:00:00+00:00"><meta property="article:modified_time" content="2020-01-20T00:00:00+00:00"><meta itemprop=name content="kubernetes 1.17.0安装在centos8 安装体验"><meta itemprop=description content="centos8 centos8.1刚刚发布 闲来没事体验一波"><meta itemprop=datePublished content="2020-01-20T00:00:00+00:00"><meta itemprop=dateModified content="2020-01-20T00:00:00+00:00"><meta itemprop=wordCount content="2969"><meta itemprop=keywords content="kubernetes,linux,centos,"><meta name=twitter:card content="summary"><meta name=twitter:title content="kubernetes 1.17.0安装在centos8 安装体验"><meta name=twitter:description content="centos8 centos8.1刚刚发布 闲来没事体验一波"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>☸💕🚩</a></div><div class=mobile-navbar-icon><span></span><span></span><span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/categories/><li class=mobile-menu-item>Categories</li></a><a href=/about/><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>☸💕🚩</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/categories/>Categories</a></li><li class=menu-item><a class=menu-item-link href=/about/>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>kubernetes 1.17.0安装在centos8 安装体验</h1><div class=post-meta><span class=post-time>2020-01-20</span><div class=post-category><a href=/categories/centos/>centos</a></div><span id=busuanzi_container_page_pv class=more-meta><span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> 次阅读</span></div></header><div class=post-content><p><code>centos8 </code>centos8.1刚刚发布 闲来没事体验一波</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell><span class=c1>#centos8  install</span> 
+<span class=c1>#在启动项添加 网卡命名 禁用ipv6 https://www.aikaiyuan.com/12535.html</span>
+net.ifnames<span class=o>=</span><span class=m>0</span> <span class=nv>biosdevname</span><span class=o>=</span><span class=m>0</span> ipv6.disable<span class=o>=</span><span class=m>1</span>
 cat /etc/default/grub 
-sed <span class="s1">&#39;s/quiet/net.ifnames=0 biosdevname=0 ipv6.disable=1 quiet/g&#39;</span> /etc/default/grub
+sed <span class=s1>&#39;s/quiet/net.ifnames=0 biosdevname=0 ipv6.disable=1 quiet/g&#39;</span> /etc/default/grub
 grub2-mkconfig -o /boot/grub2/grub.cfg 
-<span class="c1"># 内核地址 https://elrepo.org/linux/kernel/el7/x86_64/RPMS/</span>
-<span class="c1">#  历史版本http://www.jules.fm/elrepo/archive/kernel/el7/x86_64/RPMS/</span>
-<span class="c1">#   https://mirror.yandex.ru/fedora/elrepo/archive/kernel/el7/x86_64/RPMS/</span>
+<span class=c1># 内核地址 https://elrepo.org/linux/kernel/el7/x86_64/RPMS/</span>
+<span class=c1>#  历史版本http://www.jules.fm/elrepo/archive/kernel/el7/x86_64/RPMS/</span>
+<span class=c1>#   https://mirror.yandex.ru/fedora/elrepo/archive/kernel/el7/x86_64/RPMS/</span>
 
 
-<span class="c1">#网络配置 https://www.linuxrumen.com/rmxx/973.html</span>
+<span class=c1>#网络配置 https://www.linuxrumen.com/rmxx/973.html</span>
 nmcli connection modify eth ipv4.addresses 192.168.1.11/24
 nmcli connection modify eth0 ipv4.dns 223.5.5.5 ipv4.gateway 192.168.1.254
-nmcli con modify eth0 connection.autoconnect yes  <span class="c1">#对应onboot=yes</span>
-nmcli connection modify eth0 ipv4.method manual <span class="c1">#对应的是stati=manual  auto=dhcp</span>
+nmcli con modify eth0 connection.autoconnect yes  <span class=c1>#对应onboot=yes</span>
+nmcli connection modify eth0 ipv4.method manual <span class=c1>#对应的是stati=manual  auto=dhcp</span>
 cmcli c up eth0
 nmcli device connect eth0
 nmcli device reapply eth0
@@ -162,452 +22,452 @@ systemctl restart NetworkManager
 
 
 
-<span class="c1">#系统优化</span>
-setenforce <span class="m">0</span>
-sed -i <span class="s1">&#39;/^SELINUX=/cSELINUX=disabled&#39;</span> /etc/selinux/config
+<span class=c1>#系统优化</span>
+setenforce <span class=m>0</span>
+sed -i <span class=s1>&#39;/^SELINUX=/cSELINUX=disabled&#39;</span> /etc/selinux/config
 systemctl disable --now firewalld 
 swapoff -a
-sed -i <span class="s1">&#39;/^#UseDNS yes/cUseDNS no&#39;</span> /etc/ssh/sshd_config
-yes <span class="p">|</span> cp /etc/fstab /etc/fstab_bak
-cat /etc/fstab_bak <span class="p">|</span>grep -v swap &gt; /etc/fstab
+sed -i <span class=s1>&#39;/^#UseDNS yes/cUseDNS no&#39;</span> /etc/ssh/sshd_config
+yes <span class=p>|</span> cp /etc/fstab /etc/fstab_bak
+cat /etc/fstab_bak <span class=p>|</span>grep -v swap &gt; /etc/fstab
 
 
-<span class="c1">#加载内核模块</span>
-cat &gt; /etc/modules-load.d/10-k8s-modules.conf <span class="s">&lt;&lt;EOF
-</span><span class="s">br_netfilter
-</span><span class="s">ip_vs
-</span><span class="s">ip_vs_rr
-</span><span class="s">ip_vs_wrr
-</span><span class="s">ip_vs_sh
-</span><span class="s">nf_conntrack_ipv4
-</span><span class="s">nf_conntrack
-</span><span class="s">EOF</span>
+<span class=c1>#加载内核模块</span>
+cat &gt; /etc/modules-load.d/10-k8s-modules.conf <span class=s>&lt;&lt;EOF
+</span><span class=s>br_netfilter
+</span><span class=s>ip_vs
+</span><span class=s>ip_vs_rr
+</span><span class=s>ip_vs_wrr
+</span><span class=s>ip_vs_sh
+</span><span class=s>nf_conntrack_ipv4
+</span><span class=s>nf_conntrack
+</span><span class=s>EOF</span>
 
 
-cat <span class="s">&lt;&lt;EOF &gt; /etc/sysctl.d/95-k8s-sysctl.conf
-</span><span class="s">net.ipv4.tcp_keepalive_time = 600
-</span><span class="s">net.ipv4.tcp_keepalive_intvl = 30
-</span><span class="s">net.ipv4.tcp_keepalive_probes = 10
-</span><span class="s">net.ipv6.conf.all.disable_ipv6 = 1
-</span><span class="s">net.ipv6.conf.default.disable_ipv6 = 1
-</span><span class="s">net.ipv6.conf.lo.disable_ipv6 = 1
-</span><span class="s">net.ipv4.neigh.default.gc_stale_time = 120
-</span><span class="s">net.ipv4.conf.all.rp_filter = 0
-</span><span class="s">net.ipv4.conf.default.rp_filter = 0
-</span><span class="s">net.ipv4.conf.default.arp_announce = 2
-</span><span class="s">net.ipv4.conf.lo.arp_announce = 2
-</span><span class="s">net.ipv4.conf.all.arp_announce = 2
-</span><span class="s">net.ipv4.ip_forward = 1
-</span><span class="s">net.ipv4.tcp_max_tw_buckets = 5000
-</span><span class="s">net.ipv4.tcp_syncookies = 1
-</span><span class="s">net.ipv4.tcp_max_syn_backlog = 1024
-</span><span class="s">net.ipv4.tcp_synack_retries = 2
-</span><span class="s">net.bridge.bridge-nf-call-ip6tables = 1
-</span><span class="s">net.bridge.bridge-nf-call-iptables = 1
-</span><span class="s">net.netfilter.nf_conntrack_max = 2310720
-</span><span class="s">fs.inotify.max_user_watches=89100
-</span><span class="s">fs.may_detach_mounts = 1
-</span><span class="s">fs.file-max = 52706963
-</span><span class="s">fs.nr_open = 52706963
-</span><span class="s">net.bridge.bridge-nf-call-arptables = 1
-</span><span class="s">vm.swappiness = 0
-</span><span class="s">vm.overcommit_memory=1
-</span><span class="s">vm.panic_on_oom=0
-</span><span class="s">EOF</span>
+cat <span class=s>&lt;&lt;EOF &gt; /etc/sysctl.d/95-k8s-sysctl.conf
+</span><span class=s>net.ipv4.tcp_keepalive_time = 600
+</span><span class=s>net.ipv4.tcp_keepalive_intvl = 30
+</span><span class=s>net.ipv4.tcp_keepalive_probes = 10
+</span><span class=s>net.ipv6.conf.all.disable_ipv6 = 1
+</span><span class=s>net.ipv6.conf.default.disable_ipv6 = 1
+</span><span class=s>net.ipv6.conf.lo.disable_ipv6 = 1
+</span><span class=s>net.ipv4.neigh.default.gc_stale_time = 120
+</span><span class=s>net.ipv4.conf.all.rp_filter = 0
+</span><span class=s>net.ipv4.conf.default.rp_filter = 0
+</span><span class=s>net.ipv4.conf.default.arp_announce = 2
+</span><span class=s>net.ipv4.conf.lo.arp_announce = 2
+</span><span class=s>net.ipv4.conf.all.arp_announce = 2
+</span><span class=s>net.ipv4.ip_forward = 1
+</span><span class=s>net.ipv4.tcp_max_tw_buckets = 5000
+</span><span class=s>net.ipv4.tcp_syncookies = 1
+</span><span class=s>net.ipv4.tcp_max_syn_backlog = 1024
+</span><span class=s>net.ipv4.tcp_synack_retries = 2
+</span><span class=s>net.bridge.bridge-nf-call-ip6tables = 1
+</span><span class=s>net.bridge.bridge-nf-call-iptables = 1
+</span><span class=s>net.netfilter.nf_conntrack_max = 2310720
+</span><span class=s>fs.inotify.max_user_watches=89100
+</span><span class=s>fs.may_detach_mounts = 1
+</span><span class=s>fs.file-max = 52706963
+</span><span class=s>fs.nr_open = 52706963
+</span><span class=s>net.bridge.bridge-nf-call-arptables = 1
+</span><span class=s>vm.swappiness = 0
+</span><span class=s>vm.overcommit_memory=1
+</span><span class=s>vm.panic_on_oom=0
+</span><span class=s>EOF</span>
 
 sysctl --system
 
-<span class="c1">#预留内存,避免由于内存耗尽导致ssh连不上主机,比如100M，资源充足建议大点</span>
-cat <span class="s">&lt;&lt;EOF &gt; /etc/sysctl.conf
-</span><span class="s">vm.min_free_kbytes=100000
-</span><span class="s">net.ipv4.tcp_keepalive_time = 50
-</span><span class="s">net.ipv4.ip_local_port_range = 1024 65000
-</span><span class="s">net.ipv4.tcp_max_syn_backlog = 8192
-</span><span class="s">net.ipv4.tcp_max_tw_buckets = 3000
-</span><span class="s">net.ipv4.tcp_syncookies = 1
-</span><span class="s">net.ipv4.tcp_tw_reuse = 1
-</span><span class="s">net.ipv4.tcp_tw_recycle = 1
-</span><span class="s">net.ipv4.tcp_fin_timeout = 30
-</span><span class="s">net.ipv4.ip_forward = 1
-</span><span class="s">EOF</span>
+<span class=c1>#预留内存,避免由于内存耗尽导致ssh连不上主机,比如100M，资源充足建议大点</span>
+cat <span class=s>&lt;&lt;EOF &gt; /etc/sysctl.conf
+</span><span class=s>vm.min_free_kbytes=100000
+</span><span class=s>net.ipv4.tcp_keepalive_time = 50
+</span><span class=s>net.ipv4.ip_local_port_range = 1024 65000
+</span><span class=s>net.ipv4.tcp_max_syn_backlog = 8192
+</span><span class=s>net.ipv4.tcp_max_tw_buckets = 3000
+</span><span class=s>net.ipv4.tcp_syncookies = 1
+</span><span class=s>net.ipv4.tcp_tw_reuse = 1
+</span><span class=s>net.ipv4.tcp_tw_recycle = 1
+</span><span class=s>net.ipv4.tcp_fin_timeout = 30
+</span><span class=s>net.ipv4.ip_forward = 1
+</span><span class=s>EOF</span>
 sysctl -p
 
-cat <span class="s">&lt;&lt;EOF &gt;&gt;/etc/security/limits.conf
-</span><span class="s">* soft nofile 65536
-</span><span class="s">* hard nofile 65536
-</span><span class="s">* soft nproc 65536
-</span><span class="s">* hard nproc 65536
-</span><span class="s">* soft  memlock  unlimited
-</span><span class="s">* hard memlock  unlimited
-</span><span class="s">EOF</span>
+cat <span class=s>&lt;&lt;EOF &gt;&gt;/etc/security/limits.conf
+</span><span class=s>* soft nofile 65536
+</span><span class=s>* hard nofile 65536
+</span><span class=s>* soft nproc 65536
+</span><span class=s>* hard nproc 65536
+</span><span class=s>* soft  memlock  unlimited
+</span><span class=s>* hard memlock  unlimited
+</span><span class=s>EOF</span>
 
 dnf -y install chrony git vim wget nfs-utils socat bash-completion  conntrack-tools ipset ipvsadm libseccomp psmisc rsync
-<span class="c1">#安装基础软件包</span>
+<span class=c1>#安装基础软件包</span>
 - name: 安装基础软件包
   yum: 
     name: 
-      - bash-completion     <span class="c1"># bash命令补全工具，需要重新登录服务器生效</span>
-      - conntrack-tools     <span class="c1"># ipvs 模式需要</span>
-      - ipset               <span class="c1"># ipvs 模式需要</span>
-      - ipvsadm             <span class="c1"># ipvs 模式需要</span>
-      - libseccomp          <span class="c1"># 安装containerd需要</span>
-      - nfs-utils           <span class="c1"># 挂载nfs 共享文件需要 (创建基于 nfs的PV 需要)</span>
-      - psmisc              <span class="c1"># 安装psmisc 才能使用命令killall，keepalive的监测脚本需要</span>
-      - rsync               <span class="c1"># 文件同步工具，分发证书等配置文件需要</span>
-      - socat               <span class="c1"># 用于port forwarding</span>
+      - bash-completion     <span class=c1># bash命令补全工具，需要重新登录服务器生效</span>
+      - conntrack-tools     <span class=c1># ipvs 模式需要</span>
+      - ipset               <span class=c1># ipvs 模式需要</span>
+      - ipvsadm             <span class=c1># ipvs 模式需要</span>
+      - libseccomp          <span class=c1># 安装containerd需要</span>
+      - nfs-utils           <span class=c1># 挂载nfs 共享文件需要 (创建基于 nfs的PV 需要)</span>
+      - psmisc              <span class=c1># 安装psmisc 才能使用命令killall，keepalive的监测脚本需要</span>
+      - rsync               <span class=c1># 文件同步工具，分发证书等配置文件需要</span>
+      - socat               <span class=c1># 用于port forwarding</span>
     state: present
-  when: <span class="s1">&#39;INSTALL_SOURCE != &#34;offline&#34;&#39;</span>
-<span class="c1">#同步下时间先</span>
+  when: <span class=s1>&#39;INSTALL_SOURCE != &#34;offline&#34;&#39;</span>
+<span class=c1>#同步下时间先</span>
 systemctl is-enabled chronyd
-timedatectl list-timezones <span class="c1"># 列出所有时区</span>
-timedatectl set-local-rtc <span class="m">1</span> <span class="c1"># 将硬件时钟调整为与本地时钟一致, 0 为设置为 UTC 时间</span>
-timedatectl set-timezone Asia/Shanghai <span class="c1"># 设置系统时区为上海</span>
-timedatectl set-ntp yes <span class="c1"># 设置开启自动同步</span>
+timedatectl list-timezones <span class=c1># 列出所有时区</span>
+timedatectl set-local-rtc <span class=m>1</span> <span class=c1># 将硬件时钟调整为与本地时钟一致, 0 为设置为 UTC 时间</span>
+timedatectl set-timezone Asia/Shanghai <span class=c1># 设置系统时区为上海</span>
+timedatectl set-ntp yes <span class=c1># 设置开启自动同步</span>
 
 systemctl disable --now firewalld
-systemctl disable --now dnsmasqsetenforce <span class="m">0</span>
+systemctl disable --now dnsmasqsetenforce <span class=m>0</span>
 dnf install -y ntpdate chrony
-systemctl <span class="nb">enable</span> --now chronyd
+systemctl <span class=nb>enable</span> --now chronyd
 
-<span class="c1">#docker install</span>
+<span class=c1>#docker install</span>
 dnf install -y yum-utils device-mapper-persistent-data lvm2
 curl  https://download.docker.com/linux/centos/docker-ce.repo -o /etc/yum.repos.d/docker-ce.repo
-dnf config-manager --add-repo<span class="o">=</span>https://download.docker.com/linux/centos/docker-ce.repo
+dnf config-manager --add-repo<span class=o>=</span>https://download.docker.com/linux/centos/docker-ce.repo
 dnf makecache
 curl -x socks5://192.168.1.118:3213 -O https://download.docker.com/linux/centos/7/x86_64/edge/Packages/containerd.io-1.2.6-3.3.el7.x86_64.rpm
 dnf -y install containerd.io-1.2.6-3.3.el7.x86_64.rpm
 dnf install docker-ce -y
-systemctl <span class="nb">enable</span> --now docker
+systemctl <span class=nb>enable</span> --now docker
 docker info
 
-cat &gt; /etc/docker/daemon.json <span class="s">&lt;&lt; EOF
-</span><span class="s">{
-</span><span class="s">  &#34;exec-opts&#34;: [&#34;native.cgroupdriver=systemd&#34;],
-</span><span class="s">  &#34;registry-mirrors&#34;: [&#34;https://dockerhub.azk8s.cn&#34;, &#34;https://docker.mirrors.ustc.edu.cn&#34;, &#34;http://hub-mirror.c.163.com/&#34;, &#34;https://registry.docker-cn.com&#34;], 
-</span><span class="s">  &#34;storage-driver&#34;: &#34;overlay2&#34;,
-</span><span class="s">  &#34;storage-opts&#34;: [&#34;overlay2.override_kernel_check=true&#34;],
-</span><span class="s">  &#34;insecure-registries&#34;: [&#34;127.0.0.1/8&#34;],
-</span><span class="s">  &#34;max-concurrent-downloads&#34;: 10,
-</span><span class="s">  &#34;log-driver&#34;: &#34;json-file&#34;,
-</span><span class="s">  &#34;log-level&#34;: &#34;warn&#34;,
-</span><span class="s">  &#34;log-opts&#34;: {
-</span><span class="s">    &#34;max-size&#34;: &#34;10m&#34;,
-</span><span class="s">    &#34;max-file&#34;: &#34;3&#34;
-</span><span class="s">    },
-</span><span class="s">  &#34;data-root&#34;: &#34;/var/lib/docker&#34;
-</span><span class="s">}
-</span><span class="s">EOF</span>
+cat &gt; /etc/docker/daemon.json <span class=s>&lt;&lt; EOF
+</span><span class=s>{
+</span><span class=s>  &#34;exec-opts&#34;: [&#34;native.cgroupdriver=systemd&#34;],
+</span><span class=s>  &#34;registry-mirrors&#34;: [&#34;https://dockerhub.azk8s.cn&#34;, &#34;https://docker.mirrors.ustc.edu.cn&#34;, &#34;http://hub-mirror.c.163.com/&#34;, &#34;https://registry.docker-cn.com&#34;], 
+</span><span class=s>  &#34;storage-driver&#34;: &#34;overlay2&#34;,
+</span><span class=s>  &#34;storage-opts&#34;: [&#34;overlay2.override_kernel_check=true&#34;],
+</span><span class=s>  &#34;insecure-registries&#34;: [&#34;127.0.0.1/8&#34;],
+</span><span class=s>  &#34;max-concurrent-downloads&#34;: 10,
+</span><span class=s>  &#34;log-driver&#34;: &#34;json-file&#34;,
+</span><span class=s>  &#34;log-level&#34;: &#34;warn&#34;,
+</span><span class=s>  &#34;log-opts&#34;: {
+</span><span class=s>    &#34;max-size&#34;: &#34;10m&#34;,
+</span><span class=s>    &#34;max-file&#34;: &#34;3&#34;
+</span><span class=s>    },
+</span><span class=s>  &#34;data-root&#34;: &#34;/var/lib/docker&#34;
+</span><span class=s>}
+</span><span class=s>EOF</span>
 systemctl daemon-reload
 systemctl restart docker
-systemctl <span class="nb">enable</span> docker
+systemctl <span class=nb>enable</span> docker
 
-<span class="c1">#设置hostname   https://www.bbsmax.com/A/QW5YNkqqdm/</span>
+<span class=c1>#设置hostname   https://www.bbsmax.com/A/QW5YNkqqdm/</span>
 hostnamectl set-hostname k8s-master01
-<span class="c1">#设置hosts</span>
-cat <span class="s">&lt;&lt;EOF &gt;&gt; /etc/hosts
-</span><span class="s">192.168.1.241   k8s-master01
-</span><span class="s">192.168.1.242   k8s-master02
-</span><span class="s">192.168.1.243   k8s-master03
-</span><span class="s">192.168.1.244   k8s-node01
-</span><span class="s">192.168.1.11    k8s-master-lb
-</span><span class="s">EOF</span>
-lsmod <span class="p">|</span> grep -e ip_vs -e nf_conntrack_ipv4
+<span class=c1>#设置hosts</span>
+cat <span class=s>&lt;&lt;EOF &gt;&gt; /etc/hosts
+</span><span class=s>192.168.1.241   k8s-master01
+</span><span class=s>192.168.1.242   k8s-master02
+</span><span class=s>192.168.1.243   k8s-master03
+</span><span class=s>192.168.1.244   k8s-node01
+</span><span class=s>192.168.1.11    k8s-master-lb
+</span><span class=s>EOF</span>
+lsmod <span class=p>|</span> grep -e ip_vs -e nf_conntrack_ipv4
 hostnamectl set-hostname k8s-master01
 hostnamectl set-hostname k8s-node01
-swapoff -a <span class="o">&amp;&amp;</span> sysctl -w vm.swappiness<span class="o">=</span><span class="m">0</span>
-vm.swappiness <span class="o">=</span> <span class="m">0</span>
+swapoff -a <span class=o>&amp;&amp;</span> sysctl -w vm.swappiness<span class=o>=</span><span class=m>0</span>
+vm.swappiness <span class=o>=</span> <span class=m>0</span>
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-<span class="nb">echo</span> <span class="s1">&#39;Asia/Shanghai&#39;</span> /etc/timezone
+<span class=nb>echo</span> <span class=s1>&#39;Asia/Shanghai&#39;</span> /etc/timezone
 ntpdate time2.aliyun.com
 ssh-keygen -t rsa
-<span class="c1">#配置免密</span>
-ssh-keygen -t ed25519 -C <span class="s2">&#34;myki&#34;</span>
-<span class="k">for</span> i in k8s-master01 k8s-master02 k8s-master03 k8s-node01<span class="p">;</span><span class="k">do</span> ssh-copy-id -i .ssh/id_ed25519.pub <span class="nv">$i</span><span class="p">;</span><span class="k">done</span>
+<span class=c1>#配置免密</span>
+ssh-keygen -t ed25519 -C <span class=s2>&#34;myki&#34;</span>
+<span class=k>for</span> i in k8s-master01 k8s-master02 k8s-master03 k8s-node01<span class=p>;</span><span class=k>do</span> ssh-copy-id -i .ssh/id_ed25519.pub <span class=nv>$i</span><span class=p>;</span><span class=k>done</span>
 dnf install wget jq psmisc vim net-tools yum-utils device-mapper-persistent-data lvm2 git -y
 
-<span class="c1">#Master01下载安装文件</span>
-git config --global http.proxy <span class="s1">&#39;socks5://192.168.1.118:3213&#39;</span>
-git config --global https.proxy <span class="s1">&#39;socks5://192.168.1.118:3213&#39;</span>
+<span class=c1>#Master01下载安装文件</span>
+git config --global http.proxy <span class=s1>&#39;socks5://192.168.1.118:3213&#39;</span>
+git config --global https.proxy <span class=s1>&#39;socks5://192.168.1.118:3213&#39;</span>
 git clone https://github.com/dotbalo/k8s-ha-install.git
 git checkout manual-installation-v1.17.x
 
 
-<span class="c1">#k8s组件安装</span>
+<span class=c1>#k8s组件安装</span>
 wget https://storage.googleapis.com/kubernetes-release/release/v1.17.0/kubernetes-server-linux-amd64.tar.gz
 wget https://github.com/etcd-io/etcd/releases/download/v3.3.18/etcd-v3.3.18-linux-amd64.tar.gz
-tar -xf kubernetes-server-linux-amd64.tar.gz  --strip-components<span class="o">=</span><span class="m">3</span> -C /usr/local/bin kubernetes/server/bin/kube<span class="o">{</span>let,ctl,-apiserver,-controller-manager,-scheduler,-proxy<span class="o">}</span>
-tar -zxvf etcd-v3.3.18-linux-amd64.tar.gz --strip-components<span class="o">=</span><span class="m">1</span> -C /usr/local/bin etcd-v3.3.18-linux-amd64/etcd<span class="o">{</span>,ctl<span class="o">}</span>
+tar -xf kubernetes-server-linux-amd64.tar.gz  --strip-components<span class=o>=</span><span class=m>3</span> -C /usr/local/bin kubernetes/server/bin/kube<span class=o>{</span>let,ctl,-apiserver,-controller-manager,-scheduler,-proxy<span class=o>}</span>
+tar -zxvf etcd-v3.3.18-linux-amd64.tar.gz --strip-components<span class=o>=</span><span class=m>1</span> -C /usr/local/bin etcd-v3.3.18-linux-amd64/etcd<span class=o>{</span>,ctl<span class=o>}</span>
 kubectl version
 etcdctl -v
 
-<span class="c1">#将组件发送到其他节点</span>
-<span class="nv">MasterNodes</span><span class="o">=</span><span class="s1">&#39;k8s-master02 k8s-master03&#39;</span>
-<span class="nv">WorkNodes</span><span class="o">=</span><span class="s1">&#39;k8s-node01&#39;</span>
-<span class="k">for</span> NODE in <span class="nv">$MasterNodes</span><span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> <span class="nv">$NODE</span><span class="p">;</span> scp /usr/local/bin/kube<span class="o">{</span>let,ctl,-apiserver,-controller-manager,-scheduler,-proxy<span class="o">}</span> <span class="nv">$NODE</span>:/usr/local/bin/<span class="p">;</span> scp /usr/local/bin/etcd* <span class="nv">$NODE</span>:/usr/local/bin/<span class="p">;</span> <span class="k">done</span>
-<span class="k">for</span> NODE in <span class="nv">$WorkNodes</span><span class="p">;</span> <span class="k">do</span>     scp /usr/local/bin/kube<span class="o">{</span>let,-proxy<span class="o">}</span> <span class="nv">$NODE</span>:/usr/local/bin/ <span class="p">;</span> <span class="k">done</span>
+<span class=c1>#将组件发送到其他节点</span>
+<span class=nv>MasterNodes</span><span class=o>=</span><span class=s1>&#39;k8s-master02 k8s-master03&#39;</span>
+<span class=nv>WorkNodes</span><span class=o>=</span><span class=s1>&#39;k8s-node01&#39;</span>
+<span class=k>for</span> NODE in <span class=nv>$MasterNodes</span><span class=p>;</span> <span class=k>do</span> <span class=nb>echo</span> <span class=nv>$NODE</span><span class=p>;</span> scp /usr/local/bin/kube<span class=o>{</span>let,ctl,-apiserver,-controller-manager,-scheduler,-proxy<span class=o>}</span> <span class=nv>$NODE</span>:/usr/local/bin/<span class=p>;</span> scp /usr/local/bin/etcd* <span class=nv>$NODE</span>:/usr/local/bin/<span class=p>;</span> <span class=k>done</span>
+<span class=k>for</span> NODE in <span class=nv>$WorkNodes</span><span class=p>;</span> <span class=k>do</span>     scp /usr/local/bin/kube<span class=o>{</span>let,-proxy<span class=o>}</span> <span class=nv>$NODE</span>:/usr/local/bin/ <span class=p>;</span> <span class=k>done</span>
 
-<span class="c1">#CNI安装，下载CNI组件</span>
+<span class=c1>#CNI安装，下载CNI组件</span>
 wget  https://github.com/containernetworking/plugins/releases/download/v0.7.5/cni-plugins-amd64-v0.7.5.tgz
-<span class="c1">#所有节点创建/opt/cni/bin目录</span>
+<span class=c1>#所有节点创建/opt/cni/bin目录</span>
 mkdir -p /opt/cni/bin
 tar -zxf cni-plugins-amd64-v0.7.5.tgz -C /opt/cni/bin
-<span class="k">for</span> NODE in <span class="nv">$MasterNodes</span><span class="p">;</span> <span class="k">do</span>     ssh <span class="nv">$NODE</span> <span class="s1">&#39;mkdir -p /opt/cni/bin&#39;</span><span class="p">;</span>     scp /opt/cni/bin/* <span class="nv">$NODE</span>:/opt/cni/bin/<span class="p">;</span> <span class="k">done</span>
-<span class="k">for</span> NODE in <span class="nv">$WorkNodes</span><span class="p">;</span> <span class="k">do</span>     ssh <span class="nv">$NODE</span> <span class="s1">&#39;mkdir -p /opt/cni/bin&#39;</span><span class="p">;</span>     scp /opt/cni/bin/* <span class="nv">$NODE</span>:/opt/cni/bin/<span class="p">;</span> <span class="k">done</span>
+<span class=k>for</span> NODE in <span class=nv>$MasterNodes</span><span class=p>;</span> <span class=k>do</span>     ssh <span class=nv>$NODE</span> <span class=s1>&#39;mkdir -p /opt/cni/bin&#39;</span><span class=p>;</span>     scp /opt/cni/bin/* <span class=nv>$NODE</span>:/opt/cni/bin/<span class=p>;</span> <span class=k>done</span>
+<span class=k>for</span> NODE in <span class=nv>$WorkNodes</span><span class=p>;</span> <span class=k>do</span>     ssh <span class=nv>$NODE</span> <span class=s1>&#39;mkdir -p /opt/cni/bin&#39;</span><span class=p>;</span>     scp /opt/cni/bin/* <span class=nv>$NODE</span>:/opt/cni/bin/<span class=p>;</span> <span class=k>done</span>
 
 
-<span class="c1">#生成证书</span>
-wget <span class="s2">&#34;https://pkg.cfssl.org/R1.2/cfssl_linux-amd64&#34;</span> -O /usr/local/bin/cfssl
-wget <span class="s2">&#34;https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64&#34;</span> -O /usr/local/bin/cfssljson
+<span class=c1>#生成证书</span>
+wget <span class=s2>&#34;https://pkg.cfssl.org/R1.2/cfssl_linux-amd64&#34;</span> -O /usr/local/bin/cfssl
+wget <span class=s2>&#34;https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64&#34;</span> -O /usr/local/bin/cfssljson
 wget https://pkg.cfssl.org/R1.2/cfssl-certinfo_linux-amd64 -O /usr/local/bin/cfssl-certinfo
 chmod +x /usr/local/bin/cfssl*
 
-<span class="c1">#Master01节点生成etcd证书</span>
+<span class=c1>#Master01节点生成etcd证书</span>
 mkdir /etc/etcd/ssl -p
-<span class="nb">cd</span> k8s-ha-install/
+<span class=nb>cd</span> k8s-ha-install/
 git checkout manual-installation-v1.17.x
-<span class="nb">cd</span> pki/
+<span class=nb>cd</span> pki/
 
-cfssl gencert -initca etcd-ca-csr.json <span class="p">|</span> cfssljson -bare /etc/etcd/ssl/etcd-ca
-cfssl gencert <span class="se">\
-</span><span class="se"></span>   -ca<span class="o">=</span>/etc/etcd/ssl/etcd-ca.pem <span class="se">\
-</span><span class="se"></span>   -ca-key<span class="o">=</span>/etc/etcd/ssl/etcd-ca-key.pem <span class="se">\
-</span><span class="se"></span>   -config<span class="o">=</span>ca-config.json <span class="se">\
-</span><span class="se"></span>   -hostname<span class="o">=</span>127.0.0.1,k8s-master01,k8s-master02,k8s-master03,192.168.1.241,192.168.1.242,192.168.1.243 <span class="se">\
-</span><span class="se"></span>   -profile<span class="o">=</span>kubernetes <span class="se">\
-</span><span class="se"></span>   etcd-csr.json <span class="p">|</span> cfssljson -bare /etc/etcd/ssl/etcd
+cfssl gencert -initca etcd-ca-csr.json <span class=p>|</span> cfssljson -bare /etc/etcd/ssl/etcd-ca
+cfssl gencert <span class=se>\
+</span><span class=se></span>   -ca<span class=o>=</span>/etc/etcd/ssl/etcd-ca.pem <span class=se>\
+</span><span class=se></span>   -ca-key<span class=o>=</span>/etc/etcd/ssl/etcd-ca-key.pem <span class=se>\
+</span><span class=se></span>   -config<span class=o>=</span>ca-config.json <span class=se>\
+</span><span class=se></span>   -hostname<span class=o>=</span>127.0.0.1,k8s-master01,k8s-master02,k8s-master03,192.168.1.241,192.168.1.242,192.168.1.243 <span class=se>\
+</span><span class=se></span>   -profile<span class=o>=</span>kubernetes <span class=se>\
+</span><span class=se></span>   etcd-csr.json <span class=p>|</span> cfssljson -bare /etc/etcd/ssl/etcd
 
-<span class="c1">#将证书复制到其他节点</span>
-<span class="k">for</span> NODE in <span class="nv">$MasterNodes</span><span class="p">;</span> <span class="k">do</span>
-     ssh <span class="nv">$NODE</span> <span class="s2">&#34;mkdir -p /etc/etcd/ssl&#34;</span>
-     <span class="k">for</span> FILE in etcd-ca-key.pem  etcd-ca.pem  etcd-key.pem  etcd.pem<span class="p">;</span> <span class="k">do</span>
-       scp /etc/etcd/ssl/<span class="si">${</span><span class="nv">FILE</span><span class="si">}</span> <span class="nv">$NODE</span>:/etc/etcd/ssl/<span class="si">${</span><span class="nv">FILE</span><span class="si">}</span>
-     <span class="k">done</span>
- <span class="k">done</span>
+<span class=c1>#将证书复制到其他节点</span>
+<span class=k>for</span> NODE in <span class=nv>$MasterNodes</span><span class=p>;</span> <span class=k>do</span>
+     ssh <span class=nv>$NODE</span> <span class=s2>&#34;mkdir -p /etc/etcd/ssl&#34;</span>
+     <span class=k>for</span> FILE in etcd-ca-key.pem  etcd-ca.pem  etcd-key.pem  etcd.pem<span class=p>;</span> <span class=k>do</span>
+       scp /etc/etcd/ssl/<span class=si>${</span><span class=nv>FILE</span><span class=si>}</span> <span class=nv>$NODE</span>:/etc/etcd/ssl/<span class=si>${</span><span class=nv>FILE</span><span class=si>}</span>
+     <span class=k>done</span>
+ <span class=k>done</span>
 
-<span class="c1">#生成kubernetes证书 所有节点创建kubernetes相关目录</span>
+<span class=c1>#生成kubernetes证书 所有节点创建kubernetes相关目录</span>
 mkdir -p /etc/kubernetes/pki
-cfssl gencert -initca ca-csr.json <span class="p">|</span> cfssljson -bare /etc/kubernetes/pki/ca
-cfssl gencert   -ca<span class="o">=</span>/etc/kubernetes/pki/ca.pem   -ca-key<span class="o">=</span>/etc/kubernetes/pki/ca-key.pem   -config<span class="o">=</span>ca-config.json   -hostname<span class="o">=</span>10.96.0.1,192.168.1.11,127.0.0.1,kubernetes,kubernetes.default,kubernetes.default.svc,kubernetes.default.svc.cluster,kubernetes.default.svc.cluster.local,192.168.1.241,192.168.1.242,192.168.1.243   -profile<span class="o">=</span>kubernetes   apiserver-csr.json <span class="p">|</span> cfssljson -bare /etc/kubernetes/pki/apiserver
-cfssl gencert   -initca front-proxy-ca-csr.json <span class="p">|</span> cfssljson -bare /etc/kubernetes/pki/front-proxy-ca
-cfssl gencert   -ca<span class="o">=</span>/etc/kubernetes/pki/front-proxy-ca.pem   -ca-key<span class="o">=</span>/etc/kubernetes/pki/front-proxy-ca-key.pem   -config<span class="o">=</span>ca-config.json   -profile<span class="o">=</span>kubernetes   front-proxy-client-csr.json <span class="p">|</span> cfssljson -bare /etc/kubernetes/pki/front-proxy-client
-cfssl gencert <span class="se">\
-</span><span class="se"></span>   -ca<span class="o">=</span>/etc/kubernetes/pki/ca.pem <span class="se">\
-</span><span class="se"></span>   -ca-key<span class="o">=</span>/etc/kubernetes/pki/ca-key.pem <span class="se">\
-</span><span class="se"></span>   -config<span class="o">=</span>ca-config.json <span class="se">\
-</span><span class="se"></span>   -profile<span class="o">=</span>kubernetes <span class="se">\
-</span><span class="se"></span>   manager-csr.json <span class="p">|</span> cfssljson -bare /etc/kubernetes/pki/controller-manager
+cfssl gencert -initca ca-csr.json <span class=p>|</span> cfssljson -bare /etc/kubernetes/pki/ca
+cfssl gencert   -ca<span class=o>=</span>/etc/kubernetes/pki/ca.pem   -ca-key<span class=o>=</span>/etc/kubernetes/pki/ca-key.pem   -config<span class=o>=</span>ca-config.json   -hostname<span class=o>=</span>10.96.0.1,192.168.1.11,127.0.0.1,kubernetes,kubernetes.default,kubernetes.default.svc,kubernetes.default.svc.cluster,kubernetes.default.svc.cluster.local,192.168.1.241,192.168.1.242,192.168.1.243   -profile<span class=o>=</span>kubernetes   apiserver-csr.json <span class=p>|</span> cfssljson -bare /etc/kubernetes/pki/apiserver
+cfssl gencert   -initca front-proxy-ca-csr.json <span class=p>|</span> cfssljson -bare /etc/kubernetes/pki/front-proxy-ca
+cfssl gencert   -ca<span class=o>=</span>/etc/kubernetes/pki/front-proxy-ca.pem   -ca-key<span class=o>=</span>/etc/kubernetes/pki/front-proxy-ca-key.pem   -config<span class=o>=</span>ca-config.json   -profile<span class=o>=</span>kubernetes   front-proxy-client-csr.json <span class=p>|</span> cfssljson -bare /etc/kubernetes/pki/front-proxy-client
+cfssl gencert <span class=se>\
+</span><span class=se></span>   -ca<span class=o>=</span>/etc/kubernetes/pki/ca.pem <span class=se>\
+</span><span class=se></span>   -ca-key<span class=o>=</span>/etc/kubernetes/pki/ca-key.pem <span class=se>\
+</span><span class=se></span>   -config<span class=o>=</span>ca-config.json <span class=se>\
+</span><span class=se></span>   -profile<span class=o>=</span>kubernetes <span class=se>\
+</span><span class=se></span>   manager-csr.json <span class=p>|</span> cfssljson -bare /etc/kubernetes/pki/controller-manager
 
-kubectl config set-cluster kubernetes <span class="se">\
-</span><span class="se"></span>     --certificate-authority<span class="o">=</span>/etc/kubernetes/pki/ca.pem <span class="se">\
-</span><span class="se"></span>     --embed-certs<span class="o">=</span><span class="nb">true</span> <span class="se">\
-</span><span class="se"></span>     --server<span class="o">=</span>https://192.168.1.11:8443 <span class="se">\
-</span><span class="se"></span>     --kubeconfig<span class="o">=</span>/etc/kubernetes/controller-manager.kubeconfig
-kubectl config set-context system:kube-controller-manager@kubernetes <span class="se">\
-</span><span class="se"></span>    --cluster<span class="o">=</span>kubernetes <span class="se">\
-</span><span class="se"></span>    --user<span class="o">=</span>system:kube-controller-manager <span class="se">\
-</span><span class="se"></span>    --kubeconfig<span class="o">=</span>/etc/kubernetes/controller-manager.kubeconfig
+kubectl config set-cluster kubernetes <span class=se>\
+</span><span class=se></span>     --certificate-authority<span class=o>=</span>/etc/kubernetes/pki/ca.pem <span class=se>\
+</span><span class=se></span>     --embed-certs<span class=o>=</span><span class=nb>true</span> <span class=se>\
+</span><span class=se></span>     --server<span class=o>=</span>https://192.168.1.11:8443 <span class=se>\
+</span><span class=se></span>     --kubeconfig<span class=o>=</span>/etc/kubernetes/controller-manager.kubeconfig
+kubectl config set-context system:kube-controller-manager@kubernetes <span class=se>\
+</span><span class=se></span>    --cluster<span class=o>=</span>kubernetes <span class=se>\
+</span><span class=se></span>    --user<span class=o>=</span>system:kube-controller-manager <span class=se>\
+</span><span class=se></span>    --kubeconfig<span class=o>=</span>/etc/kubernetes/controller-manager.kubeconfig
 
-kubectl config use-context system:kube-controller-manager@kubernetes <span class="se">\
-</span><span class="se"></span>    --kubeconfig<span class="o">=</span>/etc/kubernetes/controller-manager.kubeconfig
-
-
-kubectl config set-credentials system:kube-controller-manager <span class="se">\
-</span><span class="se"></span>     --client-certificate<span class="o">=</span>/etc/kubernetes/pki/controller-manager.pem <span class="se">\
-</span><span class="se"></span>     --client-key<span class="o">=</span>/etc/kubernetes/pki/controller-manager-key.pem <span class="se">\
-</span><span class="se"></span>     --embed-certs<span class="o">=</span><span class="nb">true</span> <span class="se">\
-</span><span class="se"></span>     --kubeconfig<span class="o">=</span>/etc/kubernetes/controller-manager.kubeconfig
-
-kubectl config set-context system:kube-controller-manager@kubernetes <span class="se">\
-</span><span class="se"></span>     --cluster<span class="o">=</span>kubernetes <span class="se">\
-</span><span class="se"></span>     --user<span class="o">=</span>system:kube-controller-manager <span class="se">\
-</span><span class="se"></span>     --kubeconfig<span class="o">=</span>/etc/kubernetes/controller-manager.kubeconfig
-
-kubectl config use-context system:kube-controller-manager@kubernetes <span class="se">\
-</span><span class="se"></span>     --kubeconfig<span class="o">=</span>/etc/kubernetes/controller-manager.kubeconfig
+kubectl config use-context system:kube-controller-manager@kubernetes <span class=se>\
+</span><span class=se></span>    --kubeconfig<span class=o>=</span>/etc/kubernetes/controller-manager.kubeconfig
 
 
-cfssl gencert <span class="se">\
-</span><span class="se"></span>   -ca<span class="o">=</span>/etc/kubernetes/pki/ca.pem <span class="se">\
-</span><span class="se"></span>   -ca-key<span class="o">=</span>/etc/kubernetes/pki/ca-key.pem <span class="se">\
-</span><span class="se"></span>   -config<span class="o">=</span>ca-config.json <span class="se">\
-</span><span class="se"></span>   -profile<span class="o">=</span>kubernetes <span class="se">\
-</span><span class="se"></span>   scheduler-csr.json <span class="p">|</span> cfssljson -bare /etc/kubernetes/pki/scheduler
-kubectl config set-cluster kubernetes <span class="se">\
-</span><span class="se"></span>     --certificate-authority<span class="o">=</span>/etc/kubernetes/pki/ca.pem <span class="se">\
-</span><span class="se"></span>     --embed-certs<span class="o">=</span><span class="nb">true</span> <span class="se">\
-</span><span class="se"></span>     --server<span class="o">=</span>https://192.168.1.11:8443 <span class="se">\
-</span><span class="se"></span>     --kubeconfig<span class="o">=</span>/etc/kubernetes/scheduler.kubeconfig
-kubectl config set-credentials system:kube-scheduler <span class="se">\
-</span><span class="se"></span>     --client-certificate<span class="o">=</span>/etc/kubernetes/pki/scheduler.pem <span class="se">\
-</span><span class="se"></span>     --client-key<span class="o">=</span>/etc/kubernetes/pki/scheduler-key.pem <span class="se">\
-</span><span class="se"></span>     --embed-certs<span class="o">=</span><span class="nb">true</span> <span class="se">\
-</span><span class="se"></span>     --kubeconfig<span class="o">=</span>/etc/kubernetes/scheduler.kubeconfig
-kubectl config set-context system:kube-scheduler@kubernetes <span class="se">\
-</span><span class="se"></span>     --cluster<span class="o">=</span>kubernetes <span class="se">\
-</span><span class="se"></span>     --user<span class="o">=</span>system:kube-scheduler <span class="se">\
-</span><span class="se"></span>     --kubeconfig<span class="o">=</span>/etc/kubernetes/scheduler.kubeconfig
-kubectl config use-context system:kube-scheduler@kubernetes <span class="se">\
-</span><span class="se"></span>     --kubeconfig<span class="o">=</span>/etc/kubernetes/scheduler.kubeconfig
+kubectl config set-credentials system:kube-controller-manager <span class=se>\
+</span><span class=se></span>     --client-certificate<span class=o>=</span>/etc/kubernetes/pki/controller-manager.pem <span class=se>\
+</span><span class=se></span>     --client-key<span class=o>=</span>/etc/kubernetes/pki/controller-manager-key.pem <span class=se>\
+</span><span class=se></span>     --embed-certs<span class=o>=</span><span class=nb>true</span> <span class=se>\
+</span><span class=se></span>     --kubeconfig<span class=o>=</span>/etc/kubernetes/controller-manager.kubeconfig
 
-cfssl gencert <span class="se">\
-</span><span class="se"></span>   -ca<span class="o">=</span>/etc/kubernetes/pki/ca.pem <span class="se">\
-</span><span class="se"></span>   -ca-key<span class="o">=</span>/etc/kubernetes/pki/ca-key.pem <span class="se">\
-</span><span class="se"></span>   -config<span class="o">=</span>ca-config.json <span class="se">\
-</span><span class="se"></span>   -profile<span class="o">=</span>kubernetes <span class="se">\
-</span><span class="se"></span>   admin-csr.json <span class="p">|</span> cfssljson -bare /etc/kubernetes/pki/admin
-kubectl config set-cluster kubernetes     --certificate-authority<span class="o">=</span>/etc/kubernetes/pki/ca.pem     --embed-certs<span class="o">=</span><span class="nb">true</span>     --server<span class="o">=</span>https://192.168.1.11:8443     --kubeconfig<span class="o">=</span>/etc/kubernetes/admin.kubeconfig
-kubectl config set-credentials kubernetes-admin     --client-certificate<span class="o">=</span>/etc/kubernetes/pki/admin.pem     --client-key<span class="o">=</span>/etc/kubernetes/pki/admin-key.pem     --embed-certs<span class="o">=</span><span class="nb">true</span>     --kubeconfig<span class="o">=</span>/etc/kubernetes/admin.kubeconfig
-kubectl config set-context kubernetes-admin@kubernetes     --cluster<span class="o">=</span>kubernetes     --user<span class="o">=</span>kubernetes-admin     --kubeconfig<span class="o">=</span>/etc/kubernetes/admin.kubeconfig
-kubectl config use-context kubernetes-admin@kubernetes     --kubeconfig<span class="o">=</span>/etc/kubernetes/admin.kubeconfig
+kubectl config set-context system:kube-controller-manager@kubernetes <span class=se>\
+</span><span class=se></span>     --cluster<span class=o>=</span>kubernetes <span class=se>\
+</span><span class=se></span>     --user<span class=o>=</span>system:kube-controller-manager <span class=se>\
+</span><span class=se></span>     --kubeconfig<span class=o>=</span>/etc/kubernetes/controller-manager.kubeconfig
 
-<span class="k">for</span> NODE in k8s-master01 k8s-master02 k8s-master03<span class="p">;</span> <span class="k">do</span>
-     <span class="se">\c</span>p kubelet-csr.json kubelet-<span class="nv">$NODE</span>-csr.json<span class="p">;</span>
-     sed -i <span class="s2">&#34;s/\$NODE/</span><span class="nv">$NODE</span><span class="s2">/g&#34;</span> kubelet-<span class="nv">$NODE</span>-csr.json<span class="p">;</span>
-     cfssl gencert <span class="se">\
-</span><span class="se"></span>       -ca<span class="o">=</span>/etc/kubernetes/pki/ca.pem <span class="se">\
-</span><span class="se"></span>       -ca-key<span class="o">=</span>/etc/kubernetes/pki/ca-key.pem <span class="se">\
-</span><span class="se"></span>       -config<span class="o">=</span>ca-config.json <span class="se">\
-</span><span class="se"></span>       -hostname<span class="o">=</span><span class="nv">$NODE</span> <span class="se">\
-</span><span class="se"></span>       -profile<span class="o">=</span>kubernetes <span class="se">\
-</span><span class="se"></span>       kubelet-<span class="nv">$NODE</span>-csr.json <span class="p">|</span> cfssljson -bare /etc/kubernetes/pki/kubelet-<span class="nv">$NODE</span><span class="p">;</span>
-     rm -f kubelet-<span class="nv">$NODE</span>-csr.json
-   <span class="k">done</span>
-
-<span class="k">for</span> NODE in k8s-master01 k8s-master02 k8s-master03<span class="p">;</span> <span class="k">do</span>
-     ssh <span class="nv">$NODE</span> <span class="s2">&#34;mkdir -p /etc/kubernetes/pki&#34;</span>
-     scp /etc/kubernetes/pki/ca.pem <span class="nv">$NODE</span>:/etc/kubernetes/pki/ca.pem
-     scp /etc/kubernetes/pki/kubelet-<span class="nv">$NODE</span>-key.pem <span class="nv">$NODE</span>:/etc/kubernetes/pki/kubelet-key.pem
-     scp /etc/kubernetes/pki/kubelet-<span class="nv">$NODE</span>.pem <span class="nv">$NODE</span>:/etc/kubernetes/pki/kubelet.pem
-     rm -f /etc/kubernetes/pki/kubelet-<span class="nv">$NODE</span>-key.pem /etc/kubernetes/pki/kubelet-<span class="nv">$NODE</span>.pem
- <span class="k">done</span>
+kubectl config use-context system:kube-controller-manager@kubernetes <span class=se>\
+</span><span class=se></span>     --kubeconfig<span class=o>=</span>/etc/kubernetes/controller-manager.kubeconfig
 
 
-<span class="k">for</span> NODE in k8s-master01 k8s-master02 k8s-master03<span class="p">;</span> <span class="k">do</span>
-     ssh <span class="nv">$NODE</span> <span class="s2">&#34;cd /etc/kubernetes/pki &amp;&amp; \
-</span><span class="s2">       kubectl config set-cluster kubernetes \
-</span><span class="s2">         --certificate-authority=/etc/kubernetes/pki/ca.pem \
-</span><span class="s2">         --embed-certs=true \
-</span><span class="s2">         --server=https://192.168.1.11:8443 \
-</span><span class="s2">         --kubeconfig=/etc/kubernetes/kubelet.kubeconfig &amp;&amp; \
-</span><span class="s2">       kubectl config set-credentials system:node:</span><span class="si">${</span><span class="nv">NODE</span><span class="si">}</span><span class="s2"> \
-</span><span class="s2">         --client-certificate=/etc/kubernetes/pki/kubelet.pem \
-</span><span class="s2">         --client-key=/etc/kubernetes/pki/kubelet-key.pem \
-</span><span class="s2">         --embed-certs=true \
-</span><span class="s2">         --kubeconfig=/etc/kubernetes/kubelet.kubeconfig &amp;&amp; \
-</span><span class="s2">       kubectl config set-context system:node:</span><span class="si">${</span><span class="nv">NODE</span><span class="si">}</span><span class="s2">@kubernetes \
-</span><span class="s2">         --cluster=kubernetes \
-</span><span class="s2">         --user=system:node:</span><span class="si">${</span><span class="nv">NODE</span><span class="si">}</span><span class="s2"> \
-</span><span class="s2">         --kubeconfig=/etc/kubernetes/kubelet.kubeconfig &amp;&amp; \
-</span><span class="s2">       kubectl config use-context system:node:</span><span class="si">${</span><span class="nv">NODE</span><span class="si">}</span><span class="s2">@kubernetes \
-</span><span class="s2">         --kubeconfig=/etc/kubernetes/kubelet.kubeconfig&#34;</span>
- <span class="k">done</span>
+cfssl gencert <span class=se>\
+</span><span class=se></span>   -ca<span class=o>=</span>/etc/kubernetes/pki/ca.pem <span class=se>\
+</span><span class=se></span>   -ca-key<span class=o>=</span>/etc/kubernetes/pki/ca-key.pem <span class=se>\
+</span><span class=se></span>   -config<span class=o>=</span>ca-config.json <span class=se>\
+</span><span class=se></span>   -profile<span class=o>=</span>kubernetes <span class=se>\
+</span><span class=se></span>   scheduler-csr.json <span class=p>|</span> cfssljson -bare /etc/kubernetes/pki/scheduler
+kubectl config set-cluster kubernetes <span class=se>\
+</span><span class=se></span>     --certificate-authority<span class=o>=</span>/etc/kubernetes/pki/ca.pem <span class=se>\
+</span><span class=se></span>     --embed-certs<span class=o>=</span><span class=nb>true</span> <span class=se>\
+</span><span class=se></span>     --server<span class=o>=</span>https://192.168.1.11:8443 <span class=se>\
+</span><span class=se></span>     --kubeconfig<span class=o>=</span>/etc/kubernetes/scheduler.kubeconfig
+kubectl config set-credentials system:kube-scheduler <span class=se>\
+</span><span class=se></span>     --client-certificate<span class=o>=</span>/etc/kubernetes/pki/scheduler.pem <span class=se>\
+</span><span class=se></span>     --client-key<span class=o>=</span>/etc/kubernetes/pki/scheduler-key.pem <span class=se>\
+</span><span class=se></span>     --embed-certs<span class=o>=</span><span class=nb>true</span> <span class=se>\
+</span><span class=se></span>     --kubeconfig<span class=o>=</span>/etc/kubernetes/scheduler.kubeconfig
+kubectl config set-context system:kube-scheduler@kubernetes <span class=se>\
+</span><span class=se></span>     --cluster<span class=o>=</span>kubernetes <span class=se>\
+</span><span class=se></span>     --user<span class=o>=</span>system:kube-scheduler <span class=se>\
+</span><span class=se></span>     --kubeconfig<span class=o>=</span>/etc/kubernetes/scheduler.kubeconfig
+kubectl config use-context system:kube-scheduler@kubernetes <span class=se>\
+</span><span class=se></span>     --kubeconfig<span class=o>=</span>/etc/kubernetes/scheduler.kubeconfig
+
+cfssl gencert <span class=se>\
+</span><span class=se></span>   -ca<span class=o>=</span>/etc/kubernetes/pki/ca.pem <span class=se>\
+</span><span class=se></span>   -ca-key<span class=o>=</span>/etc/kubernetes/pki/ca-key.pem <span class=se>\
+</span><span class=se></span>   -config<span class=o>=</span>ca-config.json <span class=se>\
+</span><span class=se></span>   -profile<span class=o>=</span>kubernetes <span class=se>\
+</span><span class=se></span>   admin-csr.json <span class=p>|</span> cfssljson -bare /etc/kubernetes/pki/admin
+kubectl config set-cluster kubernetes     --certificate-authority<span class=o>=</span>/etc/kubernetes/pki/ca.pem     --embed-certs<span class=o>=</span><span class=nb>true</span>     --server<span class=o>=</span>https://192.168.1.11:8443     --kubeconfig<span class=o>=</span>/etc/kubernetes/admin.kubeconfig
+kubectl config set-credentials kubernetes-admin     --client-certificate<span class=o>=</span>/etc/kubernetes/pki/admin.pem     --client-key<span class=o>=</span>/etc/kubernetes/pki/admin-key.pem     --embed-certs<span class=o>=</span><span class=nb>true</span>     --kubeconfig<span class=o>=</span>/etc/kubernetes/admin.kubeconfig
+kubectl config set-context kubernetes-admin@kubernetes     --cluster<span class=o>=</span>kubernetes     --user<span class=o>=</span>kubernetes-admin     --kubeconfig<span class=o>=</span>/etc/kubernetes/admin.kubeconfig
+kubectl config use-context kubernetes-admin@kubernetes     --kubeconfig<span class=o>=</span>/etc/kubernetes/admin.kubeconfig
+
+<span class=k>for</span> NODE in k8s-master01 k8s-master02 k8s-master03<span class=p>;</span> <span class=k>do</span>
+     <span class=se>\c</span>p kubelet-csr.json kubelet-<span class=nv>$NODE</span>-csr.json<span class=p>;</span>
+     sed -i <span class=s2>&#34;s/\$NODE/</span><span class=nv>$NODE</span><span class=s2>/g&#34;</span> kubelet-<span class=nv>$NODE</span>-csr.json<span class=p>;</span>
+     cfssl gencert <span class=se>\
+</span><span class=se></span>       -ca<span class=o>=</span>/etc/kubernetes/pki/ca.pem <span class=se>\
+</span><span class=se></span>       -ca-key<span class=o>=</span>/etc/kubernetes/pki/ca-key.pem <span class=se>\
+</span><span class=se></span>       -config<span class=o>=</span>ca-config.json <span class=se>\
+</span><span class=se></span>       -hostname<span class=o>=</span><span class=nv>$NODE</span> <span class=se>\
+</span><span class=se></span>       -profile<span class=o>=</span>kubernetes <span class=se>\
+</span><span class=se></span>       kubelet-<span class=nv>$NODE</span>-csr.json <span class=p>|</span> cfssljson -bare /etc/kubernetes/pki/kubelet-<span class=nv>$NODE</span><span class=p>;</span>
+     rm -f kubelet-<span class=nv>$NODE</span>-csr.json
+   <span class=k>done</span>
+
+<span class=k>for</span> NODE in k8s-master01 k8s-master02 k8s-master03<span class=p>;</span> <span class=k>do</span>
+     ssh <span class=nv>$NODE</span> <span class=s2>&#34;mkdir -p /etc/kubernetes/pki&#34;</span>
+     scp /etc/kubernetes/pki/ca.pem <span class=nv>$NODE</span>:/etc/kubernetes/pki/ca.pem
+     scp /etc/kubernetes/pki/kubelet-<span class=nv>$NODE</span>-key.pem <span class=nv>$NODE</span>:/etc/kubernetes/pki/kubelet-key.pem
+     scp /etc/kubernetes/pki/kubelet-<span class=nv>$NODE</span>.pem <span class=nv>$NODE</span>:/etc/kubernetes/pki/kubelet.pem
+     rm -f /etc/kubernetes/pki/kubelet-<span class=nv>$NODE</span>-key.pem /etc/kubernetes/pki/kubelet-<span class=nv>$NODE</span>.pem
+ <span class=k>done</span>
 
 
-<span class="c1">#创建ServiceAccount Key</span>
-openssl genrsa -out /etc/kubernetes/pki/sa.key <span class="m">2048</span>
+<span class=k>for</span> NODE in k8s-master01 k8s-master02 k8s-master03<span class=p>;</span> <span class=k>do</span>
+     ssh <span class=nv>$NODE</span> <span class=s2>&#34;cd /etc/kubernetes/pki &amp;&amp; \
+</span><span class=s2>       kubectl config set-cluster kubernetes \
+</span><span class=s2>         --certificate-authority=/etc/kubernetes/pki/ca.pem \
+</span><span class=s2>         --embed-certs=true \
+</span><span class=s2>         --server=https://192.168.1.11:8443 \
+</span><span class=s2>         --kubeconfig=/etc/kubernetes/kubelet.kubeconfig &amp;&amp; \
+</span><span class=s2>       kubectl config set-credentials system:node:</span><span class=si>${</span><span class=nv>NODE</span><span class=si>}</span><span class=s2> \
+</span><span class=s2>         --client-certificate=/etc/kubernetes/pki/kubelet.pem \
+</span><span class=s2>         --client-key=/etc/kubernetes/pki/kubelet-key.pem \
+</span><span class=s2>         --embed-certs=true \
+</span><span class=s2>         --kubeconfig=/etc/kubernetes/kubelet.kubeconfig &amp;&amp; \
+</span><span class=s2>       kubectl config set-context system:node:</span><span class=si>${</span><span class=nv>NODE</span><span class=si>}</span><span class=s2>@kubernetes \
+</span><span class=s2>         --cluster=kubernetes \
+</span><span class=s2>         --user=system:node:</span><span class=si>${</span><span class=nv>NODE</span><span class=si>}</span><span class=s2> \
+</span><span class=s2>         --kubeconfig=/etc/kubernetes/kubelet.kubeconfig &amp;&amp; \
+</span><span class=s2>       kubectl config use-context system:node:</span><span class=si>${</span><span class=nv>NODE</span><span class=si>}</span><span class=s2>@kubernetes \
+</span><span class=s2>         --kubeconfig=/etc/kubernetes/kubelet.kubeconfig&#34;</span>
+ <span class=k>done</span>
+
+
+<span class=c1>#创建ServiceAccount Key</span>
+openssl genrsa -out /etc/kubernetes/pki/sa.key <span class=m>2048</span>
 openssl rsa -in /etc/kubernetes/pki/sa.key -pubout -out /etc/kubernetes/pki/sa.pub
-<span class="k">for</span> NODE in k8s-master02 k8s-master03<span class="p">;</span> <span class="k">do</span> 
-<span class="k">for</span> FILE in <span class="k">$(</span>ls /etc/kubernetes/pki <span class="p">|</span> grep -v etcd<span class="k">)</span><span class="p">;</span> <span class="k">do</span> 
-scp /etc/kubernetes/pki/<span class="si">${</span><span class="nv">FILE</span><span class="si">}</span> <span class="nv">$NODE</span>:/etc/kubernetes/pki/<span class="si">${</span><span class="nv">FILE</span><span class="si">}</span><span class="p">;</span>
-<span class="k">done</span><span class="p">;</span> 
-<span class="k">for</span> FILE in admin.kubeconfig controller-manager.kubeconfig scheduler.kubeconfig<span class="p">;</span> <span class="k">do</span> 
-scp /etc/kubernetes/<span class="si">${</span><span class="nv">FILE</span><span class="si">}</span> <span class="nv">$NODE</span>:/etc/kubernetes/<span class="si">${</span><span class="nv">FILE</span><span class="si">}</span><span class="p">;</span>
-<span class="k">done</span><span class="p">;</span>
-<span class="k">done</span>
+<span class=k>for</span> NODE in k8s-master02 k8s-master03<span class=p>;</span> <span class=k>do</span> 
+<span class=k>for</span> FILE in <span class=k>$(</span>ls /etc/kubernetes/pki <span class=p>|</span> grep -v etcd<span class=k>)</span><span class=p>;</span> <span class=k>do</span> 
+scp /etc/kubernetes/pki/<span class=si>${</span><span class=nv>FILE</span><span class=si>}</span> <span class=nv>$NODE</span>:/etc/kubernetes/pki/<span class=si>${</span><span class=nv>FILE</span><span class=si>}</span><span class=p>;</span>
+<span class=k>done</span><span class=p>;</span> 
+<span class=k>for</span> FILE in admin.kubeconfig controller-manager.kubeconfig scheduler.kubeconfig<span class=p>;</span> <span class=k>do</span> 
+scp /etc/kubernetes/<span class=si>${</span><span class=nv>FILE</span><span class=si>}</span> <span class=nv>$NODE</span>:/etc/kubernetes/<span class=si>${</span><span class=nv>FILE</span><span class=si>}</span><span class=p>;</span>
+<span class=k>done</span><span class=p>;</span>
+<span class=k>done</span>
 
-<span class="c1">#etcd配置大致相同，注意修改每个Master节点的etcd配置的主机名和IP地址</span>
+<span class=c1>#etcd配置大致相同，注意修改每个Master节点的etcd配置的主机名和IP地址</span>
 vi /etc/etcd/etcd.config.yml
-name: <span class="s1">&#39;k8s-master01&#39;</span>
+name: <span class=s1>&#39;k8s-master01&#39;</span>
 data-dir: /var/lib/etcd
 wal-dir: /var/lib/etcd/wal
-snapshot-count: <span class="m">5000</span>
-heartbeat-interval: <span class="m">100</span>
-election-timeout: <span class="m">1000</span>
-quota-backend-bytes: <span class="m">0</span>
-listen-peer-urls: <span class="s1">&#39;https://192.168.1.241:2380&#39;</span>
-listen-client-urls: <span class="s1">&#39;https://192.168.1.241:2379,http://127.0.0.1:2379&#39;</span>
-max-snapshots: <span class="m">3</span>
-max-wals: <span class="m">5</span>
+snapshot-count: <span class=m>5000</span>
+heartbeat-interval: <span class=m>100</span>
+election-timeout: <span class=m>1000</span>
+quota-backend-bytes: <span class=m>0</span>
+listen-peer-urls: <span class=s1>&#39;https://192.168.1.241:2380&#39;</span>
+listen-client-urls: <span class=s1>&#39;https://192.168.1.241:2379,http://127.0.0.1:2379&#39;</span>
+max-snapshots: <span class=m>3</span>
+max-wals: <span class=m>5</span>
 cors:
-initial-advertise-peer-urls: <span class="s1">&#39;https://192.168.1.241:2380&#39;</span>
-advertise-client-urls: <span class="s1">&#39;https://192.168.1.241:2379&#39;</span>
+initial-advertise-peer-urls: <span class=s1>&#39;https://192.168.1.241:2380&#39;</span>
+advertise-client-urls: <span class=s1>&#39;https://192.168.1.241:2379&#39;</span>
 discovery:
-discovery-fallback: <span class="s1">&#39;proxy&#39;</span>
+discovery-fallback: <span class=s1>&#39;proxy&#39;</span>
 discovery-proxy:
 discovery-srv:
-initial-cluster: <span class="s1">&#39;k8s-master01=https://192.168.1.241:2380,k8s-master02=https://192.168.1.242:2380,k8s-master03=https://192.168.1.243:2380&#39;</span>
-initial-cluster-token: <span class="s1">&#39;etcd-k8s-cluster&#39;</span>
-initial-cluster-state: <span class="s1">&#39;new&#39;</span>
-strict-reconfig-check: <span class="nb">false</span>
-enable-v2: <span class="nb">true</span>
-enable-pprof: <span class="nb">true</span>
-proxy: <span class="s1">&#39;off&#39;</span>
-proxy-failure-wait: <span class="m">5000</span>
-proxy-refresh-interval: <span class="m">30000</span>
-proxy-dial-timeout: <span class="m">1000</span>
-proxy-write-timeout: <span class="m">5000</span>
-proxy-read-timeout: <span class="m">0</span>
+initial-cluster: <span class=s1>&#39;k8s-master01=https://192.168.1.241:2380,k8s-master02=https://192.168.1.242:2380,k8s-master03=https://192.168.1.243:2380&#39;</span>
+initial-cluster-token: <span class=s1>&#39;etcd-k8s-cluster&#39;</span>
+initial-cluster-state: <span class=s1>&#39;new&#39;</span>
+strict-reconfig-check: <span class=nb>false</span>
+enable-v2: <span class=nb>true</span>
+enable-pprof: <span class=nb>true</span>
+proxy: <span class=s1>&#39;off&#39;</span>
+proxy-failure-wait: <span class=m>5000</span>
+proxy-refresh-interval: <span class=m>30000</span>
+proxy-dial-timeout: <span class=m>1000</span>
+proxy-write-timeout: <span class=m>5000</span>
+proxy-read-timeout: <span class=m>0</span>
 client-transport-security:
-  ca-file: <span class="s1">&#39;/etc/kubernetes/pki/etcd/etcd-ca.pem&#39;</span>
-  cert-file: <span class="s1">&#39;/etc/kubernetes/pki/etcd/etcd.pem&#39;</span>
-  key-file: <span class="s1">&#39;/etc/kubernetes/pki/etcd/etcd-key.pem&#39;</span>
-  client-cert-auth: <span class="nb">true</span>
-  trusted-ca-file: <span class="s1">&#39;/etc/kubernetes/pki/etcd/etcd-ca.pem&#39;</span>
-  auto-tls: <span class="nb">true</span>
+  ca-file: <span class=s1>&#39;/etc/kubernetes/pki/etcd/etcd-ca.pem&#39;</span>
+  cert-file: <span class=s1>&#39;/etc/kubernetes/pki/etcd/etcd.pem&#39;</span>
+  key-file: <span class=s1>&#39;/etc/kubernetes/pki/etcd/etcd-key.pem&#39;</span>
+  client-cert-auth: <span class=nb>true</span>
+  trusted-ca-file: <span class=s1>&#39;/etc/kubernetes/pki/etcd/etcd-ca.pem&#39;</span>
+  auto-tls: <span class=nb>true</span>
 peer-transport-security:
-  ca-file: <span class="s1">&#39;/etc/kubernetes/pki/etcd/etcd-ca.pem&#39;</span>
-  cert-file: <span class="s1">&#39;/etc/kubernetes/pki/etcd/etcd.pem&#39;</span>
-  key-file: <span class="s1">&#39;/etc/kubernetes/pki/etcd/etcd-key.pem&#39;</span>
-  peer-client-cert-auth: <span class="nb">true</span>
-  trusted-ca-file: <span class="s1">&#39;/etc/kubernetes/pki/etcd/etcd-ca.pem&#39;</span>
-  auto-tls: <span class="nb">true</span>
-debug: <span class="nb">false</span>
+  ca-file: <span class=s1>&#39;/etc/kubernetes/pki/etcd/etcd-ca.pem&#39;</span>
+  cert-file: <span class=s1>&#39;/etc/kubernetes/pki/etcd/etcd.pem&#39;</span>
+  key-file: <span class=s1>&#39;/etc/kubernetes/pki/etcd/etcd-key.pem&#39;</span>
+  peer-client-cert-auth: <span class=nb>true</span>
+  trusted-ca-file: <span class=s1>&#39;/etc/kubernetes/pki/etcd/etcd-ca.pem&#39;</span>
+  auto-tls: <span class=nb>true</span>
+debug: <span class=nb>false</span>
 log-package-levels:
 log-output: default
-force-new-cluster: <span class="nb">false</span>
+force-new-cluster: <span class=nb>false</span>
 
 vi /usr/lib/systemd/system/etcd.service
-<span class="o">[</span>Unit<span class="o">]</span>
-<span class="nv">Description</span><span class="o">=</span>Etcd Service
-<span class="nv">Documentation</span><span class="o">=</span>https://coreos.com/etcd/docs/latest/
-<span class="nv">After</span><span class="o">=</span>network.target
+<span class=o>[</span>Unit<span class=o>]</span>
+<span class=nv>Description</span><span class=o>=</span>Etcd Service
+<span class=nv>Documentation</span><span class=o>=</span>https://coreos.com/etcd/docs/latest/
+<span class=nv>After</span><span class=o>=</span>network.target
 
-<span class="o">[</span>Service<span class="o">]</span>
-<span class="nv">Type</span><span class="o">=</span>notify
-<span class="nv">ExecStart</span><span class="o">=</span>/usr/local/bin/etcd --config-file<span class="o">=</span>/etc/etcd/etcd.config.yml
-<span class="nv">Restart</span><span class="o">=</span>on-failure
-<span class="nv">RestartSec</span><span class="o">=</span><span class="m">10</span>
-<span class="nv">LimitNOFILE</span><span class="o">=</span><span class="m">65536</span>
+<span class=o>[</span>Service<span class=o>]</span>
+<span class=nv>Type</span><span class=o>=</span>notify
+<span class=nv>ExecStart</span><span class=o>=</span>/usr/local/bin/etcd --config-file<span class=o>=</span>/etc/etcd/etcd.config.yml
+<span class=nv>Restart</span><span class=o>=</span>on-failure
+<span class=nv>RestartSec</span><span class=o>=</span><span class=m>10</span>
+<span class=nv>LimitNOFILE</span><span class=o>=</span><span class=m>65536</span>
 
-<span class="o">[</span>Install<span class="o">]</span>
-<span class="nv">WantedBy</span><span class="o">=</span>multi-user.target
-<span class="nv">Alias</span><span class="o">=</span>etcd3.service
+<span class=o>[</span>Install<span class=o>]</span>
+<span class=nv>WantedBy</span><span class=o>=</span>multi-user.target
+<span class=nv>Alias</span><span class=o>=</span>etcd3.service
 
 mkdir /etc/kubernetes/pki/etcd
 ln -s /etc/etcd/ssl/* /etc/kubernetes/pki/etcd/
 systemctl daemon-reload
-systemctl <span class="nb">enable</span> --now etcd
-<span class="c1">#安装cfssl https://www.cnblogs.com/dukuan/p/12104600.html  https://ngames-dev.cn/2019/08/25/%E4%BA%8C%E8%BF%9B%E5%88%B6k8s%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/</span>
+systemctl <span class=nb>enable</span> --now etcd
+<span class=c1>#安装cfssl https://www.cnblogs.com/dukuan/p/12104600.html  https://ngames-dev.cn/2019/08/25/%E4%BA%8C%E8%BF%9B%E5%88%B6k8s%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/</span>
 wget https://storage.googleapis.com/kubernetes-release/release/v1.17.0/kubernetes-server-linux-amd64.tar.gz
 
-<span class="c1">#etcd 如果初始化失败  https://blog.51cto.com/14143894/2428545</span>
+<span class=c1>#etcd 如果初始化失败  https://blog.51cto.com/14143894/2428545</span>
 systemctl stop etcd.service
 rm -rf /var/lib/etcd/*
 systemctl daemon-reload
 systemctl start etcd.service
 
-<span class="c1">#检查集群etcd监控状态</span>
-<span class="c1">#export ETCDCTL_API=3</span>
-etcdctl --ca-file<span class="o">=</span>/etc/kubernetes/pki/etcd/etcd-ca.pem --cert-file<span class="o">=</span>/etc/kubernetes/pki/etcd/etcd.pem --key-file<span class="o">=</span>/etc/kubernetes/pki/etcd/etcd-key.pem member list
-etcdctl --ca-file<span class="o">=</span>/etc/kubernetes/pki/etcd/etcd-ca.pem --cert-file<span class="o">=</span>/etc/kubernetes/pki/etcd/etcd.pem --key-file<span class="o">=</span>/etc/kubernetes/pki/etcd/etcd-key.pem cluster-health
+<span class=c1>#检查集群etcd监控状态</span>
+<span class=c1>#export ETCDCTL_API=3</span>
+etcdctl --ca-file<span class=o>=</span>/etc/kubernetes/pki/etcd/etcd-ca.pem --cert-file<span class=o>=</span>/etc/kubernetes/pki/etcd/etcd.pem --key-file<span class=o>=</span>/etc/kubernetes/pki/etcd/etcd-key.pem member list
+etcdctl --ca-file<span class=o>=</span>/etc/kubernetes/pki/etcd/etcd-ca.pem --cert-file<span class=o>=</span>/etc/kubernetes/pki/etcd/etcd.pem --key-file<span class=o>=</span>/etc/kubernetes/pki/etcd/etcd-key.pem cluster-health
 
-<span class="c1">#在所有master节点上执行高可用配置</span>
+<span class=c1>#在所有master节点上执行高可用配置</span>
 yum install keepalived haproxy -y
 vi /etc/haproxy/haproxy.cfg
 
 global
-  maxconn  <span class="m">2000</span>
-  ulimit-n  <span class="m">16384</span>
+  maxconn  <span class=m>2000</span>
+  ulimit-n  <span class=m>16384</span>
   log  127.0.0.1 local0 err
   stats timeout 30s
 
@@ -615,31 +475,31 @@ defaults
   log global
   mode  http
   option  httplog
-  timeout connect <span class="m">5000</span>
-  timeout client  <span class="m">50000</span>
-  timeout server  <span class="m">50000</span>
+  timeout connect <span class=m>5000</span>
+  timeout client  <span class=m>50000</span>
+  timeout server  <span class=m>50000</span>
   timeout http-request 15s
   timeout http-keep-alive 15s
 
 frontend monitor-in
-  <span class="nb">bind</span> *:33305
+  <span class=nb>bind</span> *:33305
   mode http
   option httplog
   monitor-uri /monitor
 
 listen stats
-  <span class="nb">bind</span>    *:8006
+  <span class=nb>bind</span>    *:8006
   mode    http
-  stats   <span class="nb">enable</span>
+  stats   <span class=nb>enable</span>
   stats   hide-version
   stats   uri       /stats
   stats   refresh   30s
-  stats   realm     Haproxy<span class="se">\ </span>Statistics
+  stats   realm     Haproxy<span class=se>\ </span>Statistics
   stats   auth      admin:admin
 
 frontend k8s-master
-  <span class="nb">bind</span> 0.0.0.0:8443
-  <span class="nb">bind</span> 127.0.0.1:8443
+  <span class=nb>bind</span> 0.0.0.0:8443
+  <span class=nb>bind</span> 127.0.0.1:8443
   mode tcp
   option tcplog
   tcp-request inspect-delay 5s
@@ -650,245 +510,245 @@ backend k8s-master
   option tcplog
   option tcp-check
   balance roundrobin
-  default-server inter 10s downinter 5s rise <span class="m">2</span> fall <span class="m">2</span> slowstart 60s maxconn <span class="m">250</span> maxqueue <span class="m">256</span> weight <span class="m">100</span>
+  default-server inter 10s downinter 5s rise <span class=m>2</span> fall <span class=m>2</span> slowstart 60s maxconn <span class=m>250</span> maxqueue <span class=m>256</span> weight <span class=m>100</span>
   server k8s-master01    192.168.1.241:6443  check
   server k8s-master02    192.168.1.242:6443  check
   server k8s-master03    192.168.1.243:6443  check
 
 vim /etc/keepalived/keepalived.conf
-! Configuration File <span class="k">for</span> keepalived
-global_defs <span class="o">{</span>
+! Configuration File <span class=k>for</span> keepalived
+global_defs <span class=o>{</span>
     router_id LVS_DEVEL
-<span class="o">}</span>
-vrrp_script chk_apiserver <span class="o">{</span>
-    script <span class="s2">&#34;/etc/keepalived/check_apiserver.sh&#34;</span>
-    interval <span class="m">2</span>
+<span class=o>}</span>
+vrrp_script chk_apiserver <span class=o>{</span>
+    script <span class=s2>&#34;/etc/keepalived/check_apiserver.sh&#34;</span>
+    interval <span class=m>2</span>
     weight -5
-    fall <span class="m">3</span>  
-    rise <span class="m">2</span>
-<span class="o">}</span>
-vrrp_instance VI_1 <span class="o">{</span>
+    fall <span class=m>3</span>  
+    rise <span class=m>2</span>
+<span class=o>}</span>
+vrrp_instance VI_1 <span class=o>{</span>
     state MASTER
     interface eth0
     mcast_src_ip 192.168.1.241
-    virtual_router_id <span class="m">241</span>
-    priority <span class="m">100</span>
-    advert_int <span class="m">2</span>
-    authentication <span class="o">{</span>
+    virtual_router_id <span class=m>241</span>
+    priority <span class=m>100</span>
+    advert_int <span class=m>2</span>
+    authentication <span class=o>{</span>
         auth_type PASS
         auth_pass K8SHA_KA_AUTH
-    <span class="o">}</span>
-    virtual_ipaddress <span class="o">{</span>
+    <span class=o>}</span>
+    virtual_ipaddress <span class=o>{</span>
         192.168.1.11
-    <span class="o">}</span>
-    track_script <span class="o">{</span>
+    <span class=o>}</span>
+    track_script <span class=o>{</span>
       chk_apiserver 
-<span class="o">}</span> <span class="o">}</span>
+<span class=o>}</span> <span class=o>}</span>
 
 vi /etc/keepalived/check_apiserver.sh
-<span class="c1">#!/bin/bash</span>
+<span class=c1>#!/bin/bash</span>
 
-<span class="nv">err</span><span class="o">=</span><span class="m">0</span>
-<span class="k">for</span> k in <span class="k">$(</span>seq <span class="m">1</span> 5<span class="k">)</span>
-<span class="k">do</span>
-    <span class="nv">check_code</span><span class="o">=</span><span class="k">$(</span>pgrep kube-apiserver<span class="k">)</span>
-    <span class="k">if</span> <span class="o">[[</span> <span class="nv">$check_code</span> <span class="o">==</span> <span class="s2">&#34;&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-        <span class="nv">err</span><span class="o">=</span><span class="k">$(</span>expr <span class="nv">$err</span> + 1<span class="k">)</span>
-        sleep <span class="m">5</span>
-        <span class="k">continue</span>
-    <span class="k">else</span>
-        <span class="nv">err</span><span class="o">=</span><span class="m">0</span>
-        <span class="nb">break</span>
-    <span class="k">fi</span>
-<span class="k">done</span>
+<span class=nv>err</span><span class=o>=</span><span class=m>0</span>
+<span class=k>for</span> k in <span class=k>$(</span>seq <span class=m>1</span> 5<span class=k>)</span>
+<span class=k>do</span>
+    <span class=nv>check_code</span><span class=o>=</span><span class=k>$(</span>pgrep kube-apiserver<span class=k>)</span>
+    <span class=k>if</span> <span class=o>[[</span> <span class=nv>$check_code</span> <span class=o>==</span> <span class=s2>&#34;&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+        <span class=nv>err</span><span class=o>=</span><span class=k>$(</span>expr <span class=nv>$err</span> + 1<span class=k>)</span>
+        sleep <span class=m>5</span>
+        <span class=k>continue</span>
+    <span class=k>else</span>
+        <span class=nv>err</span><span class=o>=</span><span class=m>0</span>
+        <span class=nb>break</span>
+    <span class=k>fi</span>
+<span class=k>done</span>
 
-<span class="k">if</span> <span class="o">[[</span> <span class="nv">$err</span> !<span class="o">=</span> <span class="s2">&#34;0&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-    <span class="nb">echo</span> <span class="s2">&#34;systemctl stop keepalived&#34;</span>
+<span class=k>if</span> <span class=o>[[</span> <span class=nv>$err</span> !<span class=o>=</span> <span class=s2>&#34;0&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+    <span class=nb>echo</span> <span class=s2>&#34;systemctl stop keepalived&#34;</span>
     /usr/bin/systemctl stop keepalived
-    <span class="nb">exit</span> <span class="m">1</span>
-<span class="k">else</span>
-    <span class="nb">exit</span> <span class="m">0</span>
-<span class="k">fi</span>
-systemctl <span class="nb">enable</span> --now haproxy
-systemctl <span class="nb">enable</span> --now keepalived
+    <span class=nb>exit</span> <span class=m>1</span>
+<span class=k>else</span>
+    <span class=nb>exit</span> <span class=m>0</span>
+<span class=k>fi</span>
+systemctl <span class=nb>enable</span> --now haproxy
+systemctl <span class=nb>enable</span> --now keepalived
 
 
-<span class="c1">#Kubernetes组件配置</span>
+<span class=c1>#Kubernetes组件配置</span>
 mkdir -p /etc/kubernetes/manifests/ /etc/systemd/system/kubelet.service.d /var/lib/kubelet /var/log/kubernetes
-<span class="nb">echo</span> <span class="s1">&#39;[Unit]
-</span><span class="s1">Description=Kubernetes API Server
-</span><span class="s1">Documentation=https://github.com/kubernetes/kubernetes
-</span><span class="s1">After=network.target
-</span><span class="s1">
-</span><span class="s1">[Service]
-</span><span class="s1">ExecStart=/usr/local/bin/kube-apiserver \
-</span><span class="s1">      --v=2  \
-</span><span class="s1">      --logtostderr=true  \
-</span><span class="s1">      --allow-privileged=true  \
-</span><span class="s1">      --bind-address=0.0.0.0  \
-</span><span class="s1">      --secure-port=6443  \
-</span><span class="s1">      --insecure-port=0  \
-</span><span class="s1">      --advertise-address=192.168.1.11 \
-</span><span class="s1">      --service-cluster-ip-range=10.96.0.0/12  \
-</span><span class="s1">      --service-node-port-range=30000-50000  \
-</span><span class="s1">      --etcd-servers=https://192.168.1.241:2379,https://192.168.1.242:2379,https://192.168.1.243:2379 \
-</span><span class="s1">      --etcd-cafile=/etc/etcd/ssl/etcd-ca.pem  \
-</span><span class="s1">      --etcd-certfile=/etc/etcd/ssl/etcd.pem  \
-</span><span class="s1">      --etcd-keyfile=/etc/etcd/ssl/etcd-key.pem  \
-</span><span class="s1">      --client-ca-file=/etc/kubernetes/pki/ca.pem  \
-</span><span class="s1">      --tls-cert-file=/etc/kubernetes/pki/apiserver.pem  \
-</span><span class="s1">      --tls-private-key-file=/etc/kubernetes/pki/apiserver-key.pem  \
-</span><span class="s1">      --kubelet-client-certificate=/etc/kubernetes/pki/apiserver.pem  \
-</span><span class="s1">      --kubelet-client-key=/etc/kubernetes/pki/apiserver-key.pem  \
-</span><span class="s1">      --service-account-key-file=/etc/kubernetes/pki/sa.pub  \
-</span><span class="s1">      --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname  \
-</span><span class="s1">      --enable-admission-plugins=NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,DefaultTolerationSeconds,NodeRestriction,ResourceQuota  \
-</span><span class="s1">      --authorization-mode=Node,RBAC  \
-</span><span class="s1">      --enable-bootstrap-token-auth=true  \
-</span><span class="s1">      --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.pem  \
-</span><span class="s1">      --proxy-client-cert-file=/etc/kubernetes/pki/front-proxy-client.pem  \
-</span><span class="s1">      --proxy-client-key-file=/etc/kubernetes/pki/front-proxy-client-key.pem  \
-</span><span class="s1">      --requestheader-allowed-names=aggregator  \
-</span><span class="s1">      --requestheader-group-headers=X-Remote-Group  \
-</span><span class="s1">      --requestheader-extra-headers-prefix=X-Remote-Extra-  \
-</span><span class="s1">      --requestheader-username-headers=X-Remote-User  \
-</span><span class="s1">      --token-auth-file=/etc/kubernetes/token.csv
-</span><span class="s1">
-</span><span class="s1">Restart=on-failure
-</span><span class="s1">RestartSec=10s
-</span><span class="s1">LimitNOFILE=65535
-</span><span class="s1">
-</span><span class="s1">[Install]
-</span><span class="s1">WantedBy=multi-user.target&#39;</span> &gt; /usr/lib/systemd/system/kube-apiserver.service 
+<span class=nb>echo</span> <span class=s1>&#39;[Unit]
+</span><span class=s1>Description=Kubernetes API Server
+</span><span class=s1>Documentation=https://github.com/kubernetes/kubernetes
+</span><span class=s1>After=network.target
+</span><span class=s1>
+</span><span class=s1>[Service]
+</span><span class=s1>ExecStart=/usr/local/bin/kube-apiserver \
+</span><span class=s1>      --v=2  \
+</span><span class=s1>      --logtostderr=true  \
+</span><span class=s1>      --allow-privileged=true  \
+</span><span class=s1>      --bind-address=0.0.0.0  \
+</span><span class=s1>      --secure-port=6443  \
+</span><span class=s1>      --insecure-port=0  \
+</span><span class=s1>      --advertise-address=192.168.1.11 \
+</span><span class=s1>      --service-cluster-ip-range=10.96.0.0/12  \
+</span><span class=s1>      --service-node-port-range=30000-50000  \
+</span><span class=s1>      --etcd-servers=https://192.168.1.241:2379,https://192.168.1.242:2379,https://192.168.1.243:2379 \
+</span><span class=s1>      --etcd-cafile=/etc/etcd/ssl/etcd-ca.pem  \
+</span><span class=s1>      --etcd-certfile=/etc/etcd/ssl/etcd.pem  \
+</span><span class=s1>      --etcd-keyfile=/etc/etcd/ssl/etcd-key.pem  \
+</span><span class=s1>      --client-ca-file=/etc/kubernetes/pki/ca.pem  \
+</span><span class=s1>      --tls-cert-file=/etc/kubernetes/pki/apiserver.pem  \
+</span><span class=s1>      --tls-private-key-file=/etc/kubernetes/pki/apiserver-key.pem  \
+</span><span class=s1>      --kubelet-client-certificate=/etc/kubernetes/pki/apiserver.pem  \
+</span><span class=s1>      --kubelet-client-key=/etc/kubernetes/pki/apiserver-key.pem  \
+</span><span class=s1>      --service-account-key-file=/etc/kubernetes/pki/sa.pub  \
+</span><span class=s1>      --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname  \
+</span><span class=s1>      --enable-admission-plugins=NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,DefaultTolerationSeconds,NodeRestriction,ResourceQuota  \
+</span><span class=s1>      --authorization-mode=Node,RBAC  \
+</span><span class=s1>      --enable-bootstrap-token-auth=true  \
+</span><span class=s1>      --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.pem  \
+</span><span class=s1>      --proxy-client-cert-file=/etc/kubernetes/pki/front-proxy-client.pem  \
+</span><span class=s1>      --proxy-client-key-file=/etc/kubernetes/pki/front-proxy-client-key.pem  \
+</span><span class=s1>      --requestheader-allowed-names=aggregator  \
+</span><span class=s1>      --requestheader-group-headers=X-Remote-Group  \
+</span><span class=s1>      --requestheader-extra-headers-prefix=X-Remote-Extra-  \
+</span><span class=s1>      --requestheader-username-headers=X-Remote-User  \
+</span><span class=s1>      --token-auth-file=/etc/kubernetes/token.csv
+</span><span class=s1>
+</span><span class=s1>Restart=on-failure
+</span><span class=s1>RestartSec=10s
+</span><span class=s1>LimitNOFILE=65535
+</span><span class=s1>
+</span><span class=s1>[Install]
+</span><span class=s1>WantedBy=multi-user.target&#39;</span> &gt; /usr/lib/systemd/system/kube-apiserver.service 
 vim /etc/kubernetes/token.csv
 cat !$
 cat /etc/kubernetes/token.csv
-d7d356746b508a1a478e49968fba7947,kubelet-bootstrap,10001,<span class="s2">&#34;system:kubelet-bootstrap&#34;</span>
-systemctl daemon-reload <span class="o">&amp;&amp;</span> systemctl <span class="nb">enable</span> --now kube-apiserver
+d7d356746b508a1a478e49968fba7947,kubelet-bootstrap,10001,<span class=s2>&#34;system:kubelet-bootstrap&#34;</span>
+systemctl daemon-reload <span class=o>&amp;&amp;</span> systemctl <span class=nb>enable</span> --now kube-apiserver
 curl -k https://192.168.1.11:8443
 
-<span class="c1">#所有Master节点配置kube-controller-manager service</span>
-<span class="nb">echo</span> <span class="s1">&#39;
-</span><span class="s1">[Unit]
-</span><span class="s1">Description=Kubernetes Controller Manager
-</span><span class="s1">Documentation=https://github.com/kubernetes/kubernetes
-</span><span class="s1">After=network.target
-</span><span class="s1">
-</span><span class="s1">[Service]
-</span><span class="s1">ExecStart=/usr/local/bin/kube-controller-manager \
-</span><span class="s1">      --v=2 \
-</span><span class="s1">      --logtostderr=true \
-</span><span class="s1">      --address=127.0.0.1 \
-</span><span class="s1">      --root-ca-file=/etc/kubernetes/pki/ca.pem \
-</span><span class="s1">      --cluster-signing-cert-file=/etc/kubernetes/pki/ca.pem \
-</span><span class="s1">      --cluster-signing-key-file=/etc/kubernetes/pki/ca-key.pem \
-</span><span class="s1">      --service-account-private-key-file=/etc/kubernetes/pki/sa.key \
-</span><span class="s1">      --kubeconfig=/etc/kubernetes/controller-manager.kubeconfig \
-</span><span class="s1">      --leader-elect=true \
-</span><span class="s1">      --use-service-account-credentials=true \
-</span><span class="s1">      --node-monitor-grace-period=40s \
-</span><span class="s1">      --node-monitor-period=5s \
-</span><span class="s1">      --pod-eviction-timeout=2m0s \
-</span><span class="s1">      --controllers=*,bootstrapsigner,tokencleaner \
-</span><span class="s1">      --allocate-node-cidrs=true \
-</span><span class="s1">      --cluster-cidr=10.244.0.0/16 \
-</span><span class="s1">      --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.pem \
-</span><span class="s1">      --node-cidr-mask-size=24
-</span><span class="s1">      
-</span><span class="s1">Restart=always
-</span><span class="s1">RestartSec=10s
-</span><span class="s1">
-</span><span class="s1">[Install]
-</span><span class="s1">WantedBy=multi-user.target&#39;</span> &gt; /usr/lib/systemd/system/kube-controller-manager.service
+<span class=c1>#所有Master节点配置kube-controller-manager service</span>
+<span class=nb>echo</span> <span class=s1>&#39;
+</span><span class=s1>[Unit]
+</span><span class=s1>Description=Kubernetes Controller Manager
+</span><span class=s1>Documentation=https://github.com/kubernetes/kubernetes
+</span><span class=s1>After=network.target
+</span><span class=s1>
+</span><span class=s1>[Service]
+</span><span class=s1>ExecStart=/usr/local/bin/kube-controller-manager \
+</span><span class=s1>      --v=2 \
+</span><span class=s1>      --logtostderr=true \
+</span><span class=s1>      --address=127.0.0.1 \
+</span><span class=s1>      --root-ca-file=/etc/kubernetes/pki/ca.pem \
+</span><span class=s1>      --cluster-signing-cert-file=/etc/kubernetes/pki/ca.pem \
+</span><span class=s1>      --cluster-signing-key-file=/etc/kubernetes/pki/ca-key.pem \
+</span><span class=s1>      --service-account-private-key-file=/etc/kubernetes/pki/sa.key \
+</span><span class=s1>      --kubeconfig=/etc/kubernetes/controller-manager.kubeconfig \
+</span><span class=s1>      --leader-elect=true \
+</span><span class=s1>      --use-service-account-credentials=true \
+</span><span class=s1>      --node-monitor-grace-period=40s \
+</span><span class=s1>      --node-monitor-period=5s \
+</span><span class=s1>      --pod-eviction-timeout=2m0s \
+</span><span class=s1>      --controllers=*,bootstrapsigner,tokencleaner \
+</span><span class=s1>      --allocate-node-cidrs=true \
+</span><span class=s1>      --cluster-cidr=10.244.0.0/16 \
+</span><span class=s1>      --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.pem \
+</span><span class=s1>      --node-cidr-mask-size=24
+</span><span class=s1>      
+</span><span class=s1>Restart=always
+</span><span class=s1>RestartSec=10s
+</span><span class=s1>
+</span><span class=s1>[Install]
+</span><span class=s1>WantedBy=multi-user.target&#39;</span> &gt; /usr/lib/systemd/system/kube-controller-manager.service
 systemctl daemon-reload
-systemctl <span class="nb">enable</span> --now kube-controller-manager
+systemctl <span class=nb>enable</span> --now kube-controller-manager
 
-<span class="c1">#kube-scheduler service</span>
-<span class="nb">echo</span> <span class="s1">&#39;
-</span><span class="s1">[Unit]
-</span><span class="s1">Description=Kubernetes Scheduler
-</span><span class="s1">Documentation=https://github.com/kubernetes/kubernetes
-</span><span class="s1">After=network.target
-</span><span class="s1">
-</span><span class="s1">[Service]
-</span><span class="s1">ExecStart=/usr/local/bin/kube-scheduler \
-</span><span class="s1">      --v=2 \
-</span><span class="s1">      --logtostderr=true \
-</span><span class="s1">      --address=127.0.0.1 \
-</span><span class="s1">      --leader-elect=true \
-</span><span class="s1">      --kubeconfig=/etc/kubernetes/scheduler.kubeconfig
-</span><span class="s1">
-</span><span class="s1">Restart=always
-</span><span class="s1">RestartSec=10s
-</span><span class="s1">
-</span><span class="s1">[Install]
-</span><span class="s1">WantedBy=multi-user.target&#39;</span> &gt; /usr/lib/systemd/system/kube-scheduler.service
+<span class=c1>#kube-scheduler service</span>
+<span class=nb>echo</span> <span class=s1>&#39;
+</span><span class=s1>[Unit]
+</span><span class=s1>Description=Kubernetes Scheduler
+</span><span class=s1>Documentation=https://github.com/kubernetes/kubernetes
+</span><span class=s1>After=network.target
+</span><span class=s1>
+</span><span class=s1>[Service]
+</span><span class=s1>ExecStart=/usr/local/bin/kube-scheduler \
+</span><span class=s1>      --v=2 \
+</span><span class=s1>      --logtostderr=true \
+</span><span class=s1>      --address=127.0.0.1 \
+</span><span class=s1>      --leader-elect=true \
+</span><span class=s1>      --kubeconfig=/etc/kubernetes/scheduler.kubeconfig
+</span><span class=s1>
+</span><span class=s1>Restart=always
+</span><span class=s1>RestartSec=10s
+</span><span class=s1>
+</span><span class=s1>[Install]
+</span><span class=s1>WantedBy=multi-user.target&#39;</span> &gt; /usr/lib/systemd/system/kube-scheduler.service
 systemctl daemon-reload
-systemctl <span class="nb">enable</span> --now kube-scheduler
+systemctl <span class=nb>enable</span> --now kube-scheduler
 
-<span class="c1">#TLS Bootstrapping配置 在Master01创建bootstrap</span>
-kubectl config set-cluster kubernetes     --certificate-authority<span class="o">=</span>/etc/kubernetes/pki/ca.pem     --embed-certs<span class="o">=</span><span class="nb">true</span>     --server<span class="o">=</span>https://192.168.1.11:8443     --kubeconfig<span class="o">=</span>/etc/kubernetes/bootstrap-kubelet.kubeconfig
-kubectl config set-credentials tls-bootstrap-token-user     --token<span class="o">=</span>c8ad9c.2e4d610cf3e7426e --kubeconfig<span class="o">=</span>/etc/kubernetes/bootstrap-kubelet.kubeconfig
-kubectl config set-context tls-bootstrap-token-user@kubernetes     --cluster<span class="o">=</span>kubernetes     --user<span class="o">=</span>tls-bootstrap-token-user     --kubeconfig<span class="o">=</span>/etc/kubernetes/bootstrap-kubelet.kubeconfig
-kubectl config use-context tls-bootstrap-token-user@kubernetes     --kubeconfig<span class="o">=</span>/etc/kubernetes/bootstrap-kubelet.kubeconfig
+<span class=c1>#TLS Bootstrapping配置 在Master01创建bootstrap</span>
+kubectl config set-cluster kubernetes     --certificate-authority<span class=o>=</span>/etc/kubernetes/pki/ca.pem     --embed-certs<span class=o>=</span><span class=nb>true</span>     --server<span class=o>=</span>https://192.168.1.11:8443     --kubeconfig<span class=o>=</span>/etc/kubernetes/bootstrap-kubelet.kubeconfig
+kubectl config set-credentials tls-bootstrap-token-user     --token<span class=o>=</span>c8ad9c.2e4d610cf3e7426e --kubeconfig<span class=o>=</span>/etc/kubernetes/bootstrap-kubelet.kubeconfig
+kubectl config set-context tls-bootstrap-token-user@kubernetes     --cluster<span class=o>=</span>kubernetes     --user<span class=o>=</span>tls-bootstrap-token-user     --kubeconfig<span class=o>=</span>/etc/kubernetes/bootstrap-kubelet.kubeconfig
+kubectl config use-context tls-bootstrap-token-user@kubernetes     --kubeconfig<span class=o>=</span>/etc/kubernetes/bootstrap-kubelet.kubeconfig
 
-<span class="c1">#在Master01创建bootstrap</span>
+<span class=c1>#在Master01创建bootstrap</span>
 cp /etc/kubernetes/admin.kubeconfig /root/.kube/config
-<span class="nb">cd</span> ../bootstrap/
+<span class=nb>cd</span> ../bootstrap/
 kubectl create -f bootstrap.secret.yaml
 
 
-<span class="k">for</span> NODE in k8s-node01 <span class="p">;</span> <span class="k">do</span>
-     ssh <span class="nv">$NODE</span> mkdir -p /etc/kubernetes/pki /etc/etcd/ssl /etc/etcd/ssl
-     <span class="k">for</span> FILE in etcd-ca.pem etcd.pem etcd-key.pem<span class="p">;</span> <span class="k">do</span>
-       scp /etc/etcd/ssl/<span class="nv">$FILE</span> <span class="nv">$NODE</span>:/etc/etcd/ssl/
-     <span class="k">done</span>
-     <span class="k">for</span> FILE in pki/ca.pem pki/ca-key.pem pki/front-proxy-ca.pem bootstrap-kubelet.kubeconfig<span class="p">;</span> <span class="k">do</span>
-       scp /etc/kubernetes/<span class="nv">$FILE</span> <span class="nv">$NODE</span>:/etc/kubernetes/<span class="si">${</span><span class="nv">FILE</span><span class="si">}</span>
- <span class="k">done</span>
- <span class="k">done</span>
+<span class=k>for</span> NODE in k8s-node01 <span class=p>;</span> <span class=k>do</span>
+     ssh <span class=nv>$NODE</span> mkdir -p /etc/kubernetes/pki /etc/etcd/ssl /etc/etcd/ssl
+     <span class=k>for</span> FILE in etcd-ca.pem etcd.pem etcd-key.pem<span class=p>;</span> <span class=k>do</span>
+       scp /etc/etcd/ssl/<span class=nv>$FILE</span> <span class=nv>$NODE</span>:/etc/etcd/ssl/
+     <span class=k>done</span>
+     <span class=k>for</span> FILE in pki/ca.pem pki/ca-key.pem pki/front-proxy-ca.pem bootstrap-kubelet.kubeconfig<span class=p>;</span> <span class=k>do</span>
+       scp /etc/kubernetes/<span class=nv>$FILE</span> <span class=nv>$NODE</span>:/etc/kubernetes/<span class=si>${</span><span class=nv>FILE</span><span class=si>}</span>
+ <span class=k>done</span>
+ <span class=k>done</span>
 
-<span class="c1">#所有Node节点创建相关目录</span>
+<span class=c1>#所有Node节点创建相关目录</span>
 mkdir -p /var/lib/kubelet /var/log/kubernetes /etc/systemd/system/kubelet.service.d /etc/kubernetes/manifests/
-<span class="c1">#所有节点配置kubelet service（Master节点不部署Pod也可无需配置）</span>
+<span class=c1>#所有节点配置kubelet service（Master节点不部署Pod也可无需配置）</span>
 vim  /usr/lib/systemd/system/kubelet.service
-<span class="o">[</span>Unit<span class="o">]</span>
-<span class="nv">Description</span><span class="o">=</span>Kubernetes Kubelet
-<span class="nv">Documentation</span><span class="o">=</span>https://github.com/kubernetes/kubernetes
-<span class="nv">After</span><span class="o">=</span>docker.service
-<span class="nv">Requires</span><span class="o">=</span>docker.service
+<span class=o>[</span>Unit<span class=o>]</span>
+<span class=nv>Description</span><span class=o>=</span>Kubernetes Kubelet
+<span class=nv>Documentation</span><span class=o>=</span>https://github.com/kubernetes/kubernetes
+<span class=nv>After</span><span class=o>=</span>docker.service
+<span class=nv>Requires</span><span class=o>=</span>docker.service
  
-<span class="o">[</span>Service<span class="o">]</span>
-<span class="nv">ExecStart</span><span class="o">=</span>/usr/local/bin/kubelet
+<span class=o>[</span>Service<span class=o>]</span>
+<span class=nv>ExecStart</span><span class=o>=</span>/usr/local/bin/kubelet
  
-<span class="nv">Restart</span><span class="o">=</span>always
-<span class="nv">StartLimitInterval</span><span class="o">=</span><span class="m">0</span>
-<span class="nv">RestartSec</span><span class="o">=</span><span class="m">10</span>
+<span class=nv>Restart</span><span class=o>=</span>always
+<span class=nv>StartLimitInterval</span><span class=o>=</span><span class=m>0</span>
+<span class=nv>RestartSec</span><span class=o>=</span><span class=m>10</span>
  
-<span class="o">[</span>Install<span class="o">]</span>
-<span class="nv">WantedBy</span><span class="o">=</span>multi-user.target
+<span class=o>[</span>Install<span class=o>]</span>
+<span class=nv>WantedBy</span><span class=o>=</span>multi-user.target
 
 vim  /etc/systemd/system/kubelet.service.d/10-kubelet.conf
-<span class="o">[</span>Service<span class="o">]</span>
-<span class="nv">Environment</span><span class="o">=</span><span class="s2">&#34;KUBELET_KUBECONFIG_ARGS=--bootstrap-kubeconfig=/etc/kubernetes/bootstrap-kubelet.kubeconfig --kubeconfig=/etc/kubernetes/kubelet.kubeconfig --cgroup-driver=systemd&#34;</span>
-<span class="nv">Environment</span><span class="o">=</span><span class="s2">&#34;KUBELET_SYSTEM_ARGS=--network-plugin=cni --cni-conf-dir=/etc/cni/net.d --cni-bin-dir=/opt/cni/bin&#34;</span>
-<span class="nv">Environment</span><span class="o">=</span><span class="s2">&#34;KUBELET_CONFIG_ARGS=--config=/etc/kubernetes/kubelet-conf.yml&#34;</span>
-<span class="nv">Environment</span><span class="o">=</span><span class="s2">&#34;KUBELET_EXTRA_ARGS=--node-labels=node.kubernetes.io/node=&#39;&#39; --pod-infra-container-image=registry.cn-hangzhou.aliyuncs.com/google_containers/pause-amd64:3.1&#34;</span>
-<span class="nv">ExecStart</span><span class="o">=</span>
-<span class="nv">ExecStart</span><span class="o">=</span>/usr/local/bin/kubelet <span class="nv">$KUBELET_KUBECONFIG_ARGS</span> <span class="nv">$KUBELET_CONFIG_ARGS</span> <span class="nv">$KUBELET_SYSTEM_ARGS</span> <span class="nv">$KUBELET_EXTRA_ARGS</span>
+<span class=o>[</span>Service<span class=o>]</span>
+<span class=nv>Environment</span><span class=o>=</span><span class=s2>&#34;KUBELET_KUBECONFIG_ARGS=--bootstrap-kubeconfig=/etc/kubernetes/bootstrap-kubelet.kubeconfig --kubeconfig=/etc/kubernetes/kubelet.kubeconfig --cgroup-driver=systemd&#34;</span>
+<span class=nv>Environment</span><span class=o>=</span><span class=s2>&#34;KUBELET_SYSTEM_ARGS=--network-plugin=cni --cni-conf-dir=/etc/cni/net.d --cni-bin-dir=/opt/cni/bin&#34;</span>
+<span class=nv>Environment</span><span class=o>=</span><span class=s2>&#34;KUBELET_CONFIG_ARGS=--config=/etc/kubernetes/kubelet-conf.yml&#34;</span>
+<span class=nv>Environment</span><span class=o>=</span><span class=s2>&#34;KUBELET_EXTRA_ARGS=--node-labels=node.kubernetes.io/node=&#39;&#39; --pod-infra-container-image=registry.cn-hangzhou.aliyuncs.com/google_containers/pause-amd64:3.1&#34;</span>
+<span class=nv>ExecStart</span><span class=o>=</span>
+<span class=nv>ExecStart</span><span class=o>=</span>/usr/local/bin/kubelet <span class=nv>$KUBELET_KUBECONFIG_ARGS</span> <span class=nv>$KUBELET_CONFIG_ARGS</span> <span class=nv>$KUBELET_SYSTEM_ARGS</span> <span class=nv>$KUBELET_EXTRA_ARGS</span>
 
 vi /etc/kubernetes/kubelet-conf.yml
 apiVersion: kubelet.config.k8s.io/v1beta1
 kind: KubeletConfiguration
 address: 0.0.0.0
-port: <span class="m">10250</span>
-readOnlyPort: <span class="m">10255</span>
+port: <span class=m>10250</span>
+readOnlyPort: <span class=m>10255</span>
 authentication:
   anonymous:
-    enabled: <span class="nb">false</span>
+    enabled: <span class=nb>false</span>
   webhook:
     cacheTTL: 2m0s
-    enabled: <span class="nb">true</span>
+    enabled: <span class=nb>true</span>
   x509:
     clientCAFile: /etc/kubernetes/pki/ca.pem
 authorization:
@@ -897,298 +757,151 @@ authorization:
     cacheAuthorizedTTL: 5m0s
     cacheUnauthorizedTTL: 30s
 cgroupDriver: cgroupfs
-cgroupsPerQOS: <span class="nb">true</span>
+cgroupsPerQOS: <span class=nb>true</span>
 clusterDNS:
 - 10.96.0.10
 clusterDomain: cluster.local
-containerLogMaxFiles: <span class="m">5</span>
+containerLogMaxFiles: <span class=m>5</span>
 containerLogMaxSize: 10Mi
 contentType: application/vnd.kubernetes.protobuf
-cpuCFSQuota: <span class="nb">true</span>
+cpuCFSQuota: <span class=nb>true</span>
 cpuManagerPolicy: none
 cpuManagerReconcilePeriod: 10s
-enableControllerAttachDetach: <span class="nb">true</span>
-enableDebuggingHandlers: <span class="nb">true</span>
+enableControllerAttachDetach: <span class=nb>true</span>
+enableDebuggingHandlers: <span class=nb>true</span>
 enforceNodeAllocatable:
 - pods
-eventBurst: <span class="m">10</span>
-eventRecordQPS: <span class="m">5</span>
+eventBurst: <span class=m>10</span>
+eventRecordQPS: <span class=m>5</span>
 evictionHard:
   imagefs.available: 15%
   memory.available: 100Mi
   nodefs.available: 10%
   nodefs.inodesFree: 5%
 evictionPressureTransitionPeriod: 5m0s
-failSwapOn: <span class="nb">true</span>
+failSwapOn: <span class=nb>true</span>
 fileCheckFrequency: 20s
 hairpinMode: promiscuous-bridge
 healthzBindAddress: 127.0.0.1
-healthzPort: <span class="m">10248</span>
+healthzPort: <span class=m>10248</span>
 httpCheckFrequency: 20s
-imageGCHighThresholdPercent: <span class="m">85</span>
-imageGCLowThresholdPercent: <span class="m">80</span>
+imageGCHighThresholdPercent: <span class=m>85</span>
+imageGCLowThresholdPercent: <span class=m>80</span>
 imageMinimumGCAge: 2m0s
-iptablesDropBit: <span class="m">15</span>
-iptablesMasqueradeBit: <span class="m">14</span>
-kubeAPIBurst: <span class="m">10</span>
-kubeAPIQPS: <span class="m">5</span>
-makeIPTablesUtilChains: <span class="nb">true</span>
-maxOpenFiles: <span class="m">1000000</span>
-maxPods: <span class="m">110</span>
+iptablesDropBit: <span class=m>15</span>
+iptablesMasqueradeBit: <span class=m>14</span>
+kubeAPIBurst: <span class=m>10</span>
+kubeAPIQPS: <span class=m>5</span>
+makeIPTablesUtilChains: <span class=nb>true</span>
+maxOpenFiles: <span class=m>1000000</span>
+maxPods: <span class=m>110</span>
 nodeStatusUpdateFrequency: 10s
 oomScoreAdj: -999
 podPidsLimit: -1
-registryBurst: <span class="m">10</span>
-registryPullQPS: <span class="m">5</span>
+registryBurst: <span class=m>10</span>
+registryPullQPS: <span class=m>5</span>
 resolvConf: /etc/resolv.conf
-rotateCertificates: <span class="nb">true</span>
+rotateCertificates: <span class=nb>true</span>
 runtimeRequestTimeout: 2m0s
-serializeImagePulls: <span class="nb">true</span>
+serializeImagePulls: <span class=nb>true</span>
 staticPodPath: /etc/kubernetes/manifests
 streamingConnectionIdleTimeout: 4h0m0s
 syncFrequency: 1m0s
 volumeStatsAggPeriod: 1m0s
 
 systemctl daemon-reload
-systemctl <span class="nb">enable</span> --now kubelet
+systemctl <span class=nb>enable</span> --now kubelet
 
 
-<span class="c1">#Kube-Proxy配置</span>
-<span class="nb">cd</span> /root/k8s-ha-install
+<span class=c1>#Kube-Proxy配置</span>
+<span class=nb>cd</span> /root/k8s-ha-install
 kubectl -n kube-system create serviceaccount kube-proxy
 kubectl create clusterrolebinding system:kube-proxy         --clusterrole system:node-proxier         --serviceaccount kube-system:kube-proxy
-<span class="nv">SECRET</span><span class="o">=</span><span class="k">$(</span>kubectl -n kube-system get sa/kube-proxy <span class="se">\
-</span><span class="se"></span>    --output<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.secrets[0].name}&#39;</span><span class="k">)</span>
-<span class="nv">JWT_TOKEN</span><span class="o">=</span><span class="k">$(</span>kubectl -n kube-system get secret/<span class="nv">$SECRET</span> <span class="se">\
-</span><span class="se"></span>--output<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.data.token}&#39;</span> <span class="p">|</span> base64 -d<span class="k">)</span>
-<span class="nv">PKI_DIR</span><span class="o">=</span>/etc/kubernetes/pki
-<span class="nv">K8S_DIR</span><span class="o">=</span>/etc/kubernetes
-kubectl config set-cluster kubernetes     --certificate-authority<span class="o">=</span>/etc/kubernetes/pki/ca.pem     --embed-certs<span class="o">=</span><span class="nb">true</span>     --server<span class="o">=</span>https://192.168.1.11:8443     --kubeconfig<span class="o">=</span><span class="si">${</span><span class="nv">K8S_DIR</span><span class="si">}</span>/kube-proxy.kubeconfig
-kubectl config set-credentials kubernetes     --token<span class="o">=</span><span class="si">${</span><span class="nv">JWT_TOKEN</span><span class="si">}</span>     --kubeconfig<span class="o">=</span>/etc/kubernetes/kube-proxy.kubeconfig
-kubectl config set-context kubernetes     --cluster<span class="o">=</span>kubernetes     --user<span class="o">=</span>kubernetes     --kubeconfig<span class="o">=</span>/etc/kubernetes/kube-proxy.kubeconfig
-kubectl config use-context kubernetes     --kubeconfig<span class="o">=</span>/etc/kubernetes/kube-proxy.kubeconfig
+<span class=nv>SECRET</span><span class=o>=</span><span class=k>$(</span>kubectl -n kube-system get sa/kube-proxy <span class=se>\
+</span><span class=se></span>    --output<span class=o>=</span><span class=nv>jsonpath</span><span class=o>=</span><span class=s1>&#39;{.secrets[0].name}&#39;</span><span class=k>)</span>
+<span class=nv>JWT_TOKEN</span><span class=o>=</span><span class=k>$(</span>kubectl -n kube-system get secret/<span class=nv>$SECRET</span> <span class=se>\
+</span><span class=se></span>--output<span class=o>=</span><span class=nv>jsonpath</span><span class=o>=</span><span class=s1>&#39;{.data.token}&#39;</span> <span class=p>|</span> base64 -d<span class=k>)</span>
+<span class=nv>PKI_DIR</span><span class=o>=</span>/etc/kubernetes/pki
+<span class=nv>K8S_DIR</span><span class=o>=</span>/etc/kubernetes
+kubectl config set-cluster kubernetes     --certificate-authority<span class=o>=</span>/etc/kubernetes/pki/ca.pem     --embed-certs<span class=o>=</span><span class=nb>true</span>     --server<span class=o>=</span>https://192.168.1.11:8443     --kubeconfig<span class=o>=</span><span class=si>${</span><span class=nv>K8S_DIR</span><span class=si>}</span>/kube-proxy.kubeconfig
+kubectl config set-credentials kubernetes     --token<span class=o>=</span><span class=si>${</span><span class=nv>JWT_TOKEN</span><span class=si>}</span>     --kubeconfig<span class=o>=</span>/etc/kubernetes/kube-proxy.kubeconfig
+kubectl config set-context kubernetes     --cluster<span class=o>=</span>kubernetes     --user<span class=o>=</span>kubernetes     --kubeconfig<span class=o>=</span>/etc/kubernetes/kube-proxy.kubeconfig
+kubectl config use-context kubernetes     --kubeconfig<span class=o>=</span>/etc/kubernetes/kube-proxy.kubeconfig
 
-<span class="c1">#赋值Service文件</span>
-<span class="k">for</span> NODE in k8s-master01 k8s-master02 k8s-master03<span class="p">;</span> <span class="k">do</span>
-     scp <span class="si">${</span><span class="nv">K8S_DIR</span><span class="si">}</span>/kube-proxy.kubeconfig <span class="nv">$NODE</span>:/etc/kubernetes/kube-proxy.kubeconfig
-     scp kube-proxy/kube-proxy.conf <span class="nv">$NODE</span>:/etc/kubernetes/kube-proxy.conf
-     scp kube-proxy/kube-proxy.service <span class="nv">$NODE</span>:/usr/lib/systemd/system/kube-proxy.service
- <span class="k">done</span>
+<span class=c1>#赋值Service文件</span>
+<span class=k>for</span> NODE in k8s-master01 k8s-master02 k8s-master03<span class=p>;</span> <span class=k>do</span>
+     scp <span class=si>${</span><span class=nv>K8S_DIR</span><span class=si>}</span>/kube-proxy.kubeconfig <span class=nv>$NODE</span>:/etc/kubernetes/kube-proxy.kubeconfig
+     scp kube-proxy/kube-proxy.conf <span class=nv>$NODE</span>:/etc/kubernetes/kube-proxy.conf
+     scp kube-proxy/kube-proxy.service <span class=nv>$NODE</span>:/usr/lib/systemd/system/kube-proxy.service
+ <span class=k>done</span>
 
-<span class="k">for</span> NODE in k8s-node01<span class="p">;</span> <span class="k">do</span>
-     scp /etc/kubernetes/kube-proxy.kubeconfig <span class="nv">$NODE</span>:/etc/kubernetes/kube-proxy.kubeconfig
-     scp kube-proxy/kube-proxy.conf <span class="nv">$NODE</span>:/etc/kubernetes/kube-proxy.conf
-     scp kube-proxy/kube-proxy.service <span class="nv">$NODE</span>:/usr/lib/systemd/system/kube-proxy.service
- <span class="k">done</span>
+<span class=k>for</span> NODE in k8s-node01<span class=p>;</span> <span class=k>do</span>
+     scp /etc/kubernetes/kube-proxy.kubeconfig <span class=nv>$NODE</span>:/etc/kubernetes/kube-proxy.kubeconfig
+     scp kube-proxy/kube-proxy.conf <span class=nv>$NODE</span>:/etc/kubernetes/kube-proxy.conf
+     scp kube-proxy/kube-proxy.service <span class=nv>$NODE</span>:/usr/lib/systemd/system/kube-proxy.service
+ <span class=k>done</span>
 
 systemctl daemon-reload
-systemctl <span class="nb">enable</span> --now kube-proxy
+systemctl <span class=nb>enable</span> --now kube-proxy
 
-<span class="c1">#安装Calico 3.11.1</span>
-<span class="nb">cd</span> /root/k8s-ha-install/Calico/
+<span class=c1>#安装Calico 3.11.1</span>
+<span class=nb>cd</span> /root/k8s-ha-install/Calico/
 kubectl create -f calico.yaml
 kubectl get po -n kube-system -o wide
 kubectl get node
 kubectl cluster-info
 
-<span class="nb">cd</span> /root/k8s-ha-install/CoreDNS/
+<span class=nb>cd</span> /root/k8s-ha-install/CoreDNS/
 kubectl create -f coredns.yaml
 kubectl get po -n kube-system
 kubectl logs -f coredns-76b74f549-7znbw -n kube-system
 
-<span class="c1">#集群验证</span>
-cat<span class="s">&lt;&lt;EOF | kubectl apply -f -
-</span><span class="s">apiVersion: v1
-</span><span class="s">kind: Pod
-</span><span class="s">metadata:
-</span><span class="s">  name: busybox
-</span><span class="s">  namespace: default
-</span><span class="s">spec:
-</span><span class="s">  containers:
-</span><span class="s">  - name: busybox
-</span><span class="s">    image: busybox:1.28
-</span><span class="s">    command:
-</span><span class="s">      - sleep
-</span><span class="s">      - &#34;3600&#34;
-</span><span class="s">    imagePullPolicy: IfNotPresent
-</span><span class="s">  restartPolicy: Always
-</span><span class="s">EOF</span>
+<span class=c1>#集群验证</span>
+cat<span class=s>&lt;&lt;EOF | kubectl apply -f -
+</span><span class=s>apiVersion: v1
+</span><span class=s>kind: Pod
+</span><span class=s>metadata:
+</span><span class=s>  name: busybox
+</span><span class=s>  namespace: default
+</span><span class=s>spec:
+</span><span class=s>  containers:
+</span><span class=s>  - name: busybox
+</span><span class=s>    image: busybox:1.28
+</span><span class=s>    command:
+</span><span class=s>      - sleep
+</span><span class=s>      - &#34;3600&#34;
+</span><span class=s>    imagePullPolicy: IfNotPresent
+</span><span class=s>  restartPolicy: Always
+</span><span class=s>EOF</span>
 
-kubectl <span class="nb">exec</span>  busybox -n default -- nslookup kubernetes
-kubectl <span class="nb">exec</span>  busybox -n default -- nslookup kube-dns.kube-system
+kubectl <span class=nb>exec</span>  busybox -n default -- nslookup kubernetes
+kubectl <span class=nb>exec</span>  busybox -n default -- nslookup kube-dns.kube-system
 
 
 journalctl -xefu kubelet
-<span class="c1">#nftables https://hezhiqiang8909.gitbook.io/nftables/</span>
+<span class=c1>#nftables https://hezhiqiang8909.gitbook.io/nftables/</span>
 nft list ruleset
 
-</code></pre></div>
-    </div>
-
-    <div class="post-copyright">
-  <p class="copyright-item">
-    <span class="item-title">文章作者</span>
-    <span class="item-content">🐳Myki</span>
-  </p>
-  <p class="copyright-item">
-    <span class="item-title">上次更新</span>
-    <span class="item-content">
-        2020-01-20
-        
-    </span>
-  </p>
-  
-  
-</div>
-<div class="post-reward">
-  <input type="checkbox" name="reward" id="reward" hidden />
-  <label class="reward-button" for="reward">赞赏支持</label>
-  <div class="qr-code">
-    
-    <label class="qr-code-image" for="reward">
-        <img class="image" src="https://oss.1nth.com/images/1nth/wechat.png">
-        <span>微信打赏</span>
-      </label>
-    <label class="qr-code-image" for="reward">
-        <img class="image" src="https://oss.1nth.com/images/1nth/alipay.png">
-        <span>支付宝打赏</span>
-      </label>
-  </div>
-</div><footer class="post-footer">
-      <div class="post-tags">
-          <a href="/tags/kubernetes/">kubernetes</a>
-          <a href="/tags/linux/">linux</a>
-          <a href="/tags/centos/">centos</a>
-          </div>
-      <nav class="post-nav">
-        <a class="prev" href="/post/consul_install/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">consul安装使用 做prometheus的配置中心</span>
-            <span class="prev-text nav-mobile">上一篇</span>
-          </a>
-        <a class="next" href="/post/centos8_install/">
-            <span class="next-text nav-default">centos8 安装体验install</span>
-            <span class="next-text nav-mobile">下一篇</span>
-            <i class="iconfont icon-right"></i>
-          </a>
-      </nav>
-    </footer>
-  </article>
-        </div>
-        <div id="disqus_thread"></div>
-    <script type="text/javascript">
-    (function() {
-      
-      
-      if (window.location.hostname === 'localhost') return;
-
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      var disqus_shortname = 'mykifan';
-      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-  
-
-  
-
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="social-links">
-      <a href="mailto:21kixc@gmail.com" class="iconfont icon-email" title="email"></a>
-      <a href="https://github.com/21ki" class="iconfont icon-github" title="github"></a>
-      <a href="http://localhost:1313" class="iconfont icon-weibo" title="weibo"></a>
-  <a href="https://www.1nth.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
-</div>
-
-<div class="copyright">
-  
-
-  <div class="busuanzi-footer">
-    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
-      <span class="division">|</span>
-    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
-  </div>
-
-  <span class="copyright-year">
-    &copy; 
-    2018 - 
-    2020<span class="heart"><i class="iconfont icon-heart"></i></span><span>🐳Myki</span>
-    
-    <a href="https://www.upyun.com/?utm_source=lianmeng&amp;utm_medium=referra"><img src="https://oss.1nth.com/images/1nth/%E5%8F%88%E6%8B%8D%E4%BA%91_logo5.png"align="absmiddle" width="59px" height="30px" /></a>
-    <span>提供加速服务</span>
-    
-  <br>
-    
-    <a href="http://beian.miit.gov.cn"><img src="https://oss.1nth.com/images/1nth/svg/icp.svg" alt="image"></a>
-    
-    <a class="hugo" href="https://oss.1nth.com/images/1nth/svg/hugo.svg" data-fancybox="gallery" data-caption=""><img src="https://oss.1nth.com/images/1nth/svg/hugo.svg" alt="image"></a>
-    <a class="even" href="https://oss.1nth.com/images/1nth/svg/even.svg" data-fancybox="gallery" data-caption=""><img src="https://oss.1nth.com/images/1nth/svg/even.svg" alt="image"></a>
-  </br>
-  </span>
-</div>
-</div>
-
-    </footer>
-
-    <div class="back-to-top" id="back-to-top">
-      <i class="iconfont icon-up"></i>
-    </div>
-  </div>
-  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
-
-
-
-<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
-
-
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-154483127-1', 'auto');
-	ga('set', 'anonymizeIp', true);
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-<script id="baidu_analytics">
-  var _hmt = _hmt || [];
-  (function() {
-    if (window.location.hostname === 'localhost') return;
-    var hm = document.createElement("script"); hm.async = true;
-    hm.src = "https://hm.baidu.com/hm.js?9f5f711a6a3e2fd392b4b02d93529765";
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(hm, s);
-  })();
-</script>
-
-<script id="baidu_push">
-  (function(){
-    if (window.location.hostname === 'localhost') return;
-    var bp = document.createElement('script'); bp.async = true;
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-    }
-    else {
-      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-  })();
-</script>
-
-
-
-
-</body>
-</html>
+</code></pre></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+<span class=item-content>🐳Myki</span></p><p class=copyright-item><span class=item-title>上次更新</span>
+<span class=item-content>2020-01-20</span></p></div><div class=post-reward><input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label><div class=qr-code><label class=qr-code-image for=reward><img class=image src=https://oss.1nth.com/images/1nth/wechat.png>
+<span>微信打赏</span></label>
+<label class=qr-code-image for=reward><img class=image src=https://oss.1nth.com/images/1nth/alipay.png>
+<span>支付宝打赏</span></label></div></div><footer class=post-footer><div class=post-tags><a href=/tags/kubernetes/>kubernetes</a>
+<a href=/tags/linux/>linux</a>
+<a href=/tags/centos/>centos</a></div><nav class=post-nav><a class=prev href=/post/consul_install/><i class="iconfont icon-left"></i><span class="prev-text nav-default">consul安装使用 做prometheus的配置中心</span>
+<span class="prev-text nav-mobile">上一篇</span></a>
+<a class=next href=/post/centos8_install/><span class="next-text nav-default">centos8 安装体验install</span>
+<span class="next-text nav-mobile">下一篇</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><div id=disqus_thread></div><script type=text/javascript>(function(){if(window.location.hostname==='localhost')return;var dsq=document.createElement('script');dsq.type='text/javascript';dsq.async=true;var disqus_shortname='mykifan';dsq.src='//'+disqus_shortname+'.disqus.com/embed.js';(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(dsq);})();</script><noscript>Please enable JavaScript to view the <a href=http://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:21kixc@gmail.com class="iconfont icon-email" title=email></a><a href=https://github.com/21ki class="iconfont icon-github" title=github></a><a href=http://localhost:1313 class="iconfont icon-weibo" title=weibo></a><a href=https://www.1nth.com/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><div class=busuanzi-footer><span id=busuanzi_container_site_pv>本站总访问量 <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> 次</span>
+<span class=division>|</span>
+<span id=busuanzi_container_site_uv>本站总访客数 <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> 人</span></div><span class=copyright-year>&copy;
+2018 -
+2020<span class=heart><i class="iconfont icon-heart"></i></span><span>🐳Myki</span>
+<a href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referra"><img src=https://oss.1nth.com/images/1nth/%E5%8F%88%E6%8B%8D%E4%BA%91_logo5.png align=absmiddle width=59px height=30px></a>
+<span>提供加速服务</span><br><a href=http://beian.miit.gov.cn><img src=https://oss.1nth.com/images/1nth/svg/icp.svg alt=image></a>
+<a class=hugo href=https://oss.1nth.com/images/1nth/svg/hugo.svg data-fancybox=gallery data-caption><img src=https://oss.1nth.com/images/1nth/svg/hugo.svg alt=image></a>
+<a class=even href=https://oss.1nth.com/images/1nth/svg/even.svg data-fancybox=gallery data-caption><img src=https://oss.1nth.com/images/1nth/svg/even.svg alt=image></a></br></span></div></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js integrity=sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP crossorigin=anonymous></script><link rel=stylesheet href=https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css integrity=sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF crossorigin=anonymous><script type=text/javascript src=/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js></script><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','UA-154483127-1','auto');ga('set','anonymizeIp',true);ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script><script id=baidu_analytics>var _hmt=_hmt||[];(function(){if(window.location.hostname==='localhost')return;var hm=document.createElement("script");hm.async=true;hm.src="https://hm.baidu.com/hm.js?9f5f711a6a3e2fd392b4b02d93529765";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s);})();</script><script id=baidu_push>(function(){if(window.location.hostname==='localhost')return;var bp=document.createElement('script');bp.async=true;var curProtocol=window.location.protocol.split(':')[0];if(curProtocol==='https'){bp.src='https://zz.bdstatic.com/linksubmit/push.js';}
+else{bp.src='http://push.zhanzhang.baidu.com/push.js';}
+var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(bp,s);})();</script></body></html>
