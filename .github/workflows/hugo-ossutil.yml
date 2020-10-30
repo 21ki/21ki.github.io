@@ -27,4 +27,4 @@ jobs:
           access-key-secret: ${{ secrets.ACCESS_KEY_SECRET }}
           #sts-token: "sts_token"
       - name: Deply To OSS
-        run: ossutil cp ./ oss://enok-blog/ -rf
+        run: ossutil cp ./ oss://blog-myki/ -rf
