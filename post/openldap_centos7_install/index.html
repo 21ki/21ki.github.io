@@ -1,0 +1,259 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>openldap安装 使用 - Myki的博客</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="🐳Myki"><meta name=description content="centos 7.9 slapd 2.4.44"><meta name=keywords content="openldap,centos"><meta name=generator content="Hugo 0.74.3 with theme even"><link rel=canonical href=https://www.1nth.com/post/openldap_centos7_install/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script><link href=/sass/main.min.a9078c195c76d0b255970a73e8aabe1b54513002dd70ecece9f46c640536ee54.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><link rel=stylesheet href=/css/custom.css><meta property="og:title" content="openldap安装 使用"><meta property="og:description" content="centos 7.9 
+slapd 2.4.44"><meta property="og:type" content="article"><meta property="og:url" content="https://www.1nth.com/post/openldap_centos7_install/"><meta property="article:published_time" content="2021-01-18T00:00:00+00:00"><meta property="article:modified_time" content="2021-01-18T00:00:00+00:00"><meta itemprop=name content="openldap安装 使用"><meta itemprop=description content="centos 7.9 
+slapd 2.4.44"><meta itemprop=datePublished content="2021-01-18T00:00:00+00:00"><meta itemprop=dateModified content="2021-01-18T00:00:00+00:00"><meta itemprop=wordCount content="2732"><meta itemprop=keywords content="openldap,"><meta name=twitter:card content="summary"><meta name=twitter:title content="openldap安装 使用"><meta name=twitter:description content="centos 7.9 
+slapd 2.4.44"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>☸💕🚩</a></div><div class=mobile-navbar-icon><span></span><span></span><span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/categories/><li class=mobile-menu-item>Categories</li></a><a href=/about/><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>☸💕🚩</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/categories/>Categories</a></li><li class=menu-item><a class=menu-item-link href=/about/>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>openldap安装 使用</h1><div class=post-meta><span class=post-time>2021-01-18</span><div class=post-category><a href=/categories/openldap/>openldap</a>
+<a href=/categories/centos/>centos</a></div><span id=busuanzi_container_page_pv class=more-meta><span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> 次阅读</span></div></header><div class=post-content><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>centos 7.9 
+slapd 2.4.44
+</code></pre></div><h1 id=安装openldap>安装OpenLDAP</h1><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>yum -y install openldap compat-openldap openldap-clients openldap-servers openldap-servers-sql openldap-devel migrationtools
+</code></pre></div><h3 id=查看openldap版本>查看OpenLDAP版本</h3><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>slapd -VV
+@<span class=o>(</span><span class=c1>#) $OpenLDAP: slapd 2.4.44 (Sep 30 2020 17:16:39) $</span>
+	mockbuild@x86-02.bsys.centos.org:/builddir/build/BUILD/openldap-2.4.44/openldap-2.4.44/servers/slapd
+</code></pre></div><p>OpenLDAP的相关配置文件信息</p><p>/etc/openldap/slapd.conf：OpenLDAP的主配置文件，记录根域信息，管理员名称，密码，日志，权限等</p><p>/etc/openldap/slapd.d/*：这下面是/etc/openldap/slapd.conf配置信息生成的文件，每修改一次配置信息，这里的东西就要重新生成</p><p>/etc/openldap/schema/*：OpenLDAP的schema存放的地方</p><p>/var/lib/ldap/*：OpenLDAP的数据文件</p><p>/usr/share/openldap-servers/DB_CONFIG.example 模板数据库配置文件</p><p>OpenLDAP监听的端口：</p><p>默认监听端口：389（明文数据传输）</p><p>加密监听端口：636（密文数据传输）</p><h3 id=配置openldap>配置OpenLDAP</h3><p>OpenLDAP默认使用的数据库是BerkeleyDB，现在来开始配置OpenLDAP数据库，使用如下命令：</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>cp /usr/share/openldap-servers/DB_CONFIG.example /var/lib/ldap/DB_CONFIG
+</code></pre></div><p>修改配置文件
+生成ldap管理员密码</p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>slappasswd -s xiaofan@1
+{SSHA}4Mr+3lBtr33pyIQYgNNpN1Bs2NyLa2Zw
+</code></pre></div><p>注意：其中cn=Manager中的Manager表示OpenLDAP管理员的用户名，dc是我们的组织信息，而olcRootPW表示OpenLDAP管理员的密码,用刚才我们生成的密码。</p><p>修改olcDatabase={2}hdb.ldif文件</p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>vi /etc/openldap/slapd.d/cn\=config/olcDatabase\=\{2\}hdb.ldif
+olcSuffix: dc=mvmyun,dc=com
+olcRootDN: cn=Manager,dc=mvmyun,dc=com
+olcRootPW: {SSHA}4Mr+3lBtr33pyIQYgNNpN1Bs2NyLa2Zw
+</code></pre></div><p>注意：其中cn=Manager中的Manager表示OpenLDAP管理员的用户名，dc是我们的组织信息，而olcRootPW表示OpenLDAP管理员的密码,用刚才我们生成的密码。</p><p>修改olcDatabase={1}monitor.ldif文件</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>vi /etc/openldap/slapd.d/cn<span class=se>\=</span>config/olcDatabase<span class=se>\=\{</span>1<span class=se>\}</span>monitor.ldif
+olcAccess: <span class=o>{</span>0<span class=o>}</span>to * by dn.base<span class=o>=</span><span class=s2>&#34;gidNumber=0+uidNumber=0,cn=peercred,cn=extern
+</span><span class=s2> al,cn=auth&#34;</span> <span class=nb>read</span> by dn.base<span class=o>=</span><span class=s2>&#34;cn=Manager,dc=mvmyun,dc=com&#34;</span> <span class=nb>read</span> by * none
+</code></pre></div><p>验证OpenLDAP的基本配置</p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>slaptest -u
+60053302 ldif_read_file: checksum error on &#34;/etc/openldap/slapd.d/cn=config/olcDatabase={1}monitor.ldif&#34;
+60053302 ldif_read_file: checksum error on &#34;/etc/openldap/slapd.d/cn=config/olcDatabase={2}hdb.ldif&#34;
+config file testing succeeded
+</code></pre></div><p>#报错 ldif_read_file: checksum error on 删除掉报错的文件的前两行 校验error也可以忽略</p><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback># AUTO-GENERATED FILE - DO NOT EDIT!! Use ldapmodify.
+# CRC32 3e515b74
+</code></pre></div><p>修改ldap文件权限</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>chown -R ldap:ldap /var/lib/ldap/
+chown -R ldap:ldap /etc/openldap/
+</code></pre></div><p>启动OpenLDAP</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>systemctl <span class=nb>enable</span> --now slapd
+systemctl status slapd.service
+</code></pre></div><p>导入Schema</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/cosine.ldif
+ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/nis.ldif
+ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/inetorgperson.ldif
+</code></pre></div><p>修改migrate_common.ph文件
+migrate_common.ph文件主要是用于生成ldif文件使用，修改migrate_common.ph文件，如下：</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>vi /usr/share/migrationtools/migrate_common.ph +71
+<span class=c1># Default DNS domain</span>
+<span class=nv>$DEFAULT_MAIL_DOMAIN</span> <span class=o>=</span> <span class=s2>&#34;mvmyun.com&#34;</span><span class=p>;</span>
+
+<span class=c1># Default base</span> 
+<span class=nv>$DEFAULT_BASE</span> <span class=o>=</span> <span class=s2>&#34;dc=mvmyun,dc=com&#34;</span><span class=p>;</span>
+
+<span class=nv>$EXTENDED_SCHEMA</span> <span class=o>=</span> 1<span class=p>;</span>
+</code></pre></div><p>生成base.ldif</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>mkdir /root/openldap
+/usr/share/migrationtools/migrate_base.pl &gt;/root/openldap/base.ldif
+ldapadd -x -D <span class=s2>&#34;cn=Manager,dc=mvmyun,dc=com&#34;</span> -w xiaofan@1 -f /root/openldap/base.ldif
+</code></pre></div><p>添加用户及用户组</p><p>默认情况下OpenLDAP是没有普通用户的，但是有一个管理员用户。管理用户就是前面我们刚刚配置的root。</p><p>现在我们把系统中的用户，添加到OpenLDAP中。为了进行区分，我们现在新加两个用户ldapuser1和ldapuser2，和两个用户组ldapgroup1和ldapgroup2.</p><p>添加用户组，使用如下命令：</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>groupadd ldapgroup1
+groupadd ldapgroup2
+</code></pre></div><p>添加用户并设置密码</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>useradd -g ldapgroup1 ldapuser1
+useradd -g ldapgroup2 ldapuser2
+<span class=nb>echo</span> <span class=s1>&#39;123456&#39;</span> <span class=p>|</span> passwd --stdin ldapuser1
+<span class=nb>echo</span> <span class=s1>&#39;123456&#39;</span> <span class=p>|</span> passwd --stdin ldapuser2
+</code></pre></div><p>把刚刚添加的用户和用户组提取出来，这包括该用户的密码和其他相关属性，如下</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>grep <span class=s2>&#34;:10[0-9][0-9]&#34;</span> /etc/passwd &gt; /root/openldap/users
+grep <span class=s2>&#34;:10[0-9][0-9]&#34;</span> /etc/group &gt; /root/openldap/groups
+</code></pre></div><p>根据上述生成的用户和用户组属性，使用migrate_passwd.pl文件生成要添加用户和用户组的ldif，如下：</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>/usr/share/migrationtools/migrate_group.pl /root/openldap/groups &gt; /root/openldap/groups.ldif
+/usr/share/migrationtools/migrate_passwd.pl /root/openldap/users &gt; /root/openldap/users.ldif
+</code></pre></div><p>导入用户及用户组到OpenLDAP数据库</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>ldapadd -x -w <span class=s2>&#34;xiaofan@1&#34;</span> -D <span class=s2>&#34;cn=Manager,dc=mvmyun,dc=com&#34;</span> -f /root/openldap/groups.ldif
+ldapadd -x -w <span class=s2>&#34;xiaofan@1&#34;</span> -D <span class=s2>&#34;cn=Manager,dc=mvmyun,dc=com&#34;</span> -f /root/openldap/users.ldif 
+</code></pre></div><p>把OpenLDAP用户加入到用户组</p><p>尽管我们已经把用户和用户组信息，导入到OpenLDAP数据库中了。但实际上目前OpenLDAP用户和用户组之间是没有任何关联的。</p><p>如果我们要把OpenLDAP数据库中的用户和用户组关联起来的话，我们还需要做另外单独的配置。</p><p>现在我们要把ldapuser1用户加入到ldapgroup1用户组，需要新建添加用户到用户组的ldif文件，如下</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>cat &gt; /root/openldap/add_user_to_groups.ldif &lt;&lt; <span class=s2>&#34;EOF&#34;</span>
+dn: <span class=nv>cn</span><span class=o>=</span>ldapgroup1,ou<span class=o>=</span>Group,dc<span class=o>=</span>mvmyun,dc<span class=o>=</span>com
+changetype: modify
+add: memberuid
+memberuid: ldapuser1
+
+dn: <span class=nv>cn</span><span class=o>=</span>ldapgroup2,ou<span class=o>=</span>Group,dc<span class=o>=</span>mvmyun,dc<span class=o>=</span>com
+changetype: modify
+add: memberuid
+memberuid: ldapuser2
+EOF
+
+ldapadd -x -w <span class=s2>&#34;xiaofan@1&#34;</span> -D <span class=s2>&#34;cn=Manager,dc=mvmyun,dc=com&#34;</span> -f /root/openldap/add_user_to_groups.ldif
+</code></pre></div><p>查询添加的OpenLDAP用户组信息，如下：</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>ldapsearch -LLL -x -D <span class=s2>&#34;cn=Manager,dc=mvmyun,dc=com&#34;</span> -w <span class=s2>&#34;xiaofan@1&#34;</span> -b <span class=s2>&#34;dc=mvmyun,dc=com&#34;</span> <span class=s2>&#34;cn=ldapgroup1&#34;</span>
+</code></pre></div><h3 id=开启openldap日志访问功能>开启OpenLDAP日志访问功能</h3><p>默认情况下OpenLDAP是没有启用日志记录功能的，但是在实际使用过程中，我们为了定位问题需要使用到OpenLDAP日志。</p><p>新建日志配置ldif文件，如下：</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>cat &gt; /root/openldap/loglevel.ldif <span class=s>&lt;&lt; EOF
+</span><span class=s>dn: cn=config
+</span><span class=s>changetype: modify
+</span><span class=s>replace: olcLogLevel
+</span><span class=s>olcLogLevel: stats
+</span><span class=s>EOF</span>
+
+ldapmodify -Y EXTERNAL -H ldapi:/// -f /root/openldap/loglevel.ldif
+</code></pre></div><p>修改rsyslog配置文件，并重启rsyslog服务，如下：</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>cat &gt;&gt; /etc/rsyslog.conf <span class=s>&lt;&lt; EOF
+</span><span class=s>local4.* /var/log/slapd.log
+</span><span class=s>EOF</span>
+</code></pre></div><p>重启服务</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>systemctl restart rsyslog
+systemctl restart slapd
+</code></pre></div><p>使用ldapuser1认证下</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>ldapwhoami -x -D <span class=nv>uid</span><span class=o>=</span>ldapuser1,ou<span class=o>=</span>People,dc<span class=o>=</span>mvmyun,dc<span class=o>=</span>com -w <span class=m>123456</span>
+dn:uid<span class=o>=</span>ldapuser1,ou<span class=o>=</span>People,dc<span class=o>=</span>mvmyun,dc<span class=o>=</span>com
+</code></pre></div><p>查看OpenLDAP日志，如下：</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>tail  /var/log/slapd.log
+</code></pre></div><h1 id=安装phpldapadmin>安装phpldapadmin</h1><p><a href=http://phpldapadmin.sourceforge.net/wiki/index.php/Main_Page>phpldapadmin</a> 是使用php语言开发的web端管理ldap的应用。</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>yum --enablerepo<span class=o>=</span>epel -y install phpldapadmin
+</code></pre></div><p>修改配置文件</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>vi /etc/phpldapadmin/config.php +397
+
+<span class=c1>#397行取消注释，398行添加注释</span>
+
+<span class=nv>$servers</span>-&gt;setValue<span class=o>(</span><span class=s1>&#39;login&#39;</span>,<span class=s1>&#39;attr&#39;</span>,<span class=s1>&#39;dn&#39;</span><span class=o>)</span><span class=p>;</span>
+//<span class=nv>$servers</span>-&gt;setValue<span class=o>(</span><span class=s1>&#39;login&#39;</span>,<span class=s1>&#39;attr&#39;</span>,<span class=s1>&#39;uid&#39;</span><span class=o>)</span><span class=p>;</span>
+
+
+vi /etc/httpd/conf.d/phpldapadmin.conf
+Alias /phpldapadmin /usr/share/phpldapadmin/htdocs
+Alias /ldapadmin /usr/share/phpldapadmin/htdocs
+
+&lt;Directory /usr/share/phpldapadmin/htdocs&gt;
+  &lt;IfModule mod_authz_core.c&gt;
+    <span class=c1># Apache 2.4</span>
+    <span class=c1>#Require local</span>
+    Require all granted
+    Require ip 127.0.0.1
+    Require ip ::1
+    <span class=c1>#Require ip 172.18.255.0/24</span>
+    <span class=c1>#Require ip 1.202.114.70</span>
+  &lt;/IfModule&gt;
+  &lt;IfModule !mod_authz_core.c&gt;
+    <span class=c1># Apache 2.2</span>
+    Order Deny,Allow
+    Deny from all
+    Allow from 127.0.0.1
+    Allow from ::1
+  &lt;/IfModule&gt;
+&lt;/Directory&gt;
+</code></pre></div><p>启动httpd</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>systemctl <span class=nb>enable</span> --now httpd
+</code></pre></div><p>浏览器访问phpldapadmin</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>url: http://服务器地址/phpldapadmin/
+用户名：cn<span class=o>=</span>Manager,dc<span class=o>=</span>mvmyun,dc<span class=o>=</span>com
+密码：xiaofan@1
+</code></pre></div><h1 id=安装self-service-password>安装Self Service Password</h1><p>为了解放管理员的工作，让OpenLDAP用户可以自行进行密码的修改和重置，就需要我们来搭建一套自助修改密码系统。</p><p>在此我们使用的是开源的基于php语言开发的ldap自助修改密码系统<a href=https://ltb-project.org/documentation/self-service-password>Self Service Password</a></p><p>Self Service Password是一个Web应用，可以让用户自行更新、修改和重置LDAP中的用户密码。支持标准的LDAPv3目录服务，包括：OpenLDAP,Active Directory,OpenDS,ApacheDS等。</p><p>源码地址： <a href=https://github.com/ltb-project/self-service-password>https://github.com/ltb-project/self-service-password</a></p><p>安装服务</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>cat &gt; /etc/yum.repos.d/ltb-project-noarch.repo <span class=s>&lt;&lt; EOF
+</span><span class=s>[ltb-project-noarch]
+</span><span class=s>name=LTB project packages
+</span><span class=s>baseurl=https://ltb-project.org/rpm/\$releasever/noarch
+</span><span class=s>enabled=1
+</span><span class=s>gpgcheck=1
+</span><span class=s>gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-LTB-project
+</span><span class=s>EOF</span>
+
+rpm --import https://ltb-project.org/lib/RPM-GPG-KEY-LTB-project
+
+yum -y install self-service-password
+</code></pre></div><p>现在我们来查看下Self Service Password安装的文件，如下：</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>rpm -ql self-service-password
+</code></pre></div><p>比较重要的文件</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>/etc/httpd/conf.d/self-service-password.conf    apache配置文件
+/usr/share/self-service-password/conf/config.inc.php   self-service-password配置文件
+</code></pre></div><h2 id=修改配置文件>修改配置文件</h2><p>如果不用虚拟主机的形式，可以修改apache配置文件</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>cp /etc/httpd/conf.d/self-service-password.conf<span class=o>{</span>,.bak<span class=o>}</span>
+cat &gt; /etc/httpd/conf.d/self-service-password.conf <span class=s>&lt;&lt; EOF
+</span><span class=s>NameVirtualHost *:80
+</span><span class=s>&lt;VirtualHost *:80&gt;
+</span><span class=s>    ServerName 192.168.1.4
+</span><span class=s>    DocumentRoot /usr/share/self-service-password
+</span><span class=s>    DirectoryIndex index.php
+</span><span class=s>    AddDefaultCharset UTF-8
+</span><span class=s>    #SSLEngine on
+</span><span class=s>    #SSLCertificateFile &#34;/usr/share/self-service-password/certs/sspweb.crt&#34;
+</span><span class=s>    #SSLCertificateKeyFile &#34;/usr/share/self-service-password/certs/sspweb.key&#34;
+</span><span class=s>    &lt;Directory &#34;/usr/share/self-service-password&#34;&gt;
+</span><span class=s>        Options FollowSymLinks
+</span><span class=s>        AllowOverride None
+</span><span class=s>        Require all granted
+</span><span class=s>    &lt;/Directory&gt;
+</span><span class=s>    LogLevel warn
+</span><span class=s>    ErrorLog /var/log/httpd/ssp_error_log
+</span><span class=s>    CustomLog /var/log/httpd/ssp_access_log combined
+</span><span class=s>&lt;/VirtualHost&gt;
+</span><span class=s>
+</span><span class=s>EOF</span>
+</code></pre></div><p>修改Self Service Password的配置文件</p><p>修改ldap连接和email</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>vi  /usr/share/self-service-password/conf/config.inc.php +37
+<span class=nv>$ldap_url</span> <span class=o>=</span> <span class=s2>&#34;ldap://localhost&#34;</span><span class=p>;</span>
+<span class=nv>$ldap_starttls</span> <span class=o>=</span> false<span class=p>;</span>
+<span class=nv>$ldap_binddn</span> <span class=o>=</span> <span class=s2>&#34;cn=Manager,dc=mvmyun,dc=com&#34;</span><span class=p>;</span>
+<span class=nv>$ldap_bindpw</span> <span class=o>=</span> <span class=s2>&#34;xiaofan@1&#34;</span><span class=p>;</span>
+<span class=nv>$ldap_base</span> <span class=o>=</span> <span class=s2>&#34;ou=People,dc=mvmyun,dc=com&#34;</span><span class=p>;</span>
+<span class=nv>$ldap_login_attribute</span> <span class=o>=</span> <span class=s2>&#34;uid&#34;</span><span class=p>;</span>
+<span class=nv>$ldap_fullname_attribute</span> <span class=o>=</span> <span class=s2>&#34;cn&#34;</span><span class=p>;</span>
+<span class=nv>$ldap_filter</span> <span class=o>=</span> <span class=s2>&#34;(&amp;(objectClass=person)(</span><span class=nv>$ldap_login_attribute</span><span class=s2>={login}))&#34;</span><span class=p>;</span>
+
+
+<span class=nv>$keyphrase</span> <span class=o>=</span> <span class=s2>&#34;mvmyunRandmon&#34;</span><span class=p>;</span>
+
+<span class=nv>$hash</span> <span class=o>=</span> <span class=s2>&#34;SSHA&#34;</span><span class=p>;</span>
+
+<span class=nv>$who_change_password</span> <span class=o>=</span> <span class=s2>&#34;manager&#34;</span><span class=p>;</span>
+
+
+<span class=nv>$mail_from</span> <span class=o>=</span> <span class=s2>&#34;admin@example.com&#34;</span><span class=p>;</span>
+<span class=nv>$mail_from_name</span> <span class=o>=</span> <span class=s2>&#34;Self Service Password&#34;</span><span class=p>;</span>
+<span class=nv>$mail_signature</span> <span class=o>=</span> <span class=s2>&#34;&#34;</span><span class=p>;</span>
+<span class=c1># Notify users anytime their password is changed</span>
+<span class=nv>$notify_on_change</span> <span class=o>=</span> false<span class=p>;</span>
+<span class=c1># PHPMailer configuration (see https://github.com/PHPMailer/PHPMailer)</span>
+<span class=nv>$mail_sendmailpath</span> <span class=o>=</span> <span class=s1>&#39;/usr/sbin/sendmail&#39;</span><span class=p>;</span>
+<span class=nv>$mail_protocol</span> <span class=o>=</span> <span class=s1>&#39;smtp&#39;</span><span class=p>;</span>
+<span class=nv>$mail_smtp_debug</span> <span class=o>=</span> 0<span class=p>;</span>
+<span class=nv>$mail_debug_format</span> <span class=o>=</span> <span class=s1>&#39;error_log&#39;</span><span class=p>;</span>
+<span class=nv>$mail_smtp_host</span> <span class=o>=</span> <span class=s1>&#39;localhost&#39;</span><span class=p>;</span>
+<span class=nv>$mail_smtp_auth</span> <span class=o>=</span> false<span class=p>;</span>
+<span class=nv>$mail_smtp_user</span> <span class=o>=</span> <span class=s1>&#39;&#39;</span><span class=p>;</span>
+<span class=nv>$mail_smtp_pass</span> <span class=o>=</span> <span class=s1>&#39;&#39;</span><span class=p>;</span>
+<span class=nv>$mail_smtp_port</span> <span class=o>=</span> 25<span class=p>;</span>
+<span class=nv>$mail_smtp_timeout</span> <span class=o>=</span> 30<span class=p>;</span>
+<span class=nv>$mail_smtp_keepalive</span> <span class=o>=</span> false<span class=p>;</span>
+<span class=nv>$mail_smtp_secure</span> <span class=o>=</span> <span class=s1>&#39;tls&#39;</span><span class=p>;</span>
+<span class=nv>$mail_smtp_autotls</span> <span class=o>=</span> true<span class=p>;</span>
+<span class=nv>$mail_contenttype</span> <span class=o>=</span> <span class=s1>&#39;text/plain&#39;</span><span class=p>;</span>
+<span class=nv>$mail_wordwrap</span> <span class=o>=</span> 0<span class=p>;</span>
+<span class=nv>$mail_charset</span> <span class=o>=</span> <span class=s1>&#39;utf-8&#39;</span><span class=p>;</span>
+<span class=nv>$mail_priority</span> <span class=o>=</span> 3<span class=p>;</span>
+<span class=nv>$mail_newline</span> <span class=o>=</span> PHP_EOL<span class=p>;</span>
+</code></pre></div><p>重启Apache</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>systemctl restart httpd
+</code></pre></div><p>访问页面</p><p>http://服务器地址/index.php</p><p>在终端验证修改的密码</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>ldapwhoami -x -D <span class=nv>uid</span><span class=o>=</span>ldapuser1,ou<span class=o>=</span>People,dc<span class=o>=</span>mvmyun,dc<span class=o>=</span>com -w <span class=m>123456</span>
+ldap_bind: Invalid credentials <span class=o>(</span>49<span class=o>)</span>
+ldapwhoami -x -D <span class=nv>uid</span><span class=o>=</span>ldapuser1,ou<span class=o>=</span>People,dc<span class=o>=</span>mvmyun,dc<span class=o>=</span>com -w <span class=m>12345678</span>
+dn:uid<span class=o>=</span>ldapuser1,ou<span class=o>=</span>People,dc<span class=o>=</span>lework,dc<span class=o>=</span>com
+</code></pre></div><p>使用docker 安装phpldapadmin</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>docker run -d  -p 2201:80 --name myphpldapadmin --env <span class=nv>PHPLDAPADMIN_HTTPS</span><span class=o>=</span><span class=nb>false</span> --env <span class=nv>PHPLDAPADMIN_LDAP_HOSTS</span><span class=o>=</span>192.168.1.4 --detach osixia/phpldapadmin
+</code></pre></div><p>使用docker安装self-service-password <a href=https://blog.frognew.com/2017/05/openldap-self-service-password.html>参考</a></p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>docker pull grams/ltb-self-service-password
+mkdir /opt/ssp/ -p
+<span class=nb>cd</span> /opt/ssp/
+wget wget https://raw.fastgit.org/grams/docker-LTB-self-service-password/master/assets/config.inc.php
+vi config.inc.php
+<span class=c1># LDAP</span>
+<span class=nv>$ldap_url</span> <span class=o>=</span> <span class=s2>&#34;ldap://192.168.1.4:389&#34;</span><span class=p>;</span>
+<span class=nv>$ldap_starttls</span> <span class=o>=</span> false<span class=p>;</span>
+<span class=nv>$ldap_binddn</span> <span class=o>=</span> <span class=s2>&#34;cn=manager,dc=mvmyun,dc=com&#34;</span><span class=p>;</span>
+<span class=nv>$ldap_bindpw</span> <span class=o>=</span> <span class=s2>&#34;xiaofan@1&#34;</span><span class=p>;</span>
+<span class=nv>$ldap_base</span> <span class=o>=</span> <span class=s2>&#34;dc=mvmyun,dc=com&#34;</span><span class=p>;</span>
+
+<span class=nv>$hash</span> <span class=o>=</span> <span class=s2>&#34;SSHA&#34;</span><span class=p>;</span>
+<span class=nv>$pwd_min_length</span> <span class=o>=</span> 8<span class=p>;</span>
+<span class=nv>$pwd_max_length</span> <span class=o>=</span> 12<span class=p>;</span>
+<span class=nv>$pwd_min_lower</span> <span class=o>=</span> 1<span class=p>;</span>
+<span class=nv>$pwd_min_upper</span> <span class=o>=</span> 1<span class=p>;</span>
+<span class=nv>$pwd_min_digit</span> <span class=o>=</span> 1<span class=p>;</span>
+
+<span class=nv>$use_questions</span> <span class=o>=</span> false<span class=p>;</span>
+
+<span class=c1>## Mail</span>
+<span class=nv>$mail_from</span> <span class=o>=</span> <span class=s2>&#34;root@myki.cn&#34;</span><span class=p>;</span>
+<span class=nv>$notify_on_change</span> <span class=o>=</span> true<span class=p>;</span>
+<span class=nv>$mail_smtp_host</span> <span class=o>=</span> <span class=s1>&#39;smtp.myki.cn&#39;</span><span class=p>;</span>
+<span class=nv>$mail_smtp_auth</span> <span class=o>=</span> true<span class=p>;</span>
+<span class=nv>$mail_smtp_user</span> <span class=o>=</span> <span class=s1>&#39;root@myki.cn&#39;</span><span class=p>;</span>
+<span class=nv>$mail_smtp_pass</span> <span class=o>=</span> <span class=s1>&#39;xiaofan@1&#39;</span><span class=p>;</span>
+<span class=nv>$mail_smtp_port</span> <span class=o>=</span> 25<span class=p>;</span>
+<span class=nv>$mail_smtp_timeout</span> <span class=o>=</span> 30<span class=p>;</span>
+
+docker run -p 8765:80 -d -v /opt/ssp/config.inc.php:/usr/share/self-service-password/conf/config.inc.php --name ldap-ssp grams/ltb-self-service-password
+</code></pre></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+<span class=item-content>🐳Myki</span></p><p class=copyright-item><span class=item-title>上次更新</span>
+<span class=item-content>2021-01-18</span></p></div><div class=post-reward><input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label><div class=qr-code><label class=qr-code-image for=reward><img class=image src=https://oss.1nth.com/images/1nth/wechat.png>
+<span>微信打赏</span></label>
+<label class=qr-code-image for=reward><img class=image src=https://oss.1nth.com/images/1nth/alipay.png>
+<span>支付宝打赏</span></label></div></div><footer class=post-footer><div class=post-tags><a href=/tags/openldap/>openldap</a></div><nav class=post-nav><a class=next href=/post/yum_install_archive/><span class="next-text nav-default">centos6 5 yum 源存档</span>
+<span class="next-text nav-mobile">下一篇</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><div id=disqus_thread></div><script type=text/javascript>(function(){if(window.location.hostname==='localhost')return;var dsq=document.createElement('script');dsq.type='text/javascript';dsq.async=true;var disqus_shortname='mykifan';dsq.src='//'+disqus_shortname+'.disqus.com/embed.js';(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(dsq);})();</script><noscript>Please enable JavaScript to view the <a href=http://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:21kixc@gmail.com class="iconfont icon-email" title=email></a><a href=https://github.com/21ki class="iconfont icon-github" title=github></a><a href=http://localhost:1313 class="iconfont icon-weibo" title=weibo></a><a href=https://www.1nth.com/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><div class=busuanzi-footer><span id=busuanzi_container_site_pv>本站总访问量 <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> 次</span>
+<span class=division>|</span>
+<span id=busuanzi_container_site_uv>本站总访客数 <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> 人</span></div><span class=copyright-year>&copy;
+2018 -
+2021<span class=heart><i class="iconfont icon-heart"></i></span><span>🐳Myki</span>
+<a href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referra"><img src=https://oss.1nth.com/images/1nth/%E5%8F%88%E6%8B%8D%E4%BA%91_logo5.png align=absmiddle width=59px height=30px></a>
+<span>提供加速服务</span><br><a href=http://beian.miit.gov.cn><img src=https://oss.1nth.com/images/1nth/svg/icp.svg alt=image></a>
+<a class=hugo href=https://oss.1nth.com/images/1nth/svg/hugo.svg data-fancybox=gallery data-caption><img src=https://oss.1nth.com/images/1nth/svg/hugo.svg alt=image></a>
+<a class=even href=https://oss.1nth.com/images/1nth/svg/even.svg data-fancybox=gallery data-caption><img src=https://oss.1nth.com/images/1nth/svg/even.svg alt=image></a></br></span></div></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js integrity=sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP crossorigin=anonymous></script><link rel=stylesheet href=https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css integrity=sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF crossorigin=anonymous><script type=text/javascript src=/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js></script><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','UA-154483127-1','auto');ga('set','anonymizeIp',true);ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script><script id=baidu_analytics>var _hmt=_hmt||[];(function(){if(window.location.hostname==='localhost')return;var hm=document.createElement("script");hm.async=true;hm.src="https://hm.baidu.com/hm.js?9f5f711a6a3e2fd392b4b02d93529765";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s);})();</script><script id=baidu_push>(function(){if(window.location.hostname==='localhost')return;var bp=document.createElement('script');bp.async=true;var curProtocol=window.location.protocol.split(':')[0];if(curProtocol==='https'){bp.src='https://zz.bdstatic.com/linksubmit/push.js';}
+else{bp.src='http://push.zhanzhang.baidu.com/push.js';}
+var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(bp,s);})();</script></body></html>
