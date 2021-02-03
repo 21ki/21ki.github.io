@@ -204,17 +204,56 @@
     </footer>
   </article>
         </div>
-        <div class="w3-panel w3-border w3-light-grey w3-round-large">
-      <i class="fa fa-commenting w3-xxxlarge "></i><br>
-      <p class="w3-xlarge"></p>
-  </div>
-  <script data-isso="https://isso.1nth.com/"
+        <script>
+  var remark_config = {
+    host: "https://isso.1nth.com",
+    
+    site_id: 'remark',
+    components: ['embed'], 
+                           
+                           
+                           
+                           
+                           
+    url: 'PAGE_URL', 
+                     
+                     
+                     
+                     
+                     
+                     
+                     
+                     
+                     
+                     
+                     
+                     
+                     
+                     
+                     
+                     
+                     
+                     
+    max_shown_comments: 10, 
+    theme: 'dark', 
+    page_title: 'Moving to Remark42', 
+    locale: 'zh' 
+  };
+
+  (function(c) {
+    for(var i = 0; i < c.length; i++){
+      var d = document, s = d.createElement('script');
+      s.src = remark_config.host + '/web/' +c[i] +'.js';
+      s.defer = true;
+      (d.head || d.body).appendChild(s);
+    }
+  })(remark_config.components || ['embed']);
+</script>
+
+  <div id="remark42"></div>
+
+
   
-      data-isso-lang="zh"
-  
-      src="https://isso.1nth.com/js/embed.min.js"></script>
-  
-  <section id="isso-thread"></section>
 
   
 
