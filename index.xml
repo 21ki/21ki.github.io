@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Myki的博客</title><link>https://www.1nth.com/</link><description>Recent content on Myki的博客</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 24 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.1nth.com/index.xml" rel="self" type="application/rss+xml"/><item><title>使用k8s踩过的坑,优化记录 (持续交作业)</title><link>https://www.1nth.com/post/k8s_issues/</link><pubDate>Wed, 24 Feb 2021 00:00:00 +0000</pubDate><guid>https://www.1nth.com/post/k8s_issues/</guid><description>&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-shell" data-lang="shell">k8s v1.18.3 &lt;span class="o">(&lt;/span>dev 二进制安装&lt;span class="o">)&lt;/span>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Myki的博客</title><link>https://www.1nth.com/</link><description>Recent content on Myki的博客</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 04 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.1nth.com/index.xml" rel="self" type="application/rss+xml"/><item><title>kubernetes导出</title><link>https://www.1nth.com/post/k8s_yaml_export/</link><pubDate>Thu, 04 Mar 2021 00:00:00 +0000</pubDate><guid>https://www.1nth.com/post/k8s_yaml_export/</guid><description>&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-shell" data-lang="shell">在 k8s 中导出&lt;span class="o">(&lt;/span>kubectl get xx -o yaml&lt;span class="o">)&lt;/span>资源描述信息时，会带出一些k8s系统添加的信息，但这些都不是我们需要的信息，官方没有提供过滤的选项，在下面我给出了几种方式来处理这种情况。
+&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>使用k8s踩过的坑,优化记录 (持续交作业)</title><link>https://www.1nth.com/post/k8s_issues/</link><pubDate>Wed, 24 Feb 2021 00:00:00 +0000</pubDate><guid>https://www.1nth.com/post/k8s_issues/</guid><description>&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-shell" data-lang="shell">k8s v1.18.3 &lt;span class="o">(&lt;/span>dev 二进制安装&lt;span class="o">)&lt;/span>
 k8s v1.19.4 &lt;span class="o">(&lt;/span>线上 kubeadm安装&lt;span class="o">)&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div></description></item><item><title>内存泄漏 -bash fork Cannot allocate memory</title><link>https://www.1nth.com/post/memory-leak/</link><pubDate>Tue, 09 Feb 2021 00:00:00 +0000</pubDate><guid>https://www.1nth.com/post/memory-leak/</guid><description>&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-shell" data-lang="shell">-bash: fork: Cannot allocate memory
 &lt;/code>&lt;/pre>&lt;/div></description></item><item><title>基于libfaketime修改容器时间(不修改宿主机)</title><link>https://www.1nth.com/post/pod_time_modify/</link><pubDate>Sun, 07 Feb 2021 00:00:00 +0000</pubDate><guid>https://www.1nth.com/post/pod_time_modify/</guid><description>&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-shell" data-lang="shell">因业务订单需要生成报表需要修改单个k8s的单个pod时间,而且不影响其他业务得使用
@@ -114,7 +115,13 @@ cat /opt/nexus-data/admin.password
 &lt;span class="nb">export&lt;/span> &lt;span class="nv">HISTFILE&lt;/span>&lt;span class="o">=&lt;/span>/dev/null
 &lt;span class="nb">export&lt;/span> &lt;span class="nv">HISTSIZE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">0&lt;/span>
 &lt;span class="nb">export&lt;/span> &lt;span class="nv">HISTFILESIZE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">0&lt;/span>
-&lt;/code>&lt;/pre>&lt;/div></description></item><item><title/><link>https://www.1nth.com/about/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.1nth.com/about/</guid><description>Myki博客 hugo 努力更新中 喜欢linux .
-运维工程师
+&lt;/code>&lt;/pre>&lt;/div></description></item><item><title/><link>https://www.1nth.com/about/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.1nth.com/about/</guid><description>Myki的博客 本博采用 hugo，Markdown写作 努力更新中 . 酷爱linux系统
+linux运维工程师
 kubernetes 爱好者
-Email: 21kixc@gmail.com</description></item></channel></rss>
+Email: 21kixc@gmail.com
+时间轴
+[2015] voip国际通讯电信业务
+[2016] 只身前往缅甸开阔国际电话业务
+[2016] 小区网络,iptv,缓存,olt,话务,缓存等
+[2017] 网络工程师
+[2018] linux运维工程师</description></item></channel></rss>

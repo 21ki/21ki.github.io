@@ -1,0 +1,110 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>kubernetes导出 - Myki的博客</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="🐳Myki"><meta name=description content="在 k8s 中导出(kubectl get xx -o yaml)资源描述信息时，会带出一些k8s系统添加的信息，但这些都不是我们需要的信息，官方没有提供过滤的选项，在下面我给出了几种方式来处理这种情况。"><meta name=keywords content="linux,kubernetes"><meta name=generator content="Hugo 0.74.3 with theme even"><link rel=canonical href=https://www.1nth.com/post/k8s_yaml_export/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script><link href=/sass/main.min.83880bcdc66e2d3b83a9fe4533b1e85263f6cabaa321732e2d4583d920a909ce.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><link rel=stylesheet href=/css/custom.css><meta property="og:title" content="kubernetes导出"><meta property="og:description" content="在 k8s 中导出(kubectl get xx -o yaml)资源描述信息时，会带出一些k8s系统添加的信息，但这些都不是我们需要的信息，官方没有提供过滤的选项，在下面我给出了几种方式来处理这种情况。"><meta property="og:type" content="article"><meta property="og:url" content="https://www.1nth.com/post/k8s_yaml_export/"><meta property="article:published_time" content="2021-03-04T00:00:00+00:00"><meta property="article:modified_time" content="2021-03-04T00:00:00+00:00"><meta itemprop=name content="kubernetes导出"><meta itemprop=description content="在 k8s 中导出(kubectl get xx -o yaml)资源描述信息时，会带出一些k8s系统添加的信息，但这些都不是我们需要的信息，官方没有提供过滤的选项，在下面我给出了几种方式来处理这种情况。"><meta itemprop=datePublished content="2021-03-04T00:00:00+00:00"><meta itemprop=dateModified content="2021-03-04T00:00:00+00:00"><meta itemprop=wordCount content="548"><meta itemprop=keywords content="kubernetes,"><meta name=twitter:card content="summary"><meta name=twitter:title content="kubernetes导出"><meta name=twitter:description content="在 k8s 中导出(kubectl get xx -o yaml)资源描述信息时，会带出一些k8s系统添加的信息，但这些都不是我们需要的信息，官方没有提供过滤的选项，在下面我给出了几种方式来处理这种情况。"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>☸💕🚩</a></div><div class=mobile-navbar-icon><span></span><span></span><span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/categories/><li class=mobile-menu-item>Categories</li></a><a href=/about/><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>☸💕🚩</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/categories/>Categories</a></li><li class=menu-item><a class=menu-item-link href=/about/>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>kubernetes导出</h1><div class=post-meta><span class=post-time>2021-03-04</span><div class=post-category><a href=/categories/linux/>linux</a>
+<a href=/categories/kubernetes/>kubernetes</a></div><span id=busuanzi_container_page_pv class=more-meta><span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> 次阅读</span></div></header><div class=post-content><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>在 k8s 中导出<span class=o>(</span>kubectl get xx -o yaml<span class=o>)</span>资源描述信息时，会带出一些k8s系统添加的信息，但这些都不是我们需要的信息，官方没有提供过滤的选项，在下面我给出了几种方式来处理这种情况。
+</code></pre></div><h1 id=使用-yq-项目过滤-yaml-信息>使用 yq 项目过滤 yaml 信息</h1><h3 id=1使用-yq-项目过滤-yaml-信息>1.使用 yq 项目过滤 yaml 信息</h3><h4 id=输出-yaml>输出 yaml</h4><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>wget https://gh.con.sh/https://github.com/mikefarah/yq/releases/download/3.4.1/yq_linux_amd64 -O /usr/local/sbin/yq
+chmod +x /usr/local/sbin/yq
+
+kubectl_yaml<span class=o>()</span> <span class=o>{</span>
+  kubectl -o yaml <span class=s2>&#34;</span><span class=nv>$@</span><span class=s2>&#34;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> yq d - <span class=s1>&#39;items[*].metadata.managedFields&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> yq d - <span class=s1>&#39;metadata.managedFields&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> yq d - <span class=s1>&#39;items[*].metadata.ownerReferences&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> yq d - <span class=s1>&#39;metadata.ownerReferences&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> yq d - <span class=s1>&#39;items[*].metadata.annotations.&#34;kubectl.kubernetes.io/last-applied-configuration&#34;&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> yq d - <span class=s1>&#39;metadata.annotations.&#34;kubectl.kubernetes.io/last-applied-configuration&#34;&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> yq d - <span class=s1>&#39;items[*].metadata.creationTimestamp&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> yq d - <span class=s1>&#39;metadata.creationTimestamp&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> yq d - <span class=s1>&#39;items[*].metadata.resourceVersion&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> yq d - <span class=s1>&#39;metadata.resourceVersion&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> yq d - <span class=s1>&#39;items[*].metadata.generateName&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> yq d - <span class=s1>&#39;metadata.generateName&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> yq d - <span class=s1>&#39;items[*].metadata.selfLink&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> yq d - <span class=s1>&#39;metadata.selfLink&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> yq d - <span class=s1>&#39;items[*].metadata.uid&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> yq d - <span class=s1>&#39;metadata.uid&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> yq d - <span class=s1>&#39;items[*].status&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> yq d - <span class=s1>&#39;status&#39;</span>
+<span class=o>}</span>
+</code></pre></div><h4 id=输出-json>输出 json</h4><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>wget https://gh.con.sh/https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 -O /usr/local/sbin/jq
+chmod +x /usr/local/sbin/jq
+
+kubectl_json<span class=o>()</span> <span class=o>{</span>
+  kubectl -o json <span class=s2>&#34;</span><span class=nv>$@</span><span class=s2>&#34;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> jq <span class=s1>&#39;del(.items[]?.metadata.managedFields)&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> jq <span class=s1>&#39;del(.metadata.managedFields)&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> jq <span class=s1>&#39;del(.items[]?.metadata.ownerReferences)&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> jq <span class=s1>&#39;del(.metadata.ownerReferences)&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> jq <span class=s1>&#39;del(.items[]?.metadata.annotations.&#34;kubectl.kubernetes.io/last-applied-configuration&#34;)&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> jq <span class=s1>&#39;del(.metadata.annotations.&#34;kubectl.kubernetes.io/last-applied-configuration&#34;)&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> jq <span class=s1>&#39;del(.items[]?.metadata.creationTimestamp)&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> jq <span class=s1>&#39;del(.metadata.creationTimestamp)&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> jq <span class=s1>&#39;del(.items[]?.metadata.resourceVersion)&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> jq <span class=s1>&#39;del(.metadata.resourceVersion)&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> jq <span class=s1>&#39;del(.items[]?.metadata.generateName)&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> jq <span class=s1>&#39;del(.metadata.generateName)&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> jq <span class=s1>&#39;del(.items[]?.metadata.selfLink)&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> jq <span class=s1>&#39;del(.metadata.selfLink)&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> jq <span class=s1>&#39;del(.items[]?.metadata.uid)&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> jq <span class=s1>&#39;del(.metadata.uid)&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> jq <span class=s1>&#39;del(.items[]?.status)&#39;</span> <span class=se>\
+</span><span class=se></span>    <span class=p>|</span> jq <span class=s1>&#39;del(.status)&#39;</span>
+<span class=o>}</span>
+</code></pre></div><h3 id=2使用插件kubectl-neathttpsgithubcomitayskkubectl-neat-清理kuberntes-yaml和json输出使其具有可读性>2.使用插件<a href=https://github.com/itaysk/kubectl-neat>kubectl-neat</a> 清理Kuberntes yaml和json输出，使其具有可读性.</h3><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>wget https://gh.con.sh/https://github.com/itaysk/kubectl-neat/releases/download/v2.0.1/kubectl-neat_linux.tar.gz
+tar zxf kubectl-neat_linux.tar.gz  -C /usr/local/sbin/
+chmod +x /usr/local/sbin/kubectl-neat
+<span class=c1>#常用命令</span>
+kubectl get pod mypod -o yaml <span class=p>|</span> kubectl neat
+kubectl get pod mypod -oyaml <span class=p>|</span> kubectl neat -o json
+kubectl neat -f - &lt;./my-pod.json
+kubectl neat -f ./my-pod.json
+kubectl neat -f ./my-pod.json --output yaml
+kubectl neat get -- pod mypod -oyaml
+kubectl neat get -- svc -n default myservice --output json
+</code></pre></div><h3 id=3使用-sed-使用sed时需时刻注意匹配关键字>3.使用 sed 使用sed时，需时刻注意匹配关键字</h3><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># kubectl get svc ingress-demo-app -o yaml \</span>
+  <span class=p>|</span> sed -n <span class=s1>&#39;/ managedFields:/{p; :a; N; / name: ingress-demo-app/!ba; s/.*\n//}; p&#39;</span> <span class=se>\
+</span><span class=se></span>  <span class=p>|</span> sed -e <span class=s1>&#39;s/ uid:.*//g&#39;</span> <span class=se>\
+</span><span class=se></span>        -e <span class=s1>&#39;s/ resourceVersion:.*//g&#39;</span> <span class=se>\
+</span><span class=se></span>        -e <span class=s1>&#39;s/ selfLink:.*//g&#39;</span> <span class=se>\
+</span><span class=se></span>        -e <span class=s1>&#39;s/ creationTimestamp:.*//g&#39;</span> <span class=se>\
+</span><span class=se></span>        -e <span class=s1>&#39;s/ managedFields:.*//g&#39;</span> <span class=se>\
+</span><span class=se></span>        -e <span class=s1>&#39;s/ generateName:.*//g&#39;</span> <span class=se>\
+</span><span class=se></span>        -e <span class=s1>&#39;/^\s*$/d&#39;</span>
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: <span class=p>|</span>
+      <span class=o>{</span><span class=s2>&#34;apiVersion&#34;</span>:<span class=s2>&#34;v1&#34;</span>,<span class=s2>&#34;kind&#34;</span>:<span class=s2>&#34;Service&#34;</span>,<span class=s2>&#34;metadata&#34;</span>:<span class=o>{</span><span class=s2>&#34;annotations&#34;</span>:<span class=o>{}</span>,<span class=s2>&#34;name&#34;</span>:<span class=s2>&#34;ingress-demo-app&#34;</span>,<span class=s2>&#34;namespace&#34;</span>:<span class=s2>&#34;default&#34;</span><span class=o>}</span>,<span class=s2>&#34;spec&#34;</span>:<span class=o>{</span><span class=s2>&#34;ports&#34;</span>:<span class=o>[{</span><span class=s2>&#34;name&#34;</span>:<span class=s2>&#34;http&#34;</span>,<span class=s2>&#34;port&#34;</span>:80,<span class=s2>&#34;targetPort&#34;</span>:80<span class=o>}]</span>,<span class=s2>&#34;selector&#34;</span>:<span class=o>{</span><span class=s2>&#34;app&#34;</span>:<span class=s2>&#34;ingress-demo-app&#34;</span><span class=o>}</span>,<span class=s2>&#34;type&#34;</span>:<span class=s2>&#34;ClusterIP&#34;</span><span class=o>}}</span>
+  name: ingress-demo-app
+  namespace: default
+spec:
+  clusterIP: 10.96.44.53
+  ports:
+  - name: http
+    port: <span class=m>80</span>
+    protocol: TCP
+    targetPort: <span class=m>80</span>
+  selector:
+    app: ingress-demo-app
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: <span class=o>{}</span>
+</code></pre></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+<span class=item-content>🐳Myki</span></p><p class=copyright-item><span class=item-title>上次更新</span>
+<span class=item-content>2021-03-04</span></p></div><div class=post-reward><input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label><div class=qr-code><label class=qr-code-image for=reward><img class=image src=https://oss.1nth.com/images/1nth/wechat.png>
+<span>微信打赏</span></label>
+<label class=qr-code-image for=reward><img class=image src=https://oss.1nth.com/images/1nth/alipay.png>
+<span>支付宝打赏</span></label></div></div><footer class=post-footer><div class=post-tags><a href=/tags/kubernetes/>kubernetes</a></div><nav class=post-nav><a class=next href=/post/k8s_issues/><span class="next-text nav-default">使用k8s踩过的坑,优化记录 (持续交作业)</span>
+<span class="next-text nav-mobile">下一篇</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><div class="w3-panel w3-border w3-light-grey w3-round-large"><i class="fa fa-commenting w3-xxxlarge"></i><br><p class=w3-xlarge></p></div><script data-isso=https://isso.1nth.com/ data-isso-lang=zh src=https://isso.1nth.com/js/embed.min.js></script><section id=isso-thread></section></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:21kixc@gmail.com class="iconfont icon-email" title=email></a><a href=https://github.com/21ki class="iconfont icon-github" title=github></a><a href=http://localhost:1313 class="iconfont icon-weibo" title=weibo></a><a href=https://www.1nth.com/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><div class=busuanzi-footer><span id=busuanzi_container_site_pv>本站总访问量 <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> 次</span>
+<span class=division>|</span>
+<span id=busuanzi_container_site_uv>本站总访客数 <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> 人</span></div><span class=copyright-year>&copy;
+2018 -
+2021<span class=heart><i class="iconfont icon-heart"></i></span><span>🐳Myki</span>
+<a href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referra"><img src=https://oss.1nth.com/images/1nth/%E5%8F%88%E6%8B%8D%E4%BA%91_logo5.png align=absmiddle width=59px height=30px></a>
+<span>提供加速服务</span><br><a href=http://beian.miit.gov.cn><img src=https://oss.1nth.com/images/1nth/svg/icp.svg alt=image></a>
+<a class=hugo href=https://oss.1nth.com/images/1nth/svg/hugo.svg data-fancybox=gallery data-caption><img src=https://oss.1nth.com/images/1nth/svg/hugo.svg alt=image></a>
+<a class=even href=https://oss.1nth.com/images/1nth/svg/even.svg data-fancybox=gallery data-caption><img src=https://oss.1nth.com/images/1nth/svg/even.svg alt=image></a></br></span></div></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js integrity=sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP crossorigin=anonymous></script><link rel=stylesheet href=https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css integrity=sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF crossorigin=anonymous><script type=text/javascript src=/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js></script><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','UA-154483127-1','auto');ga('set','anonymizeIp',true);ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script><script id=baidu_analytics>var _hmt=_hmt||[];(function(){if(window.location.hostname==='localhost')return;var hm=document.createElement("script");hm.async=true;hm.src="https://hm.baidu.com/hm.js?9f5f711a6a3e2fd392b4b02d93529765";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s);})();</script><script id=baidu_push>(function(){if(window.location.hostname==='localhost')return;var bp=document.createElement('script');bp.async=true;var curProtocol=window.location.protocol.split(':')[0];if(curProtocol==='https'){bp.src='https://zz.bdstatic.com/linksubmit/push.js';}
+else{bp.src='http://push.zhanzhang.baidu.com/push.js';}
+var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(bp,s);})();</script><script src=/js/custom.js></script></body></html>

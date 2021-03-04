@@ -38,16 +38,16 @@
   }
 
 /**/
-  /* .pagination{
+  .pagination{
     margin:0;   
-  } */
+  } 
 
 /*页面中间颜色及样式*/
-/* .main{
+ /* .main{
   padding-bottom: 2em;
     background-color: #f8f8fd;
     box-shadow: 0 1px 2px #00000066, 0 0 30px #0a0a001a inset;
-}    */
+}     */
 
 /*页面背景https://oss.1nth.com/images/1nth/tfs/TB1xzbUumBYBeNjy0FeXXbnmFXa-125-121.png 备份地址*/
 body{
@@ -56,7 +56,7 @@ body{
 
 /*鼠标跟随效果*/
 
-    .draw {
+    /* .draw {
         position: fixed;
         width: 1px;
         line-height: 1px;
@@ -73,4 +73,4 @@ body{
                     opacity:0;
             transform:translate3D(0, -20px, 0) scale(5) rotate(45deg);
         }
-    }
+    } */
