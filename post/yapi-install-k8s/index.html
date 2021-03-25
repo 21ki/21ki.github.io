@@ -1,0 +1,209 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>yapi部署 - Myki的博客</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="🐳Myki"><meta name=description content="起初yapi是单独部署在一台机器上,部署方式docker,最近公司统一账户管理(openldap),所以把yapi部署在k8s里面"><meta name=keywords content="yapi,kubernetes"><meta name=generator content="Hugo 0.74.3 with theme even"><link rel=canonical href=https://www.1nth.com/post/yapi-install-k8s/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script><link href=/sass/main.min.83880bcdc66e2d3b83a9fe4533b1e85263f6cabaa321732e2d4583d920a909ce.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><link rel=stylesheet href=/css/custom.css><meta property="og:title" content="yapi部署"><meta property="og:description" content="起初yapi是单独部署在一台机器上,部署方式docker,最近公司统一账户管理(openldap),所以把yapi部署在k8s里面"><meta property="og:type" content="article"><meta property="og:url" content="https://www.1nth.com/post/yapi-install-k8s/"><meta property="article:published_time" content="2021-03-25T00:00:00+00:00"><meta property="article:modified_time" content="2021-03-25T00:00:00+00:00"><meta itemprop=name content="yapi部署"><meta itemprop=description content="起初yapi是单独部署在一台机器上,部署方式docker,最近公司统一账户管理(openldap),所以把yapi部署在k8s里面"><meta itemprop=datePublished content="2021-03-25T00:00:00+00:00"><meta itemprop=dateModified content="2021-03-25T00:00:00+00:00"><meta itemprop=wordCount content="2299"><meta itemprop=keywords content="yapi,"><meta name=twitter:card content="summary"><meta name=twitter:title content="yapi部署"><meta name=twitter:description content="起初yapi是单独部署在一台机器上,部署方式docker,最近公司统一账户管理(openldap),所以把yapi部署在k8s里面"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>☸💕🚩</a></div><div class=mobile-navbar-icon><span></span><span></span><span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/categories/><li class=mobile-menu-item>Categories</li></a><a href=/about/><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>☸💕🚩</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/categories/>Categories</a></li><li class=menu-item><a class=menu-item-link href=/about/>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>yapi部署</h1><div class=post-meta><span class=post-time>2021-03-25</span><div class=post-category><a href=/categories/yapi/>yapi</a>
+<a href=/categories/kubernetes/>kubernetes</a></div><span id=busuanzi_container_page_pv class=more-meta><span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> 次阅读</span></div></header><div class=post-content><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>起初yapi是单独部署在一台机器上,部署方式docker,最近公司统一账户管理<span class=o>(</span>openldap<span class=o>)</span>,所以把yapi部署在k8s里面
+</code></pre></div><h1 id=mongodb部署在物理机上>mongodb部署在物理机上</h1><h2 id=添加源>添加源</h2><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>vi /etc/yum.repos.d/mongodb-org-4.2.repo
+<span class=o>[</span>mongodb-org-4.2<span class=o>]</span>
+<span class=nv>name</span><span class=o>=</span>MongoDB Repository
+<span class=nv>baseurl</span><span class=o>=</span>https://repo.mongodb.org/yum/redhat/<span class=nv>$releasever</span>/mongodb-org/4.2/x86_64/
+<span class=nv>gpgcheck</span><span class=o>=</span><span class=m>1</span>
+<span class=nv>enabled</span><span class=o>=</span><span class=m>1</span>
+<span class=nv>gpgkey</span><span class=o>=</span>https://www.mongodb.org/static/pgp/server-4.2.asc
+</code></pre></div><h2 id=安装>安装</h2><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>yum -y install mongodb-org
+</code></pre></div><h2 id=启动及配置>启动及配置</h2><ul><li>/var/lib/mongo(数据文件所在目录)</li><li>/var/log/mongodb(日志文件所在目录)</li><li>/etc/mongod.conf(配置文件所在目录)</li></ul><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>systemctl <span class=nb>enable</span> mongod --now
+</code></pre></div><h2 id=开启认证>开启认证</h2><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>mongo
+use admin
+db.createUser<span class=o>(</span>
+  <span class=o>{</span>
+    user: <span class=s2>&#34;myki&#34;</span>,
+    pwd: <span class=s2>&#34;密码&#34;</span>,
+    roles: <span class=o>[</span> <span class=o>{</span> role: <span class=s2>&#34;root&#34;</span>, db: <span class=s2>&#34;admin&#34;</span> <span class=o>}</span> <span class=o>]</span>
+  <span class=o>}</span>
+<span class=o>)</span>
+
+show users<span class=p>;</span>
+quit<span class=o>()</span>
+</code></pre></div><h2 id=修改配置文件>修改配置文件</h2><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>vi /etc/mongod.conf
+net:
+  port: 27017
+  bindIp: 0.0.0.0
+security:
+  authorization: enabled
+</code></pre></div><h1 id=yapi安装-yaml文件如下>yapi安装 yaml文件如下</h1><div class=highlight><pre class=chroma><code class=language-yaml data-lang=yaml><span class=k>kind</span><span class=p>:</span><span class=w> </span>ConfigMap<span class=w>
+</span><span class=w></span><span class=k>apiVersion</span><span class=p>:</span><span class=w> </span>v1<span class=w>
+</span><span class=w></span><span class=k>metadata</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>name</span><span class=p>:</span><span class=w> </span>config-json<span class=w>
+</span><span class=w>  </span><span class=k>namespace</span><span class=p>:</span><span class=w> </span>tools<span class=w>
+</span><span class=w>  </span><span class=k>labels</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span><span class=k>app</span><span class=p>:</span><span class=w> </span>yapi<span class=w>
+</span><span class=w></span><span class=k>data</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>config.json</span><span class=p>:</span><span class=w> </span>|<span class=sd>-
+</span><span class=sd>    {</span><span class=w>
+</span><span class=w>      </span><span class=k>&#34;port&#34;: </span><span class=s2>&#34;3000&#34;</span><span class=p>,</span><span class=w>
+</span><span class=w>      </span><span class=k>&#34;closeRegister&#34;: </span><span class=kc>true</span><span class=p>,</span><span class=w>
+</span><span class=w>      </span><span class=k>&#34;adminAccount&#34;: </span><span class=s2>&#34;admin@admin.com&#34;</span><span class=p>,</span><span class=w>
+</span><span class=w>      </span><span class=k>&#34;db&#34;: </span>{<span class=w>
+</span><span class=w>        </span><span class=k>&#34;servername&#34;: </span><span class=s2>&#34;192.168.1.43&#34;</span><span class=p>,</span><span class=w>
+</span><span class=w>        </span><span class=k>&#34;DATABASE&#34;: </span><span class=s2>&#34;yapi&#34;</span><span class=p>,</span><span class=w>
+</span><span class=w>        </span><span class=k>&#34;port&#34;: </span><span class=m>27017</span><span class=p>,</span><span class=w>
+</span><span class=w>        </span><span class=k>&#34;user&#34;: </span><span class=s2>&#34;myki&#34;</span><span class=p>,</span><span class=w>
+</span><span class=w>        </span><span class=k>&#34;pass&#34;: </span><span class=s2>&#34;密码&#34;</span><span class=p>,</span><span class=w>
+</span><span class=w>        </span><span class=k>&#34;authSource&#34;: </span><span class=s2>&#34;admin&#34;</span><span class=w>
+</span><span class=w>      </span>}<span class=p>,</span><span class=w>
+</span><span class=w>      </span><span class=k>&#34;ldapLogin&#34;: </span>{<span class=w>
+</span><span class=w>        </span><span class=k>&#34;enable&#34;: </span><span class=kc>true</span><span class=p>,</span><span class=w>
+</span><span class=w>        </span><span class=k>&#34;server&#34;: </span><span class=s2>&#34;ldap://ldap.mvmyun.com&#34;</span><span class=p>,</span><span class=w>
+</span><span class=w>        </span><span class=k>&#34;baseDn&#34;: </span><span class=s2>&#34;cn=manager,dc=mvmyun,dc=com&#34;</span><span class=p>,</span><span class=w>
+</span><span class=w>        </span><span class=k>&#34;bindPassword&#34;: </span><span class=s2>&#34;密码&#34;</span><span class=p>,</span><span class=w>
+</span><span class=w>        </span><span class=k>&#34;searchDn&#34;: </span><span class=s2>&#34;ou=People,dc=mvmyun,dc=com&#34;</span><span class=p>,</span><span class=w>
+</span><span class=w>        </span><span class=k>&#34;searchStandard&#34;: </span><span class=s2>&#34;&amp;(objectClass=posixAccount)(cn=%s)&#34;</span><span class=p>,</span><span class=w>
+</span><span class=w>        </span><span class=k>&#34;emailPostfix&#34;: </span><span class=s2>&#34;@163.com&#34;</span><span class=p>,</span><span class=w>
+</span><span class=w>        </span><span class=k>&#34;emailKey&#34;: </span><span class=s2>&#34;mail&#34;</span><span class=p>,</span><span class=w>
+</span><span class=w>        </span><span class=k>&#34;usernameKey&#34;: </span><span class=s2>&#34;name&#34;</span><span class=w>
+</span><span class=w>     </span>}<span class=w>
+</span><span class=w>    </span>}<span class=w>
+</span><span class=w></span>---<span class=w>
+</span><span class=w></span><span class=k>apiVersion</span><span class=p>:</span><span class=w> </span>v1<span class=w> </span><span class=c># 指定api版本，此值必须在kubectl api-versions中</span><span class=w>
+</span><span class=w></span><span class=k>kind</span><span class=p>:</span><span class=w> </span>Service<span class=w> </span><span class=c># 指定创建资源的角色/类型</span><span class=w>
+</span><span class=w></span><span class=k>metadata</span><span class=p>:</span><span class=w> </span><span class=c># 资源的元数据/属性</span><span class=w>
+</span><span class=w>  </span><span class=k>name</span><span class=p>:</span><span class=w> </span>yapi<span class=w> </span><span class=c># 资源的名字，在同一个namespace中必须唯一</span><span class=w>
+</span><span class=w>  </span><span class=k>namespace</span><span class=p>:</span><span class=w> </span>tools<span class=w> </span><span class=c># 部署在哪个namespace中</span><span class=w>
+</span><span class=w>  </span><span class=k>labels</span><span class=p>:</span><span class=w> </span><span class=c># 设定资源的标签</span><span class=w>
+</span><span class=w>    </span><span class=k>app</span><span class=p>:</span><span class=w> </span>yapi<span class=w>
+</span><span class=w></span><span class=k>spec</span><span class=p>:</span><span class=w> </span><span class=c># 资源规范字段</span><span class=w>
+</span><span class=w>  </span><span class=k>type</span><span class=p>:</span><span class=w> </span>ClusterIP<span class=w> </span><span class=c># ClusterIP 类型</span><span class=w>
+</span><span class=w>  </span><span class=k>ports</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span>- <span class=k>port</span><span class=p>:</span><span class=w> </span><span class=m>80</span><span class=w> </span><span class=c># service 端口</span><span class=w>
+</span><span class=w>      </span><span class=k>targetPort</span><span class=p>:</span><span class=w> </span>http<span class=w> </span><span class=c># 容器暴露的端口</span><span class=w>
+</span><span class=w>      </span><span class=k>protocol</span><span class=p>:</span><span class=w> </span>TCP<span class=w> </span><span class=c># 协议</span><span class=w>
+</span><span class=w>      </span><span class=k>name</span><span class=p>:</span><span class=w> </span>http<span class=w> </span><span class=c># 端口名称</span><span class=w>
+</span><span class=w>  </span><span class=k>selector</span><span class=p>:</span><span class=w> </span><span class=c># 选择器</span><span class=w>
+</span><span class=w>    </span><span class=k>app</span><span class=p>:</span><span class=w> </span>yapi<span class=w>
+</span><span class=w></span>---<span class=w>
+</span><span class=w></span><span class=k>apiVersion</span><span class=p>:</span><span class=w> </span>apps/v1<span class=w> </span><span class=c># 指定api版本，此值必须在kubectl api-versions中</span><span class=w>
+</span><span class=w></span><span class=k>kind</span><span class=p>:</span><span class=w> </span>Deployment<span class=w> </span><span class=c># 指定创建资源的角色/类型</span><span class=w>
+</span><span class=w></span><span class=k>metadata</span><span class=p>:</span><span class=w> </span><span class=c># 资源的元数据/属性</span><span class=w>
+</span><span class=w>  </span><span class=k>name</span><span class=p>:</span><span class=w> </span>yapi<span class=w> </span><span class=c># 资源的名字，在同一个namespace中必须唯一</span><span class=w>
+</span><span class=w>  </span><span class=k>namespace</span><span class=p>:</span><span class=w> </span>tools<span class=w> </span><span class=c># 部署在哪个namespace中</span><span class=w>
+</span><span class=w>  </span><span class=k>labels</span><span class=p>:</span><span class=w> </span><span class=c># 设定资源的标签</span><span class=w>
+</span><span class=w>    </span><span class=k>app</span><span class=p>:</span><span class=w> </span>yapi<span class=w>
+</span><span class=w>    </span><span class=k>version</span><span class=p>:</span><span class=w> </span>stable<span class=w>
+</span><span class=w></span><span class=k>spec</span><span class=p>:</span><span class=w> </span><span class=c># 资源规范字段</span><span class=w>
+</span><span class=w>  </span><span class=k>replicas</span><span class=p>:</span><span class=w> </span><span class=m>1</span><span class=w> </span><span class=c># 声明副本数目</span><span class=w>
+</span><span class=w>  </span><span class=k>revisionHistoryLimit</span><span class=p>:</span><span class=w> </span><span class=m>3</span><span class=w> </span><span class=c># 保留历史版本</span><span class=w>
+</span><span class=w>  </span><span class=k>selector</span><span class=p>:</span><span class=w> </span><span class=c># 选择器</span><span class=w>
+</span><span class=w>    </span><span class=k>matchLabels</span><span class=p>:</span><span class=w> </span><span class=c># 匹配标签</span><span class=w>
+</span><span class=w>      </span><span class=k>app</span><span class=p>:</span><span class=w> </span>yapi<span class=w>
+</span><span class=w>      </span><span class=k>version</span><span class=p>:</span><span class=w> </span>stable<span class=w>
+</span><span class=w>  </span><span class=k>minReadySeconds</span><span class=p>:</span><span class=w> </span><span class=m>5</span><span class=w> </span><span class=c># 最小就绪时间 默认值0</span><span class=w>
+</span><span class=w>  </span><span class=k>strategy</span><span class=p>:</span><span class=w> </span><span class=c># 策略</span><span class=w>
+</span><span class=w>    </span><span class=k>rollingUpdate</span><span class=p>:</span><span class=w> </span><span class=c># 滚动更新</span><span class=w>
+</span><span class=w>      </span><span class=k>maxSurge</span><span class=p>:</span><span class=w> </span><span class=m>30</span>%<span class=w> </span><span class=c># 最大额外可以存在的副本数，可以为百分比，也可以为整数</span><span class=w>
+</span><span class=w>      </span><span class=k>maxUnavailable</span><span class=p>:</span><span class=w> </span><span class=m>30</span>%<span class=w> </span><span class=c># 示在更新过程中能够进入不可用状态的 Pod 的最大值，可以为百分比，也可以为整数</span><span class=w>
+</span><span class=w>    </span><span class=k>type</span><span class=p>:</span><span class=w> </span>RollingUpdate<span class=w> </span><span class=c># 滚动更新策略</span><span class=w>
+</span><span class=w>  </span><span class=k>template</span><span class=p>:</span><span class=w> </span><span class=c># 模版</span><span class=w>
+</span><span class=w>    </span><span class=k>metadata</span><span class=p>:</span><span class=w> </span><span class=c># 资源的元数据/属性</span><span class=w>
+</span><span class=w>      </span><span class=k>annotations</span><span class=p>:</span><span class=w> </span><span class=c># 自定义注解列表</span><span class=w>
+</span><span class=w>        </span><span class=k>sidecar.istio.io/inject</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;false&#34;</span><span class=w> </span><span class=c># 自定义注解名字</span><span class=w>
+</span><span class=w>        </span><span class=k>myki</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;1600000000&#34;</span><span class=w> </span><span class=c># 自定义注解名字</span><span class=w>
+</span><span class=w>      </span><span class=k>labels</span><span class=p>:</span><span class=w> </span><span class=c># 设定资源的标签</span><span class=w>
+</span><span class=w>        </span><span class=k>app</span><span class=p>:</span><span class=w> </span>yapi<span class=w>
+</span><span class=w>        </span><span class=k>version</span><span class=p>:</span><span class=w> </span>stable<span class=w>
+</span><span class=w>    </span><span class=k>spec</span><span class=p>:</span><span class=w> </span><span class=c># 资源规范字段</span><span class=w>
+</span><span class=w>      </span><span class=c>#serviceAccountName: jenkins</span><span class=w>
+</span><span class=w>      </span><span class=c>#serviceAccount: jenkins</span><span class=w>
+</span><span class=w>      </span><span class=k>containers</span><span class=p>:</span><span class=w>
+</span><span class=w>        </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>yapi<span class=w> </span><span class=c># 容器的名字</span><span class=w>
+</span><span class=w>          </span><span class=c>#image: nginx # 容器使用的镜像地址</span><span class=w>
+</span><span class=w>          </span><span class=k>image</span><span class=p>:</span><span class=w> </span>registry.cn-hangzhou.aliyuncs.com/anoyi/yapi<span class=w> </span><span class=c># 容器使用的镜像地址</span><span class=w>
+</span><span class=w>          </span><span class=k>workingDir</span><span class=p>:</span><span class=w> </span>/yapi/vendors<span class=w>
+</span><span class=w>          </span><span class=k>command</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=s2>&#34;/bin/sh&#34;</span><span class=p>]</span><span class=w>
+</span><span class=w>          </span><span class=k>args</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=s2>&#34;-c&#34;</span><span class=p>,</span><span class=w> </span><span class=s2>&#34;node server/app.js&#34;</span><span class=p>]</span><span class=w>
+</span><span class=w>          </span><span class=k>volumeMounts</span><span class=p>:</span><span class=w> </span><span class=c># 定义挂载</span><span class=w>
+</span><span class=w>          </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>config-json<span class=w>
+</span><span class=w>            </span><span class=k>mountPath</span><span class=p>:</span><span class=w> </span>/yapi/config.json<span class=w>
+</span><span class=w>            </span><span class=k>subPath</span><span class=p>:</span><span class=w> </span>config.json<span class=w>
+</span><span class=w>          </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>timezone<span class=w> </span><span class=c># 挂载名字</span><span class=w>
+</span><span class=w>            </span><span class=k>mountPath</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;/etc/localtime&#34;</span><span class=w> </span><span class=c># pod 挂载目录</span><span class=w>
+</span><span class=w>            </span><span class=k>readOnly</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>
+</span><span class=w>          </span><span class=k>imagePullPolicy</span><span class=p>:</span><span class=w>
+</span><span class=w></span><span class=c>#            periodSeconds: 10 # 检查间隔时间</span><span class=w>
+</span><span class=w>          </span><span class=k>ports</span><span class=p>:</span><span class=w>
+</span><span class=w>            </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>http<span class=w> </span><span class=c># 名称</span><span class=w>
+</span><span class=w>              </span><span class=k>containerPort</span><span class=p>:</span><span class=w> </span><span class=m>3000</span><span class=w> </span><span class=c># 容器开发对外的端口</span><span class=w>
+</span><span class=w>              </span><span class=k>protocol</span><span class=p>:</span><span class=w> </span>TCP<span class=w> </span><span class=c># 协议</span><span class=w>
+</span><span class=w>          </span><span class=k>lifecycle</span><span class=p>:</span><span class=w>
+</span><span class=w>            </span><span class=c>#优雅关闭容器</span><span class=w>
+</span><span class=w>            </span><span class=k>preStop</span><span class=p>:</span><span class=w>
+</span><span class=w>              </span><span class=k>exec</span><span class=p>:</span><span class=w>
+</span><span class=w>                </span><span class=k>command</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=s2>&#34;/bin/sh&#34;</span><span class=p>,</span><span class=w> </span><span class=s2>&#34;-c&#34;</span><span class=p>,</span><span class=w> </span><span class=s2>&#34;sleep 30&#34;</span><span class=p>]</span><span class=w>
+</span><span class=w>      </span><span class=k>imagePullSecrets</span><span class=p>:</span><span class=w> </span><span class=c># 镜像仓库拉取密钥</span><span class=w>
+</span><span class=w>        </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>aliyun-registry-vpc<span class=w>
+</span><span class=w>      </span><span class=k>hostAliases</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span>- <span class=k>ip</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;192.168.1.26&#34;</span><span class=w>
+</span><span class=w>        </span><span class=k>hostnames</span><span class=p>:</span><span class=w>
+</span><span class=w>          </span>- <span class=s2>&#34;rc-ws.mymtools.com&#34;</span><span class=w>
+</span><span class=w>      </span><span class=k>affinity</span><span class=p>:</span><span class=w> </span><span class=c># 亲和性调试</span><span class=w>
+</span><span class=w>        </span><span class=k>nodeAffinity</span><span class=p>:</span><span class=w> </span><span class=c># 节点亲和力</span><span class=w>
+</span><span class=w>          </span><span class=k>requiredDuringSchedulingIgnoredDuringExecution</span><span class=p>:</span><span class=w> </span><span class=c># pod 必须部署到满足条件的节点上</span><span class=w>
+</span><span class=w>            </span><span class=k>nodeSelectorTerms</span><span class=p>:</span><span class=w> </span><span class=c># 节点满足任何一个条件就可以</span><span class=w>
+</span><span class=w>              </span>- <span class=k>matchExpressions</span><span class=p>:</span><span class=w> </span><span class=c># 有多个选项，则只有同时满足这些逻辑选项的节点才能运行 pod</span><span class=w>
+</span><span class=w>                  </span>- <span class=k>key</span><span class=p>:</span><span class=w> </span>beta.kubernetes.io/arch<span class=w>
+</span><span class=w>                    </span><span class=k>operator</span><span class=p>:</span><span class=w> </span>In<span class=w>
+</span><span class=w>                    </span><span class=k>values</span><span class=p>:</span><span class=w>
+</span><span class=w>                      </span>- amd64<span class=w>
+</span><span class=w>      </span><span class=k>dnsPolicy</span><span class=p>:</span><span class=w> </span>ClusterFirst<span class=w> </span><span class=c># Pod 的 DNS 配置可让用户对 Pod 的 DNS 设置进行更多控制</span><span class=w>
+</span><span class=w>      </span><span class=c>#serviceAccountName: demo #服务账户名称</span><span class=w>
+</span><span class=w>      </span><span class=c>#serviceAccount: demo #为Pod 配置服务账户</span><span class=w>
+</span><span class=w>      </span><span class=k>dnsConfig</span><span class=p>:</span><span class=w>
+</span><span class=w>        </span><span class=k>options</span><span class=p>:</span><span class=w>
+</span><span class=w>          </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>single-request-reopen<span class=w> </span><span class=c># dns搜索域解决dns 命中低问题</span><span class=w>
+</span><span class=w>      </span><span class=k>volumes</span><span class=p>:</span><span class=w> </span><span class=c># 外部挂载</span><span class=w>
+</span><span class=w>        </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>config-json<span class=w>
+</span><span class=w>          </span><span class=k>configMap</span><span class=p>:</span><span class=w>
+</span><span class=w>            </span><span class=k>name</span><span class=p>:</span><span class=w> </span>config-json<span class=w>
+</span><span class=w>        </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>timezone<span class=w> </span><span class=c># 挂载名字</span><span class=w>
+</span><span class=w>          </span><span class=k>hostPath</span><span class=p>:</span><span class=w>
+</span><span class=w>            </span><span class=k>path</span><span class=p>:</span><span class=w> </span>/usr/share/zoneinfo/Asia/Shanghai<span class=w>
+</span><span class=w></span>---<span class=w>
+</span><span class=w></span><span class=k>apiVersion</span><span class=p>:</span><span class=w> </span>networking.k8s.io/v1beta1<span class=w>
+</span><span class=w></span><span class=k>kind</span><span class=p>:</span><span class=w> </span>Ingress<span class=w>
+</span><span class=w></span><span class=k>metadata</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>name</span><span class=p>:</span><span class=w> </span>yapi-https<span class=w>
+</span><span class=w>  </span><span class=k>namespace</span><span class=p>:</span><span class=w> </span>tools<span class=w>
+</span><span class=w>  </span><span class=k>annotations</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span><span class=k>nginx.ingress.kubernetes.io/force-ssl-redirect</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;true&#34;</span><span class=w>
+</span><span class=w>    </span><span class=k>nginx.ingress.kubernetes.io/ssl-redirect</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;true&#34;</span><span class=w>
+</span><span class=w></span><span class=k>spec</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>ingressClassName</span><span class=p>:</span><span class=w> </span>nginx<span class=w> </span><span class=c># 1.18 以上使用</span><span class=w>
+</span><span class=w>  </span><span class=k>tls</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span>- <span class=k>hosts</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span>- yapi.mvmyun.com<span class=w>
+</span><span class=w>    </span><span class=k>secretName</span><span class=p>:</span><span class=w> </span>mvmyun-com<span class=w>
+</span><span class=w>  </span><span class=k>rules</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span>- <span class=k>host</span><span class=p>:</span><span class=w> </span>yapi.mvmyun.com<span class=w>
+</span><span class=w>    </span><span class=k>http</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span><span class=k>paths</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span>- <span class=k>path</span><span class=p>:</span><span class=w> </span>/<span class=w>
+</span><span class=w>        </span><span class=k>pathType</span><span class=p>:</span><span class=w> </span>Prefix<span class=w>
+</span><span class=w>        </span><span class=k>backend</span><span class=p>:</span><span class=w>
+</span><span class=w>          </span><span class=k>serviceName</span><span class=p>:</span><span class=w> </span>yapi<span class=w>
+</span><span class=w>          </span><span class=k>servicePort</span><span class=p>:</span><span class=w> </span><span class=m>80</span><span class=w>
+</span><span class=w>
+</span></code></pre></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+<span class=item-content>🐳Myki</span></p><p class=copyright-item><span class=item-title>上次更新</span>
+<span class=item-content>2021-03-25</span></p></div><div class=post-reward><input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label><div class=qr-code><label class=qr-code-image for=reward><img class=image src=https://oss.1nth.com/images/1nth/wechat.png>
+<span>微信打赏</span></label>
+<label class=qr-code-image for=reward><img class=image src=https://oss.1nth.com/images/1nth/alipay.png>
+<span>支付宝打赏</span></label></div></div><footer class=post-footer><div class=post-tags><a href=/tags/yapi/>yapi</a></div><nav class=post-nav><a class=next href=/post/k8s_yaml_export/><span class="next-text nav-default">kubernetes导出</span>
+<span class="next-text nav-mobile">下一篇</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><div class="w3-panel w3-border w3-light-grey w3-round-large"><i class="fa fa-commenting w3-xxxlarge"></i><br><p class=w3-xlarge></p></div><script data-isso=https://isso.1nth.com/ data-isso-lang=zh src=https://isso.1nth.com/js/embed.min.js></script><section id=isso-thread></section></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:21kixc@gmail.com class="iconfont icon-email" title=email></a><a href=https://github.com/21ki class="iconfont icon-github" title=github></a><a href=http://localhost:1313 class="iconfont icon-weibo" title=weibo></a><a href=https://www.1nth.com/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><div class=busuanzi-footer><span id=busuanzi_container_site_pv>本站总访问量 <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> 次</span>
+<span class=division>|</span>
+<span id=busuanzi_container_site_uv>本站总访客数 <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> 人</span></div><span class=copyright-year>&copy;
+2018 -
+2021<span class=heart><i class="iconfont icon-heart"></i></span><span>🐳Myki</span>
+<a href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referra"><img src=https://oss.1nth.com/images/1nth/%E5%8F%88%E6%8B%8D%E4%BA%91_logo5.png align=absmiddle width=59px height=30px></a>
+<span>提供加速服务</span><br><a href=http://beian.miit.gov.cn><img src=https://oss.1nth.com/images/1nth/svg/icp.svg alt=image></a>
+<a class=hugo href=https://oss.1nth.com/images/1nth/svg/hugo.svg data-fancybox=gallery data-caption><img src=https://oss.1nth.com/images/1nth/svg/hugo.svg alt=image></a>
+<a class=even href=https://oss.1nth.com/images/1nth/svg/even.svg data-fancybox=gallery data-caption><img src=https://oss.1nth.com/images/1nth/svg/even.svg alt=image></a></br></span></div></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js integrity=sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP crossorigin=anonymous></script><link rel=stylesheet href=https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css integrity=sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF crossorigin=anonymous><script type=text/javascript src=/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js></script><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','UA-154483127-1','auto');ga('set','anonymizeIp',true);ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script><script id=baidu_analytics>var _hmt=_hmt||[];(function(){if(window.location.hostname==='localhost')return;var hm=document.createElement("script");hm.async=true;hm.src="https://hm.baidu.com/hm.js?9f5f711a6a3e2fd392b4b02d93529765";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s);})();</script><script id=baidu_push>(function(){if(window.location.hostname==='localhost')return;var bp=document.createElement('script');bp.async=true;var curProtocol=window.location.protocol.split(':')[0];if(curProtocol==='https'){bp.src='https://zz.bdstatic.com/linksubmit/push.js';}
+else{bp.src='http://push.zhanzhang.baidu.com/push.js';}
+var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(bp,s);})();</script><script src=/js/custom.js></script></body></html>
