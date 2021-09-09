@@ -1,0 +1,216 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>k8s安装cert-manager及签发泛域名证书 - Myki的博客</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="🐳Myki"><meta name=description content="简介  cert-manager 是一个云原生证书管理开源项目，用于在 Kubernetes 集群中自动管理和颁发来自各种颁发源的 TLS 证书，它可以从各种受支持的来源颁发证书，包括 Let’s Encrypt、HashiCorp Vault和Venafi以及私有 PKI，它将确保证书定期有效和更新，并在到期前的适当时间尝试更新证书。"><meta name=keywords content="ssl,k8s"><meta name=generator content="Hugo 0.74.3 with theme even"><link rel=canonical href=https://www.1nth.com/post/k8s-cert-manager/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script><link href=/sass/main.min.b5b9c0f253defc99c13b35448ffb4214367d80b2b1237dfac18a4a76d034c663.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><link rel=stylesheet href=/css/custom.css><meta property="og:title" content="k8s安装cert-manager及签发泛域名证书"><meta property="og:description" content="简介
+
+cert-manager 是一个云原生证书管理开源项目，用于在 Kubernetes 集群中自动管理和颁发来自各种颁发源的 TLS 证书，它可以从各种受支持的来源颁发证书，包括 Let’s Encrypt、HashiCorp Vault和Venafi以及私有 PKI，它将确保证书定期有效和更新，并在到期前的适当时间尝试更新证书。"><meta property="og:type" content="article"><meta property="og:url" content="https://www.1nth.com/post/k8s-cert-manager/"><meta property="article:published_time" content="2021-09-09T00:00:00+00:00"><meta property="article:modified_time" content="2021-09-09T00:00:00+00:00"><meta itemprop=name content="k8s安装cert-manager及签发泛域名证书"><meta itemprop=description content="简介
+
+cert-manager 是一个云原生证书管理开源项目，用于在 Kubernetes 集群中自动管理和颁发来自各种颁发源的 TLS 证书，它可以从各种受支持的来源颁发证书，包括 Let’s Encrypt、HashiCorp Vault和Venafi以及私有 PKI，它将确保证书定期有效和更新，并在到期前的适当时间尝试更新证书。"><meta itemprop=datePublished content="2021-09-09T00:00:00+00:00"><meta itemprop=dateModified content="2021-09-09T00:00:00+00:00"><meta itemprop=wordCount content="2620"><meta itemprop=keywords content="harbor,"><meta name=twitter:card content="summary"><meta name=twitter:title content="k8s安装cert-manager及签发泛域名证书"><meta name=twitter:description content="简介
+
+cert-manager 是一个云原生证书管理开源项目，用于在 Kubernetes 集群中自动管理和颁发来自各种颁发源的 TLS 证书，它可以从各种受支持的来源颁发证书，包括 Let’s Encrypt、HashiCorp Vault和Venafi以及私有 PKI，它将确保证书定期有效和更新，并在到期前的适当时间尝试更新证书。"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>☸💕🚩</a></div><div class=mobile-navbar-icon><span></span><span></span><span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/categories/><li class=mobile-menu-item>Categories</li></a><a href=/about/><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>☸💕🚩</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/categories/>Categories</a></li><li class=menu-item><a class=menu-item-link href=/about/>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>k8s安装cert-manager及签发泛域名证书</h1><div class=post-meta><span class=post-time>2021-09-09</span><div class=post-category><a href=/categories/ssl/>ssl</a>
+<a href=/categories/k8s/>k8s</a></div><span id=busuanzi_container_page_pv class=more-meta><span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> 次阅读</span></div></header><div class=post-content><h1 id=简介>简介</h1><blockquote><p>cert-manager 是一个云原生证书管理开源项目，用于在 Kubernetes 集群中自动管理和颁发来自各种颁发源的 TLS 证书，它可以从各种受支持的来源颁发证书，包括 Let’s Encrypt、HashiCorp Vault和Venafi以及私有 PKI，它将确保证书定期有效和更新，并在到期前的适当时间尝试更新证书。</p></blockquote><h1 id=架构>架构</h1><p><img src="https://oss.1nth.com/images/1nth/k8s-cert-manager01.png?x-oss-process=style/dev" alt=jenkins_plugin_download>
+Issuers/ClusterIssuers：定义使用 什么证书颁发机构 (CA) 来去颁发证书，Issuers和ClusterIssuers区别是issuers是一个名称空间级别的资源， 只能用来签发自己所在 namespace 下的证书，ClusterIssuer是个集群级别的资源 可以签发任意 namespace 下的证书</p><p>Certificate：定义所需的 X.509 证书，该证书将更新并保持最新。Certificate是一个命名空间资源，当Certificate被创建时，它会去创建相应的CertificateRequest资源来去申请证书。</p><h1 id=安装>安装</h1><p>安装cert-manager相对比较简单，这里安装的cert-manager版本为v1.5.6，注意该版本要求kubectl版本>= v1.19.0-rc.1</p><p>所有资源（CustomResourceDefinitions和 cert-manager、cainjector 和 webhook 组件）都包含在一个 YAML 清单文件中：</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>wget https://github.com/jetstack/cert-manager/releases/download/v1.5.6/cert-manager.yaml
+kubectl apply -f cert-manager.yaml 
+</code></pre></div><p>默认情况下，cert-manager 将安装到cert-manager 命名空间中，我们可以使用如下命令验证安装</p><h1 id=配置issuerclusterissuer>配置Issuer/ClusterIssuer</h1><p>cert-manager支持以下几种证书颁发者</p><ul><li>SelfSigned</li><li>CA</li><li>Vault</li><li>Venafi</li><li>External</li><li>ACME
+这里只介绍使用ACME作为证书颁发者的方式。</li></ul><h2 id=http-01-校验原理>HTTP-01 校验原理</h2><p>HTTP-01 的校验原理是给你域名指向的 HTTP 服务增加一个临时 location ，Let’s Encrypt 会发送 http 请求到 http:///.well-known/acme-challenge/，YOUR_DOMAIN 就是被校验的域名，TOKEN 是 ACME 协议的客户端负责放置的文件，在这里 ACME 客户端就是 cert-manager，它通过修改或创建 Ingress 规则来增加这个临时校验路径并指向提供 TOKEN 的服务。Let’s Encrypt 会对比 TOKEN 是否符合预期，校验成功后就会颁发证书。此方法仅适用于给使用 Ingress 暴露流量的服务颁发证书，并且不支持泛域名证书。</p><h2 id=dns-01-校验原理>DNS-01 校验原理</h2><p>DNS-01 的校验原理是利用 DNS 提供商的 API Key 拿到你的 DNS 控制权限， 在 Let’s Encrypt 为 ACME 客户端提供令牌后，ACME 客户端 (cert-manager) 将创建从该令牌和您的帐户密钥派生的 TXT 记录，并将该记录放在 _acme-challenge.。 然后 Let’s Encrypt 将向 DNS 系统查询该记录，如果找到匹配项，就可以颁发证书。此方法不需要你的服务使用 Ingress，并且支持泛域名证书。</p><h2 id=校验方式对比>校验方式对比</h2><p>HTTP-01 的校验方式的优点是: 配置简单通用，不管使用哪个 DNS 提供商都可以使用相同的配置方法；缺点是：需要依赖 Ingress，如果你的服务不是用 Ingress 暴露流量的就不适用，而且不支持泛域名证书。</p><p>DNS-01 的校验方式的优点是没有 HTTP-01 校验方式缺点，不依赖 Ingress，也支持泛域名；缺点就是不同 DNS 提供商的配置方式不一样，而且 DNS 提供商有很多，cert-manager 的 Issuer 不可能每个都去支持，支持如下的dns提供商：</p><ul><li><p>Akamai</p></li><li><p>AzureDNS</p></li><li><p>CloudFlare</p></li><li><p>Google</p></li><li><p>Route53</p></li><li><p>DigitalOcean</p></li><li><p>RFC2136</p></li></ul><p>Cert-manager 还支持使用外部 webhook 的接入 DNS 提供商，支持如下webhook</p><ul><li><p>AliDNS-Webhook</p></li><li><p>cert-manager-webhook-civo</p></li><li><p>cert-manager-webhook-dnspod</p></li><li><p>cert-manager-webhook-dnsimple</p></li><li><p>cert-manager-webhook-gandi</p></li><li><p>cert-manager-webhook-infomaniak</p></li><li><p>cert-manager-webhook-inwx</p></li><li><p>cert-manager-webhook-oci （Oracle 云基础设施）</p></li><li><p>cert-manager-webhook-scaleway</p></li><li><p>cert-manager-webhook-selectel</p></li><li><p>cert-manager-webhook-softlayer</p></li><li><p>cert-manager-webhook-ibmcis</p></li><li><p>cert-manager-webhook-loopia</p></li><li><p>cert-manager-webhook-arvan</p></li><li><p>bizflycloud-certmanager-dns-webhook</p></li></ul><h1 id=http01配置示例>HTTP01配置示例</h1><div class=highlight><pre class=chroma><code class=language-yaml data-lang=yaml><span class=k>apiVersion</span><span class=p>:</span><span class=w> </span>cert-manager.io/v1<span class=w>
+</span><span class=w></span><span class=k>kind</span><span class=p>:</span><span class=w> </span>ClusterIssuer<span class=w>
+</span><span class=w></span><span class=k>metadata</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>name</span><span class=p>:</span><span class=w> </span>tls<span class=w>
+</span><span class=w></span><span class=k>spec</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>acme</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span><span class=c># You must replace this email address with your own.</span><span class=w>
+</span><span class=w>    </span><span class=c># Let&#39;s Encrypt will use this to contact you about expiring</span><span class=w>
+</span><span class=w>    </span><span class=c># certificates, and issues related to your account.</span><span class=w>
+</span><span class=w>    </span><span class=k>email</span><span class=p>:</span><span class=w> </span>xxxxxxx@qq.com<span class=w>
+</span><span class=w>    </span><span class=k>server</span><span class=p>:</span><span class=w> </span>https<span class=p>:</span>//acme-v02.api.letsencrypt.org/directory<span class=w>
+</span><span class=w>    </span><span class=k>privateKeySecretRef</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span><span class=c># Secret resource that will be used to store the account&#39;s private key.</span><span class=w>
+</span><span class=w>      </span><span class=k>name</span><span class=p>:</span><span class=w> </span>issuer-account-key<span class=w>
+</span><span class=w>    </span><span class=c># Add a single challenge solver, HTTP01 using nginx</span><span class=w>
+</span><span class=w>    </span><span class=k>solvers</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span>- <span class=k>http01</span><span class=p>:</span><span class=w>
+</span><span class=w>        </span><span class=k>ingress</span><span class=p>:</span><span class=w>
+</span><span class=w>          </span><span class=k>class</span><span class=p>:</span><span class=w> </span>nginx<span class=w>
+</span><span class=w>
+</span></code></pre></div><p>说明：</p><ul><li><p>metadata.name: 是我们创建的签发机构的名称，后面我们创建证书的时候会引用它</p></li><li><p>spec.acme.email: 是你自己的邮箱，证书快过期的时候会有邮件提醒，不过 cert-manager 会利用 acme 协议自动给我们重新颁发证书来续期</p></li><li><p>spec.acme.server: 是 acme 协议的服务端，我们这里用 Let’s Encrypt，这个地址就写死成这样就行</p></li><li><p>spec.acme.privateKeySecretRef: 指示此签发机构的私钥将要存储到哪个 Secret 对象中，名称不重要</p></li><li><p>spec.acme.solvers: 这里指示签发机构校验方式，有http01和dns01两种，该字段下配置的class和name只能同时存在一个，class指定使用的ingress class 名称，name比较少用，通常用于云上自带的ingress</p></li></ul><p>我们部署上述示例，并部署一个ingress 代理集群内的grafana服务验证签发证书</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>kubectl apply -f clusterissuer.yaml 
+clusterissuer.cert-manager.io/tls created
+
+cat ingress/ingree-nginx.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: tls
+  name: <span class=nb>test</span>
+  namespace: monitoring
+spec:
+  rules:
+  - host: ingress-nginx.1nth.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: grafana
+            port:
+              number: <span class=m>3000</span>
+        path: /
+        pathType: Prefix
+  tls: <span class=c1># &lt; placing a host in the TLS config will indicate a certificate should be created</span>
+  - hosts:
+    - ingress-nginx.1nth.com
+    secretName: ingress-nginx--tls
+    
+kubectl apply -f ingress/ingree-nginx.yaml 
+ingress.networking.k8s.io/test created
+</code></pre></div><p>我们可以查看生成的certificate和签发的证书(安全原因删除了部分证书中的字符)</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>kubectl -n monitoring  get certificate
+NAME                 READY   SECRET               AGE
+ingress-nginx--tls   True    ingress-nginx--tls   2m26s
+
+kubectl -n monitoring  get secret ingress-nginx--tls -o yaml
+apiVersion: v1
+data:
+  tls.crt: LS0tLS1CRUdJT********kMrT0IrYTl2VXZhRUFkZ0QyWEpRdjBYY3dJaFJVR0FndwpsRmFPNDAwVEdUTy8zd3d2SUF2TVR2Rms0d0FBQVhyN3Fzcy9BQUFFQXdCSE1FVUNJQ2svS2VodE1YOUlLZEFyCjhZTVMyZU9ZR05mbXlBSnZQR0tYS3Bxc3NyNkJBaUVBZ1FZM1ZmWFUvZEd0TDQ3VytsOCt3WTRxd0VONkowN3MKUFVTNUhPZm1HNmN3RFFZSktvWklodmNOQVFFTEJRQURnZ0VCQUxqT1JBQUJPbVMzdUwrTktNWCtPTVBZWXltYwpjSnFkdDRhUFUxUUhvMk5mY2NnbG9PeVl0ci9MclQvSytQOGUxQkN1Q0Jqd2d2MVpBbzhUUWxiVU1POE9BbGhYClB6dWk4YnV3VnF2N0Jvb3BvRVUyNVZuU0FOb3B3ZVVWM1RrNW1DSEs5YW9ORVpBZUF4NEE4T3o0MWdNeVN0SnEKOFpqZnBxZCtJUmNUdzNGL0E4MVhRTmJzYnVTaG5DWUZMZkxQUkpMZDNGeGszOGRpSEsrZ0UxT0JZV1REZSsvdQpJWTFGT1R1TkhFSmoybzBJbEFZTE5ueTM4ZHcxQkEyQ3VDZVFHNE1TWHYxdnhFVFhwWjUrNzNBclFFUDlydXZpClNBSTh2VEtYM2gycGFDS0lhdEZIMEZDTE9uQUZDMU9ia0ZCanRLTUJTWDRMZE5UZDQ3S0pIcHg3bUJVPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCi0tLS0tQkVHSU4gQ0VSVElGSUNBVEUtLS0tLQpNSUlGRmpDQ0F2NmdBd0lCQWdJUkFKRXJDRXJQREJpblUvYldMaVduWDFvd0RRWUpLb1pJaHZjTkFRRUxCUUF3ClR6RUxNQWtHQTFVRUJoTUNWVk14S1RBbkJnTlZCQW9USUVsdWRHVnlibVYwSUZObFkzVnlhWFI1SUZKbGMyVmgKY21Ob0lFZHliM1Z3TVJVd0V3WURWUVFERXd4SlUxSkhJRkp2YjNRZ1dERXdIaGNOTWpBd09UQTBNREF3TURBdwpXaGNOTWpVd09URTFNVFl3TURBd1dqQXlNUXN3Q1FZRFZRUUdFd0pWVXpFV01CUUdBMVVFQ2hNTlRHVjBKM01nClJXNWpjbmx3ZERFTE1Ba0dBMVVFQXhNQ1VqTXdnZ0VpTUEwR0NTcUdTSWIzRFFFQkFRVUFBNElCRHdBd2dnRUsKQW9JQkFRQzdBaFVvelBhZ2xOTVBFdXlOVlpMRCtJTHhtYVo2UW9pblhTYXF0U3U1eFV5eHI0NXIrWFhJbzljUApSNVFVVlRWWGpKNm9vamtaOVlJOFFxbE9idlU3d3k3YmpjQ3dYUE5aT09mdHoybndXZ3NidnNDVUpDV0gramR4CnN4UG5IS3pobSsvYjVEdEZVa1dXcWNGVHpqVElVdTYxcnUyUDNtQnc0cVZVcTdadERwZWxRRFJySzlPOFp1dG0KTkh6NmE0dVBWeW1aK0RBWFhicHliL3VCeGEzU2hsZzlGOGZuQ2J2eEsvZUczTUhhY1YzVVJ1UE1yU1hCaUx4ZwpaM1Ztcy9FWTk2SmM1bFAvT29pMlI2WC9FeGpxbUFsM1A1MVQrYzhCNWZXbWNCY1VyMk9rLzVtems1M2NVNmNHCi9raUZIYUZwcmlWMXV4UE1VZ1AxN1ZHaGk5c1ZBZ01CQUFHamdnRUlNSUlCQkRBT0JnTlZIUThCQWY4RUJBTUMKQVlZd0hRWURWUjBsQkJZd0ZBWUlLd1lCQlFVSEF3SUdDQ3NHQVFVRkJ3TUJNQklHQTFVZEV3RUIvd1FJTUFZQgpBZjhDQVFBd0hRWURWUjBPQkJZRUZCUXVzeGUzV0ZiTHJsQUpRT1lmcjUyTEZNTEdNQjhHQTFVZEl3UVlNQmFBCkZIbTBXZVo3dHVYa0FYT0FDSWpJR2xqMjZadHVNRElHQ0NzR0FRVUZCd0VCQkNZd0pEQWlCZ2dyQmdFRkJRY3cKQW9ZV2FIUjBjRG92TDNneExta3ViR1Z1WTNJdWIzSm5MekFuQmdOVkhSOEVJREFlTUJ5Z0dxQVloaFpvZEhSdwpPaTh2ZURFdVl5NXNaVzVqY2k1dmNtY3ZNQ0lHQTFVZElBUWJNQmt3Q0FZR1o0RU1BUUlCTUEwR0N5c0dBUVFCCmd0OFRBUUVCTUEwR0NTcUdTSWIzRFFFQkN3VUFBNElDQVFDRnlrNUhQcVAzaFVTRnZOVm5lTEtZWTYxMVRSNlcKUFRObGNsUXRnYURxdyszNElMOWZ6TGR3QUxkdU8vWmVsTjdrSUorbTc0dXlBK2VpdFJZOGtjNjA3VGtDNTN3bAppa2ZtWlc0L1J2VFo4TTZVSys1VXpoSzhqQ2RMdU1HWUw2S3Z6WEdSU2dpM3lMZ2pld1F0Q1BrSVZ6NkQyUVF6CkNrY2hlQW1DSjhNcXlKdTV6bHp5Wk1qQXZubkFUNDV0UkF4ZWtyc3U5NHNRNGVnZFJDbmJXU0R0WTdraCtCSW0KbEpOWG9CMWxCTUVLSXE0UURVT1hvUmdmZnVEZ2hqZTFXckc5TUwrSGJpc3EveUZPR3dYRDlSaVg4RjZzdzZXNAphdkF1dkRzenVlNUwzc3o4NUsrRUM0WS93RlZETnZabzRUWVhhbzZaMGYrbFFLYzB0OERRWXprMU9YVnU4cnAyCnlKTUM2YWxMYkJmT0RBTFp2WUg3bjdkbzFBWmxzNEk5ZDFQNGpua0RyUW94QjNVcVE5aFZsM0xFS1E3M3hGMU8KeUs1R2hERFg4b1ZmR0tGNXUrZGVjSXNINFlhVHc3bVAzR0Z4SlNxdjMrMGxVRkpvaTVMYzVkYTE0OXA5MElkcwpoQ0V4cm9MMSs3bXJ5SWtYUGVGTTVUZ085cjBydlphQkZPdlYyejBncDM1WjArTDRXUGxidUVqTi9seFBGaW4rCkhsVWpyOGdSc0kzcWZKT1FGeS85cktJSlIwWS84T213dC84b1RXZ3kxbWRlSG1tams3ajFuWXN2QzlKU1E2WnYKTWxkbFRUS0IzemhUaFYxK1hXWXA2cmpkNUpXMXpiVldFa0xOeEU3R0pUaEVVRzNzemdCVkdQN3BTV1RVVHNxWApuTFJid0hPb3E3aEh3Zz09Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0KLS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUZZRENDQkVpZ0F3SUJBZ0lRUUFGM0lUZlU2VUs0N25hcVBHUUt0ekFOQmdrcWhraUc5dzBCQVFzRkFEQS8KTVNRd0lnWURWUVFLRXh0RWFXZHBkR0ZzSUZOcFoyNWhkSFZ5WlNCVWNuVnpkQ0JEYnk0eEZ6QVZCZ05WQkFNVApEa1JUVkNCU2IyOTBJRU5CSUZnek1CNFhEVEl4TURFeU1ERTVNVFF3TTFvWERUSTBNRGt6TURFNE1UUXdNMW93ClR6RUxNQWtHQTFVRUJoTUNWVk14S1RBbkJnTlZCQW9USUVsdWRHVnlibVYwSUZObFkzVnlhWFI1SUZKbGMyVmgKY21Ob0lFZHliM1Z3TVJVd0V3WURWUVFERXd4SlUxSkhJRkp2YjNRZ1dERXdnZ0lpTUEwR0NTcUdTSWIzRFFFQgpBUVVBQTRJQ0R3QXdnZ0lLQW9JQ0FRQ3Q2Q1J6OUJRMzg1dWVLMWNvSEllKzNMZmZPSkNNYmp6bVY2QjQ5M1hDCm92NzFhbTcyQUU4bzI5NW9obXhFazdheFkvMFVFbXUvSDlMcU1ac2hmdEV6UExwSTlkMTUzN080L3hMeElacEwKd1lxR2NXbEtabVpzajM0OGNMK3RLU0lHOCtUQTVvQ3U0a3VQdDVsK2xBT2YwMGVYZkpsSUkxUG9PSzVQQ20rRApMdEZKVjR5QWRMYmFMOUE0alhzRGNDRWJkZkl3UFBxUHJ0M2FZNnZyRmsvQ2poRkxmczhMNlArMWR5NzBzbnRLCjRFd1NKUXh3alFNcG9PRlRKT3dUMmU0WnZ4Q3pTb3cvaWFOaFVkNnNod2VVOUdOeDdDN2liMXVZZ2VHSlhEUjUKYkhidk81QmllZWJicEpvdkpzWFFFT0VPM3RrUWpoYjd0L2VvOThmbEFnZVlqellJbGVmaU41WU5ObldlK3c1eQpzUjJidkFQNVNRWFlnZDBGdENyV1FlbXNBWGFWQ2cvWTM5VzlFaDgxTHlnWGJOS1l3YWdKWkhkdVJ6ZTZ6cXhaClhtaWRmM0xXaWNVR1FTaytXVDdkSnZVa3lSR25XcU5NUUI5R29abTFwenBSYm9ZN25uMXlweElGZUZudFBsRjQKRlFzRGo0M1FMd1d5UG50S0hFdHpCUkw4eHVyZ1VCTjhRNU4wczhwMDU0NGZBUWpRTU5SYmNUYTBCN3JCTURCYwpTTGVDTzVpbWZXQ0tvcU1wZ3N5NnZZTUVHNktEQTBHaDFnWHhHOEsyOEtoOGhqdEdxRWdxaU54Mm1uYS9IMnFsClBSbVA2emp6Wk43SUt3MEtLUC8zMitJVlF0UWkwQ2RkNFhuK0dPZHdpSzFPNXRtTE9zYmRKMUZ1Lzd4azlUTkQKVHdJREFRQUJvNElCUmpDQ0FVSXdEd1lEVlIwVEFRSC9CQVV3QXdFQi96QU9CZ05WSFE4QkFmOEVCQU1DQVFZdwpTd1lJS3dZQkJRVUhBUUVFUHpBOU1Ec0dDQ3NHQVFVRkJ6QUNoaTlvZEhSd09pOHZZWEJ3Y3k1cFpHVnVkSEoxCmMzUXVZMjl0TDNKdmIzUnpMMlJ6ZEhKdmIzUmpZWGd6TG5BM1l6QWZCZ05WSFNNRUdEQVdnQlRFcDdHa2V5eHgKK3R2aFM1QjEvOFFWWUlXSkVEQlVCZ05WSFNBRVRUQkxNQWdHQm1lQkRBRUNBVEEvQmdzckJnRUVBWUxmRXdFQgpBVEF3TUM0R0NDc0dBUVVGQndJQkZpSm9kSFJ3T2k4dlkzQnpMbkp2YjNRdGVERXViR1YwYzJWdVkzSjVjSFF1CmIzSm5NRHdHQTFVZEh3UTFNRE13TWFBdm9DMkdLMmgwZEhBNkx5OWpjbXd1YVdSbGJuUnlkWE4wTG1OdmJTOUUKVTFSU1QwOVVRMEZZTTBOU1RDNWpjbXd3SFFZRFZSME9CQllFRkhtMFdlWjd0dVhrQVhPQUNJaklHbGoyNlp0dQpNQTBHQ1NxR1NJYjNEUUVCQ3dVQUE0SUJBUUFLY3dCc2xtNy9EbExRcnQyTTUxb0dyUytvNDQrL3lRb0RGVkRDCjVXeEN1MitiOUxSUHdrU0lDSFhNNndlYkZHSnVlTjdzSjdvNVhQV2lvVzVXbEhBUVU3Rzc1Sy9Rb3NNckFkU1cKOU1VZ05UUDUyR0UyNEhHTnRMaTFxb0pGbGNEeXFTTW81OWFoeTJjSTJxQkRMS29ia3gvSjN2V3JhVjBUOVZ1RwpXQ0xLVFZYa2NHZHR3bGZGUmpsQno0cFlnMWh0bWY1WDZEWU84QTRqcXYySWw5RGpYQTZVU2JXMUZ6WFNMcjlPCmhlOFk0SVdTNndZN2JDa2pDV0RjUlFKTUVoZzc2ZnNPM3R4RStGaVlydXE5UlVXaGlGMW15djRRNlcrQ3lCRkMKRGZ2cDdPT0dBTjZkRU9NNCtxUjlzZGpvU1lLRUJwc3I2R3RQQVF3NGR5NzUzZWM1Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+  tls.key: LS0tLS1CRUdJTiBSx********************************************VFY2J3SStsNGFCM2NWMjNDMlIyM0wvbFNNY3MzSUIKZHZLQVQ5RUNnWUVBeHVhNlNWV0pyamJ5bmZwRVRQajNWa3ZTRm5rM0lxS1BZS2hUSW9VaGNmOGVSUkkvZzhkWApsVzVJZTNHbjhWaWlTTzB3TFJuZ3lHUVFSZDFDVGk5NEZNMmNabHA5czl3RHhWZFhlRm5FbmhhQVh5ZEVhQThmCkVteG04ek9TNWV0cnBiY2hueEI3eCtOaWo3MktZcFo4cnhobG1XcFRaRVJETzRveExWLzZYa1VDZ1lFQTRWTnMKUlkzME5LWmk2S0IxYWI1RFFYSTJTekJSeVdjbmd6ZjZRT3JEaVpldWsraS9CMGUrM2ZUNkRoSGl3bVNBcWtVUAo3b1Z0L1JNbkNDR1kwb1B1d0NkaSt5b1A0ejNOVTJpNWJDRk45eU12WUNkVWxVRG9KRVQ3YUdBV3QybTJtZDRiClgzaXpId1JaZVkyNk1FRFdUdUltSVFBdlRVdkRRS0RxeTNlSzRBc0NnWUVBZzRzdW9yZDJrZ2gzRnJIZ29BTjgKR00rV1J4U3R1VE5IbmNaVkRSeDlEUmFMbjJTOUt0c1llcFJ3VFd2U2hWUjRKOER1UHJYQnF1WTZ1T25uSXl4VAp2M1pvUEcwV2UzQkQ4aXljaGRUZ3F5ajRoM1hCMFF4SElYa2Q4VFFuci9XdHdQQkh4Um95c3ZVWVJ6WTBvcFVpCkt1NzRxcWplTkE3TlpFQTEyK3VBK3YwQ2dZRUFrVzRobEtieGRrWHAwdEUxMXdFcE1ZV0F5M2l0WVB1R1FpZ1EKQ25RN3JvUEs5c1lpL1pUdCtSNFRncDlDcDByc3pIajB0bk5DTVRSNlhjSXBlNzRSaTg0Z0VaSHRYVExYWWoxVwphQmI2MWtiTVhoZ2tmSXkvQ0NISnptMHVYRVVMeVRYVW53TXRRUml5azBUSlpqbUMyTGtYK1BiQWtQZ1VWcE5GCjEvc1pGRThDZ1lCekhVZE9LWVBjMUtlKzlwcGVvVlR1UjZ4bTlrTGJ0WHpPcXpuRVhQZUNMVmQyOWFBaTRGYUsKMXVocXdwcFVpL2x6N2VIb2pySDFmSXNaMDliTTd0aVBDY0FJK2NRemlGVWJvc2ZCdmxVakFzRVRNREFYbU5GLwpQYUhHWVR3MHVkVVlWL3YzdysxcXNsZG03a1kyN000anI4RGFITENKdlZERlpYMzRCMW9mVVE9PQotLS0tLUVORCBSU0EgUFJJVkFURSBLRVktLS0tLQo<span class=o>=</span>
+kind: Secret
+metadata:
+  annotations:
+    cert-manager.io/alt-names: ingress-nginx.1nth.com
+    cert-manager.io/certificate-name: ingress-nginx--tls
+    cert-manager.io/common-name: ingress-nginx.1nth.com
+    cert-manager.io/ip-sans: <span class=s2>&#34;&#34;</span>
+    cert-manager.io/issuer-group: cert-manager.io
+    cert-manager.io/issuer-kind: ClusterIssuer
+    cert-manager.io/issuer-name: tls
+    cert-manager.io/uri-sans: <span class=s2>&#34;&#34;</span>
+  creationTimestamp: <span class=s2>&#34;2021-09-09T08:25:14Z&#34;</span>
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:data:
+        .: <span class=o>{}</span>
+        f:tls.crt: <span class=o>{}</span>
+        f:tls.key: <span class=o>{}</span>
+      f:metadata:
+        f:annotations:
+          .: <span class=o>{}</span>
+          f:cert-manager.io/alt-names: <span class=o>{}</span>
+          f:cert-manager.io/certificate-name: <span class=o>{}</span>
+          f:cert-manager.io/common-name: <span class=o>{}</span>
+          f:cert-manager.io/ip-sans: <span class=o>{}</span>
+          f:cert-manager.io/issuer-group: <span class=o>{}</span>
+          f:cert-manager.io/issuer-kind: <span class=o>{}</span>
+          f:cert-manager.io/issuer-name: <span class=o>{}</span>
+          f:cert-manager.io/uri-sans: <span class=o>{}</span>
+      f:type: <span class=o>{}</span>
+    manager: controller
+    operation: Update
+    time: <span class=s2>&#34;2021-09-09T08:25:14Z&#34;</span>
+  name: ingress-nginx--tls
+  namespace: monitoring
+  resourceVersion: <span class=s2>&#34;274536&#34;</span>
+  selfLink: /api/v1/namespaces/monitoring/secrets/ingress-nginx--tls
+  uid: 929f9252-1905-4afc-b622-892151f1bbf3
+type: kubernetes.io/tls
+</code></pre></div><p>此时我们访问我们ingress文件里定义的域名可以看到此时证书已经签发</p><h1 id=dns01配置示例>DNS01配置示例</h1><p>这里使用的dns服务商为阿里云，需要使用AliDNS-Webhook</p><p>安装alidns-webhook</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>wget https://raw.githubusercontent.com/pragkent/alidns-webhook/master/deploy/bundle.yaml
+</code></pre></div><p>建议修改文件中的acme.yourcompany.com</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>sed -i s/<span class=s1>&#39;acme.yourcompany.com&#39;</span>/<span class=s1>&#39;acme.1nth.com&#39;</span>/g bundle.yaml
+</code></pre></div><p>创建一个包含阿里dns凭据的secert</p><div class=highlight><pre class=chroma><code class=language-yaml data-lang=yaml><span class=k>apiVersion </span><span class=p>:</span><span class=w> </span>v1<span class=w> 
+</span><span class=w></span><span class=k>kind </span><span class=p>:</span><span class=w> </span>Secret<span class=w> 
+</span><span class=w></span><span class=k>metadata </span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>name </span><span class=p>:</span><span class=w> </span>alidns-secret<span class=w> 
+</span><span class=w>  </span><span class=k>namespace </span><span class=p>:</span><span class=w> </span>cert-manager<span class=w> 
+</span><span class=w></span><span class=k>data </span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>access-key </span><span class=p>:</span><span class=w> </span>YOUR_ACCESS_KEY(base64)<span class=w> 
+</span><span class=w>  </span><span class=k>secret-key </span><span class=p>:</span><span class=w> </span>YOUR_SECRET_KEY(base64)<span class=w>
+</span></code></pre></div><p>或者使用如下命令行方式创建</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>kubectl -n cert-manager create secret generic alidns-secret --from-literal<span class=o>=</span>access-key<span class=o>=</span><span class=s1>&#39;YOUR_ACCESS_KEY&#39;</span> --from-literal<span class=o>=</span>secret-key<span class=o>=</span><span class=s1>&#39;YOUR_SECRET_KEY&#39;</span>
+</code></pre></div><p>创建 ClusterIssuer cluster-issuer-letsencrypt-prod.yaml</p><div class=highlight><pre class=chroma><code class=language-yaml data-lang=yaml><span class=k>apiVersion</span><span class=p>:</span><span class=w> </span>cert-manager.io/v1<span class=w>
+</span><span class=w></span><span class=k>kind</span><span class=p>:</span><span class=w> </span>ClusterIssuer<span class=w>
+</span><span class=w></span><span class=k>metadata</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>name</span><span class=p>:</span><span class=w> </span>letsencrypt-staging<span class=w>
+</span><span class=w></span><span class=k>spec</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>acme</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span><span class=c># Change to your letsencrypt email</span><span class=w>
+</span><span class=w>    </span><span class=k>email</span><span class=p>:</span><span class=w> </span><span class=m>85959493</span>@qq.com<span class=w>
+</span><span class=w>    </span><span class=k>server</span><span class=p>:</span><span class=w> </span>https<span class=p>:</span>//acme-v02.api.letsencrypt.org/directory<span class=w>
+</span><span class=w>    </span><span class=k>privateKeySecretRef</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span><span class=k>name</span><span class=p>:</span><span class=w> </span>letsencrypt-staging-account-key<span class=w>
+</span><span class=w>    </span><span class=k>solvers</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span>- <span class=k>dns01</span><span class=p>:</span><span class=w>
+</span><span class=w>        </span><span class=k>webhook</span><span class=p>:</span><span class=w>
+</span><span class=w>          </span><span class=k>groupName</span><span class=p>:</span><span class=w> </span>acme.1nth.com<span class=w> </span><span class=c>#须和bundle.yaml文件中定义的groupname 一致</span><span class=w>
+</span><span class=w>          </span><span class=k>solverName</span><span class=p>:</span><span class=w> </span>alidns<span class=w>
+</span><span class=w>          </span><span class=k>config</span><span class=p>:</span><span class=w>
+</span><span class=w>            </span><span class=k>region</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;&#34;</span><span class=w>
+</span><span class=w>            </span><span class=k>accessKeySecretRef</span><span class=p>:</span><span class=w>
+</span><span class=w>              </span><span class=k>name</span><span class=p>:</span><span class=w> </span>alidns-secret<span class=w>
+</span><span class=w>              </span><span class=k>key</span><span class=p>:</span><span class=w> </span>access-key<span class=w>
+</span><span class=w>            </span><span class=k>secretKeySecretRef</span><span class=p>:</span><span class=w>
+</span><span class=w>              </span><span class=k>name</span><span class=p>:</span><span class=w> </span>alidns-secret<span class=w>
+</span><span class=w>              </span><span class=k>key</span><span class=p>:</span><span class=w> </span>secret-key<span class=w>
+</span></code></pre></div><p>我们创建一个 手动去申请证书 certificate.yaml</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>cat certificate.yaml
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: 1nth-com-tls
+spec:
+  secretName: 1nth-com-tls
+  dnsNames:
+  - 1nth.com
+  - <span class=s2>&#34;*.1nth.com&#34;</span>
+  issuerRef:
+    name: letsencrypt-staging
+    kind: ClusterIssuer
+
+kubectl apply -f  certificate.yaml
+kubectl get certificate	
+AME              READY   SECRET            AGE
+1nth-com-tls   False   1nth-com-tls   10s
+			  
+</code></pre></div><p>刚创建后我们查看certificate会发现ready状态为false,此时稍等会自动在我们的dns解析里创建txt 记录，然后去签发证书，该字段就会变为true</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>kubectl get certificate
+NAME           READY   SECRET         AGE
+1nth-com-tls   True    1nth-com-tls   59m
+kubectl get secrets
+NAME                  TYPE                                  DATA   AGE
+1nth-com-tls          kubernetes.io/tls                     <span class=m>2</span>      57m   <span class=c1>#此时DATA 变为2，说明里面存着真正的证书文件</span>
+default-token-gsgmt   kubernetes.io/service-account-token   <span class=m>3</span>      156d
+oss-secret            Opaque                                <span class=m>2</span>      52d
+qingcloud             kubernetes.io/dockerconfigjson        <span class=m>1</span>      48d
+</code></pre></div><p>我们可以看到这个证书是个泛域名证书，此时我们ingress 可以直接使用该secert，不需要再去添加注解执行使用的issuer/cluseteissuer了，例如</p><div class=highlight><pre class=chroma><code class=language-yaml data-lang=yaml><span class=k>apiVersion</span><span class=p>:</span><span class=w> </span>networking.k8s.io/v1beta1<span class=w>
+</span><span class=w></span><span class=k>kind</span><span class=p>:</span><span class=w> </span>Ingress<span class=w>
+</span><span class=w></span><span class=k>metadata</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>name</span><span class=p>:</span><span class=w> </span>whoami-https<span class=w>
+</span><span class=w>  </span><span class=k>namespace</span><span class=p>:</span><span class=w> </span>default<span class=w>
+</span><span class=w>  </span><span class=k>annotations</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span><span class=k>nginx.ingress.kubernetes.io/force-ssl-redirect</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;true&#34;</span><span class=w>
+</span><span class=w>    </span><span class=k>nginx.ingress.kubernetes.io/ssl-redirect</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;true&#34;</span><span class=w>
+</span><span class=w></span><span class=k>spec</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>ingressClassName</span><span class=p>:</span><span class=w> </span>nginx<span class=w> </span><span class=c># 1.18 以上使用</span><span class=w>
+</span><span class=w>  </span><span class=k>tls</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span>- <span class=k>hosts</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span>- cert.1nth.com<span class=w>
+</span><span class=w>    </span><span class=k>secretName</span><span class=p>:</span><span class=w> </span>1nth-com-tls<span class=w>
+</span><span class=w>  </span><span class=k>rules</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span>- <span class=k>host</span><span class=p>:</span><span class=w> </span>cert.1nth.com<span class=w>
+</span><span class=w>    </span><span class=k>http</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span><span class=k>paths</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span>- <span class=k>path</span><span class=p>:</span><span class=w> </span>/<span class=w>
+</span><span class=w>        </span><span class=k>pathType</span><span class=p>:</span><span class=w> </span>Prefix<span class=w>
+</span><span class=w>        </span><span class=k>backend</span><span class=p>:</span><span class=w>
+</span><span class=w>          </span><span class=k>serviceName</span><span class=p>:</span><span class=w> </span>whoami<span class=w>
+</span><span class=w>          </span><span class=k>servicePort</span><span class=p>:</span><span class=w> </span><span class=m>80</span><span class=w>
+</span></code></pre></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+<span class=item-content>🐳Myki</span></p><p class=copyright-item><span class=item-title>上次更新</span>
+<span class=item-content>2021-09-09</span></p></div><div class=post-reward><input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label><div class=qr-code><label class=qr-code-image for=reward><img class=image src=https://oss.1nth.com/images/1nth/wechat.png>
+<span>微信打赏</span></label>
+<label class=qr-code-image for=reward><img class=image src=https://oss.1nth.com/images/1nth/alipay.png>
+<span>支付宝打赏</span></label></div></div><footer class=post-footer><div class=post-tags><a href=/tags/harbor/>harbor</a></div><nav class=post-nav><a class=next href=/post/k8s-delete-namespace/><span class="next-text nav-default">强制删除 Terminating 状态的 namespace</span>
+<span class="next-text nav-mobile">下一篇</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><div class="w3-panel w3-border w3-light-grey w3-round-large"><i class="fa fa-commenting w3-xxxlarge"></i><br><p class=w3-xlarge></p></div><script data-isso=https://isso.1nth.com/ data-isso-lang=zh src=https://isso.1nth.com/js/embed.min.js></script><section id=isso-thread></section></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:21kixc@gmail.com class="iconfont icon-email" title=email></a><a href=https://github.com/21ki class="iconfont icon-github" title=github></a><a href=http://localhost:1313 class="iconfont icon-weibo" title=weibo></a><a href=https://www.1nth.com/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><div class=busuanzi-footer><span id=busuanzi_container_site_pv>本站总访问量 <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> 次</span>
+<span class=division>|</span>
+<span id=busuanzi_container_site_uv>本站总访客数 <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> 人</span></div><span class=copyright-year>&copy;
+2018 -
+2021<span class=heart><i class="iconfont icon-heart"></i></span><span>🐳Myki</span>
+<a href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referra"><img src=https://oss.1nth.com/images/1nth/%E5%8F%88%E6%8B%8D%E4%BA%91_logo5.png align=absmiddle width=59px height=30px></a>
+<span>提供加速服务</span><br><a href=http://beian.miit.gov.cn><img src=https://oss.1nth.com/images/1nth/svg/icp.svg alt=image></a>
+<a class=hugo href=https://oss.1nth.com/images/1nth/svg/hugo.svg data-fancybox=gallery data-caption><img src=https://oss.1nth.com/images/1nth/svg/hugo.svg alt=image></a>
+<a class=even href=https://oss.1nth.com/images/1nth/svg/even.svg data-fancybox=gallery data-caption><img src=https://oss.1nth.com/images/1nth/svg/even.svg alt=image></a></br></span></div></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js integrity=sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP crossorigin=anonymous></script><link rel=stylesheet href=https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css integrity=sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF crossorigin=anonymous><script type=text/javascript src=/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js></script><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','UA-154483127-1','auto');ga('set','anonymizeIp',true);ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script><script id=baidu_analytics>var _hmt=_hmt||[];(function(){if(window.location.hostname==='localhost')return;var hm=document.createElement("script");hm.async=true;hm.src="https://hm.baidu.com/hm.js?9f5f711a6a3e2fd392b4b02d93529765";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s);})();</script><script id=baidu_push>(function(){if(window.location.hostname==='localhost')return;var bp=document.createElement('script');bp.async=true;var curProtocol=window.location.protocol.split(':')[0];if(curProtocol==='https'){bp.src='https://zz.bdstatic.com/linksubmit/push.js';}
+else{bp.src='http://push.zhanzhang.baidu.com/push.js';}
+var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(bp,s);})();</script><script src=/js/custom.js></script></body></html>
