@@ -29,4 +29,4 @@ jobs:
           access-key-secret: ${{ secrets.ACCESS_KEY_SECRET }}
           #sts-token: "sts_token"
       - name: Deply To OSS
-        run: ossutil cp /home/runner/work/21ki.github.io/21ki.github.io/ oss://${env.BUCKCT_NAME}/ -rf
+        run: ossutil cp /home/runner/work/21ki.github.io/21ki.github.io/ oss://${BUCKCT_NAME}/ -rf
