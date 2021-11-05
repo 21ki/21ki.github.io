@@ -1,92 +1,96 @@
-<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>github action kubeadm编译证书100年 - Myki的博客</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="🐳Myki"><meta name=description content="github action kubeadm编译证书100年"><meta name=keywords content="centos,k8s"><meta name=generator content="Hugo 0.74.3 with theme even"><link rel=canonical href=https://www.1nth.com/post/github_action_kubeadm/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script><link href=/sass/main.min.b5b9c0f253defc99c13b35448ffb4214367d80b2b1237dfac18a4a76d034c663.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><link rel=stylesheet href=/css/custom.css><meta property="og:title" content="github action kubeadm编译证书100年"><meta property="og:description" content="github action kubeadm编译证书100年"><meta property="og:type" content="article"><meta property="og:url" content="https://www.1nth.com/post/github_action_kubeadm/"><meta property="article:published_time" content="2020-06-20T00:00:00+00:00"><meta property="article:modified_time" content="2020-06-20T00:00:00+00:00"><meta itemprop=name content="github action kubeadm编译证书100年"><meta itemprop=description content="github action kubeadm编译证书100年"><meta itemprop=datePublished content="2020-06-20T00:00:00+00:00"><meta itemprop=dateModified content="2020-06-20T00:00:00+00:00"><meta itemprop=wordCount content="202"><meta itemprop=keywords content="kubeadm,"><meta name=twitter:card content="summary"><meta name=twitter:title content="github action kubeadm编译证书100年"><meta name=twitter:description content="github action kubeadm编译证书100年"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>☸💕🚩</a></div><div class=mobile-navbar-icon><span></span><span></span><span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/categories/><li class=mobile-menu-item>Categories</li></a><a href=/about/><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>☸💕🚩</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/categories/>Categories</a></li><li class=menu-item><a class=menu-item-link href=/about/>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>github action kubeadm编译证书100年</h1><div class=post-meta><span class=post-time>2020-06-20</span><div class=post-category><a href=/categories/centos/>centos</a>
-<a href=/categories/k8s/>k8s</a></div><span id=busuanzi_container_page_pv class=more-meta><span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> 次阅读</span></div></header><div class=post-content><h4 id=github-action-kubeadm编译证书100年>github action kubeadm编译证书100年</h4><h3 id=直接fork官网kubernets--然后创建工作流-参考地址httpsgithubcom21kikubernetesblobmastergithubworkflowsgoyml>直接fork官网kubernets 然后创建工作流 <a href=https://github.com/21ki/kubernetes/blob/master/.github/workflows/go.yml>参考地址</a></h3><div class=highlight><pre class=chroma><code class=language-yml data-lang=yml><span class=k>name</span><span class=p>:</span><span class=w> </span>Go<span class=w>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>github action kubeadm编译证书100年 - Myki的博客</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="🐳Myki"><meta name=description content="github action kubeadm编译证书100年"><meta name=keywords content="centos,k8s"><meta name=generator content="Hugo 0.74.3 with theme even"><link rel=canonical href=https://www.1nth.com/post/github_action_kubeadm/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script><link href=/sass/main.min.b5b9c0f253defc99c13b35448ffb4214367d80b2b1237dfac18a4a76d034c663.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><link rel=stylesheet href=/css/custom.css><meta property="og:title" content="github action kubeadm编译证书100年"><meta property="og:description" content="github action kubeadm编译证书100年"><meta property="og:type" content="article"><meta property="og:url" content="https://www.1nth.com/post/github_action_kubeadm/"><meta property="article:published_time" content="2020-06-20T00:00:00+00:00"><meta property="article:modified_time" content="2020-06-20T00:00:00+00:00"><meta itemprop=name content="github action kubeadm编译证书100年"><meta itemprop=description content="github action kubeadm编译证书100年"><meta itemprop=datePublished content="2020-06-20T00:00:00+00:00"><meta itemprop=dateModified content="2020-06-20T00:00:00+00:00"><meta itemprop=wordCount content="510"><meta itemprop=keywords content="kubeadm,"><meta name=twitter:card content="summary"><meta name=twitter:title content="github action kubeadm编译证书100年"><meta name=twitter:description content="github action kubeadm编译证书100年"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>☸💕🚩</a></div><div class=mobile-navbar-icon><span></span><span></span><span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/categories/><li class=mobile-menu-item>Categories</li></a><a href=/about/><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>☸💕🚩</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/categories/>Categories</a></li><li class=menu-item><a class=menu-item-link href=/about/>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>github action kubeadm编译证书100年</h1><div class=post-meta><span class=post-time>2020-06-20</span><div class=post-category><a href=/categories/centos/>centos</a>
+<a href=/categories/k8s/>k8s</a></div><span id=busuanzi_container_page_pv class=more-meta><span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> 次阅读</span></div></header><div class=post-content><h4 id=github-action-kubeadm编译证书100年>github action kubeadm编译证书100年</h4><h3 id=直接fork官网kubernets--然后创建工作流-参考地址httpsgithubcom21kigithub-actionblobmainkubeadm-build-99yearkubeadmyml>直接fork官网kubernets 然后创建工作流 <a href=https://github.com/21ki/github-action/blob/main/kubeadm-build-99year/kubeadm.yml>参考地址</a></h3><div class=highlight><pre class=chroma><code class=language-yml data-lang=yml><span class=k>name</span><span class=p>:</span><span class=w> </span>Build<span class=w> </span>kubeadm<span class=w> </span><span class=m>99</span><span class=w> </span>year<span class=w>
 </span><span class=w>
 </span><span class=w></span><span class=k>on</span><span class=p>:</span><span class=w>
 </span><span class=w>  </span><span class=k>push</span><span class=p>:</span><span class=w>
-</span><span class=w>    </span><span class=k>branches</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span>master<span class=w> </span><span class=p>]</span><span class=w>
-</span><span class=w>  </span><span class=k>pull_request</span><span class=p>:</span><span class=w>
-</span><span class=w>    </span><span class=k>branches</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=w> </span>master<span class=w> </span><span class=p>]</span><span class=w>
+</span><span class=w>    </span><span class=k>tags</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span>- <span class=s1>&#39;v*&#39;</span><span class=w>
 </span><span class=w>
 </span><span class=w></span><span class=k>jobs</span><span class=p>:</span><span class=w>
-</span><span class=w>
 </span><span class=w>  </span><span class=k>build</span><span class=p>:</span><span class=w>
 </span><span class=w>    </span><span class=k>name</span><span class=p>:</span><span class=w> </span>Build<span class=w>
 </span><span class=w>    </span><span class=k>runs-on</span><span class=p>:</span><span class=w> </span>ubuntu-latest<span class=w>
 </span><span class=w>    </span><span class=k>steps</span><span class=p>:</span><span class=w>
 </span><span class=w>
-</span><span class=w>    </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>Set<span class=w> </span>up<span class=w> </span>Go<span class=w> </span><span class=m>1.</span>x<span class=w>
-</span><span class=w>      </span><span class=k>uses</span><span class=p>:</span><span class=w> </span>actions/setup-go@v2<span class=w>
-</span><span class=w>      </span><span class=k>with</span><span class=p>:</span><span class=w>
-</span><span class=w>        </span><span class=k>go-version</span><span class=p>:</span><span class=w> </span>^<span class=m>1.14</span><span class=w>
-</span><span class=w>      </span><span class=k>id</span><span class=p>:</span><span class=w> </span>go<span class=w>
+</span><span class=w>      </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>Set<span class=w> </span>up<span class=w> </span>Go<span class=w>
+</span><span class=w>        </span><span class=k>uses</span><span class=p>:</span><span class=w> </span>actions/setup-go@v2<span class=w>
+</span><span class=w>        </span><span class=k>with</span><span class=p>:</span><span class=w>
+</span><span class=w>          </span><span class=k>go-version</span><span class=p>:</span><span class=w> </span><span class=m>1.17</span><span class=w>
 </span><span class=w>
-</span><span class=w>    </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>Dump<span class=w> </span>GitHub<span class=w> </span>context<span class=w>
-</span><span class=w>      </span><span class=k>env</span><span class=p>:</span><span class=w>
-</span><span class=w>        </span><span class=k>packageName</span><span class=p>:</span><span class=w> </span>v1<span class=m>.19.3</span><span class=w>
-</span><span class=w>      </span><span class=c>#run: echo &#34;::set-env name=packageName::v1.18.2&#34;</span><span class=w>
-</span><span class=w>      </span><span class=c>#run: echo &#39;${{ env.packageName }}&#39;</span><span class=w>
-</span><span class=w>      </span><span class=k>run</span><span class=p>:</span><span class=w> </span>echo<span class=w> </span><span class=s2>&#34;packageName=${{ env.packageName }}&#34;</span><span class=w> </span>&gt;&gt;<span class=w> </span>$GITHUB_ENV<span class=w>
-</span><span class=w>    
-</span><span class=w>    </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>Get<span class=w> </span>Env<span class=w>
-</span><span class=w>      </span><span class=k>run</span><span class=p>:</span><span class=w> </span>echo<span class=w> </span><span class=s1>&#39;${{ env.packageName }}&#39;</span><span class=w>
-</span><span class=w>       
-</span><span class=w>    </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>Check<span class=w> </span>out<span class=w> </span>code<span class=w> </span>into<span class=w> </span>the<span class=w> </span>Go<span class=w> </span>module<span class=w> </span>directory<span class=w>
-</span><span class=w>      </span><span class=k>uses</span><span class=p>:</span><span class=w> </span>actions/checkout@v2<span class=w>
-</span><span class=w>      </span><span class=k>with</span><span class=p>:</span><span class=w>
-</span><span class=w>        </span><span class=k>ref</span><span class=p>:</span><span class=w> </span>${{<span class=w> </span>env.packageName<span class=w> </span>}}<span class=w>
-</span><span class=w>         
-</span><span class=w>    </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>Sed<span class=w> </span>Env<span class=w>
-</span><span class=w>      </span><span class=k>run</span><span class=p>:</span><span class=w> </span><span class=sd>|
-</span><span class=sd>        sed -i &#34;s/365/365 * 99/&#34; /home/runner/work/kubernetes/kubernetes/cmd/kubeadm/app/constants/constants.go</span><span class=w>
-</span><span class=w>        </span>sed<span class=w> </span>-i<span class=w> </span><span class=s2>&#34;s/10)/99)/&#34;</span><span class=w>  </span>/home/runner/work/kubernetes/kubernetes/staging/src/k8s.io/client-go/util/cert/cert.go<span class=w>
+</span><span class=w>      </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>Dump<span class=w> </span>GitHub<span class=w> </span>context<span class=w>
+</span><span class=w>        </span><span class=k>run</span><span class=p>:</span><span class=w> </span>echo<span class=w> </span><span class=s2>&#34;RELEASE_VERSION=${GITHUB_REF:10}&#34;</span><span class=w> </span>&gt;&gt;<span class=w> </span>$GITHUB_ENV<span class=w>
+</span><span class=w>        </span><span class=c>#run: echo &#34;NOW::$(date +&#39;%Y-%m-%dT%H:%M:%S&#39;)&#34; &gt;&gt; $GITHUB_ENV</span><span class=w>
 </span><span class=w>
-</span><span class=w>    </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>Get<span class=w> </span>Env<span class=w>
-</span><span class=w>      </span><span class=k>run</span><span class=p>:</span><span class=w> </span><span class=sd>|
-</span><span class=sd>        find . -name constants.go |xargs cat |grep 365</span><span class=w>
-</span><span class=w>        </span>find<span class=w> </span>.<span class=w> </span>-name<span class=w> </span>cert.go<span class=w> </span>|xargs<span class=w> </span>cat<span class=w> </span>|grep<span class=w> </span>365d<span class=w>
+</span><span class=w>      </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>Get<span class=w> </span>Env<span class=w>
+</span><span class=w>        </span><span class=k>run</span><span class=p>:</span><span class=w> </span>echo<span class=w> </span><span class=s1>&#39;${{ env.RELEASE_VERSION }}&#39;</span><span class=w>
 </span><span class=w>
-</span><span class=w>    </span><span class=c>#- name: github</span><span class=w>
-</span><span class=w>    </span><span class=c>#  run: git clone --branch v1.18.2 https://github.com/kubernetes/kubernetes.git</span><span class=w>
+</span><span class=w>      </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>Check<span class=w> </span>out<span class=w> </span>code<span class=w> </span>into<span class=w> </span>the<span class=w> </span>Go<span class=w> </span>module<span class=w> </span>directory<span class=w>
+</span><span class=w>        </span><span class=k>uses</span><span class=p>:</span><span class=w> </span>actions/checkout@v2<span class=w>
+</span><span class=w>        </span><span class=k>with</span><span class=p>:</span><span class=w>
+</span><span class=w>          </span><span class=k>ref</span><span class=p>:</span><span class=w> </span>${{<span class=w> </span>env.RELEASE_VERSION<span class=w> </span>}}<span class=w>
 </span><span class=w>
-</span><span class=w>    </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>Get<span class=w> </span>dependencies<span class=w>
-</span><span class=w>      </span><span class=k>run</span><span class=p>:</span><span class=w> </span><span class=sd>|
-</span><span class=sd>        go get -v -t -d ./...</span><span class=w>
-</span><span class=w>        </span>if<span class=w> </span><span class=p>[</span><span class=w> </span>-f<span class=w> </span>Gopkg.toml<span class=w> </span><span class=p>]</span>;<span class=w> </span>then<span class=w>
-</span><span class=w>            </span>curl<span class=w> </span>https<span class=p>:</span>//raw.githubusercontent.com/golang/dep/master/install.sh<span class=w> </span>|<span class=w> </span>sh<span class=w>
-</span><span class=w>            </span>dep<span class=w> </span>ensure<span class=w>
-</span><span class=w>        </span>fi<span class=w>
-</span><span class=w>    </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>Get<span class=w> </span>workpath<span class=w>
-</span><span class=w>      </span><span class=k>run</span><span class=p>:</span><span class=w> </span>pwd<span class=w>
+</span><span class=w>      </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>Sed<span class=w> </span>Env<span class=w>
+</span><span class=w>        </span><span class=k>run</span><span class=p>:</span><span class=w> </span><span class=sd>|
+</span><span class=sd>          sed -i &#34;s/365/365 * 99/&#34; /home/runner/work/kubernetes/kubernetes/cmd/kubeadm/app/constants/constants.go</span><span class=w>
+</span><span class=w>          </span>sed<span class=w> </span>-i<span class=w> </span><span class=s2>&#34;s/10)/99)/&#34;</span><span class=w>  </span>/home/runner/work/kubernetes/kubernetes/staging/src/k8s.io/client-go/util/cert/cert.go<span class=w>
+</span><span class=w>      </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>Get<span class=w> </span>Env<span class=w>
+</span><span class=w>        </span><span class=k>run</span><span class=p>:</span><span class=w> </span><span class=sd>|
+</span><span class=sd>          find . -name constants.go |xargs cat |grep 365</span><span class=w>
+</span><span class=w>          </span>find<span class=w> </span>.<span class=w> </span>-name<span class=w> </span>cert.go<span class=w> </span>|xargs<span class=w> </span>cat<span class=w> </span>|grep<span class=w> </span>365d<span class=w>
+</span><span class=w>      </span><span class=c>#- name: github</span><span class=w>
+</span><span class=w>      </span><span class=c>#  run: git clone --branch v1.18.2 https://github.com/kubernetes/kubernetes.git</span><span class=w>
 </span><span class=w>
-</span><span class=w>    </span><span class=c>#- name: 切换分支</span><span class=w>
-</span><span class=w>    </span><span class=c>#  run: git checkout v1.18.2</span><span class=w>
+</span><span class=w>      </span><span class=c>#      - name: Get dependencies</span><span class=w>
+</span><span class=w>      </span><span class=c>#        run: |</span><span class=w>
+</span><span class=w>      </span><span class=c>#          go get -v -t -d ./...</span><span class=w>
+</span><span class=w>      </span><span class=c>#          if [ -f Gopkg.toml ]; then</span><span class=w>
+</span><span class=w>      </span><span class=c>#              curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh</span><span class=w>
+</span><span class=w>      </span><span class=c>#              dep ensure</span><span class=w>
+</span><span class=w>      </span><span class=c>#          fi</span><span class=w>
+</span><span class=w>      </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>Get<span class=w> </span>workpath<span class=w>
+</span><span class=w>        </span><span class=k>run</span><span class=p>:</span><span class=w> </span>pwd<span class=w>
 </span><span class=w>
-</span><span class=w>    </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>Build<span class=w>
-</span><span class=w>      </span><span class=k>run</span><span class=p>:</span><span class=w> </span>KUBE_GIT_TREE_STATE=clean<span class=w> </span>make<span class=w> </span>all<span class=w> </span>WHAT=cmd/kubeadm<span class=w> </span>GOFLAGS=-v<span class=w>
+</span><span class=w>      </span><span class=c>#- name: 切换分支</span><span class=w>
+</span><span class=w>      </span><span class=c>#  run: git checkout v1.18.2</span><span class=w>
 </span><span class=w>
-</span><span class=w>    </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>Get<span class=w> </span>paGth<span class=w>
-</span><span class=w>      </span><span class=k>run</span><span class=p>:</span><span class=w> </span>find<span class=w> </span>.<span class=w> </span>-name<span class=w> </span>kubeadm<span class=w>
-</span><span class=w>    
-</span><span class=w>    </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>Kubeadm<span class=w> </span>version<span class=w>
-</span><span class=w>      </span><span class=k>run</span><span class=p>:</span><span class=w> </span><span class=sd>|
-</span><span class=sd>        chmod +x ./_output/local/bin/linux/amd64/kubeadm</span><span class=w>
-</span><span class=w>        </span>./_output/local/bin/linux/amd64/kubeadm<span class=w> </span>version<span class=w>
+</span><span class=w>      </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>Build<span class=w>
+</span><span class=w>        </span><span class=k>run</span><span class=p>:</span><span class=w> </span>KUBE_GIT_TREE_STATE=clean<span class=w> </span>make<span class=w> </span>all<span class=w> </span>WHAT=cmd/kubeadm<span class=w> </span>GOFLAGS=-v<span class=w>
 </span><span class=w>
-</span><span class=w>    </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>Package<span class=w>
-</span><span class=w>      </span><span class=k>run</span><span class=p>:</span><span class=w> </span>mkdir<span class=w> </span>myki<span class=w> </span><span class=cp>&amp;&amp;</span><span class=w> </span>cp<span class=w> </span>./_output/local/bin/linux/amd64/kubeadm<span class=w> </span>myki<span class=w>
+</span><span class=w>      </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>Get<span class=w> </span>paGth<span class=w>
+</span><span class=w>        </span><span class=k>run</span><span class=p>:</span><span class=w> </span>find<span class=w> </span>.<span class=w> </span>-name<span class=w> </span>kubeadm<span class=w>
 </span><span class=w>
-</span><span class=w>    </span>- <span class=k>uses</span><span class=p>:</span><span class=w> </span>actions/upload-artifact@v1<span class=w>
-</span><span class=w>      </span><span class=k>with</span><span class=p>:</span><span class=w>
-</span><span class=w>        </span><span class=k>name</span><span class=p>:</span><span class=w> </span>kubeadm-${{<span class=w> </span>env.packageName<span class=w> </span>}}<span class=w>
-</span><span class=w>        </span><span class=k>path</span><span class=p>:</span><span class=w> </span>myki<span class=w>
+</span><span class=w>      </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>Kubeadm<span class=w> </span>version<span class=w>
+</span><span class=w>        </span><span class=k>run</span><span class=p>:</span><span class=w> </span><span class=sd>|
+</span><span class=sd>          chmod +x ./_output/local/bin/linux/amd64/kubeadm</span><span class=w>
+</span><span class=w>          </span>./_output/local/bin/linux/amd64/kubeadm<span class=w> </span>version<span class=w>
+</span><span class=w>      </span><span class=c>#制品库打包</span><span class=w>
+</span><span class=w>      </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>Upload<span class=w> </span>assets<span class=w>
+</span><span class=w>        </span><span class=k>run</span><span class=p>:</span><span class=w> </span><span class=sd>|
+</span><span class=sd>          mkdir myki</span><span class=w>
+</span><span class=w>          </span>cp<span class=w> </span>./_output/local/bin/linux/amd64/kubeadm<span class=w> </span>kubeadm-${{<span class=w> </span>env.RELEASE_VERSION<span class=w> </span>}}<span class=w>
+</span><span class=w>          </span>sha256sum<span class=w> </span>kubeadm-${{<span class=w> </span>env.RELEASE_VERSION<span class=w> </span>}}<span class=w> </span>&gt;<span class=w> </span>kubeadm-${{<span class=w> </span>env.RELEASE_VERSION<span class=w> </span>}}.sha256sum.txt<span class=w>
+</span><span class=w>      </span><span class=c>#制品库上传</span><span class=w>
+</span><span class=w>      </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>Release<span class=w> </span>and<span class=w> </span>upload<span class=w> </span>binary<span class=w> </span>file<span class=w>
+</span><span class=w>        </span><span class=k>uses</span><span class=p>:</span><span class=w> </span>softprops/action-gh-release@v1<span class=w>
+</span><span class=w>        </span><span class=k>env</span><span class=p>:</span><span class=w>
+</span><span class=w>          </span><span class=k>GITHUB_TOKEN</span><span class=p>:</span><span class=w> </span>${{<span class=w> </span>secrets.GITHUB_TOKEN<span class=w> </span>}}<span class=w>
+</span><span class=w>        </span><span class=k>with</span><span class=p>:</span><span class=w>
+</span><span class=w>          </span><span class=k>files</span><span class=p>:</span><span class=w> </span><span class=sd>|
+</span><span class=sd>            kubeadm-${{ env.RELEASE_VERSION }}</span><span class=w>
+</span><span class=w>            </span>kubeadm-${{<span class=w> </span>env.RELEASE_VERSION<span class=w> </span>}}.sha256sum.txt<span class=w>
+</span><span class=w></span><span class=c>#      - uses: actions/upload-artifact@v2</span><span class=w>
+</span><span class=w></span><span class=c>#        with:</span><span class=w>
+</span><span class=w></span><span class=c>#          name: kubeadm-${{ env.RELEASE_VERSION }}</span><span class=w>
+</span><span class=w></span><span class=c>#          path: myki</span><span class=w>
 </span><span class=w>
-</span><span class=w></span><span class=c>#     #- name: Copy file</span><span class=w>
-</span><span class=w></span><span class=c>#     #  run: mkdir staging &amp;&amp; cp _output/local/bin/linux/amd64/kubeadm staging</span><span class=w>
-</span><span class=w></span><span class=c>#     #- name: Test</span><span class=w>
-</span><span class=w></span><span class=c>#       #run: go test -v .</span><span class=w>
-</span><span class=w>
-</span></code></pre></div><p><img src="https://oss.1nth.com/images/1nth/kubeadm-ssl-100-01.png?x-oss-process=style/dev" alt=下载此文件>
-然后执行证书更新命令</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>cp -r /etc/kubernetes/pki /etc/kubernetes/pki.origin
+</span></code></pre></div><p><img src="https://oss.1nth.com/images/1nth/kubeadm-ssl-100-01.png?x-oss-process=style/dev" alt=下载此文件></p><h1 id=自己编译>自己编译</h1><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>git reset --hard v1.22.3
+mkdir .github/workflows/
+curl -o .github/workflows/kubeadm.yml https://github.com/21ki/github-action/raw/main/kubeadm-build-99year/kubeadm.yml
+git add .github/workflows/kubeadm.yml
+git commit -am <span class=s2>&#34;kubeadm_build&#34;</span>
+git tag  v1.22.3-patch-1.0 -f
+git push origin v1.22.3-patch-1.0 -f
+</code></pre></div><h1 id=然后执行证书更新命令>然后执行证书更新命令</h1><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>cp -r /etc/kubernetes/pki /etc/kubernetes/pki.origin
 kubeadm init phase kubeconfig all --config initconfig.yaml
 cp -dprf /etc/kubernetes/*.conf /opt/
 kubeadm init phase kubeconfig all --config initconfig.yaml
