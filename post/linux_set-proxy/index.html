@@ -1,0 +1,150 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>linux系统代理以及nodejs git npm pip docker等等 - Myki的博客</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="🐳Myki"><meta name=description content="linux系统代理以及nodejs git npm pip docker等等"><meta name=keywords content="linux,proxy"><meta name=generator content="Hugo 0.74.3 with theme even"><link rel=canonical href=https://www.1nth.com/post/linux_set-proxy/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script><link href=/sass/main.min.b5b9c0f253defc99c13b35448ffb4214367d80b2b1237dfac18a4a76d034c663.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><link rel=stylesheet href=/css/custom.css><meta property="og:title" content="linux系统代理以及nodejs git npm pip docker等等"><meta property="og:description" content="linux系统代理以及nodejs git npm pip docker等等"><meta property="og:type" content="article"><meta property="og:url" content="https://www.1nth.com/post/linux_set-proxy/"><meta property="article:published_time" content="2021-12-22T00:00:00+00:00"><meta property="article:modified_time" content="2021-12-22T00:00:00+00:00"><meta itemprop=name content="linux系统代理以及nodejs git npm pip docker等等"><meta itemprop=description content="linux系统代理以及nodejs git npm pip docker等等"><meta itemprop=datePublished content="2021-12-22T00:00:00+00:00"><meta itemprop=dateModified content="2021-12-22T00:00:00+00:00"><meta itemprop=wordCount content="674"><meta itemprop=keywords content="proxy,"><meta name=twitter:card content="summary"><meta name=twitter:title content="linux系统代理以及nodejs git npm pip docker等等"><meta name=twitter:description content="linux系统代理以及nodejs git npm pip docker等等"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>☸💕🚩</a></div><div class=mobile-navbar-icon><span></span><span></span><span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/categories/><li class=mobile-menu-item>Categories</li></a><a href=/about/><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>☸💕🚩</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/categories/>Categories</a></li><li class=menu-item><a class=menu-item-link href=/about/>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>linux系统代理以及nodejs git npm pip docker等等</h1><div class=post-meta><span class=post-time>2021-12-22</span><div class=post-category><a href=/categories/linux/>linux</a>
+<a href=/categories/proxy/>proxy</a></div><span id=busuanzi_container_page_pv class=more-meta><span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> 次阅读</span></div></header><div class=post-content><h4 id=linux系统代理以及nodejs-git-npm-pip-docker等等>linux系统代理以及nodejs git npm pip docker等等</h4><h3 id=linux代理>linux代理</h3><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell><span class=nb>export</span> <span class=nv>proxy</span><span class=o>=</span><span class=s2>&#34;http://192.168.1.61:7890&#34;</span>
+<span class=nb>export</span> <span class=nv>http_proxy</span><span class=o>=</span><span class=nv>$proxy</span>
+<span class=nb>export</span> <span class=nv>https_proxy</span><span class=o>=</span><span class=nv>$proxy</span>
+<span class=nb>export</span> <span class=nv>ftp_proxy</span><span class=o>=</span><span class=nv>$proxy</span>
+<span class=nb>export</span> <span class=nv>no_proxy</span><span class=o>=</span><span class=s2>&#34;localhost, 127.0.0.1, ::1&#34;</span>
+curl cip.cc
+</code></pre></div><h3 id=yum代理>yum代理</h3><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>vi /etc/yum.conf
+<span class=nv>proxy</span><span class=o>=</span>http://192.168.1.1:80
+</code></pre></div><h3 id=apt代理>apt代理</h3><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>sudo vi /etc/apt/apt.conf
+Acquire::http::Proxy <span class=s2>&#34;socks5://172.xx.xx.xxx:1080&#34;</span><span class=p>;</span>
+Acquire::https::Proxy <span class=s2>&#34;socks5://172.xx.xx.xxx:1080&#34;</span><span class=p>;</span>
+</code></pre></div><h3 id=pip代理>pip代理</h3><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>mkdir -p ~/.config/pip/pip.conf
+tee ~/.config/pip/pip.conf <span class=s>&lt;&lt;-&#39;EOF&#39;
+</span><span class=s>[global]
+</span><span class=s>index-url=http://mirrors.aliyun.com/pypi/simple/
+</span><span class=s>[install]
+</span><span class=s>trusted-host=mirrors.aliyun.com
+</span><span class=s>EOF</span>
+</code></pre></div><h3 id=git代理>git代理</h3><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>git config --global http.proxy <span class=s1>&#39;socks5://192.168.1.111:3213&#39;</span>
+git config --global https.proxy <span class=s1>&#39;socks5://192.168.1.111:3213&#39;</span>
+git config --global --unset http.proxy
+git config --global --unset https.proxy
+git config --global http.proxy http://username:abc@123@proxy.baidu.com:8080
+</code></pre></div><h3 id=解析时会从第一个解析提示123proxyhkhuaweicom找不到此时要对其中的特殊符号进行处理使用百分比编码percent-encoding对特殊字符进行转换转换>解析时会从第一个@解析，提示@123@proxyhk.huawei.com找不到，此时要对其中的特殊符号进行处理，使用百分比编码(Percent-encoding)对特殊字符进行转换，转换。</h3><h3 id=列表如下>列表如下：</h3><div class=highlight><pre class=chroma><code class=language-fallback data-lang=fallback>! --&gt; %21    # --&gt; %23    $ --&gt; %24    &amp; --&gt; %26    &#39; --&gt; %27
+( --&gt; %28    ) --&gt; %29    * --&gt; %2A    + --&gt; %2B    , --&gt; %2C
+/ --&gt; %2F    : --&gt; %3A    ; --&gt; %3B    = --&gt; %3D    ? --&gt; %3F
+@ --&gt; %40    [ --&gt; %5B    ] --&gt; %5D
+</code></pre></div><h3 id=npm代理>npm代理</h3><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>npm config <span class=nb>set</span> proxy http://proxyhost:proxyport 
+npm config <span class=nb>set</span> https-proxy http://proxyhost:proxyport
+
+npm config <span class=nb>set</span> proxy null 
+npm config <span class=nb>set</span> https-proxy null
+<span class=c1># 或者</span>
+npm config delete proxy
+</code></pre></div><h3 id=-go代理go-版本是-113-及以上># go代理(Go 版本是 1.13 及以上)</h3><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>go env -w <span class=nv>GO111MODULE</span><span class=o>=</span>on
+go env -w <span class=nv>GOPROXY</span><span class=o>=</span>https://goproxy.cn,direct
+</code></pre></div><h1 id=gradle代理>gradle代理</h1><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>./gradlew -DsocksProxyHost<span class=o>=</span>127.0.0.1 -DsocksProxyPort<span class=o>=</span><span class=m>1080</span> bootrun
+</code></pre></div><h3 id=mvn代理>mvn代理</h3><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>vi ~/.m2/settings.xml
+
+&lt;settings&gt;
+&lt;proxies&gt;
+        &lt;proxy&gt;
+                &lt;id&gt;ss&lt;/id&gt;
+                &lt;active&gt;false&lt;/active&gt;
+                &lt;protocol&gt;http&lt;/protocol&gt;
+                &lt;host&gt;192.168.85.1&lt;/host&gt;
+                &lt;port&gt;1080&lt;/port&gt;
+                &lt;nonProxyHosts&gt;127.0.0.1&lt;/nonProxyHosts&gt;
+        &lt;/proxy&gt;
+&lt;/proxies&gt;
+
+&lt;mirrors&gt;
+&lt;mirror&gt;
+  &lt;id&gt;alimaven&lt;/id&gt;
+  &lt;name&gt;aliyun maven&lt;/name&gt;
+  &lt;url&gt;http://maven.aliyun.com/nexus/content/groups/public/&lt;/url&gt;<span class=p>;</span>
+  &lt;mirrorOf&gt;central&lt;/mirrorOf&gt;
+&lt;/mirror&gt;
+&lt;/mirrors&gt;
+
+&lt;/settings&gt;
+</code></pre></div><h3 id=docker代理着重说明>docker代理(着重说明)</h3><h2 id=为容器配置代理全局配置>为容器配置代理(全局配置)</h2><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># 如果有的话，先备份一下</span>
+cp ~/.docker/config.json ~/.docker/config.json.bk
+
+<span class=c1># 修改内容如下</span>
+cat ~/.docker/config.json
+<span class=o>{</span>
+        <span class=s2>&#34;auths&#34;</span>: <span class=o>{}</span>,
+        <span class=s2>&#34;HttpHeaders&#34;</span>: <span class=o>{</span>
+                <span class=s2>&#34;User-Agent&#34;</span>: <span class=s2>&#34;Docker-Client/19.03.2 (linux)&#34;</span>
+        <span class=o>}</span>,
+
+		<span class=s2>&#34;proxies&#34;</span>:
+ 		<span class=o>{</span>
+   			<span class=s2>&#34;default&#34;</span>:
+   			<span class=o>{</span>
+     			<span class=s2>&#34;httpProxy&#34;</span>: <span class=s2>&#34;http://173.39.112.117:80&#34;</span>,
+     			<span class=s2>&#34;httpsProxy&#34;</span>: <span class=s2>&#34;http://173.39.112.117:80&#34;</span>
+   			<span class=o>}</span>
+ 		<span class=o>}</span>
+<span class=o>}</span>
+</code></pre></div><p>为了确保生效，重启下 docker :systemctl restart docker</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>curl cip.cc
+</code></pre></div><h3 id=局部修改>局部修改</h3><p>方法1-在 docker run 命令添加参数</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>docker run --privileged<span class=o>=</span><span class=nb>true</span> -ti <span class=se>\
+</span><span class=se></span>-v /sys/fs/cgroup:/sys/fs/cgroup:ro <span class=se>\
+</span><span class=se></span>--env <span class=nv>HTTP_PROXY</span><span class=o>=</span><span class=s2>&#34;http://173.39.112.117:80 \
+</span><span class=s2>--env HTTPS_PROXY=&#34;</span>http://173.39.112.117:80 <span class=se>\
+</span><span class=se></span>--env <span class=nv>http_proxy</span><span class=o>=</span><span class=s2>&#34;http://173.39.112.117:80 \
+</span><span class=s2>--env https_proxy=&#34;</span>http://173.39.112.117:80 <span class=se>\
+</span><span class=se></span>-p 80:80 -d nginx
+</code></pre></div><p>方法2-在 Docker-file 添加</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>FROM nginx
+
+ENV <span class=nv>MY_PROXY_URL</span><span class=o>=</span><span class=s2>&#34;http://173.39.112.117:80&#34;</span>
+ENV <span class=nv>HTTP_PROXY</span><span class=o>=</span><span class=nv>$MY_PROXY_URL</span> <span class=se>\
+</span><span class=se></span>    <span class=nv>HTTPS_PROXY</span><span class=o>=</span><span class=nv>$MY_PROXY_URL</span> <span class=se>\
+</span><span class=se></span>    <span class=nv>FTP_PROXY</span><span class=o>=</span><span class=nv>$MY_PROXY_URL</span> <span class=se>\
+</span><span class=se></span>    <span class=nv>http_proxy</span><span class=o>=</span><span class=nv>$MY_PROXY_URL</span> <span class=se>\
+</span><span class=se></span>    <span class=nv>https_proxy</span><span class=o>=</span><span class=nv>$MY_PROXY_URL</span> <span class=se>\
+</span><span class=se></span>    <span class=nv>ftp_proxy</span><span class=o>=</span><span class=nv>$MY_PROXY_URL</span>
+
+
+RUN yum -y install httpd<span class=p>;</span> yum clean all<span class=p>;</span> systemctl <span class=nb>enable</span> httpd.service
+
+EXPOSE <span class=m>80</span>
+
+CMD <span class=o>[</span><span class=s2>&#34;/usr/sbin/init&#34;</span><span class=o>]</span>
+</code></pre></div><h3 id=为-docker-daemon-添加代理>为 Docker Daemon 添加代理#</h3><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># STEP1-创建文件夹</span>
+<span class=o>[</span>root@localhost home<span class=o>]</span><span class=c1># sudo mkdir -p /etc/systemd/system/docker.service.d</span>
+
+<span class=c1># STEP2-创建代理文件 http 和 https</span>
+<span class=o>[</span>root@localhost home<span class=o>]</span><span class=c1># cat /etc/systemd/system/docker.service.d/http-proxy.conf</span>
+<span class=o>[</span>Service<span class=o>]</span>
+<span class=nv>Environment</span><span class=o>=</span><span class=s2>&#34;HTTP_PROXY=http://proxy.esl.cisco.com:80/&#34;</span>
+
+<span class=o>[</span>root@localhost home<span class=o>]</span><span class=c1># cat /etc/systemd/system/docker.service.d/https-proxy.conf</span>
+<span class=o>[</span>Service<span class=o>]</span>
+<span class=nv>Environment</span><span class=o>=</span><span class=s2>&#34;HTTPS_PROXY=http://proxy.esl.cisco.com:80/&#34;</span>
+
+<span class=c1># 如果希望访问某些 Docker registries 不是用代理，可以在上面的配置文件后追加</span>
+<span class=o>[</span>Service<span class=o>]</span>    
+<span class=nv>Environment</span><span class=o>=</span><span class=s2>&#34;HTTP_PROXY=http://proxy.example.com:80/&#34;</span> <span class=s2>&#34;NO_PROXY=localhost,127.0.0.1,docker-registry.example.com,.corp&#34;</span>
+
+<span class=c1># STEP3-刷新变更</span>
+<span class=o>[</span>root@localhost home<span class=o>]</span><span class=c1># sudo systemctl daemon-reload</span>
+
+<span class=c1># STEP4-重启 Docker</span>
+<span class=o>[</span>root@localhost home<span class=o>]</span><span class=c1># sudo systemctl restart docker</span>
+
+<span class=c1># STEP5-验证代理是否生效</span>
+<span class=o>[</span>root@localhost home<span class=o>]</span><span class=c1># systemctl show --property=Environment docker</span>
+<span class=nv>Environment</span><span class=o>=</span><span class=nv>HTTP_PROXY</span><span class=o>=</span>http://proxy.esl.cisco.com/ <span class=nv>HTTPS_PROXY</span><span class=o>=</span>http://proxy.esl.cisco.com:80/
+</code></pre></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+<span class=item-content>🐳Myki</span></p><p class=copyright-item><span class=item-title>上次更新</span>
+<span class=item-content>2021-12-22</span></p></div><div class=post-reward><input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label><div class=qr-code><label class=qr-code-image for=reward><img class=image src=https://oss.1nth.com/images/1nth/wechat.png>
+<span>微信打赏</span></label>
+<label class=qr-code-image for=reward><img class=image src=https://oss.1nth.com/images/1nth/alipay.png>
+<span>支付宝打赏</span></label></div></div><footer class=post-footer><div class=post-tags><a href=/tags/proxy/>proxy</a></div><nav class=post-nav><a class=next href=/post/ddns-update/><span class="next-text nav-default">阿里云ddns更新cloudflare ddns更新</span>
+<span class="next-text nav-mobile">下一篇</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><div class="w3-panel w3-border w3-light-grey w3-round-large"><i class="fa fa-commenting w3-xxxlarge"></i><br><p class=w3-xlarge></p></div><script data-isso=https://isso.1nth.com/ data-isso-lang=zh src=https://isso.1nth.com/js/embed.min.js></script><section id=isso-thread></section></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:21kixc@gmail.com class="iconfont icon-email" title=email></a><a href=https://github.com/21ki class="iconfont icon-github" title=github></a><a href=http://localhost:1313 class="iconfont icon-weibo" title=weibo></a><a href=https://www.1nth.com/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><div class=busuanzi-footer><span id=busuanzi_container_site_pv>本站总访问量 <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> 次</span>
+<span class=division>|</span>
+<span id=busuanzi_container_site_uv>本站总访客数 <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> 人</span></div><span class=copyright-year>&copy;
+2018 -
+2021<span class=heart><i class="iconfont icon-heart"></i></span><span>🐳Myki</span>
+<a href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referra"><img src=https://oss.1nth.com/images/1nth/%E5%8F%88%E6%8B%8D%E4%BA%91_logo5.png align=absmiddle width=59px height=30px></a>
+<span>提供加速服务</span><br><a href=http://beian.miit.gov.cn><img src=https://oss.1nth.com/images/1nth/svg/icp.svg alt=image></a>
+<a class=hugo href=https://oss.1nth.com/images/1nth/svg/hugo.svg data-fancybox=gallery data-caption><img src=https://oss.1nth.com/images/1nth/svg/hugo.svg alt=image></a>
+<a class=even href=https://oss.1nth.com/images/1nth/svg/even.svg data-fancybox=gallery data-caption><img src=https://oss.1nth.com/images/1nth/svg/even.svg alt=image></a></br></span></div></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js integrity=sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP crossorigin=anonymous></script><link rel=stylesheet href=https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css integrity=sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF crossorigin=anonymous><script type=text/javascript src=/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js></script><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','UA-154483127-1','auto');ga('set','anonymizeIp',true);ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script><script id=baidu_analytics>var _hmt=_hmt||[];(function(){if(window.location.hostname==='localhost')return;var hm=document.createElement("script");hm.async=true;hm.src="https://hm.baidu.com/hm.js?9f5f711a6a3e2fd392b4b02d93529765";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s);})();</script><script id=baidu_push>(function(){if(window.location.hostname==='localhost')return;var bp=document.createElement('script');bp.async=true;var curProtocol=window.location.protocol.split(':')[0];if(curProtocol==='https'){bp.src='https://zz.bdstatic.com/linksubmit/push.js';}
+else{bp.src='http://push.zhanzhang.baidu.com/push.js';}
+var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(bp,s);})();</script><script src=/js/custom.js></script></body></html>
