@@ -83,10 +83,10 @@ cat ~/.docker/config.json
 </code></pre></div><p>为了确保生效，重启下 docker :systemctl restart docker</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>curl cip.cc
 </code></pre></div><h3 id=局部修改>局部修改</h3><p>方法1-在 docker run 命令添加参数</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>docker run --privileged<span class=o>=</span><span class=nb>true</span> -ti <span class=se>\
 </span><span class=se></span>-v /sys/fs/cgroup:/sys/fs/cgroup:ro <span class=se>\
-</span><span class=se></span>--env <span class=nv>HTTP_PROXY</span><span class=o>=</span><span class=s2>&#34;http://173.39.112.117:80 \
-</span><span class=s2>--env HTTPS_PROXY=&#34;</span>http://173.39.112.117:80 <span class=se>\
-</span><span class=se></span>--env <span class=nv>http_proxy</span><span class=o>=</span><span class=s2>&#34;http://173.39.112.117:80 \
-</span><span class=s2>--env https_proxy=&#34;</span>http://173.39.112.117:80 <span class=se>\
+</span><span class=se></span>--env <span class=nv>HTTP_PROXY</span><span class=o>=</span><span class=s2>&#34;http://173.39.112.117:80&#34;</span> <span class=se>\
+</span><span class=se></span>--env <span class=nv>HTTPS_PROXY</span><span class=o>=</span><span class=s2>&#34;http://173.39.112.117:80&#34;</span> <span class=se>\
+</span><span class=se></span>--env <span class=nv>http_proxy</span><span class=o>=</span><span class=s2>&#34;http://173.39.112.117:80&#34;</span> <span class=se>\
+</span><span class=se></span>--env <span class=nv>https_proxy</span><span class=o>=</span><span class=s2>&#34;http://173.39.112.117:80&#34;</span> <span class=se>\
 </span><span class=se></span>-p 80:80 -d nginx
 </code></pre></div><p>方法2-在 Docker-file 添加</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>FROM nginx
 
