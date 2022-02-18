@@ -1,0 +1,140 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>kube-event通知 - Myki的博客</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="🐳Myki"><meta name=description content="k8s事件通知"><meta name=keywords content="kubernetes,notify"><meta name=generator content="Hugo 0.74.3 with theme even"><link rel=canonical href=https://www.1nth.com/post/kube-event/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script><link href=/sass/main.min.b5b9c0f253defc99c13b35448ffb4214367d80b2b1237dfac18a4a76d034c663.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><link rel=stylesheet href=/css/custom.css><meta property="og:title" content="kube-event通知"><meta property="og:description" content="k8s事件通知"><meta property="og:type" content="article"><meta property="og:url" content="https://www.1nth.com/post/kube-event/"><meta property="article:published_time" content="2022-02-18T00:00:00+00:00"><meta property="article:modified_time" content="2022-02-18T00:00:00+00:00"><meta itemprop=name content="kube-event通知"><meta itemprop=description content="k8s事件通知"><meta itemprop=datePublished content="2022-02-18T00:00:00+00:00"><meta itemprop=dateModified content="2022-02-18T00:00:00+00:00"><meta itemprop=wordCount content="601"><meta itemprop=keywords content="kubernetes,"><meta name=twitter:card content="summary"><meta name=twitter:title content="kube-event通知"><meta name=twitter:description content="k8s事件通知"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>☸💕🚩</a></div><div class=mobile-navbar-icon><span></span><span></span><span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/categories/><li class=mobile-menu-item>Categories</li></a><a href=/about/><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>☸💕🚩</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/categories/>Categories</a></li><li class=menu-item><a class=menu-item-link href=/about/>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>kube-event通知</h1><div class=post-meta><span class=post-time>2022-02-18</span><div class=post-category><a href=/categories/kubernetes/>kubernetes</a>
+<a href=/categories/notify/>notify</a></div><span id=busuanzi_container_page_pv class=more-meta><span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> 次阅读</span></div></header><div class=post-content><p>k8s事件通知</p><h2 id=起因>起因</h2><p>公司一个项目(pod)，无报错日志，健康检查也是可以过的。但是却被携程下线了。自己手动调用项目也是正常
+于是开发看堆栈，最后发现问题是线上打印日志打印到线下的ELK,线下的ELK被日志写满,但是报告是写的是ELK
+有问题却没有及时发现，日了藏獒了，所以决定加一个事件事件，其实很不想加，因为如果加上去一堆通知，
+就好某开发写的java只要一查询一个订单列表mysql的cpu%90以上，然后每次短信通知几十条，关键也不去处理。您说
+要是关了的话又怕到时候mysql跑死通知不到，不关又好烦。最后还是加上事件通知，我询问产品经理被下线的时候
+能否调用他们接口通知，被告知没有这样的接口（我觉得吧没有这样的接口显然不可能）</p><h2 id=安装kube-event>安装kube-event</h2><p><a href=https://github.com/AliyunContainerService/kube-eventer>github仓库</a></p><div class=highlight><pre class=chroma><code class=language-yaml data-lang=yaml><span class=k>apiVersion</span><span class=p>:</span><span class=w> </span>apps/v1<span class=w>
+</span><span class=w></span><span class=k>kind</span><span class=p>:</span><span class=w> </span>Deployment<span class=w>
+</span><span class=w></span><span class=k>metadata</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>labels</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span><span class=k>name</span><span class=p>:</span><span class=w> </span>kube-eventer<span class=w>
+</span><span class=w>  </span><span class=k>name</span><span class=p>:</span><span class=w> </span>kube-eventer<span class=w>
+</span><span class=w>  </span><span class=k>namespace</span><span class=p>:</span><span class=w> </span>kube-system<span class=w>
+</span><span class=w></span><span class=k>spec</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>replicas</span><span class=p>:</span><span class=w> </span><span class=m>1</span><span class=w>
+</span><span class=w>  </span><span class=k>selector</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span><span class=k>matchLabels</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span><span class=k>app</span><span class=p>:</span><span class=w> </span>kube-eventer<span class=w>
+</span><span class=w>  </span><span class=k>template</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span><span class=k>metadata</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span><span class=k>labels</span><span class=p>:</span><span class=w>
+</span><span class=w>        </span><span class=k>app</span><span class=p>:</span><span class=w> </span>kube-eventer<span class=w>
+</span><span class=w>      </span><span class=k>annotations</span><span class=p>:</span><span class=w>
+</span><span class=w>        </span><span class=k>scheduler.alpha.kubernetes.io/critical-pod</span><span class=p>:</span><span class=w> </span><span class=s1>&#39;&#39;</span><span class=w>
+</span><span class=w>    </span><span class=k>spec</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span><span class=k>dnsPolicy</span><span class=p>:</span><span class=w> </span>ClusterFirstWithHostNet<span class=w>
+</span><span class=w>      </span><span class=k>serviceAccount</span><span class=p>:</span><span class=w> </span>kube-eventer<span class=w>
+</span><span class=w>      </span><span class=k>containers</span><span class=p>:</span><span class=w>
+</span><span class=w>        </span>- <span class=k>image</span><span class=p>:</span><span class=w> </span>registry.aliyuncs.com/acs/kube-eventer-amd64<span class=p>:</span>v1<span class=m>.2.0</span>-484d9cd-aliyun<span class=w>
+</span><span class=w>          </span><span class=k>name</span><span class=p>:</span><span class=w> </span>kube-eventer<span class=w>
+</span><span class=w>          </span><span class=k>command</span><span class=p>:</span><span class=w>
+</span><span class=w>            </span>- <span class=s2>&#34;/kube-eventer&#34;</span><span class=w>
+</span><span class=w>            </span>- <span class=s2>&#34;--source=kubernetes:https://kubernetes.default&#34;</span><span class=w>
+</span><span class=w>            </span><span class=c>## .e.g,dingtalk sink demo</span><span class=w>
+</span><span class=w>            </span>- --sink=elasticsearch<span class=p>:</span>http<span class=p>:</span>//<span class=m>192.168.1.1</span><span class=p>:</span><span class=m>9200</span><span class=p>?</span>sniff=<span class=kc>false</span><span class=cp>&amp;ver=6</span><span class=w>
+</span><span class=w>            </span>- --sink=dingtalk<span class=p>:</span>https<span class=p>:</span>//oapi.dingtalk.com/robot/send<span class=p>?</span>access_token=${TOKEN}<span class=cp>&amp;label=${通知标题}&amp;level=Warning</span><span class=w>
+</span><span class=w>            </span>- --sink=webhook<span class=p>:</span>https<span class=p>:</span>//hooks.slack.com/services/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<span class=p>?</span><span class=cp>&amp;level=Warning&amp;kinds=Pod&amp;header=Content-Type=application/json&amp;custom_body_configmap=custom-body&amp;custom_body_configmap_namespace=kube-system&amp;method=POST</span><span class=w>
+</span><span class=w>            </span>- --sink=wechat<span class=p>:</span>https<span class=p>:</span>//wechat<span class=p>?</span>corp_id=wx56adfb85d5e007e6<span class=cp>&amp;corp_secret=${SECRET}&amp;agent_id=1000004&amp;to_user=&amp;label=mvm-aliyun-k8s&amp;level=Normal</span><span class=w>
+</span><span class=w>          </span><span class=k>env</span><span class=p>:</span><span class=w>
+</span><span class=w>            </span><span class=c># If TZ is assigned, set the TZ value as the time zone</span><span class=w>
+</span><span class=w>            </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>TZ<span class=w>
+</span><span class=w>              </span><span class=k>value</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;Asia/Shanghai&#34;</span><span class=w>
+</span><span class=w>          </span><span class=k>volumeMounts</span><span class=p>:</span><span class=w>
+</span><span class=w>            </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>localtime<span class=w>
+</span><span class=w>              </span><span class=k>mountPath</span><span class=p>:</span><span class=w> </span>/etc/localtime<span class=w>
+</span><span class=w>              </span><span class=k>readOnly</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>
+</span><span class=w>            </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>zoneinfo<span class=w>
+</span><span class=w>              </span><span class=k>mountPath</span><span class=p>:</span><span class=w> </span>/usr/share/zoneinfo<span class=w>
+</span><span class=w>              </span><span class=k>readOnly</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>
+</span><span class=w>          </span><span class=k>resources</span><span class=p>:</span><span class=w>
+</span><span class=w>            </span><span class=k>requests</span><span class=p>:</span><span class=w>
+</span><span class=w>              </span><span class=k>cpu</span><span class=p>:</span><span class=w> </span>100m<span class=w>
+</span><span class=w>              </span><span class=k>memory</span><span class=p>:</span><span class=w> </span>100Mi<span class=w>
+</span><span class=w>            </span><span class=k>limits</span><span class=p>:</span><span class=w>
+</span><span class=w>              </span><span class=k>cpu</span><span class=p>:</span><span class=w> </span>500m<span class=w>
+</span><span class=w>              </span><span class=k>memory</span><span class=p>:</span><span class=w> </span>250Mi<span class=w>
+</span><span class=w>      </span><span class=k>volumes</span><span class=p>:</span><span class=w>
+</span><span class=w>        </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>localtime<span class=w>
+</span><span class=w>          </span><span class=k>hostPath</span><span class=p>:</span><span class=w>
+</span><span class=w>            </span><span class=k>path</span><span class=p>:</span><span class=w> </span>/etc/localtime<span class=w>
+</span><span class=w>        </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>zoneinfo<span class=w>
+</span><span class=w>          </span><span class=k>hostPath</span><span class=p>:</span><span class=w>
+</span><span class=w>            </span><span class=k>path</span><span class=p>:</span><span class=w> </span>/usr/share/zoneinfo<span class=w>
+</span><span class=w></span>---<span class=w>
+</span><span class=w></span><span class=k>apiVersion</span><span class=p>:</span><span class=w> </span>rbac.authorization.k8s.io/v1<span class=w>
+</span><span class=w></span><span class=k>kind</span><span class=p>:</span><span class=w> </span>ClusterRole<span class=w>
+</span><span class=w></span><span class=k>metadata</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>name</span><span class=p>:</span><span class=w> </span>kube-eventer<span class=w>
+</span><span class=w></span><span class=k>rules</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span>- <span class=k>apiGroups</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span>- <span class=s2>&#34;&#34;</span><span class=w>
+</span><span class=w>    </span><span class=k>resources</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span>- configmaps<span class=w>
+</span><span class=w>      </span>- events<span class=w>
+</span><span class=w>    </span><span class=k>verbs</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span>- get<span class=w>
+</span><span class=w>      </span>- list<span class=w>
+</span><span class=w>      </span>- watch<span class=w>
+</span><span class=w></span>---<span class=w>
+</span><span class=w></span><span class=k>apiVersion</span><span class=p>:</span><span class=w> </span>rbac.authorization.k8s.io/v1<span class=w>
+</span><span class=w></span><span class=k>kind</span><span class=p>:</span><span class=w> </span>ClusterRoleBinding<span class=w>
+</span><span class=w></span><span class=k>metadata</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>name</span><span class=p>:</span><span class=w> </span>kube-eventer<span class=w>
+</span><span class=w></span><span class=k>roleRef</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>apiGroup</span><span class=p>:</span><span class=w> </span>rbac.authorization.k8s.io<span class=w>
+</span><span class=w>  </span><span class=k>kind</span><span class=p>:</span><span class=w> </span>ClusterRole<span class=w>
+</span><span class=w>  </span><span class=k>name</span><span class=p>:</span><span class=w> </span>kube-eventer<span class=w>
+</span><span class=w></span><span class=k>subjects</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span>- <span class=k>kind</span><span class=p>:</span><span class=w> </span>ServiceAccount<span class=w>
+</span><span class=w>    </span><span class=k>name</span><span class=p>:</span><span class=w> </span>kube-eventer<span class=w>
+</span><span class=w>    </span><span class=k>namespace</span><span class=p>:</span><span class=w> </span>kube-system<span class=w>
+</span><span class=w></span>---<span class=w>
+</span><span class=w></span><span class=k>apiVersion</span><span class=p>:</span><span class=w> </span>v1<span class=w>
+</span><span class=w></span><span class=k>kind</span><span class=p>:</span><span class=w> </span>ServiceAccount<span class=w>
+</span><span class=w></span><span class=k>metadata</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>name</span><span class=p>:</span><span class=w> </span>kube-eventer<span class=w>
+</span><span class=w>  </span><span class=k>namespace</span><span class=p>:</span><span class=w> </span>kube-system<span class=w>
+</span><span class=w></span>---<span class=w>
+</span><span class=w></span><span class=k>apiVersion</span><span class=p>:</span><span class=w> </span>v1<span class=w>
+</span><span class=w></span><span class=k>data</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>content</span><span class=p>:</span><span class=w> </span><span class=s1>&#39;{
+</span><span class=s1>    &#34;channel&#34;: &#34;testing&#34;,
+</span><span class=s1>    &#34;icon_emoji&#34;: &#34;:k8s:&#34;,
+</span><span class=s1>    &#34;username&#34;: &#34;eventer&#34;,
+</span><span class=s1>    &#34;attachments&#34;: [
+</span><span class=s1>        {
+</span><span class=s1>            &#34;color&#34;: &#34;warning&#34;,
+</span><span class=s1>            &#34;text&#34;: &#34;*Type*: `{{.Type}}`\n*Namespace*: `{{.InvolvedObject.Namespace}}`\n*Object*: `{{ .InvolvedObject.Kind }}/{{ .InvolvedObject.Name }}`\n*Reason*: `{{ .Reason }}`\n*Meaasge*: `{{ .Message }}`\n*Time*: `{{ .LastTimestamp }}`&#34;
+</span><span class=s1>        }
+</span><span class=s1>    ]
+</span><span class=s1>  }&#39;</span><span class=w>
+</span><span class=w></span><span class=k>kind</span><span class=p>:</span><span class=w> </span>ConfigMap<span class=w>
+</span><span class=w></span><span class=k>metadata</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>name</span><span class=p>:</span><span class=w> </span>custom-body<span class=w>
+</span><span class=w>  </span><span class=k>namespace</span><span class=p>:</span><span class=w> </span>kube-system<span class=w>
+</span></code></pre></div><h2 id=标注>标注</h2><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>kubectl apply -f kube-event.yaml
+<span class=c1># 输出到ES</span>
+--sink<span class=o>=</span>elasticsearch:http://192.168.1.73:9200?sniff<span class=o>=</span>false<span class=p>&amp;</span><span class=nv>ver</span><span class=o>=</span><span class=m>6</span>
+<span class=c1># 通知到微信</span>
+--sink<span class=o>=</span>wechat:https://wechat?corp_id<span class=o>=</span><span class=si>${</span><span class=nv>id</span><span class=si>}</span><span class=p>&amp;</span><span class=nv>corp_secret</span><span class=o>=</span><span class=si>${</span><span class=nv>SECRET</span><span class=si>}</span><span class=p>&amp;</span><span class=nv>agent_id</span><span class=o>=</span>1000004<span class=p>&amp;</span><span class=nv>to_user</span><span class=o>=</span><span class=p>&amp;</span><span class=nv>label</span><span class=o>=</span><span class=p>&amp;</span><span class=nv>level</span><span class=o>=</span>Normal
+</code></pre></div><p>ES时间图
+<img src="https://oss.1nth.com/images/1nth/kube-event-01.png?x-oss-process=style/dev" alt=kube-event-es></p></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+<span class=item-content>🐳Myki</span></p><p class=copyright-item><span class=item-title>上次更新</span>
+<span class=item-content>2022-02-18</span></p></div><div class=post-reward><input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label><div class=qr-code><label class=qr-code-image for=reward><img class=image src=https://oss.1nth.com/images/1nth/wechat.png>
+<span>微信打赏</span></label>
+<label class=qr-code-image for=reward><img class=image src=https://oss.1nth.com/images/1nth/alipay.png>
+<span>支付宝打赏</span></label></div></div><footer class=post-footer><div class=post-tags><a href=/tags/kubernetes/>kubernetes</a></div><nav class=post-nav><a class=next href=/post/console-color-print/><span class="next-text nav-default">Go和Python带颜色打印内容到终端</span>
+<span class="next-text nav-mobile">下一篇</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><div class="w3-panel w3-border w3-light-grey w3-round-large"><i class="fa fa-commenting w3-xxxlarge"></i><br><p class=w3-xlarge></p></div><script data-isso=https://isso.1nth.com/ data-isso-lang=zh src=https://isso.1nth.com/js/embed.min.js></script><section id=isso-thread></section></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:21kixc@gmail.com class="iconfont icon-email" title=email></a><a href=https://github.com/21ki class="iconfont icon-github" title=github></a><a href=http://localhost:1313 class="iconfont icon-weibo" title=weibo></a><a href=https://www.1nth.com/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><div class=busuanzi-footer><span id=busuanzi_container_site_pv>本站总访问量 <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> 次</span>
+<span class=division>|</span>
+<span id=busuanzi_container_site_uv>本站总访客数 <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> 人</span></div><span class=copyright-year>&copy;
+2018 -
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>🐳Myki</span>
+<a href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referra"><img src=https://oss.1nth.com/images/1nth/%E5%8F%88%E6%8B%8D%E4%BA%91_logo5.png align=absmiddle width=59px height=30px></a>
+<span>提供加速服务</span><br><a href=http://beian.miit.gov.cn><img src=https://oss.1nth.com/images/1nth/svg/icp.svg alt=image></a>
+<a class=hugo href=https://oss.1nth.com/images/1nth/svg/hugo.svg data-fancybox=gallery data-caption><img src=https://oss.1nth.com/images/1nth/svg/hugo.svg alt=image></a>
+<a class=even href=https://oss.1nth.com/images/1nth/svg/even.svg data-fancybox=gallery data-caption><img src=https://oss.1nth.com/images/1nth/svg/even.svg alt=image></a></br></span></div></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js integrity=sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP crossorigin=anonymous></script><link rel=stylesheet href=https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css integrity=sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF crossorigin=anonymous><script type=text/javascript src=/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js></script><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','UA-154483127-1','auto');ga('set','anonymizeIp',true);ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script><script id=baidu_analytics>var _hmt=_hmt||[];(function(){if(window.location.hostname==='localhost')return;var hm=document.createElement("script");hm.async=true;hm.src="https://hm.baidu.com/hm.js?9f5f711a6a3e2fd392b4b02d93529765";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s);})();</script><script id=baidu_push>(function(){if(window.location.hostname==='localhost')return;var bp=document.createElement('script');bp.async=true;var curProtocol=window.location.protocol.split(':')[0];if(curProtocol==='https'){bp.src='https://zz.bdstatic.com/linksubmit/push.js';}
+else{bp.src='http://push.zhanzhang.baidu.com/push.js';}
+var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(bp,s);})();</script><script src=/js/custom.js></script></body></html>
