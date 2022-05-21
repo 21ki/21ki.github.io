@@ -1,0 +1,166 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>Caddy2替换nginx以及使用 - Myki的博客</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="🐳Myki"><meta name=description content><meta name=keywords content="caddy,linux"><meta name=generator content="Hugo 0.74.3 with theme even"><link rel=canonical href=https://www.1nth.com/post/caddy/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script><link href=/sass/main.min.b5b9c0f253defc99c13b35448ffb4214367d80b2b1237dfac18a4a76d034c663.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><link rel=stylesheet href=/css/custom.css><meta property="og:title" content="Caddy2替换nginx以及使用"><meta property="og:description" content><meta property="og:type" content="article"><meta property="og:url" content="https://www.1nth.com/post/caddy/"><meta property="article:published_time" content="2022-05-01T00:00:00+00:00"><meta property="article:modified_time" content="2022-05-01T00:00:00+00:00"><meta itemprop=name content="Caddy2替换nginx以及使用"><meta itemprop=description content><meta itemprop=datePublished content="2022-05-01T00:00:00+00:00"><meta itemprop=dateModified content="2022-05-01T00:00:00+00:00"><meta itemprop=wordCount content="819"><meta itemprop=keywords content="caddy,"><meta name=twitter:card content="summary"><meta name=twitter:title content="Caddy2替换nginx以及使用"><meta name=twitter:description content><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>☸💕🚩</a></div><div class=mobile-navbar-icon><span></span><span></span><span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/categories/><li class=mobile-menu-item>Categories</li></a><a href=/about/><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>☸💕🚩</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/categories/>Categories</a></li><li class=menu-item><a class=menu-item-link href=/about/>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>Caddy2替换nginx以及使用</h1><div class=post-meta><span class=post-time>2022-05-01</span><div class=post-category><a href=/categories/caddy/>caddy</a>
+<a href=/categories/linux/>linux</a></div><span id=busuanzi_container_page_pv class=more-meta><span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> 次阅读</span></div></header><div class=post-content><p><img src="https://oss.1nth.com/images/1nth/caddy.png?x-oss-process=style/dev" alt=ingress_helm3_install></p><h2 id=安装篇centos7httpscaddyservercomdocsinstall><a href=https://caddyserver.com/docs/install>安装篇(centos7)</a></h2><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>sudo yum install yum-plugin-copr -y
+sudo yum copr <span class=nb>enable</span> @caddy/caddy -y
+sudo yum install caddy -y
+</code></pre></div><h2 id=caddy是因为插件得扩展扩展插件好用得原因不像nginx重新下载源码编译那么麻烦>caddy是因为插件得扩展,扩展插件好用得原因不像nginx重新下载源码编译那么麻烦</h2><p>直接访问<a href=https://caddyserver.com/download>https://caddyserver.com/download</a> 然后鼠标可以选中要用得插件直接下载二进制替换即可</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>cp <span class=k>$(</span>which caddy<span class=k>)</span> <span class=k>$(</span>which caddy<span class=k>)</span>_<span class=k>$(</span>caddy_v2.5.0 version <span class=p>|</span>awk <span class=s1>&#39;{print$1}&#39;</span><span class=k>)</span>
+mv caddy_v2.5.0-rc.1 <span class=k>$(</span>which caddy<span class=k>)</span>
+</code></pre></div><h1 id=caddy常用命令>caddy常用命令</h1><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># 检查配置</span>
+caddy validate
+<span class=c1># 重载配置</span>
+caddy reload
+<span class=c1># 停止</span>
+caddy stop
+<span class=c1># 查看模块</span>
+caddy list-modules
+<span class=c1># 生成一条命令</span>
+caddy adapt --config caddy.yaml --adapter yaml
+<span class=c1># 验证 Caddyfile 有效性</span>
+caddy adapt --config ./Caddyfile --validate
+<span class=c1># 格式化配置</span>
+caddy fmt
+caddy fmt -overwrite Caddyfile
+<span class=c1># 启动测试</span>
+caddy run -config /etc/caddy/Caddyfile
+</code></pre></div><h2 id=caddy配置列举一些常用得demo-配置路径-etccaddycaddyfile>caddy配置(列举一些常用得demo) 配置路径 /etc/caddy/Caddyfile</h2><h3 id=1做个获取公网ip得api>1.做个获取公网ip得api</h3><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>
+http://ip.1nth.com:80 https://ip.1nth.com <span class=o>{</span>
+	respond / <span class=m>200</span> <span class=o>{</span>
+		body <span class=s2>&#34;{remote_host}
+</span><span class=s2>&#34;</span>
+	<span class=o>}</span>
+<span class=o>}</span>
+
+</code></pre></div><h3 id=2使用阿里云ack自动获取证书>2.使用阿里云ack自动获取证书</h3><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>*.1nth.com <span class=o>{</span>
+	tls <span class=o>{</span>
+		dns alidns <span class=o>{</span>
+			access_key_id <span class=s2>&#34;access_key_id&#34;</span>
+			access_key_secret <span class=s2>&#34;access_key_secret&#34;</span>
+		<span class=o>}</span>
+	<span class=o>}</span>
+	import LOG <span class=s2>&#34;/var/log/caddy/caddy.log&#34;</span>
+<span class=o>}</span>
+
+</code></pre></div><h3 id=3静态文件>3.静态文件</h3><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>:80 <span class=o>{</span>
+        root * /var/www/html
+        file_server
+<span class=o>}</span>
+</code></pre></div><h3 id=4目录列表服务说白了就是文件服务器>4.目录列表服务(说白了就是文件服务器)</h3><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>:88 <span class=o>{</span>
+        root * /opt
+        file_server browse
+<span class=o>}</span>
+
+
+:88 <span class=o>{</span>
+	route /files/* <span class=o>{</span>
+		<span class=c1>#redir /myki /</span>
+                uri strip_prefix /files
+		root * /opt
+		file_server browse
+	<span class=o>}</span>
+<span class=o>}</span>
+</code></pre></div><h3 id=5同时映射多个地址>5.同时映射多个地址</h3><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>localhost:8888,
+psvmc.cn,
+www.psvmc.cn <span class=o>{</span>
+	root * /data/myblog
+	tls /etc/caddy/cert/psvmc.pem /etc/caddy/cert/psvmc.key
+	file_server
+<span class=o>}</span>
+</code></pre></div><h3 id=6重定向http跳转https>6.重定向(http跳转https)</h3><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>www.1nth.com <span class=o>{</span>
+    redir https://1nth.com<span class=o>{</span>uri<span class=o>}</span> permanent
+<span class=o>}</span>
+</code></pre></div><h3 id=7负载均衡-反向代理>7.负载均衡 反向代理</h3><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>www.1nth.com <span class=o>{</span>
+	reverse_proxy localhost:9000 localhost:9001 <span class=o>{</span>
+		lb_policy first
+	<span class=o>}</span>
+<span class=o>}</span>
+</code></pre></div><h3 id=8websocket反向代理>8.Websocket反向代理</h3><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>ws.1nth.com <span class=o>{</span>
+  <span class=c1>## HTTP 代理配置</span>
+  <span class=c1>## 此时访问 ws.1nth.com，实际访问的是 127.0.0.1:8080/app/ 的内容</span>
+  reverse_proxy / 127.0.0.1:8080/app/
+
+  <span class=c1>## WebSocket 代理配置</span>
+  <span class=c1>## 客户端请求的 wss://ws.1nth.com/ws, 实际为 wss://127.0.0.1:8080/ws</span>
+  reverse_proxy /ws 127.0.0.1:8080
+<span class=o>}</span>
+</code></pre></div><h3 id=9跨域访问>9.跨域访问</h3><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>:2020 <span class=o>{</span>
+    @options <span class=o>{</span>
+        method OPTIONS
+    <span class=o>}</span>
+    header <span class=o>{</span>
+        Access-Control-Allow-Origin <span class=s2>&#34;{http.request.header.Origin}&#34;</span>
+        Access-Control-Allow-Credentials <span class=nb>true</span>
+        Access-Control-Allow-Methods *
+        Access-Control-Allow-Headers DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization
+    <span class=o>}</span>
+    reverse_proxy 127.0.0.1:8080
+    respond @options <span class=m>204</span>
+<span class=o>}</span>
+</code></pre></div><h2 id=自己编译需要得模块caddy-ubuntu-2204>自己编译需要得模块caddy (Ubuntu 22.04)</h2><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># 安装go</span>
+sudo tar -zxvf go1.18.1.linux-amd64.tar.gz -C /usr/local/
+<span class=c1># 配置go环境变量</span>
+mkdir -p <span class=si>${</span><span class=nv>HOME</span><span class=si>}</span>/.go/<span class=o>{</span>src,bin,pkg<span class=o>}</span>
+vi /etc/.bashrc
+<span class=nb>export</span> <span class=nv>GO111MODULE</span><span class=o>=</span>on
+<span class=nb>export</span> <span class=nv>GOPROXY</span><span class=o>=</span><span class=s1>&#39;https://goproxy.cn,direct&#39;</span>
+<span class=nb>export</span> <span class=nv>GOROOT</span><span class=o>=</span>/usr/local/go
+<span class=nb>export</span> <span class=nv>GOPATH</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>HOME</span><span class=si>}</span><span class=s2>/.go&#34;</span>
+<span class=nb>export</span> <span class=nv>PATH</span><span class=o>=</span><span class=nv>$PATH</span>:<span class=nv>$GOROOT</span>/bin:<span class=nv>$GOPATH</span>/bin
+
+
+go version
+go env -w <span class=nv>GO111MODULE</span><span class=o>=</span>on
+go env -w <span class=nv>GOPROXY</span><span class=o>=</span>https://goproxy.cn,direct
+
+<span class=c1># 安装 xcaddy</span>
+go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
+<span class=c1># 安装完成后应当在命令行可以直接执行 xcaddy 命令</span>
+xcaddy version
+<span class=c1># 编译之前系统需要安装 jq、curl、git</span>
+apt install -y curl git jq
+<span class=c1># 获取最新版本号，其实直接去 GitHub realse 页复制以下就行</span>
+<span class=c1># 这里转化为脚本是为了方便自动化</span>
+
+<span class=c1>#获取caddy2的最新版本号，并导入变量version</span>
+<span class=nb>export</span> <span class=nv>version</span><span class=o>=</span><span class=k>$(</span>curl -s <span class=s2>&#34;https://api.github.com/repos/caddyserver/caddy/releases/latest&#34;</span> <span class=p>|</span> jq -r .tag_name<span class=k>)</span>
+<span class=c1>#2.4.6编译报错  用最新版编译</span>
+<span class=nb>export</span> <span class=nv>version</span><span class=o>=</span>v2.5.0
+<span class=c1># 使用 xcaddy 编译 https://jivps.com/21.html  https://mritd.com/2021/01/07/lets-start-using-caddy2/</span>
+<span class=c1># xcaddy build ${version} --output ./caddy_${version}</span>
+xcaddy build <span class=si>${</span><span class=nv>version</span><span class=si>}</span> --output ./caddy_<span class=si>${</span><span class=nv>version</span><span class=si>}</span> <span class=se>\
+</span><span class=se></span>        --with github.com/abiosoft/caddy-exec <span class=se>\
+</span><span class=se></span>        --with github.com/caddy-dns/cloudflare <span class=se>\
+</span><span class=se></span>        --with github.com/caddy-dns/dnspod <span class=se>\
+</span><span class=se></span>        --with github.com/caddy-dns/namecheap <span class=se>\
+</span><span class=se></span>        --with github.com/caddy-dns/alidns <span class=se>\
+</span><span class=se></span>        --with github.com/caddy-dns/duckdns <span class=se>\
+</span><span class=se></span>        --with github.com/caddy-dns/gandi <span class=se>\
+</span><span class=se></span>        --with github.com/caddy-dns/route53 <span class=se>\
+</span><span class=se></span>        --with github.com/greenpau/caddy-security <span class=se>\
+</span><span class=se></span>        --with github.com/greenpau/caddy-trace <span class=se>\
+</span><span class=se></span>        --with github.com/hairyhenderson/caddy-teapot-module <span class=se>\
+</span><span class=se></span>        --with github.com/kirsch33/realip <span class=se>\
+</span><span class=se></span>        --with github.com/porech/caddy-maxmind-geolocation <span class=se>\
+</span><span class=se></span>        --with github.com/caddyserver/transform-encoder <span class=se>\
+</span><span class=se></span>        --with github.com/mholt/caddy-webdav <span class=se>\
+</span><span class=se></span>        --with github.com/mholt/caddy-l4 <span class=se>\
+</span><span class=se></span>        --with github.com/ggicci/caddy-jwt
+</code></pre></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+<span class=item-content>🐳Myki</span></p><p class=copyright-item><span class=item-title>上次更新</span>
+<span class=item-content>2022-05-01</span></p></div><div class=post-reward><input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label><div class=qr-code><label class=qr-code-image for=reward><img class=image src=https://oss.1nth.com/images/1nth/wechat.png>
+<span>微信打赏</span></label>
+<label class=qr-code-image for=reward><img class=image src=https://oss.1nth.com/images/1nth/alipay.png>
+<span>支付宝打赏</span></label></div></div><footer class=post-footer><div class=post-tags><a href=/tags/caddy/>caddy</a></div><nav class=post-nav><a class=prev href=/post/ubuntu/><i class="iconfont icon-left"></i><span class="prev-text nav-default">Ubuntu安装使用</span>
+<span class="prev-text nav-mobile">上一篇</span></a>
+<a class=next href=/post/k8s_configmap_format/><span class="next-text nav-default">kubernetes的configmap格式错乱问题json/yaml格式化</span>
+<span class="next-text nav-mobile">下一篇</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><div class="w3-panel w3-border w3-light-grey w3-round-large"><i class="fa fa-commenting w3-xxxlarge"></i><br><p class=w3-xlarge></p></div><script data-isso=https://isso.1nth.com/ data-isso-lang=zh src=https://isso.1nth.com/js/embed.min.js></script><section id=isso-thread></section></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:21kixc@gmail.com class="iconfont icon-email" title=email></a><a href=https://github.com/21ki class="iconfont icon-github" title=github></a><a href=http://localhost:1313 class="iconfont icon-weibo" title=weibo></a><a href=https://www.1nth.com/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><div class=busuanzi-footer><span id=busuanzi_container_site_pv>本站总访问量 <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> 次</span>
+<span class=division>|</span>
+<span id=busuanzi_container_site_uv>本站总访客数 <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span> 人</span></div><span class=copyright-year>&copy;
+2018 -
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>🐳Myki</span>
+<a href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referra"><img src=https://oss.1nth.com/images/1nth/%E5%8F%88%E6%8B%8D%E4%BA%91_logo5.png align=absmiddle width=59px height=30px></a>
+<span>提供加速服务</span><br><a href=http://beian.miit.gov.cn><img src=https://oss.1nth.com/images/1nth/svg/icp.svg alt=image></a>
+<a class=hugo href=https://oss.1nth.com/images/1nth/svg/hugo.svg data-fancybox=gallery data-caption><img src=https://oss.1nth.com/images/1nth/svg/hugo.svg alt=image></a>
+<a class=even href=https://oss.1nth.com/images/1nth/svg/even.svg data-fancybox=gallery data-caption><img src=https://oss.1nth.com/images/1nth/svg/even.svg alt=image></a></br></span></div></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js integrity=sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP crossorigin=anonymous></script><link rel=stylesheet href=https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css integrity=sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF crossorigin=anonymous><script type=text/javascript src=/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js></script><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','UA-154483127-1','auto');ga('set','anonymizeIp',true);ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script><script id=baidu_analytics>var _hmt=_hmt||[];(function(){if(window.location.hostname==='localhost')return;var hm=document.createElement("script");hm.async=true;hm.src="https://hm.baidu.com/hm.js?9f5f711a6a3e2fd392b4b02d93529765";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s);})();</script><script id=baidu_push>(function(){if(window.location.hostname==='localhost')return;var bp=document.createElement('script');bp.async=true;var curProtocol=window.location.protocol.split(':')[0];if(curProtocol==='https'){bp.src='https://zz.bdstatic.com/linksubmit/push.js';}
+else{bp.src='http://push.zhanzhang.baidu.com/push.js';}
+var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(bp,s);})();</script><script src=/js/custom.js></script></body></html>
