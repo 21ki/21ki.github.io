@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: https://www.1nth.com/sitemap.xml
+Sitemap: https://www.myki.cn/sitemap.xml

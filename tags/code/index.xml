@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>code on Myki的博客</title><link>https://www.1nth.com/tags/code/</link><description>Recent content in code on Myki的博客</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 20 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.1nth.com/tags/code/index.xml" rel="self" type="application/rss+xml"/><item><title>git大文件太多问题</title><link>https://www.1nth.com/post/git-large-files/</link><pubDate>Wed, 20 Oct 2021 00:00:00 +0000</pubDate><guid>https://www.1nth.com/post/git-large-files/</guid><description>&lt;h1 id="简介">简介&lt;/h1>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>code on Myki的博客</title><link>https://www.myki.cn/tags/code/</link><description>Recent content in code on Myki的博客</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 20 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.myki.cn/tags/code/index.xml" rel="self" type="application/rss+xml"/><item><title>git大文件太多问题</title><link>https://www.myki.cn/post/git-large-files/</link><pubDate>Wed, 20 Oct 2021 00:00:00 +0000</pubDate><guid>https://www.myki.cn/post/git-large-files/</guid><description>&lt;h1 id="简介">简介&lt;/h1>
 &lt;blockquote>
 &lt;p>git大文件太多问题&lt;/p>
-&lt;/blockquote></description></item><item><title>vos3000安全认证</title><link>https://www.1nth.com/post/vos3000-safe/</link><pubDate>Thu, 14 Oct 2021 00:00:00 +0000</pubDate><guid>https://www.1nth.com/post/vos3000-safe/</guid><description>&lt;h1 id="简介">简介&lt;/h1>
+&lt;/blockquote></description></item><item><title>vos3000安全认证</title><link>https://www.myki.cn/post/vos3000-safe/</link><pubDate>Thu, 14 Oct 2021 00:00:00 +0000</pubDate><guid>https://www.myki.cn/post/vos3000-safe/</guid><description>&lt;h1 id="简介">简介&lt;/h1>
 &lt;blockquote>
 &lt;p>vos3000的web是java写的,因为陈旧的java版本导致已知漏洞很多,当然也可能有后门什么的.虽然现在已经转行,应邀朋友解决web注入问题,利用iptables动态获取客户端ip,加入到白名单的方式.&lt;/p>
-&lt;/blockquote></description></item><item><title>cloudflare-workers</title><link>https://www.1nth.com/post/cloudflare-workers/</link><pubDate>Wed, 13 Oct 2021 00:00:00 +0000</pubDate><guid>https://www.1nth.com/post/cloudflare-workers/</guid><description>&lt;h1 id="简介">简介&lt;/h1>
+&lt;/blockquote></description></item><item><title>cloudflare-workers</title><link>https://www.myki.cn/post/cloudflare-workers/</link><pubDate>Wed, 13 Oct 2021 00:00:00 +0000</pubDate><guid>https://www.myki.cn/post/cloudflare-workers/</guid><description>&lt;h1 id="简介">简介&lt;/h1>
 &lt;blockquote>
 &lt;p>Telegram国内不可用的问题.利用cloudflare-workers解决来转发tg机器人的API&lt;/p>
-&lt;/blockquote></description></item><item><title>Notepad++中查找替换“换行符”的方法介绍</title><link>https://www.1nth.com/post/notepad-use/</link><pubDate>Tue, 14 Sep 2021 00:00:00 +0000</pubDate><guid>https://www.1nth.com/post/notepad-use/</guid><description>&lt;h1 id="简介">简介&lt;/h1>
+&lt;/blockquote></description></item><item><title>Notepad++中查找替换“换行符”的方法介绍</title><link>https://www.myki.cn/post/notepad-use/</link><pubDate>Tue, 14 Sep 2021 00:00:00 +0000</pubDate><guid>https://www.myki.cn/post/notepad-use/</guid><description>&lt;h1 id="简介">简介&lt;/h1>
 &lt;blockquote>
 &lt;p>notepad++
 &lt;img src="https://oss.1nth.com/images/1nth/notepad%2B%2B-ues01.png?x-oss-process=style/dev" alt="Notepad++-use01.png">&lt;/p>
