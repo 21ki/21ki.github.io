@@ -70,9 +70,7 @@ nginx -s reload
 </code></pre></div><h3 id=后记https后续再不上>后记(https后续再不上)</h3><p>有条件的话可以用https更安全</p><p>如果是云主机就去安全组把所有对外暴露的端口都禁止访问只留一个80,443和ssh(22)</p><p>如果是家庭公网就去设置iptables或者firewalld</p><p>访问方式http://ql.example.com/waf.cgi 会把当下的ip写入到nginx的白名单</p><p>然后再访问http://ql.example.com即可访问 直接访问的话是403</p><p>我看有人装了fail2ban说是能防止爆破,这里解释下fail2ban一般用于ssh爆破并不能有效防止接口调用ssh爆破还是建议修改默认22端口来处理</p><p>很早之前也是做攻防的,其实爆破都是拿代理池去频繁调用接口,用弱口令(一般用写好的字典) 所以如果我的ip足够多照样能爆破出您的接口权限,所以最好的方法还是白名单靠破一些</p></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
 <span class=item-content>🐳Myki</span></p><p class=copyright-item><span class=item-title>上次更新</span>
 <span class=item-content>2021-12-31</span></p></div><script async src=https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js></script><ins class=adsbygoogle style=display:block data-ad-client=ca-pub-2427629508597494 data-ad-slot=2287897972 data-ad-format=auto data-full-width-responsive=true></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script><div class=post-reward><input type=checkbox name=reward id=reward hidden>
-<label class=reward-button for=reward>赞赏支持</label><div class=qr-code><label class=qr-code-image for=reward><img class=image src=https://oss.1nth.com/images/1nth/wechat.png>
-<span>微信打赏</span></label>
-<label class=qr-code-image for=reward><img class=image src=https://oss.1nth.com/images/1nth/alipay.png>
+<label class=reward-button for=reward>赞赏支持</label><div class=qr-code><label class=qr-code-image for=reward><img class=image src=/img/reward/alipay.png>
 <span>支付宝打赏</span></label></div></div><footer class=post-footer><div class=post-tags><a href=/tags/nginx/>nginx</a></div><nav class=post-nav><a class=prev href=/post/proxy_http_socks/><i class="iconfont icon-left"></i><span class="prev-text nav-default">Socks5代理Http代理通道快速搭建</span>
 <span class="prev-text nav-mobile">上一篇</span></a>
 <a class=next href=/post/clash-api-switch/><span class="next-text nav-default">clash api使用 青龙API请求失败,请检查网络</span>
